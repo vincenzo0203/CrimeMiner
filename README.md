@@ -1,3 +1,38 @@
 # CrimeMiner
+
+Per Poter installare Crime Miner sul pc
 python version 3.12.0
 install django on visual studio code
+
+## Install Python and Django
+ - Download & Install Python version 3.12.0
+ - Go to terminal and insert this code "pip install django"
+
+## Install Neo4j on Windows
+ - Download the given Neo4j Community 3.5.7 folder
+ - Move the downloaded `<neo4j_folder>` to C:\Program Files and also to C:\Apps to grant access to neo4j files
+ - Create new variable NEO4J_HOME and set value as "C:\Apps\ `<neo4j_folder>`" in System Variables
+ - Go to System Enviroment Variables and modify 'Path' Variable 
+ - Add "C:\Program Files\ `<neo4j_folder>`\bin"
+ - Open CMD and run the following command: "cd C:\Program Files\neo4j\bin"
+ - Now run the command: "neo4j install-service" and service will be installed
+ - Now install some plugins for the graph:
+   ●    Download APOC Library 3.5.0.1 https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/3.5.0.1/apoc-3.5.0.1-all.jar
+   ●    Download Graph Algorithms Library 3.5.4.0 https://github.com/neo4j-contrib/neo4j-graph-algorithms/releases/download/3.5.4.0/graph-algorithms-algo-3.5.4.0.jar
+   ●    Add downloaded libraries into <neo4j_folder>\plugins
+   ●    Add following line at the bottom of file <neo4j_folder>\conf\neo4j.conf "dbms.security.procedures.unrestricted=algo.*,apoc.*"
+
+ 
+## Start Neo4j
+ - Open CMD as Administrator and just execute `<neo4j_folder>\bin\neo4j console` and Neo4j will start listening on the default port with URL "localhost:7474/browser"
+ - Enter init credentials username: "neo4j" and password: "neo4j"
+ - Neo4j will redirect you to a new password web-page and here you have to enter the project password: "neo44%*j"
+
+## Install Project in VSCode
+ - Clone the repo 
+
+## CrimeMiner First Start in VSCode
+ - Open CMD, go to path of the project and write "cd CrimeMinerPy\CrimeMiner" 
+ - Then run the following command: "python manage.py runserver"
+ - Open Browser and write "localhost:8000/CrimeMiner"
+ - For stop the server use command ctrl+c
