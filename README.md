@@ -1,12 +1,12 @@
 # CrimeMiner
 
-Per Poter installare Crime Miner sul pc
-python version 3.12.0
-install django on visual studio code
+## Install NodeJS
+ - Download & Install Node.js 18.18.1 LTS
+ - Open CMD and run this command "npm install"
 
 ## Install Python and Django
  - Download & Install Python version 3.12.0
- - Go to terminal and insert this code "pip install django"
+ - Open CMD and run this command "pip install -r requirements.txt"
 
 ## Install Neo4j on Windows
  - Download the given Neo4j Community 3.5.7 folder
@@ -31,8 +31,8 @@ install django on visual studio code
 ## Install Project in VSCode
  - Clone the repo 
 
-## CrimeMiner First Start in VSCode
- - Open CMD, go to path of the project and write "cd CrimeMinerPy\CrimeMiner" 
- - Then run the following command: "python manage.py runserver"
+## CrimeMiner Start Application
+ - Open CMD, go to path of the project 
+ - Then run the following command: "npm run full"
  - Open Browser and write "localhost:8000/CrimeMiner"
- - For stop the server use command ctrl+c
+ - For stop server use command ctrl+c
