@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'homepage.apps.HomepageConfig',
-    
-    
+    'django_neomodel',   
 ]
 
 MIDDLEWARE = [
@@ -82,6 +81,19 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+NEOMODEL_DATABASES = {
+    'default': {
+        'ENGINE': 'neo4j',
+        'HOST': 'localhost',
+        'PORT': 7474,
+        'AUTH': {
+            'username': 'neo4j',
+            'password': 'neo44%*j',
+        },
+    }
+}
+
 
 
 # Password validation
