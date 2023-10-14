@@ -2,11 +2,11 @@
 
 ## Install NodeJS
  - Download & Install Node.js 18.18.1 LTS
- - Open CMD and run this command "npm install"
+ - Open CMD, go to path of the project and run this command "npm install"
 
-## Install Python and Django
+## Install Python
  - Download & Install Python version 3.12.0
- - Open CMD and run this command "pip install -r requirements.txt"
+ - Open CMD, go to path of the project and run this command "pip install -r requirements.txt"
 
 ## Install Neo4j on Windows
  - Download the given Neo4j Community 3.5.7 folder
@@ -36,3 +36,7 @@
  - Then run the following command: "npm run full"
  - Open Browser and write "localhost:8000/CrimeMiner"
  - For stop server use command ctrl+c
+
+## Struttura del progetto
+  E' stato utilizzato un modello MTV che corrisponde al MVC
+  Per comprendere la struttura del progetto visitare il seguente link https://medium.com/@samueleresca/developing-mvc-using-django-and-visual-studio-2015-part-1-fdcca754d310
