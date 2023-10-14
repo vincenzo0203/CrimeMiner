@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'homepage.apps.HomepageConfig',
-    'graphview.apps.GraphviewConfig'
+    
     
 ]
 
@@ -121,8 +121,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = (
     'node_modules',
-    'homepage/templates/homepage/css',
-    'CrimeMiner/media',
+    'homepage/static/',
+    'app/static/'
 )
 
 # Default primary key field type

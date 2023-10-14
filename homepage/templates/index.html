@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CrimeMiner</title>
 
-  <link rel="stylesheet" type="text/css" href="{% static './index.css' %}">
-  <!--<script src="@{/crimeminer/landing/js/modernizr-2.7.1.js}"></script>-->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+  <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 
 </head>
 
@@ -22,7 +22,7 @@
           <span class="icon-bar"></span>
         </button>
         <a class="logo" href="index.html">
-          <img src="{% static 'CrimeMiner_small.png' %}" alt="Logo" />
+          <img src="{% static 'img/CrimeMiner_small.png' %}" alt="Logo" />
         </a>
       </div>
       <div class="navbar-collapse collapse">
@@ -43,7 +43,7 @@
       <div class="row header-info">
         <div class="col-sm-10 col-sm-offset-1 text-center">
 
-          <h1 class="wow fadeIn"><img src="{% static 'newLogo.png' %}" alt="Logo" /></h1>
+          <h1 class="wow fadeIn"><img src="{% static 'img/newLogo.png' %}" alt="Logo" /></h1>
           <br />
           <p class="lead wow fadeIn" data-wow-delay="0.5s"></p>
           <div class="row">
@@ -68,20 +68,20 @@
   <section id="project" class="pad-xl">
     <div class="container" style="margin-top:200px;text-align:center">
       <img class="lolo wow fadeInUp" style="height:100%;width:100%" data-wow-delay="0.6s"
-        src="{% static 'head_pics/Scritta.png' %}" />
+        src="{% static 'img/head_pics/Scritta.png' %}" />
 
     </div>
     <div style="margin-top:50px;text-align:center" class="container">
 
-      <img class="lolo wow fadeInUp" style="height:16%;width:16%" data-wow-delay="1.6s" src="{% static 'head_pics/NET.png' %} " />
+      <img class="lolo wow fadeInUp" style="height:16%;width:16%" data-wow-delay="1.6s" src="{% static 'img/head_pics/NET.png' %} " />
       <img class="lolo wow fadeInUp" style="margin-left: 20px;height:13%;width:13%" data-wow-delay="2.6s"
-        src="{% static 'head_pics/Visual.png' %}" />
+        src="{% static 'img/head_pics/Visual.png' %}" />
       <img class="lolo wow fadeInUp" style="margin-left: 20px;height:12%;width:12%" data-wow-delay="3.6s"
-        src="{% static 'head_pics/ML.png' %}" />
+        src="{% static 'img/head_pics/ML.png' %}" />
       <img class="lolo wow fadeInUp" style="margin-left: 20px;margin-top: 6px;height:16%;width:16%"
-        data-wow-delay="4.6s" src="{% static 'head_pics/ABM.png' %}" />
+        data-wow-delay="4.6s" src="{% static 'img/head_pics/ABM.png' %}" />
       <img class="lolo wow fadeInUp" style="margin-top: 4px;margin-left:-20px;height:25%;width:25%"
-        data-wow-delay="5.6s" src="{% static 'head_pics/NLP.png' %}" />
+        data-wow-delay="5.6s" src="{% static 'img/head_pics/NLP.png' %}" />
 
       <a style="width:100%;margin:auto" href="#project_img" class="btn btn-secondary btn-sm scroll">
         <img class="lolo wow fadeInUp" data-wow-delay="6.6s"
@@ -97,7 +97,7 @@
     <div style="margin-top:50px;text-align:center" class="container">
 
       <div class="lolo wow fadeInUp" data-wow-delay="0.6s">
-        <img class="lolo wow fadeInUp" style="height:90%;width:100%" src="{% static 'CrimeMinerHome2.png' %}" />
+        <img class="lolo wow fadeInUp" style="height:90%;width:100%" src="{% static 'img/CrimeMinerHome2.png' %}" />
       </div>
     </div>
   </section>
@@ -221,7 +221,7 @@ function showSlides(n) {
         <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
           <ul class="list-unstyled team-table text-center">
             <li style="background: rgb(192, 192, 192)" class="headline">
-              <h5 class="white"><img src="{% static 'team/nicolalettieri.jpeg' %}" /></h5>
+              <h5 class="white"><img src="{% static 'img/team/nicolalettieri.jpeg' %}" /></h5>
             </li>
             <li style="background: rgb(192, 192, 192)" class="price">
               <div style="color:black" class="amount">Nicola <div style="margin-top: -5px">LETTIERI</div>
@@ -235,7 +235,7 @@ function showSlides(n) {
         <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
           <ul class="list-unstyled team-table text-center">
             <li style="background: rgb(192, 192, 192)" class="headline">
-              <h5 class="white"><img src="{% static 'team/DelfinaMalandrino.jpg' %}" /></h5>
+              <h5 class="white"><img src="{% static 'img/team/DelfinaMalandrino.jpg' %}" /></h5>
             </li>
             <li style="background: rgb(192, 192, 192)" class="price">
               <div style="color:black" class="amount">Delfina <div style="margin-top: -5px">MALANDRINO</div>
@@ -247,7 +247,7 @@ function showSlides(n) {
         <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
           <ul class="list-unstyled team-table text-center">
             <li style="background: rgb(192, 192, 192)" class="headline">
-              <h5 class="white"><img src="{% static 'team/Rocco2.png' %}" /></h5>
+              <h5 class="white"><img src="{% static 'img/team/Rocco2.png' %}" /></h5>
             </li>
             <li style="background: rgb(192, 192, 192)" class="price">
               <div style="color:black" class="amount">Rocco <div style="margin-top: -5px">ZACCAGNINO</div>
@@ -263,7 +263,7 @@ function showSlides(n) {
         <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
           <ul class="list-unstyled team-table text-center">
             <li style="background: rgb(192, 192, 192)" class="headline">
-              <h5 class="white"><img src="{% static 'team/Alfonso_G.png' %}" /></h5>
+              <h5 class="white"><img src="{% static 'img/team/Alfonso_G.png' %}" /></h5>
             </li>
             <li style="background: rgb(192, 192, 192)" class="price">
               <div style="color:black" class="amount">Alfonso <div style="margin-top: -5px">GUARINO</div>
@@ -279,7 +279,7 @@ function showSlides(n) {
         <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
           <ul class="list-unstyled team-table text-center">
             <li style="background: rgb(192, 192, 192)" class="headline">
-              <h5 class="white"><img src="{% static 'team/Del_Piano_Salvatore.jpeg' %}" /></h5>
+              <h5 class="white"><img src="{% static 'img/team/Del_Piano_Salvatore.jpeg' %}" /></h5>
             </li>
             <li style="background: rgb(192, 192, 192)" class="price">
               <div style="color:black" class="amount">Salvatore <div style="margin-top: -5px">DEL PIANO</div>
@@ -293,25 +293,6 @@ function showSlides(n) {
   </section>
 
   <section style="background:white" id="former" class="pad-xs">
-    <script>
-      function showFormers() {
-        if (document.getElementById('showF').style.display == "none") {
-
-
-          document.getElementById('showF').style.display = "block";
-          //console.log(document.getElementById('op_cl').className)
-          document.getElementById('op_cl').classList.remove('fa-chevron-up');
-          document.getElementById('op_cl').classList.add('fa-chevron-down');
-        }
-        else {
-          document.getElementById('showF').style.display = "none";
-          //console.log(document.getElementById('op_cl').className)
-          document.getElementById('op_cl').classList.remove('fa-chevron-down');
-          document.getElementById('op_cl').classList.add('fa-chevron-up');
-
-        }
-      }
-    </script>
 
     <div class="container">
       <div class="row margin-40">
@@ -331,7 +312,7 @@ function showSlides(n) {
           <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
             <ul class="list-unstyled team-table text-center">
               <li style="background: rgb(192, 192, 192)" class="headline">
-                <h5 class="white"><img src="{% static 'team/AlfredoPulvirenti.jpg' %}" /></h5>
+                <h5 class="white"><img src="{% static 'img/team/AlfredoPulvirenti.jpg' %}" /></h5>
               </li>
               <li style="background: rgb(192, 192, 192)" class="price">
                 <div style="color:black" class="amount">Alfredo <div style="margin-top: -5px">PULVIRENTI</div>
@@ -345,7 +326,7 @@ function showSlides(n) {
           <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
             <ul class="list-unstyled team-table text-center">
               <li style="background: rgb(192, 192, 192)" class="headline">
-                <h5 class="white"><img src="{% static 'team/RosalbaGiugno.png' %}" /></h5>
+                <h5 class="white"><img src="{% static 'img/team/RosalbaGiugno.png' %}" /></h5>
               </li>
               <li style="background: rgb(192, 192, 192)" class="price">
                 <div style="color:black" class="amount">Rosalba <div style="margin-top: -5px">GIUGNO</div>
@@ -358,7 +339,7 @@ function showSlides(n) {
           <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
             <ul class="list-unstyled team-table text-center">
               <li style="background: rgb(192, 192, 192)" class="headline">
-                <h5 class="white"><img src="{% static 'team/LucaVicidimini.png' %}" /></h5>
+                <h5 class="white"><img src="{% static 'img/team/LucaVicidimini.png' %}" /></h5>
               </li>
               <li style="background: rgb(192, 192, 192)" class="price">
                 <div style="color:black" class="amount">Luca <div style="margin-top: -5px">VICIDOMINI</div>
@@ -378,7 +359,7 @@ function showSlides(n) {
           <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
             <ul class="list-unstyled team-table text-center">
               <li style="background: rgb(192, 192, 192)" class="headline">
-                <h5 class="white"><img src="{% static 'team/AntonioAltamura.png' %}" /></h5>
+                <h5 class="white"><img src="{% static 'img/team/AntonioAltamura.png' %}" /></h5>
               </li>
               <li style="background: rgb(192, 192, 192)" class="price">
                 <div style="color:black" class="amount">Antonio <div style="margin-top: -5px">ALTAMURA</div>
@@ -392,7 +373,7 @@ function showSlides(n) {
           <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
             <ul class="list-unstyled team-table text-center">
               <li style="background: rgb(192, 192, 192)" class="headline">
-                <h5 class="white"><img src="{% static 'team/ArmandoFaggiano.jpg' %}" /></h5>
+                <h5 class="white"><img src="{% static 'img/team/ArmandoFaggiano.jpg' %}" /></h5>
               </li>
               <li style="background: rgb(192, 192, 192)" class="price">
                 <div style="color:black" class="amount">Armando <div style="margin-top: -5px">FAGGIANO</div>
@@ -406,7 +387,7 @@ function showSlides(n) {
           <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
             <ul class="list-unstyled team-table text-center">
               <li style="background: rgb(192, 192, 192)" class="headline">
-                <h5 class="white"><img src="{% static 'team/gregorioamendola.jpg' %}" /></h5>
+                <h5 class="white"><img src="{% static 'img/team/gregorioamendola.jpg' %}" /></h5>
               </li>
               <li style="background: rgb(192, 192, 192)" class="price">
                 <div style="color:black" class="amount">Gregorio <div style="margin-top: -5px">AMENDOLA</div>
@@ -425,7 +406,7 @@ function showSlides(n) {
           <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
             <ul class="list-unstyled team-table text-center">
               <li style="background: rgb(192, 192, 192)" class="headline">
-                <h5 class="white"><img src="{% static 'team/vincenzoseverino.jpg' %}" /></h5>
+                <h5 class="white"><img src="{% static 'img/team/vincenzoseverino.jpg' %}" /></h5>
               </li>
               <li style="background: rgb(192, 192, 192)" class="price">
                 <div style="color:black" class="amount">Vincenzo <div style="margin-top: -5px">SEVERINO</div>
@@ -441,7 +422,7 @@ function showSlides(n) {
           <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
             <ul class="list-unstyled team-table text-center">
               <li style="background: rgb(192, 192, 192)" class="headline">
-                <h5 class="white"><img src="{% static 'team/francescovicidomini.jpeg' %}" /></h5>
+                <h5 class="white"><img src="{% static 'img/team/francescovicidomini.jpeg' %}" /></h5>
               </li>
               <li style="background: rgb(192, 192, 192)" class="price">
                 <div style="color:black" class="amount">Francesco <div style="margin-top: -5px">VICIDOMINI</div>
@@ -454,7 +435,7 @@ function showSlides(n) {
           <div class="col-sm-4 col-md-4 team-container wow fadeInUp" data-wow-delay="1s">
             <ul class="list-unstyled team-table text-center">
               <li style="background: rgb(192, 192, 192)" class="headline">
-                <h5 class="white"><img src="{% static 'team/EmanueleRinaldi.jpg' %}" /></h5>
+                <h5 class="white"><img src="{% static 'img/team/EmanueleRinaldi.jpg' %}" /></h5>
               </li>
               <li style="background: rgb(192, 192, 192)" class="price">
                 <div style="color:black" class="amount">Emanuele <div style="margin-top: -5px">RINALDI</div>
