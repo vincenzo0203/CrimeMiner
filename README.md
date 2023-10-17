@@ -1,12 +1,9 @@
 # CrimeMiner
 
-## Install NodeJS
+## Install NodeJS and Python
  - Download & Install Node.js 18.18.1 LTS
- - Open CMD, go to path of the project and run this command "npm install"
-
-## Install Python
  - Download & Install Python version 3.11.5 Ad oggi se si installa la versione 3.12.0 di python non ci consente di scaricare la libreria django-neomodel utile per django.
- - Open CMD, go to path of the project and run this command "pip install -r requirements.txt"
+ - Open CMD, go to path of the project and run this command "npm run install-all"
 
 ## Install Neo4j on Windows
  - Download the given Neo4j Community 3.5.7 folder

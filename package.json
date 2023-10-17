@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "css-compile": "sass --style compressed --source-map --embed-sources --no-error-css --load-path=node_modules .",
     "full": "npm-run-all css-compile server",
-    "server": "python manage.py runserver"
+    "server": "python manage.py runserver",
+    "install-dep-fe": "npm install",
+    "install-dep-be": "pip install -r requirements.txt",
+    "install-all": "npm-run-all install-dep-fe install-dep-be"
   },
   "repository": {
     "type": "git",
