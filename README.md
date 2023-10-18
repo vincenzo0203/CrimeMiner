@@ -9,7 +9,7 @@
 - Open CMD, go to path of the project and run this command `pip install -r requirements.txt`
 
 ## Install Neo4j on Windows
-- Download the given Neo4j Community 3.5.7 folder
+- Download the given Neo4j Community 5.12.0 folder
 - Move the downloaded `<neo4j_folder>` to C:\Program Files and also to C:\Apps to grant access to neo4j files
 - Create new variable NEO4J_HOME and set value as "C:\Apps\ `<neo4j_folder>`" in System Variables
 - Go to System Enviroment Variables and modify 'Path' Variable 
@@ -17,8 +17,8 @@
 - Open CMD and run the following command: "cd C:\Program Files\neo4j\bin"
 - Now run the command: "neo4j install-service" and service will be installed
 - Now install some plugins for the graph:
-    - Download [APOC Library 3.5.0.1](https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/3.5.0.1/apoc-3.5.0.1-all.jar)
-    - Download [Graph Algorithms Library 3.5.4.0](https://github.com/neo4j-contrib/neo4j-graph-algorithms/releases/download/3.5.4.0/graph-algorithms-algo-3.5.4.0.jar)
+    - Download [APOC Library 5.12.0](https://github.com/neo4j/apoc/releases/tag/5.12.0)
+    - Download [Graph Data Science 2.5.0](https://github.com/neo4j/graph-data-science/releases/tag/2.5.0)
     - Add downloaded libraries into <neo4j_folder>\plugins
     - Add following line at the bottom of file <neo4j_folder>\conf\neo4j.conf "dbms.security.procedures.unrestricted=algo.*,apoc.*"
 
