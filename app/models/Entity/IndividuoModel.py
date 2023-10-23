@@ -1,6 +1,7 @@
 from django_neomodel import GraphDatabase, Node, Relationship, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, LongProperty, BooleanProperty
+from django.db import models
 
-class Individuo(Node):
+class IndividuoModel(Node):
 
     # Valori Long
     id = LongProperty(primary_key=True, generated_value=True)

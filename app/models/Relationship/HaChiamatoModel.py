@@ -1,7 +1,8 @@
 from django_neomodel import GraphDatabase, Node, RelationshipEntity, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, LongProperty, BooleanProperty
+from django.db import models
 
 
-class HaChiamato(RelationshipEntity):
+class HaChiamatoModel(RelationshipEntity):
     type = "HaChiamato"
 
     # Valori Long
