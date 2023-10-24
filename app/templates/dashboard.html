@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrimeMiner</title>
+
+    <!--Bootstrap Library-->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
+    <script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
+    <script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/dashboard.js' %}"></script>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+                aria-controls="offcanvasScrolling">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbarLogoContainer" href="#">
+              <img class="navbarLogo" src="{% static 'img/logo.png' %}">
+            </a>
+
+            <div class="offcanvas offcanvas-start d-block sidebar" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+                id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                <div class="offcanvas-header offcanvas-end">
+                    
+
+                    <div>
+                        <button type="button" class="btn text-reset arrowLeftMenu" data-bs-dismiss="offcanvas" aria-label="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="sidebarIcon" fill="currentColor"
+                                class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <button type="button" class="btn btnPinnableMenu" onclick="pinnableMenu()">
+                    </button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end">
+
+                      <!-- questo tag li deve essere copiato per inserire altri menu a discesa-->
+                      <li class="nav-item">
+                        <a class="nav-link menuItem" href="#graphVisualization" aria-controls="#graphVisualization" role="button" data-bs-toggle="collapse" data-toggle="collapse">
+                          <div class="d-flex justify-content-between">
+                            <div class="d-flex align-items-center sidebarItem">
+                              <img class="sidebarIcon" src="{% static 'img/dashboardHeader/graphImg.png' %}">
+                              <div>Visualizzazione Grafici</div>
+                            </div>
+                            <div class="sidebarArrowContainer">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="sidebarIconArrow sidebarIconToggleRight" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                              </svg>
+                            </div>
+                          </div>
+                        </a>
+                        <div class="sidebarCollapseMenu collapse multi-collapse" id="graphVisualization">
+                          <a class="sidebarCollapseItem" href="{% url 'individualWiretaps' %}"> Individui/Intercettazioni</a>
+                          <a class="sidebarCollapseItem" href="#">Individui/Crimini</a>
+                          <a class="sidebarCollapseItem" href="#">Individui/Intercettazione Ambientale</a>
+                          <a class="sidebarCollapseItem" href="#">Individui e Crimini/Intercettazione Ambientale</a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pageContent d-block">
+      {% block content %}
+      {% endblock %}
+    </div>
+</body>
+
+</html>

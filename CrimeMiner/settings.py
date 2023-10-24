@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'homepage.apps.HomepageConfig',
+    'app.apps.AppConfig',
     'django_neomodel',   
 ]
 
@@ -133,6 +134,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = (
     'node_modules',
+    'CrimeMiner/static/',
     'homepage/static/',
     'app/static/'
 )
