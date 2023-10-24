@@ -9,9 +9,10 @@
 
     <!--Bootstrap Library-->
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
-    <script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
+    <script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/dashboard.js' %}"></script>
 
 </head>
@@ -24,16 +25,18 @@
                 aria-controls="offcanvasScrolling">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="#">Offcanvas navbar</a>
+            <a class="navbarLogoContainer" href="#">
+              <img class="navbarLogo" src="{% static 'img/logo.png' %}">
+            </a>
 
-            <div class="offcanvas offcanvas-start d-block" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+            <div class="offcanvas offcanvas-start d-block sidebar" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
                 id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
                 <div class="offcanvas-header offcanvas-end">
                     
 
                     <div>
                         <button type="button" class="btn text-reset arrowLeftMenu" data-bs-dismiss="offcanvas" aria-label="Close">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="currentColor"
+                            <svg xmlns="http://www.w3.org/2000/svg" class="sidebarIcon" fill="currentColor"
                                 class="bi bi-arrow-left" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
                                     d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
@@ -45,48 +48,40 @@
                     </button>
                 </div>
                 <div class="offcanvas-body">
-                    <p>Try scrolling the rest of the page to see this option in action.</p>
-                </div>
-            </div>
+                    <ul class="navbar-nav justify-content-end">
 
-
-            <!--<div class="offcanvas offcanvas-start" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
-              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                      <!-- questo tag li deve essere copiato per inserire altri menu a discesa-->
+                      <li class="nav-item">
+                        <a class="nav-link menuItem" href="#graphVisualization" aria-controls="#graphVisualization" role="button" data-bs-toggle="collapse" data-toggle="collapse">
+                          <div class="d-flex justify-content-between">
+                            <div class="d-flex align-items-center sidebarItem">
+                              <img class="sidebarIcon" src="{% static 'img/dashboardHeader/graphImg.png' %}">
+                              <div>Visualizzazione Grafici</div>
+                            </div>
+                            <div class="sidebarArrowContainer">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="sidebarIconArrow sidebarIconToggleRight" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                              </svg>
+                            </div>
+                          </div>
+                        </a>
+                        <div class="sidebarCollapseMenu collapse multi-collapse" id="graphVisualization">
+                          <a class="sidebarCollapseItem" href="{% url 'individualWiretaps' %}"> Individui/Intercettazioni</a>
+                          <a class="sidebarCollapseItem" href="#">Individui/Crimini</a>
+                          <a class="sidebarCollapseItem" href="#">Individui/Intercettazione Ambientale</a>
+                          <a class="sidebarCollapseItem" href="#">Individui e Crimini/Intercettazione Ambientale</a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
             </div>
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li>
-                      <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
-            </div>
-          </div>-->
         </div>
     </nav>
 
-    <div class="pageContent d-block">ciaocia</div>
+    <div class="pageContent d-block">
+      {% block content %}
+      {% endblock %}
+    </div>
 </body>
 
 </html>

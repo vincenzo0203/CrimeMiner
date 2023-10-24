@@ -9,11 +9,60 @@ html,body{
     height: 100%;
 }
 
-.sidebar-icon{
-    width: 3vw;
-    height: 3vh;
+.navbar{
+    background-color: #73879C;
+
+    &LogoContainer{
+        margin-right: 1rem;
+    }
+
+    &Logo{
+        width:8rem;
+    }
 }
 
-.offcanvas{
+.sidebar{
     width:250px !important;
+
+    &Item{
+        gap:0.4rem;
+    }
+
+    &Icon{
+        width: 1.5rem;
+        transition: all 0.75s;
+    
+        &Arrow{
+            width: 1rem;
+            transition: all 0.75s;
+        }
+    
+        &ToggleRight{
+            transform: rotate(0deg);
+        }
+    
+        &ToggleDown{
+            transform: rotate(90deg);
+        }
+    }
+
+    &Collapse{
+        &Menu{
+            display: flex;
+            flex-direction: column;
+        }
+    
+        &Item{
+            font-size: 0.9rem;
+            padding: 0.25rem 1rem;
+            text-align: inherit;
+            text-decoration: none;
+            color: rgb(0,0,0,0.65);
+            transition: color .15s ease-in-out;
+    
+            &:hover{
+                color: rgb(0,0,0,0.8);
+            }
+        }
+    }
 }
