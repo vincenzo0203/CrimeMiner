@@ -1,6 +1,6 @@
-from django_neomodel import StructuredNode, StringProperty, RelationshipTo, Relationship
+from neomodel import StructuredNode, StringProperty, RelationshipTo, Relationship
 from neomodel import UniqueIdProperty, db
-from app.models.Entity import IndividuoModel
+from app.Models.Entity import IndividuoModel
 
 # Creazione di una repository personalizzata
 class IndividuoRepository:
@@ -26,7 +26,9 @@ class IndividuoRepository:
 
     @staticmethod
     def find_all_individuo():
-        return IndividuoModel.nodes.all()
+        cypher_query = "MATCH (n:Individuo) RETURN n"
+        result, _ = db.cypher_query(cypher_query)
+        return result
 
     @staticmethod
     def get_id_by_name(nome, cognome):

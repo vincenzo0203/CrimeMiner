@@ -1,4 +1,4 @@
-from django_neomodel import GraphDatabase, Node, RelationshipEntity, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, LongProperty, BooleanProperty
+from neomodel import GraphDatabase, Node, RelationshipEntity, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, LongProperty, BooleanProperty
 from django.db import models
 
 

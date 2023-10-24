@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'homepage.apps.HomepageConfig',
-    'django_neomodel',   
+    'app.apps.AppConfig',
+    'django_neomodel',  
 ]
 
 MIDDLEWARE = [
