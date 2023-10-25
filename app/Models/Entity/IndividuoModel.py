@@ -1,9 +1,12 @@
-from django_neomodel import GraphDatabase, Node, Relationship, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, LongProperty, BooleanProperty
+from neomodel import StructuredRel,StructuredNode, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
+from django.db import models
 
-class Individuo(Node):
+
+
+class IndividuoModel(StructuredNode):
 
     # Valori Long
-    id = LongProperty(primary_key=True, generated_value=True)
+    idIndividuo = IntegerProperty(primary_key=True, generated_value=True)
 
     # Valori String
     nodeId = StringProperty(primary_key=True, json_property="nodeid")
@@ -30,6 +33,6 @@ class Individuo(Node):
     isIndagato = BooleanProperty()
 
     #Sezione di definizione delle relazioni con entity
-    haChiamatoList = RelationshipTo("HaChiamato", direction=Relationship.UNDIRECTED)
+    haChiamatoList = RelationshipTo('Individuo', 'HaChiamato')
 
 
