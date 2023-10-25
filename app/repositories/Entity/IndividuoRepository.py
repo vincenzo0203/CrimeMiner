@@ -1,6 +1,6 @@
 from neomodel import StructuredNode, StringProperty, RelationshipTo, Relationship
 from neomodel import UniqueIdProperty, db
-from app.Models.Entity import IndividuoModel
+from app.Models.Entity.IndividuoModel import IndividuoModel
 
 # Creazione di una repository personalizzata
 class IndividuoRepository:
