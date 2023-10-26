@@ -1,3 +1,5 @@
+let historyState = {};
+
 //funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
 
@@ -12,6 +14,18 @@ window.onload = function () {
     }        
     else
         unPinnable();
+
+    //funzione che controlla se ci sono pagine da caricare all'inizio
+    if (document.cookie.includes("page")){
+        let page = getCookie("page");
+        if(page != ""){
+            setCookie("page","");
+            requestPage(page, page, "yes");
+        }
+    }
+    else
+    //inserisce la pagina iniziale nella cronologia delle pagine
+        history.pushState(historyState, '', "");
 };
 
 //funzione che permette di ruotare la freccia dei sottomenu scambiando due classi inserite nell'scss
@@ -26,6 +40,41 @@ document.addEventListener('DOMContentLoaded', function() {
                 navLink.querySelector('.sidebarIconArrow').classList.replace('sidebarIconToggleDown','sidebarIconToggleRight');
         });
     });
+});
+
+//funzione che carica le pagine all'interno del div con classe pageContent
+function requestPage(page, state, push){
+    let link = "/CrimeMiner/" + page;
+    fetch(link, {
+        method: "GET"
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            throw new Error('Errore nella richiesta.');
+        }
+    })
+    .then(data => {
+        if(push == "yes")
+            history.pushState({ page: page }, '', state);
+        document.querySelector(".pageContent").innerHTML = data;
+    })
+    .catch(error => {
+        console.error(error);
+    });
+}
+
+//funzione che si occupa della gestione delle finestre della single page application (SPA)
+window.addEventListener("popstate", function(event) {
+    if (event.state) {
+        let newState = event.state;
+
+        if(newState.page != undefined)
+            requestPage(newState.page, newState.page, "no")
+        else
+            document.querySelector(".pageContent").innerHTML = "";
+    }
 });
 
 //funzione che permette di pinnare o meno la sidebar laterale
