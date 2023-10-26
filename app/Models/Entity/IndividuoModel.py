@@ -1,8 +1,6 @@
 from neomodel import StructuredRel,StructuredNode, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
 from django.db import models
 
-
-
 class IndividuoModel(StructuredNode):
 
     # Valori Long

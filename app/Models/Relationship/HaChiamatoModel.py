@@ -1,13 +1,12 @@
-from neomodel import GraphDatabase, Node, RelationshipEntity, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, LongProperty, BooleanProperty
+from neomodel import Relationship, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
 from django.db import models
 
-
-class HaChiamatoModel(RelationshipEntity):
+class HaChiamatoModel(Relationship):
     type = "HaChiamato"
 
     # Valori Long
-    id = LongProperty(primary_key=True, generated_value=True)
-    timestamp = LongProperty()
+    id = IntegerProperty(primary_key=True, generated_value=True)
+    timestamp = IntegerProperty()
 
     # Valori String
     edgeId = StringProperty(primary_key=True, generated_value="uuid", json_property="relId")
