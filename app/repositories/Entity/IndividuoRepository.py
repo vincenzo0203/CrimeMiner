@@ -25,7 +25,7 @@ class IndividuoRepository:
         return IndividuoModel.nodes.filter(entityType=entity_type)
 
     @staticmethod
-    def find_all_individuo():
+    def find_all():
         cypher_query = "MATCH (n:Individuo) RETURN n"
         result, _ = db.cypher_query(cypher_query)
         return result

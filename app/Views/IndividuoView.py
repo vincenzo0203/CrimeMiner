@@ -12,7 +12,8 @@ class IndividuoView(View):
         self.individuo_repository = IndividuoRepository()
 
     def get(self, request):
-        action = request.GET.get('action')
+        #action = request.GET.get('action')
+        action = 'findAll'
         if action == 'findAll':
             return self.find_all()
         elif action == 'getIndividuoByName':
