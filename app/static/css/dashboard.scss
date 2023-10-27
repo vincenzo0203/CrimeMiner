@@ -17,7 +17,8 @@ html,body{
     }
 
     &Logo{
-        width:8rem;
+        width: 8vh;
+        min-width:8rem;
     }
 }
 
@@ -53,6 +54,7 @@ html,body{
         }
     
         &Item{
+            background-color: #FFFFFF;
             font-size: 0.9rem;
             padding: 0.25rem 1rem;
             text-align: inherit;

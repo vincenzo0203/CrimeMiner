@@ -1,21 +1,12 @@
 {% load static %}
 
-{% block head %}
-<script type="text/javascript" src="{% static 'cytoscape/dist/cytoscape.min.js' %}"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.14.0/cytoscape.min.js"></script>
-
-<link rel="stylesheet" type="text/css" href="{% static 'css/features/individualWiretaps/individualWiretaps.css' %}">
-<script type="text/javascript" src="{% static 'js/features/individualWiretaps.js' %}"></script>
-{% endblock %}
-
 {% block content %}
 
-<div class="d-flex">
-    <div class="cyContainer">
+<div class="d-flex w-100 bd-highlight">
+    <div class="cyContainer p-2 flex-grow-1 bd-highlight">
       <div class="cyContent"></div>
     </div>
-    <!--
-    <div>
+    <div class="accordionContainer p-2 bd-highlight">
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
               <h2 class="accordion-header" id="headingOne">
@@ -43,7 +34,6 @@
             </div>
           </div>
     </div>
-    -->
 </div>
 
 

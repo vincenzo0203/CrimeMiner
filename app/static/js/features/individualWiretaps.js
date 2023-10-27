@@ -1,15 +1,16 @@
 // Recupera lo stato dopo il reload e serve per far ricaricare il contenuto della pagina 
-window.addEventListener("load", function () {
+/*window.addEventListener("beforeunload", function (event) {
   let url = window.location.pathname.split("/CrimeMiner/").join("");
   document.cookie = "page="+ url;
-  window.location.href = "/CrimeMiner/";
-});
+  event.preventDefault();
+  location.href = "/CrimeMiner/";
+});*/
 
-window.onload = function () {
-  createGraph();
+function individualWiretaps() {
+  createGraphIndividualWiretaps();
 }
 
-function createGraph(){
+function createGraphIndividualWiretaps(){
     let cy = cytoscape({
         container: document.querySelector('.cyContent'),
         elements: [

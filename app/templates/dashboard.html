@@ -15,8 +15,10 @@
     <script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/dashboard.js' %}"></script>
 
-    {% block head %}
-    {% endblock %}
+    <script type="text/javascript" src="{% static 'cytoscape/dist/cytoscape.min.js' %}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/features/individualWiretaps/individualWiretaps.css' %}">
+    <script type="text/javascript" src="{% static 'js/features/individualWiretaps.js' %}"></script>
 
 </head>
 
@@ -34,7 +36,7 @@
 
             <div class="offcanvas offcanvas-start d-block sidebar" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
                 id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-                <div class="offcanvas-header offcanvas-end">
+                <div class="offcanvas-header offcanvas-start">
                     
 
                     <div>
@@ -47,8 +49,8 @@
                         </button>
                     </div>
                     
-                    <button type="button" class="btn btnPinnableMenu" onclick="pinnableMenu()">
-                    </button>
+                    <!--<button type="button" class="btn btnPinnableMenu" onclick="pinnableMenu()">
+                    </button>-->
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end">

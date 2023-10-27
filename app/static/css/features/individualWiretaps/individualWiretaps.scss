@@ -6,7 +6,7 @@
 
 .accordion{
     &-item{
-        margin: 1rem;
+        //margin: 1rem;
         border-radius: 4px;
     }
 
@@ -17,24 +17,25 @@
     }
 }
 
-body {
-    font-family: helvetica;
-    font-size: 14px;
-  }
-
 .cy{
 
     &Container{
-        position: inherit;
-        width: 100%;
+        position: relative;
     }
 
     &Content{
-        position: inherit;
-        height: 31rem;
+        position: relative;
+        height: 92vh;
         left: 0px;
         top: 0px;
     }
     
+}
+
+.accordion{
+
+    &Container{
+        width:25rem;
+    }
 }
 
