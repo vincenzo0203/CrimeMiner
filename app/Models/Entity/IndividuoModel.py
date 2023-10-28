@@ -33,4 +33,5 @@ class IndividuoModel(StructuredNode):
     #Sezione di definizione delle relazioni con entity
     haChiamatoList = RelationshipTo('Individuo', 'HaChiamato')
 
+    
 
