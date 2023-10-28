@@ -60,3 +60,9 @@ function createGraphIndividualWiretaps(){
       
     console.log(cy.container());
 }
+
+function changeLayoutIndividualWiretaps(nameLayout){
+  cy.layout({
+    name: nameLayout
+  }).run();
+}
