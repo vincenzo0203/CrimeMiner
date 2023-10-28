@@ -1,8 +1,6 @@
 from neomodel import StructuredRel,StructuredNode, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
 from django.db import models
 
-
-
 class IndividuoModel(StructuredNode):
 
     # Valori Long
@@ -35,4 +33,5 @@ class IndividuoModel(StructuredNode):
     #Sezione di definizione delle relazioni con entity
     haChiamatoList = RelationshipTo('Individuo', 'HaChiamato')
 
+    
 

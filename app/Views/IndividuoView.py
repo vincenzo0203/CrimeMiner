@@ -2,6 +2,8 @@ from django.http import JsonResponse
 from django.views import View
 from app.Models.Entity.IndividuoModel import IndividuoModel
 from app.repositories.Entity.IndividuoRepository import IndividuoRepository
+from typing import List
+from app.Neo4jConnection import Neo4jDriver
 
 class IndividuoView(View):
 
@@ -9,10 +11,11 @@ class IndividuoView(View):
 
     def __init__(self):
         super().__init__()
-        self.individuo_repository = IndividuoRepository()
-
+        self.individuo_repository: IndividuoRepository = IndividuoRepository()
+        
     def get(self, request):
-        action = request.GET.get('action')
+        #action = request.GET.get('action')
+        action = 'findAll'
         if action == 'findAll':
             return self.find_all()
         elif action == 'getIndividuoByName':
@@ -31,12 +34,9 @@ class IndividuoView(View):
         else:
             return JsonResponse({"error": "Invalid action"}, status=400)
 
-    def find_all(self):
+    def find_all(self) -> JsonResponse:
         individuo_list = self.individuo_repository.find_all()
-        result = []
-        for individuo in individuo_list:
-            result.append(self.serialize_individuo(individuo))
-        return JsonResponse({"result": result})
+        return JsonResponse({"result": individuo_list})
 
     def get_individuo_by_name(self, name):
         individuo = IndividuoModel.nodes.filter(name=name).first()
@@ -61,26 +61,3 @@ class IndividuoView(View):
     def get_custom_proj(self, t1, t2):
         custom_proj_data = self.individuo_repository.get_custom_proj(t1, t2)
         return JsonResponse({"result": custom_proj_data})
-
-    def serialize_individuo(self, individuo):
-        return {
-            "idIndividuo": individuo.idIndividuo,
-            "nodeId": individuo.nodeId,
-            "entityType": individuo.entityType,
-            "name": individuo.name,
-            "provinciaResidenza": individuo.provinciaResidenza,
-            "luogoNascita": individuo.luogoNascita,
-            "dataNascita": individuo.dataNascita,
-            "indirizzoResidenza": individuo.indirizzoResidenza,
-            "cognome": individuo.cognome,
-            "nome": individuo.nome,
-            "codice": individuo.codice,
-            "capResidenza": individuo.capResidenza,
-            "cittaResidenza": individuo.cittaResidenza,
-            "nazioneResidenza": individuo.nazioneResidenza,
-            "pseudonimo": individuo.pseudonimo,
-            "lng": individuo.lng,
-            "lat": individuo.lat,
-            "community": individuo.community,
-            "isIndagato": individuo.isIndagato,
-        }

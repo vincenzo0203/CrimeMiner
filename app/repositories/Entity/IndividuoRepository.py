@@ -1,9 +1,12 @@
 from neomodel import StructuredNode, StringProperty, RelationshipTo, Relationship
 from neomodel import UniqueIdProperty, db
 from app.Models.Entity.IndividuoModel import IndividuoModel
+from app.Neo4jConnection import Neo4jDriver
+import json
 
 # Creazione di una repository personalizzata
 class IndividuoRepository:
+
     @staticmethod
     def find_by_node_id(node_id):
         return IndividuoModel.nodes.get(nodeId=node_id)
@@ -25,10 +28,23 @@ class IndividuoRepository:
         return IndividuoModel.nodes.filter(entityType=entity_type)
 
     @staticmethod
-    def find_all_individuo():
-        cypher_query = "MATCH (n:Individuo) RETURN n"
-        result, _ = db.cypher_query(cypher_query)
-        return result
+    def find_all():
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "MATCH (n:Individuo) RETURN n"
+            results = session.run(cypher_query).data()
+
+            json_data = json.dumps(results, ensure_ascii=False, indent=2)
+
+            print(json_data)
+
+            return json_data
+           
+        
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []  # o solleva un'eccezione
 
     @staticmethod
     def get_id_by_name(nome, cognome):
