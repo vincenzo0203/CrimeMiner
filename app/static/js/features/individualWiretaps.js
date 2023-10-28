@@ -10,8 +10,9 @@ function individualWiretaps() {
   createGraphIndividualWiretaps();
 }
 
-function createGraphIndividualWiretaps(){
-    let cy = cytoscape({
+function createGraphIndividualWiretaps(){  
+  
+  let cy = cytoscape({
         container: document.querySelector('.cyContent'),
         elements: [
           // Definizione dei nodi
@@ -53,7 +54,7 @@ function createGraphIndividualWiretaps(){
           }
         ],
         layout: {
-          name: 'circle'
+          name: 'dagre' //circle
         }
       });
       

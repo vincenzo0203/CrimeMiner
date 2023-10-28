@@ -11,12 +11,21 @@
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
+    <!--Cytoscape Library-->
+    <script type="text/javascript" src="{% static 'cytoscape/dist/cytoscape.min.js' %}"></script>
+    
+    <!--Cytoscape Dagre Library-->
+    <script type="text/javascript" src="{% static 'dagre/dist/dagre.js' %}"></script>
+    <script type="text/javascript" src="{% static 'cytoscape-dagre/cytoscape-dagre.js' %}"></script>
+    
+    <!--Cookie-->
     <script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
+
+    <!--Dashboard-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
     <script type="text/javascript" src="{% static 'js/dashboard.js' %}"></script>
 
-    <script type="text/javascript" src="{% static 'cytoscape/dist/cytoscape.min.js' %}"></script>
-
+    <!--Individual Wiretaps-->
     <link rel="stylesheet" type="text/css" href="{% static 'css/features/individualWiretaps/individualWiretaps.css' %}">
     <script type="text/javascript" src="{% static 'js/features/individualWiretaps.js' %}"></script>
 
