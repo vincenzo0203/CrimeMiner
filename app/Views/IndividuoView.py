@@ -4,6 +4,8 @@ from app.Models.Entity.IndividuoModel import IndividuoModel
 from app.repositories.Entity.IndividuoRepository import IndividuoRepository
 from typing import List
 from app.Neo4jConnection import Neo4jDriver
+from django_request_mapping import request_mapping
+
 
 class IndividuoView(View):
 
@@ -15,7 +17,7 @@ class IndividuoView(View):
         
     def get(self, request):
         #action = request.GET.get('action')
-        action = 'findAll'
+        action = 'getIndividuoByName'
         if action == 'findAll':
             return self.find_all()
         elif action == 'getIndividuoByName':
@@ -34,15 +36,15 @@ class IndividuoView(View):
         else:
             return JsonResponse({"error": "Invalid action"}, status=400)
 
+    @request_mapping("/findall/")
     def find_all(self) -> JsonResponse:
         individuo_list = self.individuo_repository.find_all()
         return JsonResponse({"result": individuo_list})
 
-    def get_individuo_by_name(self, name):
-        individuo = IndividuoModel.nodes.filter(name=name).first()
+    def get_individuo_by_name(self, name) -> JsonResponse:
+        individuo = self.individuo_repository.find_by_nome(name)
         if individuo:
-            result_data = self.serialize_individuo(individuo)
-            return JsonResponse({"result": result_data})
+            return JsonResponse({"result": individuo})
         else:
             return JsonResponse({"error": "Individuo not found"}, status=404)
 

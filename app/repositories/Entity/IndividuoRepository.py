@@ -13,7 +13,22 @@ class IndividuoRepository:
 
     @staticmethod
     def find_by_nome(nome):
-        return IndividuoModel.nodes.filter(name=nome)
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "MATCH (n:Individuo{nome:'" + nome + "'}) RETURN n"
+            results = session.run(cypher_query).data()
+
+            json_data = json.dumps(results, ensure_ascii=False, indent=2)
+
+            print(json_data)
+
+            return json_data
+           
+        
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []  # o solleva un'eccezione
 
     @staticmethod
     def find_by_cognome(cognome):
@@ -35,8 +50,6 @@ class IndividuoRepository:
             results = session.run(cypher_query).data()
 
             json_data = json.dumps(results, ensure_ascii=False, indent=2)
-
-            print(json_data)
 
             return json_data
            
