@@ -15,6 +15,9 @@
         border-color: rgba(0,0,0,.125);
         background-color: white;
     }
+    &-button:not(.collapsed){
+        background-color: white;
+    }
 }
 
 .cy{

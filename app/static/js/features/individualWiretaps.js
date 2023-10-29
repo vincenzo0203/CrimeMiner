@@ -5,6 +5,7 @@
   event.preventDefault();
   location.href = "/CrimeMiner/";
 });*/
+let cyIndividualWiretaps;
 
 function individualWiretaps() {
   createGraphIndividualWiretaps();
@@ -12,7 +13,7 @@ function individualWiretaps() {
 
 function createGraphIndividualWiretaps(){  
   
-  let cy = cytoscape({
+  cyIndividualWiretaps = cytoscape({
         container: document.querySelector('.cyContent'),
         elements: [
           // Definizione dei nodi
@@ -54,15 +55,35 @@ function createGraphIndividualWiretaps(){
           }
         ],
         layout: {
-          name: 'dagre' //circle
+          name: 'circle', //dagre  //fcose
         }
       });
       
-    console.log(cy.container());
+    console.log(cyIndividualWiretaps.container());
 }
 
-function changeLayoutIndividualWiretaps(nameLayout){
-  cy.layout({
-    name: nameLayout
-  }).run();
+function changeLayoutIndividualWiretaps(){
+
+  // Salva la posizione corrente dei nodi nel grafo attuale
+  let currentPositions = cyIndividualWiretaps.nodes().positions();
+
+  // Cambia la disposizione (layout) del grafo al nuovo layout
+  cyIndividualWiretaps.layout({ name: document.querySelector(".selectLayout").value }).run();
+
+  // Salva la posizione desiderata dei nodi secondo il nuovo layout
+  let newPositions = cyIndividualWiretaps.nodes().positions();
+
+  cyIndividualWiretaps.nodes().animate({
+    position: (node) => {
+      let currentPos = currentPositions[node.id()];
+      let newPos = newPositions[node.id()];
+      return newPos; // Animazione sposta il nodo dalla posizione corrente a quella desiderata
+    }
+  }, {
+    duration: 3000, // Durata dell'animazione in millisecondi
+    complete: () => {
+      // L'animazione è completa
+    }
+  }).play();
+  
 }
