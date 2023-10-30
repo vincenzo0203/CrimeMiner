@@ -5,6 +5,7 @@
   event.preventDefault();
   location.href = "/CrimeMiner/";
 });*/
+
 let cyIndividualWiretaps;
 
 function individualWiretaps() {
