@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('homepage.urls')),
     path('CrimeMiner/', include('app.urls')),
+    path('CrimeMiner', include('app.urls')),
 ]
 
 if settings.DEBUG:
