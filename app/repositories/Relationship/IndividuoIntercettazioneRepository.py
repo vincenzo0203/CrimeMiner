@@ -12,7 +12,7 @@ class IndividuoIntercettazioneRepository:
         try:
             session = Neo4jDriver.get_session()
             # Query per ottenere i nodi
-            nodes_query = "MATCH (n:Individuo) RETURN n.nodeId AS id"
+            nodes_query = "MATCH (n:Individuo)  WHERE (n)-[:HaChiamato]->() OR (n)<-[:HaChiamato]-() RETURN DISTINCT n.nodeId AS id" 
             nodes = session.run(nodes_query).data()
         
             # Query per ottenere gli archi
