@@ -59,5 +59,13 @@
     
 </div>
 
+<!--Cookie-->
+<script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
 
+<script>
+  if (performance.navigation.type === 1 || performance.navigation.type === 2) { 
+    setCookie("page","chiamate_individui");
+    window.location.href = "/CrimeMiner/";
+  }
+</script>
 {% endblock %}

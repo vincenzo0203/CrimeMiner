@@ -16,17 +16,16 @@ window.onload = function () {
         unPinnable();*/
 
     //funzione che controlla se ci sono pagine da caricare all'inizio
-    /*if (document.cookie.includes("page")){
+    if (getCookie("page") != ""){
         let page = getCookie("page");
-        if(page != ""){
-            setCookie("page","");
-            requestPage(page, page, "yes");
-        }
+        setCookie("page","");
+        requestPage(page, page, "yes");
     }
-    else*/
-
-    //inserisce la pagina iniziale nella cronologia delle pagine
-    history.pushState(historyState, '', "");
+    else
+        //inserisce la pagina iniziale nella cronologia delle pagine
+        history.pushState(historyState, '', "");
+    
+    
 };
 
 //funzione che permette di ruotare la freccia dei sottomenu scambiando due classi inserite nell'scss
@@ -59,8 +58,10 @@ function requestPage(page, state, push){
     .then(data => {
         if(push == "yes")
             history.pushState({ page: page }, '', state);
+
         document.querySelector(".pageContent").innerHTML = data;
         selectionPage(page);
+        
         //chiude il menu laterale
         document.querySelector(".arrowLeftMenu").click();
     })
@@ -71,8 +72,10 @@ function requestPage(page, state, push){
 
 //funzione che richiama il metodo load delle varie pagine
 function selectionPage(page){
-    if(page == "chiamate_individui")
+    if(page == "chiamate_individui"){
         individualWiretaps();
+    }
+        
 }
 
 //funzione che si occupa della gestione delle finestre della single page application (SPA)
