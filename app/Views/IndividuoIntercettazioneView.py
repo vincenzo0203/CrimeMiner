@@ -7,8 +7,6 @@ from django_request_mapping import request_mapping
 @request_mapping("/individuoIntercettazione")
 class IndividuoIntercettazioneView(View):
 
-    template_name = 'template_name.html'
-
     def __init__(self):
         super().__init__()
         self.IndividuoIntercettazione_repository: IndividuoIntercettazioneRepository = IndividuoIntercettazioneRepository()
