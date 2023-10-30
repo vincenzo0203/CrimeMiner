@@ -5,11 +5,10 @@ from app.Neo4jConnection import Neo4jDriver
 import json
 
 class IndividuoIntercettazioneRepository:
-    def __init__(self, graph: GraphDatabase):
-        self.graph = graph
 
 #funzione che ritorna tutti gli archi e i nodi (il front-end cosi richiedeva)
-    def get_all_nodes_and_edge(self):
+    @staticmethod
+    def get_all_nodes_and_edge():
         try:
             session = Neo4jDriver.get_session()
             query ="""

@@ -1,9 +1,6 @@
 from django.http import JsonResponse
 from django.views import View
-from app.Models.Entity.IndividuoModel import IndividuoModel
 from app.repositories.Entity.IndividuoRepository import IndividuoRepository
-from typing import List
-from app.Neo4jConnection import Neo4jDriver
 from django_request_mapping import request_mapping
 
 @request_mapping("/individuo")
