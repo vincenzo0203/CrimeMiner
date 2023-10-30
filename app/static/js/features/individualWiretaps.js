@@ -69,3 +69,7 @@ function changeLayoutIndividualWiretaps() {
   }).run();
 
 }
+
+function changeMetricIndividualWiretaps(){
+  
+}

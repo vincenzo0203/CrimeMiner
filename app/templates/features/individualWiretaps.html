@@ -16,15 +16,27 @@
           </h2>
           <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
             <div class="accordion-body">
-              <div class="d-flex flex-column">
-                <div>
-                  Layout
+              <div class="d-flex">
+                <div class="d-flex flex-column">
+                  <div>
+                    Layout
+                  </div>
+                  <select class="form-select selectLayout" aria-label="Default select example" onchange="changeLayoutIndividualWiretaps();">
+                    <option value="circle" selected>Cerchio</option>
+                    <option value="dagre">Dagre</option>
+                    <option value="fcose">Force Atlas</option>
+                  </select>
                 </div>
-                <select class="form-select selectLayout" aria-label="Default select example" onchange="changeLayoutIndividualWiretaps();">
-                  <option value="circle" selected>Cerchio</option>
-                  <option value="dagre">Dagre</option>
-                  <option value="fcose">Force Atlas</option>
-                </select>
+                <div class="d-flex flex-column offset-3">
+                  <div>
+                    Metriche
+                  </div>
+                  <select class="form-select selectLayout" aria-label="Default select example" onchange="changeMetricIndividualWiretaps();">
+                    <option value="normal" selected>Normal</option>
+                    <option value="beetweness">Beetweness</option>
+                    <option value="closeness">Closeness</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
