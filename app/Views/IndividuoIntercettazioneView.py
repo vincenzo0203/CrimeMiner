@@ -14,4 +14,4 @@ class IndividuoIntercettazioneView(View):
     @request_mapping("/findallnodes/", method="get")
     def find_all(self, request) -> JsonResponse:
         node_list = self.IndividuoIntercettazione_repository.get_all_nodes_and_edge()
-        return JsonResponse({"result": node_list})
+        return JsonResponse(node_list)

@@ -11,26 +11,28 @@ class IndividuoIntercettazioneRepository:
     def get_all_nodes_and_edge():
         try:
             session = Neo4jDriver.get_session()
-            query ="""
-                MATCH p = (user:Individuo)-[r:HaChiamato]->(m:Individuo)
-                WITH p, nodes(p) AS nodes, relationships(p) AS rels
-                RETURN {
-                    node: REDUCE(acc = [], n IN nodes | acc + { id: id(n) }),
-                    edge: REDUCE(acc = [], rel IN rels | acc + {
-                        id: id(rel),
-                        idSource: id(startNode(rel)),
-                        idTarget: id(endNode(rel))
-                    })
-                } AS result
-                """
-            results = session.run(query).data()
-            json_data = json.dumps(results, ensure_ascii=False, indent=2)
-            return json_data
+            # Query per ottenere i nodi
+            nodes_query = "MATCH (n:Individuo) RETURN n.nodeId AS id"
+            nodes = session.run(nodes_query).data()
         
+            # Query per ottenere gli archi
+            edges_query = "MATCH (n:Individuo)-[r:HaChiamato]->(m:Individuo) RETURN r.sourceNodeId AS source, r.targetNodeId AS target, r.edgeId AS id"
+            edges = session.run(edges_query).data()
+        
+            # Creazione della struttura dati JSON compatibile con Cytoscape
+            cytoscape_data = {
+                "nodes": [{"data": node} for node in nodes],
+                "edges": [{"data": edge} for edge in edges]
+            }
+        
+            return cytoscape_data
+    
         except Exception as e:
                 # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
                 print("Errore durante l'esecuzione della query Cypher:", e)
                 return []  # o solleva un'eccezione   
+        
+        
 
 #Restituisce un grafo di tutti gli individui e delle chiamate tra di loro.
     def graph(self) -> typing.Iterator[typing.Dict[str, str]]:
