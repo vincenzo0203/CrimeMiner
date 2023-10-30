@@ -11,13 +11,22 @@ class IndividuoIntercettazioneRepository:
     def get_all_nodes_and_edge():
         try:
             session = Neo4jDriver.get_session()
-            query1 ="Match (n:Individuo) RETURN n.nodeId AS nodeId"
-            nodes = session.run(query1).data()
-            query2 ="MATCH (n:Individuo)-[r:HaChiamato]->(m:Individuo) RETURN r.sourceNodeId AS sourceNodeId,r.edgeId AS edgeId,r.targetNodeId AS targetNodeId "
-            edges = session.run(query2).data()
-            result = {'nodes': nodes, 'edges': edges}
-            return result
+            # Query per ottenere i nodi
+            nodes_query = "MATCH (n:Individuo) RETURN n.nodeId AS id"
+            nodes = session.run(nodes_query).data()
         
+            # Query per ottenere gli archi
+            edges_query = "MATCH (n:Individuo)-[r:HaChiamato]->(m:Individuo) RETURN r.sourceNodeId AS source, r.targetNodeId AS target, r.edgeId AS id"
+            edges = session.run(edges_query).data()
+        
+            # Creazione della struttura dati JSON compatibile con Cytoscape
+            cytoscape_data = {
+                "nodes": [{"data": node} for node in nodes],
+                "edges": [{"data": edge} for edge in edges]
+            }
+        
+            return cytoscape_data
+    
         except Exception as e:
                 # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
                 print("Errore durante l'esecuzione della query Cypher:", e)
