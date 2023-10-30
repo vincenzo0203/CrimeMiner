@@ -20,11 +20,8 @@ class IndividuoRepository:
 
             json_data = json.dumps(results, ensure_ascii=False, indent=2)
 
-            print(json_data)
-
             return json_data
-           
-        
+          
         except Exception as e:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)

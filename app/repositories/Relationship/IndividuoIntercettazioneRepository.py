@@ -11,26 +11,19 @@ class IndividuoIntercettazioneRepository:
     def get_all_nodes_and_edge():
         try:
             session = Neo4jDriver.get_session()
-            query ="""
-                MATCH p = (user:Individuo)-[r:HaChiamato]->(m:Individuo)
-                WITH p, nodes(p) AS nodes, relationships(p) AS rels
-                RETURN {
-                    node: REDUCE(acc = [], n IN nodes | acc + { id: id(n) }),
-                    edge: REDUCE(acc = [], rel IN rels | acc + {
-                        id: id(rel),
-                        idSource: id(startNode(rel)),
-                        idTarget: id(endNode(rel))
-                    })
-                } AS result
-                """
-            results = session.run(query).data()
-            json_data = json.dumps(results, ensure_ascii=False, indent=2)
-            return json_data
+            query1 ="Match (n:Individuo) RETURN n.nodeId AS nodeId"
+            nodes = session.run(query1).data()
+            query2 ="MATCH (n:Individuo)-[r:HaChiamato]->(m:Individuo) RETURN r.sourceNodeId AS sourceNodeId,r.edgeId AS edgeId,r.targetNodeId AS targetNodeId "
+            edges = session.run(query2).data()
+            result = {'nodes': nodes, 'edges': edges}
+            return result
         
         except Exception as e:
                 # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
                 print("Errore durante l'esecuzione della query Cypher:", e)
                 return []  # o solleva un'eccezione   
+        
+        
 
 #Restituisce un grafo di tutti gli individui e delle chiamate tra di loro.
     def graph(self) -> typing.Iterator[typing.Dict[str, str]]:
