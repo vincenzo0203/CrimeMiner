@@ -26,6 +26,20 @@ class IndividuoRepository:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
+        
+    @staticmethod
+    def get_node_info(node_id):
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "MATCH (n) WHERE id(n) = $nodeId RETURN n"
+            results = session.run(cypher_query, node_id=node_id).data()
+            return results
+          
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []  # o solleva un'eccezione
+
 
     @staticmethod
     def find_by_cognome(cognome):
