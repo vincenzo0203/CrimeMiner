@@ -177,3 +177,13 @@ class IndividuoIntercettazioneRepository:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
+
+
+
+#Prima creare il grafo in questo modo CALL gds.graph.project('IndividuoIntercettazioni', 'Individuo', 'HaChiamato')
+#e poi 
+#Closeness query CALL gds.closeness.stream('IndividuoIntercettazioni')
+#YIELD nodeId, score
+#WITH gds.util.asNode(nodeId) AS node, score
+#RETURN node.nodeId AS id, score AS score
+#ORDER BY score DESC;
