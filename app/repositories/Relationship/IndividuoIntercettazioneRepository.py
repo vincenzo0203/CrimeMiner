@@ -1,10 +1,21 @@
 import typing
-
-from neo4j import GraphDatabase
 from app.Neo4jConnection import Neo4jDriver
 import json
 
 class IndividuoIntercettazioneRepository:
+
+    @staticmethod
+    def get_edge_info(edge_id):
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "MATCH ()-[r]-() WHERE id(r) = $edgeId RETURN r"
+            results = session.run(cypher_query, edge_id=edge_id).data()
+            return results
+          
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []  # o solleva un'eccezione
 
 #funzione che ritorna tutti gli archi e i nodi (il front-end cosi richiedeva)
     @staticmethod

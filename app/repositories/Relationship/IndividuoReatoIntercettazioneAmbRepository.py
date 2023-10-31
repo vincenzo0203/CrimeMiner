@@ -1,8 +1,7 @@
 from typing import Iterable
-from neo4j import GraphDatabase
 from neo4j import APOC #import utilizzanto per usare le funzioni apoc
 
-class IndividuoReatoIntercettazioneAmbRepository(GraphDatabase.Repository):
+class IndividuoReatoIntercettazioneAmbRepository:
 
     def graph(self) -> Iterable[dict]:
         return self.run("MATCH p=()-->() RETURN nodes(p) as n, relationships(p)[0] as e")
