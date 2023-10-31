@@ -63,10 +63,32 @@ function createGraphIndividualWiretaps(data) {
 
 function changeLayoutIndividualWiretaps() {
 
-  cyIndividualWiretaps.layout({
-    name: document.querySelector(".selectLayout").value,
-    animate: true
-  }).run();
+  if(document.querySelector(".selectLayout").value == 'circle'){
+    cyIndividualWiretaps.layout({
+      name: 'circle',
+      animate: true
+    }).run();
+  }
+
+  if(document.querySelector(".selectLayout").value == 'dagre'){
+    cyIndividualWiretaps.layout({
+      name: 'dagre',
+      rankDir: 'TB',
+      ranker: 'longest-path',
+      spacingFactor: 0.2,
+      nodeSep: 120,
+      edgeSep: 2,
+      rankSep: 550,
+      animate: true
+    }).run();
+  }
+
+  if(document.querySelector(".selectLayout").value == 'fcose'){
+    cyIndividualWiretaps.layout({
+      name: 'fcose',
+      animate: true
+    }).run();
+  }
 
 }
 
