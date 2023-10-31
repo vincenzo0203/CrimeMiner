@@ -15,13 +15,35 @@ class IndividuoView(View):
         individuo_list = self.individuo_repository.find_all()
         return JsonResponse({"result": individuo_list})
 
-    def get_individuo_by_name(self, name) -> JsonResponse:
+    @request_mapping("/findbynome/<str:name>/", method="get")
+    def get_individuo_by_name(self,request,name) -> JsonResponse:
         individuo = self.individuo_repository.find_by_nome(name)
         if individuo:
             return JsonResponse({"result": individuo})
         else:
             return JsonResponse({"error": "Individuo not found"}, status=404)
 
+
+    @request_mapping("/getinfobyid/<int:node_id>/", method="get")
+    def get_nodeinfo_by_id(self,request,node_id) -> JsonResponse:
+        nodes = self.individuo_repository.get_node_info(node_id)
+        if nodes:
+            return JsonResponse({"result": nodes})
+        else:
+            return JsonResponse({"error": "Nodes not found"}, status=404)
+    
+    @request_mapping("/getidbynomecognome/<str:nome_cognome>/", method="get")
+    def get_id_by_nome_cognome(self,request,nome_cognome) -> JsonResponse:
+        nome, cognome = nome_cognome.split("_")
+        ids = self.individuo_repository.get_id_by_nome_cognome(nome,cognome)
+        if ids:
+            return JsonResponse({"result": ids})
+        else:
+            return JsonResponse({"error": "Nodes not found"}, status=404)
+    
+    
+    
+    
     def get_closeness(self):
         closeness_data = self.individuo_repository.get_closeness()
         return JsonResponse({"result": closeness_data})

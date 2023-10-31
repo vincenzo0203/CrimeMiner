@@ -4,7 +4,7 @@ from app.repositories.Relationship.IndividuoIntercettazioneRepository import Ind
 from django_request_mapping import request_mapping
 
 
-@request_mapping("/individuoIntercettazione")    #BISOGNA AGGIUSTARE LA REPOSITORY DI QUESTA VIEW E INFATTI NON FUNZIONA 
+@request_mapping("/individuoIntercettazione")    
 class IndividuoIntercettazioneView(View): 
 
     def __init__(self):     

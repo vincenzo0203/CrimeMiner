@@ -1,5 +1,8 @@
 from app.Neo4jConnection import Neo4jDriver
 import json
+from app.Models.Entity.IndividuoModel import IndividuoModel
+from neomodel import UniqueIdProperty, db
+
 
 class IndividuoIntercettazioneAmbRepository:
 

@@ -10,7 +10,11 @@ class IndividuoIntercettazioneAmbView(View):
         super().__init__()
         self.individuoIntercettazioneAmb_repository: IndividuoIntercettazioneAmbRepository = IndividuoIntercettazioneAmbRepository()
 
-    @request_mapping("/findall/", method="get")
-    def graph(self, request):
+
+    @request_mapping("/graphall/", method="get")
+    def graph(self, request) -> JsonResponse: 
         graph_list = self.individuoIntercettazioneAmb_repository.graph()
-        return JsonResponse(graph_list)   #aggiungere ,safe=False
+        return JsonResponse({"result": graph_list})   #funziona anche senza aggiungere ,safe=False
+    
+
+    
