@@ -3,6 +3,7 @@ from . import views
 from app.Views.IndividuoView import IndividuoView
 from app.Views.IndividuoIntercettazioneView import IndividuoIntercettazioneView
 from app.Views.IndividuoReatoIntercettazioneAmbView import IndividuoReatoIntercettazioneAmbView
+from app.Views.IndividuoIntercettazioneAmbView import IndividuoIntercettazioneAmbView
 
 
 
@@ -14,6 +15,7 @@ urlpattern = UrlPattern()
 urlpattern.register(IndividuoView)
 urlpattern.register(IndividuoIntercettazioneView)
 urlpattern.register(IndividuoReatoIntercettazioneAmbView)
+urlpattern.register(IndividuoIntercettazioneAmbView)
 
 
 

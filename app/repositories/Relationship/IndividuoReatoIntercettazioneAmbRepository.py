@@ -5,7 +5,7 @@ import json
 
 class IndividuoReatoIntercettazioneAmbRepository:
 
-    def graph(self) -> Iterable[dict]:    
+    def graph(self) -> Iterable[dict]:      #BISOGNA AGGIUSTARE LA REPOSITORY NON FUNZIONA 
         try:
             session = Neo4jDriver.get_session()
             query = "MATCH p=()-->() RETURN nodes(p) as n, relationships(p)[0] as e" 
