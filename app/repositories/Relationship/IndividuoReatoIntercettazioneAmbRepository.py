@@ -1,11 +1,22 @@
 from typing import Iterable
-from neo4j import GraphDatabase
-from neo4j import APOC #import utilizzanto per usare le funzioni apoc
+from app.Neo4jConnection import Neo4jDriver
+import json
+#from neo4j import APOC #import utilizzanto per usare le funzioni apoc
 
-class IndividuoReatoIntercettazioneAmbRepository(GraphDatabase.Repository):
+class IndividuoReatoIntercettazioneAmbRepository:
 
-    def graph(self) -> Iterable[dict]:
-        return self.run("MATCH p=()-->() RETURN nodes(p) as n, relationships(p)[0] as e")
+    def graph(self) -> Iterable[dict]:    
+        try:
+            session = Neo4jDriver.get_session()
+            query = "MATCH p=()-->() RETURN nodes(p) as n, relationships(p)[0] as e" 
+            result = session.run(query).data()
+            return result
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query per ottenere i graph:", e)
+            return []  # o solleva un'eccezione
+
+
 
     def graph_id(self) -> Iterable[dict]:
         return self.run("MATCH p=()-[r:HaChiamato|Condannato|Presente|ImputatoDi]->() RETURN r.sourceNodeId as n, r.targetNodeId as e, r.agg_id as k")
