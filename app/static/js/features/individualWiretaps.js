@@ -73,3 +73,47 @@ function changeLayoutIndividualWiretaps() {
 function changeMetricIndividualWiretaps(){
   
 }
+
+function checkedNodesAndEdgesIndividualWiretaps(){
+  //Controlla se la checkbox dei nodi è checkata, se si mostra l'id del nodo, in caso contrario no
+  if(document.querySelector("#CheckNodes").checked){
+    cyIndividualWiretaps.style()
+    .resetToDefault()
+    .selector('node')
+      .style({
+        'background-color': '#66CCFF',
+        'label': 'data(id)'
+      })
+    .update();
+  }
+  else{
+    cyIndividualWiretaps.style()
+    .resetToDefault()
+    .selector('node')
+      .style({
+        'background-color': '#66CCFF'
+      })
+    .update();
+  }
+
+  //Fa lo stesso con gli archi
+  if(document.querySelector("#CheckEdges").checked){
+    cyIndividualWiretaps.style()
+    .selector('edge')
+        .style({
+          'width': 2,
+          'line-color': '#333',
+          'label': 'data(id)'
+        })
+    .update();
+  }
+  else{
+    cyIndividualWiretaps.style()
+    .selector('edge')
+        .style({
+          'width': 2,
+          'line-color': '#333',
+        })
+    .update();
+  }
+}

@@ -50,7 +50,8 @@
 
             <div class="offcanvas offcanvas-start d-block sidebar" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
                 id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-                <div class="offcanvas-header offcanvas-start">
+                <!--se viene inserito il bottone del pinn, cambiare offcanvas-start con offcanvas-end, se i pulsanti dovessero essere switchati, inserire il pulsante commentato prima dell'altro-->
+                <div class="offcanvas-header offcanvas-start"> 
                     
 
                     <div>
@@ -63,6 +64,7 @@
                         </button>
                     </div>
                     
+                    <!--Questo è il bottone per pinnare il menu, le sue funzioni stanno in dashboard.js-->
                     <!--<button type="button" class="btn btnPinnableMenu" onclick="pinnableMenu()">
                     </button>-->
                 </div>
@@ -98,8 +100,7 @@
     </nav>
 
     <div class="pageContent d-block">
-      {% block content %}
-      {% endblock %}
+      <!--Qui verranno inserite le varie pagine-->
     </div>
 </body>
 
