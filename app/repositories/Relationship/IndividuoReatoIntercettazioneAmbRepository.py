@@ -5,7 +5,7 @@ import json
 
 class IndividuoReatoIntercettazioneAmbRepository:
 
-    def graph(self) -> Iterable[dict]:    
+    def graph(self) -> Iterable[dict]:      #BISOGNA AGGIUSTARE LA REPOSITORY NON FUNZIONA 
         try:
             session = Neo4jDriver.get_session()
             query = "MATCH p=()-->() RETURN nodes(p) as n, relationships(p)[0] as e" 
@@ -16,7 +16,7 @@ class IndividuoReatoIntercettazioneAmbRepository:
             print("Errore durante l'esecuzione della query per ottenere i graph:", e)
             return []  # o solleva un'eccezione
 
-
+##############################################################################################################################
 
     def graph_id(self) -> Iterable[dict]:
         return self.run("MATCH p=()-[r:HaChiamato|Condannato|Presente|ImputatoDi]->() RETURN r.sourceNodeId as n, r.targetNodeId as e, r.agg_id as k")

@@ -10,6 +10,22 @@ class IndividuoRepository:
     @staticmethod
     def find_by_node_id(node_id):
         return IndividuoModel.nodes.get(nodeId=node_id)
+    
+    @staticmethod
+    def find_all():
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "MATCH (n:Individuo) RETURN n"
+            results = session.run(cypher_query).data()
+            #json_data = json.dumps(results, ensure_ascii=False, indent=2)
+
+            #return json_data
+            return results
+        
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []  # o solleva un'eccezione
 
     @staticmethod
     def find_by_nome(nome):
@@ -17,10 +33,10 @@ class IndividuoRepository:
             session = Neo4jDriver.get_session()
             cypher_query = "MATCH (n:Individuo{nome:'" + nome + "'}) RETURN n"
             results = session.run(cypher_query).data()
+            #json_data = json.dumps(results, ensure_ascii=False, indent=2)
 
-            json_data = json.dumps(results, ensure_ascii=False, indent=2)
-
-            return json_data
+            #return json_data
+            return results
           
         except Exception as e:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
@@ -31,8 +47,21 @@ class IndividuoRepository:
     def get_node_info(node_id):
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "MATCH (n) WHERE id(n) = $nodeId RETURN n"
-            results = session.run(cypher_query, node_id=node_id).data()
+            cypher_query = "MATCH (n) WHERE id(n) = $Id RETURN n"
+            results = session.run(cypher_query,{"Id":node_id}).data()
+            return results
+          
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []  # o solleva un'eccezione
+
+    @staticmethod
+    def get_node_info_by_nodeId(node_id):
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "MATCH (n) WHERE n.nodeId = $nodeId RETURN n"
+            results = session.run(cypher_query,{"nodeId":node_id}).data()
             return results
           
         except Exception as e:
@@ -41,6 +70,21 @@ class IndividuoRepository:
             return []  # o solleva un'eccezione
 
 
+    @staticmethod
+    def get_id_by_nome_cognome(nome, cognome):
+        session = Neo4jDriver.get_session()
+        cypher_query = (
+            "MATCH (n:Individuo) "
+            "WHERE n.nome = $nome AND n.cognome = $cognome "
+            "RETURN DISTINCT substring(n.nodeId, 1) AS id"
+        )
+        #result, _ = db.cypher_query(cypher_query, {"nome": nome, "cognome": cognome})  #realizzazione diversa dalle altre query, da errori di autenticazione
+        result=session.run(cypher_query,{"nome": nome, "cognome": cognome}).data()
+        #return [row[0] for row in result]  ##realizzazione diversa dalle altre query, da errori di autenticazione
+        return result
+
+
+##############################################################################################################################
     @staticmethod
     def find_by_cognome(cognome):
         return IndividuoModel.nodes.filter(cognome=cognome)
@@ -52,33 +96,6 @@ class IndividuoRepository:
     @staticmethod
     def find_all_by_entity_type(entity_type):
         return IndividuoModel.nodes.filter(entityType=entity_type)
-
-    @staticmethod
-    def find_all():
-        try:
-            session = Neo4jDriver.get_session()
-            cypher_query = "MATCH (n:Individuo) RETURN n"
-            results = session.run(cypher_query).data()
-
-            json_data = json.dumps(results, ensure_ascii=False, indent=2)
-
-            return json_data
-           
-        
-        except Exception as e:
-            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
-            print("Errore durante l'esecuzione della query Cypher:", e)
-            return []  # o solleva un'eccezione
-
-    @staticmethod
-    def get_id_by_name(nome, cognome):
-        cypher_query = (
-            "MATCH (n:Individuo) "
-            "WHERE n.nome = $nome AND n.cognome = $cognome "
-            "RETURN DISTINCT substring(n.nodeId, 1) AS id"
-        )
-        result, _ = db.cypher_query(cypher_query, {"nome": nome, "cognome": cognome})
-        return [row[0] for row in result]
 
     @staticmethod
     def get_individuo_by_name(nome):

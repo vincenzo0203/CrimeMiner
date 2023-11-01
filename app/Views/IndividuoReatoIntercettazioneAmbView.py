@@ -4,7 +4,7 @@ from app.repositories.Relationship.IndividuoReatoIntercettazioneAmbRepository im
 from django_request_mapping import request_mapping
 
 
-@request_mapping("/individuoReatoIntercettazioneAmb")
+@request_mapping("/individuoReatoIntercettazioneAmb")  
 class IndividuoReatoIntercettazioneAmbView(View):
 
     def __init__(self):
@@ -14,6 +14,6 @@ class IndividuoReatoIntercettazioneAmbView(View):
     @request_mapping("/findallgraph/", method="get")
     def graph(self, request) -> JsonResponse:
         graph_list = self.individuoReatoIntercettazioneAmb_repository.graph()
-        return JsonResponse(graph_list)
+        return JsonResponse({"result": graph_list})
     
     

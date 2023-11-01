@@ -15,6 +15,8 @@ class IndividuoReatoRepository:
         except Exception as e:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
+        
+##############################################################################################################################
 
     def graphId(self) -> List[dict]:
         try:
