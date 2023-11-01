@@ -1,11 +1,3 @@
-// Recupera lo stato dopo il reload e serve per far ricaricare il contenuto della pagina 
-/*window.addEventListener("beforeunload", function (event) {
-  let url = window.location.pathname.split("/CrimeMiner/").join("");
-  document.cookie = "page="+ url;
-  event.preventDefault();
-  location.href = "/CrimeMiner/";
-});*/
-
 let cyIndividualWiretaps;
 
 function individualWiretaps() {
@@ -16,20 +8,20 @@ function requestAllNodesIndividualWiretaps() {
   fetch("/CrimeMiner/individuoIntercettazione/findallnodes/", {
     method: "GET"
   })
-    .then(response => {
-      if (response.ok) {
-        return response.text();
-      } else {
-        throw new Error('Errore nella richiesta.');
-      }
-    })
-    .then(data => {
-      data = JSON.parse(data);
-      createGraphIndividualWiretaps(data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      throw new Error('Errore nella richiesta.');
+    }
+  })
+  .then(data => {
+    data = JSON.parse(data);
+    createGraphIndividualWiretaps(data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
 }
 
 function createGraphIndividualWiretaps(data) {
@@ -58,7 +50,20 @@ function createGraphIndividualWiretaps(data) {
     }
   });
 
-  console.log(cyIndividualWiretaps.container());
+  //si aspetta che il grafo sia pronto per poter inserire per ogni nodo o arco un evento sul click
+  cyIndividualWiretaps.ready(function () {
+
+    //questo per il nodo
+    cyIndividualWiretaps.on('tap', 'node', function(evt) {
+      requestDetailsOfNodeIndividualWiretaps(evt.target.id())
+    });
+
+    //questo per l'arco
+    cyIndividualWiretaps.on('tap', 'edge', function(evt) {
+      var edge = evt.target;
+      console.log("tap", edge.id());
+    });
+  });
 }
 
 function changeLayoutIndividualWiretaps() {
@@ -138,4 +143,52 @@ function checkedNodesAndEdgesIndividualWiretaps(){
         })
     .update();
   }
+}
+
+function requestDetailsOfNodeIndividualWiretaps(id){
+  fetch("/CrimeMiner/individuo/getinfobynodeid/" + id, {
+    method: "GET"
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      throw new Error('Errore nella richiesta.');
+    }
+  })
+  .then(data => {
+    data = JSON.parse(data);
+    showDetailsOfNodeIndividualWiretaps(data.result[0].n)
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
+
+function showDetailsOfNodeIndividualWiretaps(data){
+  console.log(data);
+}
+
+function requestDetailsOfEdgeIndividualWiretaps(id){
+  fetch("/CrimeMiner/individuoIntercettazione/getinfobyedgeid/" + id, {
+    method: "GET"
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      throw new Error('Errore nella richiesta.');
+    }
+  })
+  .then(data => {
+    data = JSON.parse(data);
+    showDetailsOfEdgeIndividualWiretaps(data)
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
+
+function showDetailsOfEdgeIndividualWiretaps(data){
+  console.log(data);
 }
