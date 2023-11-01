@@ -16,7 +16,7 @@ class IndividuoReatoIntercettazioneAmbRepository:
             print("Errore durante l'esecuzione della query per ottenere i graph:", e)
             return []  # o solleva un'eccezione
 
-
+##############################################################################################################################
 
     def graph_id(self) -> Iterable[dict]:
         return self.run("MATCH p=()-[r:HaChiamato|Condannato|Presente|ImputatoDi]->() RETURN r.sourceNodeId as n, r.targetNodeId as e, r.agg_id as k")

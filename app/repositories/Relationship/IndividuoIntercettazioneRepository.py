@@ -43,9 +43,9 @@ class IndividuoIntercettazioneRepository:
                 print("Errore durante l'esecuzione della query Cypher:", e)
                 return []  # o solleva un'eccezione   
         
-        
+##############################################################################################################################
 
-#Restituisce un grafo di tutti gli individui e delle chiamate tra di loro.
+#Restituisce un grafo di tutti gli individui e delle chiamate tra di loro.  
     def graph(self) -> typing.Iterator[typing.Dict[str, str]]:
         """Returns a graph of all individuals and the calls between them."""
         try:

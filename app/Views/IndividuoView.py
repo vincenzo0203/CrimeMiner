@@ -41,7 +41,13 @@ class IndividuoView(View):
         else:
             return JsonResponse({"error": "Nodes not found"}, status=404)
     
-    
+    @request_mapping("/getinfobynodeid/<str:node_id>/", method="get")
+    def get_nodeinfo_by_node_id(self,request,node_id) -> JsonResponse:
+        nodes = self.individuo_repository.get_node_info_by_nodeId(node_id)
+        if nodes:
+            return JsonResponse({"result": nodes})
+        else:
+            return JsonResponse({"error": "Nodes not found"}, status=404)
     
     
     def get_closeness(self):
