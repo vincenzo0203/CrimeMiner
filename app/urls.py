@@ -2,6 +2,10 @@ from django.urls import path, include
 from . import views
 from app.Views.IndividuoView import IndividuoView
 from app.Views.IndividuoIntercettazioneView import IndividuoIntercettazioneView
+from app.Views.IndividuoReatoIntercettazioneAmbView import IndividuoReatoIntercettazioneAmbView
+from app.Views.IndividuoIntercettazioneAmbView import IndividuoIntercettazioneAmbView
+from app.Views.IndividuoReatoView import IndividuoReatoView
+
 
 
 from django_request_mapping import UrlPattern
@@ -11,6 +15,10 @@ urlpattern = UrlPattern()
 #Registrazione delle view del backend
 urlpattern.register(IndividuoView)
 urlpattern.register(IndividuoIntercettazioneView)
+urlpattern.register(IndividuoReatoIntercettazioneAmbView)
+urlpattern.register(IndividuoIntercettazioneAmbView)
+urlpattern.register(IndividuoReatoView)
+
 
 
 
