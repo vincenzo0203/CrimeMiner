@@ -7,7 +7,6 @@ class IndividuoIntercettazioneRepository:
     @staticmethod
     def get_edge_info(edge_id):
         try:
-            print(edge_id)
             session = Neo4jDriver.get_session()
             cypher_query = "MATCH p=()-[r:HaChiamato]->() WHERE (r.edgeId) = $edgeId RETURN DISTINCT p"
             results = session.run(cypher_query,{"edgeId":edge_id}).data()

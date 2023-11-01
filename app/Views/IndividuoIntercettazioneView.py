@@ -19,7 +19,6 @@ class IndividuoIntercettazioneView(View):
     @request_mapping("/getinfobyedgeid/<str:edge_id>", method="get")
     def get_info_by_edge_id(self, request,edge_id) -> JsonResponse:
         edge = self.IndividuoIntercettazione_repository.get_edge_info(edge_id)
-        print(edge)
         if edge:
             return JsonResponse({"result": edge})
         else:
