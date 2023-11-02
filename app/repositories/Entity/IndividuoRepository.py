@@ -4,72 +4,91 @@ from app.Models.Entity.IndividuoModel import IndividuoModel
 from app.Neo4jConnection import Neo4jDriver
 import json
 
-# Creazione di una repository personalizzata
+# Questa classe fornisce metodi per recuperare informazioni sugli individui.
 class IndividuoRepository:
 
+    # Trova un individuo dato il suo node_id.
+    # Args:
+    #     node_id (str): L'ID del nodo dell'individuo da cercare.
+    # Returns:
+    #     IndividuoModel: Il modello dell'individuo trovato.
     @staticmethod
     def find_by_node_id(node_id):
         return IndividuoModel.nodes.get(nodeId=node_id)
     
+    # Trova tutti gli individui.
+    # Args: none
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni su tutti gli individui.
     @staticmethod
     def find_all():
         try:
             session = Neo4jDriver.get_session()
             cypher_query = "MATCH (n:Individuo) RETURN n"
             results = session.run(cypher_query).data()
-            #json_data = json.dumps(results, ensure_ascii=False, indent=2)
-
-            #return json_data
             return results
-        
         except Exception as e:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
-            return []  # o solleva un'eccezione
+            return []
 
+    # Trova un individuo dato il suo nome.
+    # Args:
+    #     nome (str): Il nome dell'individuo da cercare.
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni sull'individuo trovato.
     @staticmethod
     def find_by_nome(nome):
         try:
             session = Neo4jDriver.get_session()
             cypher_query = "MATCH (n:Individuo{nome:'" + nome + "'}) RETURN n"
             results = session.run(cypher_query).data()
-            #json_data = json.dumps(results, ensure_ascii=False, indent=2)
-
-            #return json_data
             return results
-          
         except Exception as e:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
-            return []  # o solleva un'eccezione
-        
+            return []
+
+    # Ottiene le informazioni di un nodo dato il suo node_id.
+    # Args:
+    #     node_id (str): L'ID del nodo dell'individuo da cercare.
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni sull'individuo trovato.
     @staticmethod
     def get_node_info(node_id):
         try:
             session = Neo4jDriver.get_session()
             cypher_query = "MATCH (n) WHERE id(n) = $Id RETURN n"
-            results = session.run(cypher_query,{"Id":node_id}).data()
+            results = session.run(cypher_query, {"Id": node_id}).data()
             return results
-          
         except Exception as e:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
-            return []  # o solleva un'eccezione
+            return []
 
+    # Ottiene le informazioni di un nodo dato il suo node_id.
+    # Args:
+    #     node_id (str): L'ID del nodo dell'individuo da cercare.
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni sull'individuo trovato.
     @staticmethod
     def get_node_info_by_nodeId(node_id):
         try:
             session = Neo4jDriver.get_session()
             cypher_query = "MATCH (n) WHERE n.nodeId = $nodeId RETURN n"
-            results = session.run(cypher_query,{"nodeId":node_id}).data()
+            results = session.run(cypher_query, {"nodeId": node_id}).data()
             return results
-          
         except Exception as e:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
-            return []  # o solleva un'eccezione
+            return []
 
-
+    # Ottiene l'ID di un individuo dato il nome e il cognome.
+    # Args:
+    #     nome (str): Il nome dell'individuo.
+    #     cognome (str): Il cognome dell'individuo.
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti l'ID dell'individuo.
     @staticmethod
     def get_id_by_nome_cognome(nome, cognome):
         session = Neo4jDriver.get_session()
@@ -83,24 +102,48 @@ class IndividuoRepository:
         #return [row[0] for row in result]  ##realizzazione diversa dalle altre query, da errori di autenticazione
         return result
 
-
+#FUNZIONI NON TESTATE/UTILIZZATE AL MOMENTO
 ##############################################################################################################################
+    # Trova gli individui con un dato cognome.
+    # Args:
+    #     cognome (str): Il cognome degli individui da cercare.
+    # Returns:
+    #     list: Una lista di modelli di individui che corrispondono al cognome fornito.
     @staticmethod
     def find_by_cognome(cognome):
         return IndividuoModel.nodes.filter(cognome=cognome)
 
+    # Trova gli individui con un dato nome e cognome.
+    # Args:
+    #     nome (str): Il nome degli individui da cercare.
+    #     cognome (str): Il cognome degli individui da cercare.
+    # Returns:
+    #     list: Una lista di modelli di individui che corrispondono al nome e cognome forniti.
     @staticmethod
     def find_by_nome_and_cognome(nome, cognome):
         return IndividuoModel.nodes.filter(name=nome, cognome=cognome)
 
+    # Trova tutti gli individui di un certo tipo di entità.
+    # Args:
+    #     entity_type (str): Il tipo di entità degli individui da cercare.
+    # Returns:
+    #     list: Una lista di modelli di individui che corrispondono al tipo di entità fornito.
     @staticmethod
     def find_all_by_entity_type(entity_type):
         return IndividuoModel.nodes.filter(entityType=entity_type)
 
+    # Ottiene un individuo dato il suo nome.
+    # Args:
+    #     nome (str): Il nome dell'individuo da cercare.
+    # Returns:
+    #     IndividuoModel: Il modello dell'individuo trovato.
     @staticmethod
     def get_individuo_by_name(nome):
         return IndividuoModel.nodes.get(name=nome)
 
+    # Ottiene l'ID e il nome di tutti gli individui.
+    # Returns:
+    #     list: Una lista di dizionari contenenti l'ID e il nome di tutti gli individui.
     @staticmethod
     def get_id_and_nomi():
         cypher_query = (
@@ -110,6 +153,11 @@ class IndividuoRepository:
         result, _ = db.cypher_query(cypher_query)
         return [{"id": row[0], "nome": row[1]} for row in result]
 
+    # Ottiene il nome degli individui il cui nome o cognome inizia con un dato prefisso.
+    # Args:
+    #     name (str): Il prefisso del nome o cognome con cui inizia la ricerca.
+    # Returns:
+    #     list: Una lista di dizionari contenenti il nome e il cognome degli individui che soddisfano il criterio.
     @staticmethod
     def get_nome_individuo_start_with(name):
         cypher_query = (
@@ -120,6 +168,11 @@ class IndividuoRepository:
         result, _ = db.cypher_query(cypher_query, {"name": f"{name}.*"})
         return [{"nome": row[0], "cognome": row[1]} for row in result]
 
+    # Ottiene il nome degli individui il cui nome o cognome contiene una data stringa.
+    # Args:
+    #     name (str): La stringa con cui cercare il nome o cognome degli individui.
+    # Returns:
+    #     list: Una lista di dizionari contenenti il nome e il cognome degli individui che soddisfano il criterio.
     @staticmethod
     def get_all_nomi_individuo(name):
         cypher_query = (
@@ -130,6 +183,9 @@ class IndividuoRepository:
         result, _ = db.cypher_query(cypher_query, {"name": f"{name}.*"})
         return [{"nome": row[0], "cognome": row[1]} for row in result]
 
+    # Ottiene il nome degli individui intercettati.
+    # Returns:
+    #     list: Una lista di nomi degli individui intercettati.
     @staticmethod
     def get_nomi_individui_intercettati():
         cypher_query = (
@@ -139,6 +195,9 @@ class IndividuoRepository:
         result, _ = db.cypher_query(cypher_query)
         return [row[0] for row in result]
 
+    # Ottiene la misura di centralità di vicinanza degli individui.
+    # Returns:
+    #     list: Una lista di dizionari contenenti il nome, la data di nascita e il punteggio di centralità di vicinanza degli individui.
     @staticmethod
     def get_closeness():
         cypher_query = (
@@ -151,6 +210,9 @@ class IndividuoRepository:
         result, _ = db.cypher_query(cypher_query)
         return [dict(zip(row.columns, row)) for row in result]
 
+    # Ottiene il diametro del grafo degli individui.
+    # Returns:
+    #     int: Il diametro del grafo.
     @staticmethod
     def get_diameter():
         cypher_query = (
@@ -165,6 +227,11 @@ class IndividuoRepository:
         result, _ = db.cypher_query(cypher_query)
         return result[0][0]
 
+    # Ottiene un nodo dato il suo ID.
+    # Args:
+    #     id (int): L'ID del nodo da cercare.
+    # Returns:
+    #     list: Una lista di dizionari contenenti il nodo trovato.
     @staticmethod
     def get_node(id):
         cypher_query = (
@@ -175,17 +242,12 @@ class IndividuoRepository:
         result, _ = db.cypher_query(cypher_query, {"id": id})
         return [{"s": row[0]} for row in result]
 
-    @staticmethod
-    def get_proj():
-        cypher_query = (
-            "MATCH (p1:Individuo)-[:ImputatoDi]->(m:Reato)<-[:ImputatoDi]-(p2:Individuo) "
-            "WHERE p1 <> p2 "
-            "CALL apoc.create.vRelationship(p1, 'compagnoDireato', {name: 'compagnoDireato'}, p2) YIELD rel AS vr "
-            "RETURN p1, p2, vr"
-        )
-        result, _ = db.cypher_query(cypher_query)
-        return [{"p1": row[0], "p2": row[1], "vr": row[2]} for row in result]
-
+    # Esegue una proiezione personalizzata tra due tipi di entità.
+    # Args:
+    #     t1 (str): Il nome del primo tipo di entità.
+    #     t2 (str): Il nome del secondo tipo di entità.
+    # Returns:
+    #     list: Una lista di risultati della proiezione personalizzata.
     @staticmethod
     def get_custom_proj(t1, t2):
         cypher_query = (
