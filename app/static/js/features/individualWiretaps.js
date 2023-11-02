@@ -60,8 +60,7 @@ function createGraphIndividualWiretaps(data) {
 
     //questo per l'arco
     cyIndividualWiretaps.on('tap', 'edge', function(evt) {
-      var edge = evt.target;
-      console.log("tap", edge.id());
+      requestDetailsOfEdgeIndividualWiretaps(evt.target.id())
     });
   });
 }
@@ -166,7 +165,20 @@ function requestDetailsOfNodeIndividualWiretaps(id){
 }
 
 function showDetailsOfNodeIndividualWiretaps(data){
-  console.log(data);
+  document.querySelector(".infoEdge").style.display = "none";
+  document.querySelector(".infoNot").style.display = "none";
+  document.querySelector(".infoNode").style.display = "flex";
+
+  document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Individuo";
+
+  document.querySelector(".infoNodeIdContent").innerHTML = data.nodeId;
+  /*document.querySelector(".infoNodeSurnameContent").innerHTML = data.cognome;
+  document.querySelector(".infoNodeNameContent").innerHTML = data.nome;*/
+  document.querySelector(".infoNodeBirthContent").innerHTML = data.dataNascita;
+  document.querySelector(".infoNodeNationContent").innerHTML = data.nazioneResidenza;
+  document.querySelector(".infoNodeProvinceContent").innerHTML = data.provinciaResidenza;
+  document.querySelector(".infoNodeResidenceContent").innerHTML = data.cittaResidenza;
+  document.querySelector(".infoNodeAddressContent").innerHTML = data.indirizzoResidenza;
 }
 
 function requestDetailsOfEdgeIndividualWiretaps(id){
@@ -182,7 +194,7 @@ function requestDetailsOfEdgeIndividualWiretaps(id){
   })
   .then(data => {
     data = JSON.parse(data);
-    showDetailsOfEdgeIndividualWiretaps(data)
+    showDetailsOfEdgeIndividualWiretaps(data.result[0].r)
   })
   .catch(error => {
     console.error(error);
@@ -190,5 +202,21 @@ function requestDetailsOfEdgeIndividualWiretaps(id){
 }
 
 function showDetailsOfEdgeIndividualWiretaps(data){
-  console.log(data);
+  document.querySelector(".infoNode").style.display = "none";
+  document.querySelector(".infoNot").style.display = "none";
+  document.querySelector(".infoEdge").style.display = "flex";
+
+  document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Chiamata";
+
+  document.querySelector(".infoEdgeIdContent").innerHTML = data.edgeId;
+  document.querySelector(".infoEdgeDateContent").innerHTML = data.data;
+  document.querySelector(".infoEdgeDurationContent").innerHTML = data.durata;
+  document.querySelector(".infoEdgeTimeContent").innerHTML = data.ora;
+  document.querySelector(".infoEdgeSourceContent").innerHTML = data.sourceNodeId;
+  document.querySelector(".infoEdgeTargetContent").innerHTML = data.targetNodeId;
+
+  //if(data.contenuto.substring(0,400) == data.contenuto)
+    document.querySelector(".infoEdgeContentContent").innerHTML = data.contenuto;
+  /*else
+    document.querySelector(".infoEdgeContentContent").innerHTML = data.contenuto.substring(0,300) + " ..."; */
 }

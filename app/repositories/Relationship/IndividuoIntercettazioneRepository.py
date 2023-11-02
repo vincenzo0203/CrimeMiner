@@ -8,7 +8,7 @@ class IndividuoIntercettazioneRepository:
     def get_edge_info(edge_id):
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "MATCH p=()-[r:HaChiamato]->() WHERE (r.edgeId) = $edgeId RETURN DISTINCT p"
+            cypher_query = "MATCH ()-[r:HaChiamato]->() WHERE r.edgeId = $edgeId RETURN DISTINCT properties(r) AS r"
             results = session.run(cypher_query,{"edgeId":edge_id}).data()
             return results
           
