@@ -9,7 +9,7 @@ class IndividuoReatoIntercettazioneAmbRepository:
 # Args: none
 # Returns:
 # list: Una lista di risultati contenenti le informazioni sul grafo
-    def getRelationships_IndividuiReati(self) -> Iterable[dict]:      #BISOGNA AGGIUSTARE LA REPOSITORY NON FUNZIONA 
+    def getRelationships_IndividuiReati(self) -> Iterable[dict]:       
         try:
             session = Neo4jDriver.get_session()
             query = "MATCH p=()-->() RETURN nodes(p) as n, relationships(p)[0] as e" 
