@@ -8,8 +8,8 @@ class IndividuoIntercettazioneRepository:
     def get_edge_info(edge_id):
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "MATCH ()-[r]-() WHERE id(r) = $edgeId RETURN r"
-            results = session.run(cypher_query, edge_id=edge_id).data()
+            cypher_query = "MATCH p=()-[r:HaChiamato]->() WHERE (r.edgeId) = $edgeId RETURN DISTINCT p"
+            results = session.run(cypher_query,{"edgeId":edge_id}).data()
             return results
           
         except Exception as e:
@@ -45,7 +45,7 @@ class IndividuoIntercettazioneRepository:
         
 ##############################################################################################################################
 
-#Restituisce un grafo di tutti gli individui e delle chiamate tra di loro.  
+#Restituisce un grafo di tutti gli individui e delle chiamate tra di loro.
     def graph(self) -> typing.Iterator[typing.Dict[str, str]]:
         """Returns a graph of all individuals and the calls between them."""
         try:
@@ -177,13 +177,3 @@ class IndividuoIntercettazioneRepository:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
-
-
-
-#Prima creare il grafo in questo modo CALL gds.graph.project('IndividuoIntercettazioni', 'Individuo', 'HaChiamato')
-#e poi 
-#Closeness query CALL gds.closeness.stream('IndividuoIntercettazioni')
-#YIELD nodeId, score
-#WITH gds.util.asNode(nodeId) AS node, score
-#RETURN node.nodeId AS id, score AS score
-#ORDER BY score DESC;
