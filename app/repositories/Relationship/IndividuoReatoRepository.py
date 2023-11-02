@@ -1,9 +1,14 @@
 from typing import List
 from app.Neo4jConnection import Neo4jDriver
 
+# Questa classe fornisce metodi per recuperare informazioni sugli individui e i reati.
 class IndividuoReatoRepository:
 
-    def graph(self) -> List[dict]:
+    # Recupera un grafo delle relazioni tra individui e reati (Condannati o Imputati).
+    # Args: none
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni sul grafo.
+    def getGraph_IndividuiReati(self) -> List[dict]:
         try:
             session = Neo4jDriver.get_session()
             query = """
@@ -15,10 +20,12 @@ class IndividuoReatoRepository:
         except Exception as e:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
-        
-##############################################################################################################################
 
-    def graphId(self) -> List[dict]:
+    # Recupera un grafo delle relazioni tra individui e reati (Condannati o Imputati) con informazioni sugli ID.
+    # Args: none
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni sul grafo con ID.
+    def getGraph_IndividuiReati_Id(self) -> List[dict]:
         try:
             session = Neo4jDriver.get_session()
             query = """
@@ -31,6 +38,10 @@ class IndividuoReatoRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
 
+    # Recupera informazioni sui nomi degli individui e i nomi dei reati associati alle relazioni.
+    # Args: none
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti i nomi degli individui e i nomi dei reati associati.
     def getAllNomiReato(self) -> List[dict]:
         try:
             session = Neo4jDriver.get_session()
@@ -44,6 +55,11 @@ class IndividuoReatoRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
 
+    # Recupera i nomi degli individui e dei reati associati alle relazioni con un nome specifico o cognome corrispondente.
+    # Args:
+    #     name (str): Nome o cognome da cercare nelle relazioni.
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti i nomi degli individui e i nomi dei reati associati.
     def getNomeIndividuoCrimeStartWith(self, name) -> List[dict]:
         try:
             session = Neo4jDriver.get_session()
@@ -58,6 +74,10 @@ class IndividuoReatoRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
 
+    # Recupera gli ID degli individui e dei reati associati alle relazioni.
+    # Args: none
+    # Returns:
+    #     List[str]: Una lista di ID degli individui e reati associati alle relazioni.
     def getAllIdsIndividuoReato(self) -> List[str]:
         try:
             session = Neo4jDriver.get_session()
@@ -71,6 +91,10 @@ class IndividuoReatoRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
 
+    # Recupera i nomi degli individui associati alle relazioni Condannati o Imputati di reati.
+    # Args: none
+    # Returns:
+    #     List[str]: Una lista di nomi degli individui associati alle relazioni.
     def getNomiCrime(self) -> List[str]:
         try:
             session = Neo4jDriver.get_session()
@@ -84,6 +108,10 @@ class IndividuoReatoRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
 
+    # Calcola la betweenness centrality degli individui nelle relazioni Condannati o Imputati.
+    # Args: none
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni sulla betweenness centrality.
     def betweenness(self) -> List[dict]:
         try:
             session = Neo4jDriver.get_session()
@@ -97,39 +125,5 @@ class IndividuoReatoRepository:
             results = session.run(query).data()
             return results
         except Exception as e:
-            print("Errore durante l'esecuzione della query Cypher:", e)
-            return []
+            print
 
-    def closeness(self) -> List[dict]:
-        try:
-            session = Neo4jDriver.get_session()
-            query = """
-                    CALL algo.closeness.stream('Individuo', 'Condannato|ImputatoDi', {direction: 'both'})
-                    YIELD nodeId, centrality
-                    MATCH (individuo:Individuo) WHERE id(individuo) = nodeId
-                    RETURN individuo.nodeId AS id, centrality AS score
-                    ORDER BY centrality DESC
-                """
-            results = session.run(query).data()
-            return results
-        except Exception as e:
-            print("Errore durante l'esecuzione della query Cypher:", e)
-            return []
-
-    def pageRank(self) -> List[dict]:
-        try:
-            session = Neo4jDriver.get_session()
-            query = """
-                    OPTIONAL MATCH (n1:Individuo) 
-                    WITH collect(distinct n1) as c1 
-                    OPTIONAL MATCH (n2:Reato) 
-                    WITH collect(distinct n2) + c1 as nodes 
-                    CALL apoc.algo.pageRankWithConfig(nodes, {iterations: 10, types: 'ImputatoDi|Condannato'}) 
-                    YIELD node, score 
-                    RETURN node.nodeId as id, score ORDER BY score DESC
-                """
-            results = session.run(query).data()
-            return results
-        except Exception as e:
-            print("Errore durante l'esecuzione della query Cypher:", e)
-            return []

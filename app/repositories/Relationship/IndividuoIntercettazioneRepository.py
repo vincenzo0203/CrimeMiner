@@ -2,13 +2,21 @@ import typing
 from app.Neo4jConnection import Neo4jDriver
 import json
 
+#Questa classe fornisce metodi per eseguire query su un database Neo4j contenente informazioni sugli individui e le chiamate tra di loro.
 class IndividuoIntercettazioneRepository:
 
+
+# Recupera le informazioni sull'arco identificato da edge_id
+# Args:
+#     edge_id (str): L'ID dell'arco da cercare
+# Returns:
+#     list: Una lista di risultati contenenti le informazioni sull'arco.
+
     @staticmethod
-    def get_edge_info(edge_id):
+    def getEdge_Info(edge_id):
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "MATCH p=()-[r:HaChiamato]->() WHERE (r.edgeId) = $edgeId RETURN DISTINCT p"
+            cypher_query = "MATCH ()-[r:HaChiamato]->() WHERE r.edgeId = $edgeId RETURN DISTINCT properties(r) AS r"
             results = session.run(cypher_query,{"edgeId":edge_id}).data()
             return results
           
@@ -17,9 +25,13 @@ class IndividuoIntercettazioneRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
 
-#funzione che ritorna tutti gli archi e i nodi (il front-end cosi richiedeva)
+# Recupera tutti i nodi e gli archi del grafo, inclusi i nodi Individuo e gli archi HaChiamato, in un formato compatibile con Cytoscape.
+# Args: none
+# Returns:
+#     dict: Un dizionario contenente nodi ed archi, strutturato per l'uso con Cytoscape.
+
     @staticmethod
-    def get_all_nodes_and_edge():
+    def getAll_nodes_and_edge():
         try:
             session = Neo4jDriver.get_session()
             # Query per ottenere i nodi
@@ -68,9 +80,12 @@ class IndividuoIntercettazioneRepository:
         
 ##############################################################################################################################
 
-#Restituisce un grafo di tutti gli individui e delle chiamate tra di loro.
-    def graph(self) -> typing.Iterator[typing.Dict[str, str]]:
-        """Returns a graph of all individuals and the calls between them."""
+# Restituisce un grafo di tutti gli individui e delle chiamate tra di loro.
+# Args: none
+# Returns:
+#     str: Una rappresentazione JSON del grafo contenente nodi e archi.
+
+    def getGraph_Individui_HaChiamato(self) -> typing.Iterator[typing.Dict[str, str]]:
         try:
             session = Neo4jDriver.get_session()
             query = """MATCH p= (user:Individuo)-[r:HaChiamato]->(m:Individuo) RETURN nodes(p) as n, relationships(p)[0] as e"""
@@ -83,9 +98,12 @@ class IndividuoIntercettazioneRepository:
             return []  # o solleva un'eccezione
 
 
-#Restituisce un elenco di tutte le coppie di ID di individui che hanno effettuato chiamate tra di loro
-    def get_all_ids_individuo_intercettazione(self) -> typing.List[str]:
-        """Returns a list of all pairs of individual IDs that have made calls to each other."""
+# Restituisce un elenco di tutte le coppie di ID di individui che hanno effettuato chiamate tra di loro.
+# Args: none
+# Returns:
+#     str: Una rappresentazione JSON dell'elenco di coppie di ID.
+
+    def getAll_Ids_IndividuoIntercettazione(self) -> typing.List[str]:
         try: 
             session = Neo4jDriver.get_session()
             query = """match(n:Individuo)-[r:HaChiamato]->()where n.nome=\"DURANTE\" and n.cognome=\"SINISCALCHI\" OR n.nome=\"BIAGIO\" and n.cognome=\"CAVA\" RETURN toString(r.sourceNodeId) as n, toString(r.targetNodeId) as k"""
@@ -97,10 +115,12 @@ class IndividuoIntercettazioneRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
 
+# Restituisce un grafo di tutti gli individui e delle chiamate tra di loro, con gli ID degli individui al posto dei loro nomi.
+# Args: none
+# Returns:
+#     str: Una rappresentazione JSON del grafo contenente gli ID degli individui.
 
-#Restituisce un grafo di tutti gli individui e delle chiamate tra di loro, con gli ID degli individui al posto dei loro nomi.
-    def graph_id(self) -> typing.Iterator[typing.Dict[str, str]]:
-        """Returns a graph of all individuals and the calls between them, with the IDs of the individuals instead of their names."""
+    def getGraph_Ids_Individui_HaChiamato(self) -> typing.Iterator[typing.Dict[str, str]]:
         try:
             session = Neo4jDriver.get_session()
             query = """MATCH p= (user:Individuo)-[r:HaChiamato]->(m:Individuo) RETURN user.nodeId as n, m.nodeId as k"""
@@ -112,9 +132,12 @@ class IndividuoIntercettazioneRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
 
-#Restituisce un grafo di tutti gli individui e delle chiamate tra di loro, con i nomi e i cognomi degli individui al posto dei loro ID.
-    def graph_nome_cognome(self) -> typing.Iterator[typing.Dict[str, str]]:
-        """Returns a graph of all individuals and the calls between them, with the names and surnames of the individuals instead of their IDs."""
+# Restituisce un grafo di tutti gli individui e delle chiamate tra di loro, con i nomi e i cognomi degli individui al posto dei loro ID.
+# Args: none
+# Returns:
+#     str: Una rappresentazione JSON del grafo contenente i nomi e cognomi degli individui.
+
+    def getGraph_NomeCognome_Individui_HaChiamato(self) -> typing.Iterator[typing.Dict[str, str]]:
         try:
             session = Neo4jDriver.get_session()
             query = """MATCH p= (user:Individuo)-[r:HaChiamato]->(m:Individuo) RETURN user.nome+' '+user.cognome as n, m.nome+' '+m.cognome as k"""
@@ -126,9 +149,13 @@ class IndividuoIntercettazioneRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
     
-#Questa funzione ritorna un Individuo attraverso il suo id 
-    def get_nome_cognome_by_id(self, id1: str) -> typing.List[str]:
-        """Returns the name and surname of an individual given their ID."""
+# Restituisce il nome e il cognome di un individuo dato il suo ID.
+# Args:
+#     id1 (str): L'ID dell'individuo da cercare.
+# Returns:
+#     str: Una rappresentazione JSON contenente il nome e il cognome dell'individuo.
+
+    def getNome_Cognome_ById(self, id1: str) -> typing.List[str]:
         try:
             session = Neo4jDriver.get_session()
             query = """MATCH (user:Individuo) where user.nodeId={id} return user.nome+' '+user.cognome as n"""
@@ -140,12 +167,18 @@ class IndividuoIntercettazioneRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
 
-#funzione che restituisce un grafo di tutti gli individui e delle chiamate tra di loro, filtrato in base ai nomi e ai cognomi di due individui.
-    def graph_filter_id(
+# Restituisce un grafo di tutti gli individui e delle chiamate tra di loro, filtrato in base ai nomi e ai cognomi di due individui.
+# Args:
+#     nome1 (str): Nome del primo individuo.
+#     cogn1 (str): Cognome del primo individuo.
+#     nome2 (str): Nome del secondo individuo.
+#     cogn2 (str): Cognome del secondo individuo.
+# Returns:
+#     str: Una rappresentazione JSON del grafo filtrato.
+
+    def getGraph_Filtered_ById(
         self, nome1: str, cogn1: str, nome2: str, cogn2: str
     ) -> typing.Iterator[typing.Dict[str, str]]:
-        """Returns a graph of all individuals and the calls between them, filtered by the names and surnames of two individuals."""
-
         try:
             session = Neo4jDriver.get_session()
             query = """match(n:Individuo)-[r:HaChiamato]->()where n.nome={nome1} and n.cognome={cogn1} OR n.nome={nome2} and n.cognome={cogn2} RETURN toString(r.sourceNodeId) as n, toString(r.targetNodeId) as k"""
@@ -159,12 +192,17 @@ class IndividuoIntercettazioneRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
         
-#Funzione che ritorna l'individuo attraverso il nome e cognome (non era difficile da capire dal nome)
-    def get_individuo_id_by_nome_cognome(
+# Restituisce l'ID di un individuo dato il suo nome e cognome.
+# Args:
+#     nome (str): Nome dell'individuo.
+#     cognome (str): Cognome dell'individuo.
+# Returns:
+#     str: Una rappresentazione JSON contenente l'ID dell'individuo.
+
+    def getId_Individuo_By_NomeCognome(
         self, nome: str, cognome: str
     ) -> typing.List[str]:
-        """Returns the ID of an individual given their name and surname."""
-
+       
         try:
             session = Neo4jDriver.get_session()
             query = """match(n:Individuo) where n.nome={nome} and n.cognome={cognome} return n.nodeId"""
@@ -178,12 +216,11 @@ class IndividuoIntercettazioneRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
 
-#Questa funzione non ritornava nulla, ho aggiunto la return, forse nel vecchio progetto non veniva usata
-#betweenness è una funzione che richiama un algoritmo del plugin algo
+# Restituisce la centralità di betweenness di tutti gli individui.
+# Returns:
+#     str: Una rappresentazione JSON della centralità di betweenness per gli individui.
 
     def betweenness(self) -> typing.Iterator[typing.Dict[str, str]]:
-        """Returns the betweenness centrality of all individuals."""
-
         try:
             session = Neo4jDriver.get_session()
             query = """CALL algo.betweenness.stream(\"Individuo\", \"HaChiamato\", {direction:\"both\"})\n"
