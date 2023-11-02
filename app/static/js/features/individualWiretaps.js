@@ -41,7 +41,8 @@ function createGraphIndividualWiretaps(data) {
         selector: 'edge',
         style: {
           'width': 2,
-          'line-color': '#333'
+          'line-color': '#333',
+          "curve-style": "bezier"
         }
       }
     ],
@@ -70,7 +71,8 @@ function changeLayoutIndividualWiretaps() {
   if(document.querySelector(".selectLayout").value == 'circle'){
     cyIndividualWiretaps.layout({
       name: 'circle',
-      animate: true
+      animate: true,
+      animationDuration: 2000
     }).run();
   }
 
@@ -83,14 +85,17 @@ function changeLayoutIndividualWiretaps() {
       nodeSep: 120,
       edgeSep: 2,
       rankSep: 550,
-      animate: true
+      animate: true,
+      animationDuration: 7000
     }).run();
   }
 
   if(document.querySelector(".selectLayout").value == 'fcose'){
     cyIndividualWiretaps.layout({
       name: 'fcose',
-      animate: true
+      spacingFactor: 3,
+      animate: true,
+      animationDuration: 2000
     }).run();
   }
 
@@ -129,6 +134,7 @@ function checkedNodesAndEdgesIndividualWiretaps(){
         .style({
           'width': 2,
           'line-color': '#333',
+          "curve-style": "bezier",
           'label': 'data(id)'
         })
     .update();
@@ -139,6 +145,7 @@ function checkedNodesAndEdgesIndividualWiretaps(){
         .style({
           'width': 2,
           'line-color': '#333',
+          "curve-style": "bezier"
         })
     .update();
   }
