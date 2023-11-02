@@ -13,7 +13,7 @@ class IndividuoIntercettazioneAmbView(View):
 
     @request_mapping("/graphall/", method="get")
     def graph(self, request) -> JsonResponse: 
-        graph_list = self.individuoIntercettazioneAmb_repository.graph()
+        graph_list = self.individuoIntercettazioneAmb_repository.getIndividuiInIntercettazioneAmb()
         return JsonResponse({"result": graph_list})   #funziona anche senza aggiungere ,safe=False
     
 
