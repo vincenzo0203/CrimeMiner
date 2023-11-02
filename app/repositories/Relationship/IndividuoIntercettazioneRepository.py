@@ -42,6 +42,29 @@ class IndividuoIntercettazioneRepository:
                 # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
                 print("Errore durante l'esecuzione della query Cypher:", e)
                 return []  # o solleva un'eccezione   
+            
+#Metrics
+#Prima creare il grafo in questo modo CALL gds.graph.project('IndividuoIntercettazioni', 'Individuo', 'HaChiamato')
+#e poi 
+#Closeness query
+#CALL gds.closeness.stream('IndividuoIntercettazioni')
+#YIELD nodeId, score
+#WITH gds.util.asNode(nodeId) AS node, score
+#RETURN node.nodeId AS id, score AS score
+#ORDER BY score DESC;
+
+    @staticmethod
+    def Closeness():
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "CALL gds.closeness.stream('IndividuoIntercettazioni') YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score RETURN node.nodeId AS id, score AS score ORDER BY score DESC;"
+            results = session.run(cypher_query).data()
+            return results
+
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []  # o solleva un'eccezione
         
 ##############################################################################################################################
 

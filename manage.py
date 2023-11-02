@@ -2,7 +2,6 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from app.Neo4jConnection import Neo4jDriver
 
 def main():
     """Run administrative tasks."""
@@ -16,8 +15,6 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     execute_from_command_line(sys.argv)
-    Neo4jDriver.initialize()
-
 
 if __name__ == '__main__':
     main()

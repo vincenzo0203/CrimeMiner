@@ -23,3 +23,8 @@ class IndividuoIntercettazioneView(View):
             return JsonResponse({"result": edge})
         else:
             return JsonResponse({"error": "Nodes not found"}, status=404)
+    
+    @request_mapping("/Closeness/", method="get")
+    def Closeness(self, request) -> JsonResponse:
+        node_list = self.IndividuoIntercettazione_repository.Closeness()
+        return JsonResponse({"result":node_list})

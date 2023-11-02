@@ -10,6 +10,11 @@ class Neo4jDriver:
     def initialize(cls):
         if cls._driver is None:
             cls._driver = GraphDatabase.driver(cls._uri, auth=(cls._user, cls._password))
+            session = Neo4jDriver.get_session()
+            Creazione_grafico = "CALL gds.graph.project('IndividuoIntercettazioni', 'Individuo', 'HaChiamato')"
+            session.run(Creazione_grafico)
+            
+            
 
     @classmethod
     def close(cls):
