@@ -1,5 +1,6 @@
 from typing import List
 from app.Neo4jConnection import Neo4jDriver
+from app.repositories.Entity.IndividuoRepository import IndividuoRepository
 
 # Questa classe fornisce metodi per recuperare informazioni sugli individui e i reati.
 class IndividuoReatoRepository:
@@ -11,12 +12,25 @@ class IndividuoReatoRepository:
     def getGraph_IndividuiReati(self) -> List[dict]:
         try:
             session = Neo4jDriver.get_session()
-            query = """
-                    MATCH p=()-[r:ImputatoDi|Condannato]->()
-                    RETURN nodes(p) as n, relationships(p)[0] as e
-                """
-            results = session.run(query).data()
-            return results
+            individuo_nodes_query = "MATCH (n:Individuo) WHERE (n:Individuo)-[:Condannato]->() OR (n:Individuo)-[:ImputatoDi]->() RETURN DISTINCT n.nodeId AS id, n.entityType AS classes"
+            individuo_nodes = session.run(individuo_nodes_query).data()
+
+            reato_nodes_query = "MATCH (r:Reato) WHERE ()-[:Condannato]->(r:Reato) OR ()-[:ImputatoDi]->(r:Reato) RETURN DISTINCT r.nodeId AS id, r.entityType AS classes"
+            reato_nodes = session.run(reato_nodes_query).data()
+
+            nodes = individuo_nodes + reato_nodes
+
+            # Query per ottenere gli archi
+            edges_query = "MATCH ()-[r]->() WHERE ()-[r:Condannato]->() OR ()-[r:ImputatoDi]->()  RETURN r.sourceNodeId as source, r.targetNodeId as target, r.edgeId as id"
+            edges = session.run(edges_query).data()
+
+            # Creazione della struttura dati JSON compatibile con Cytoscape
+            cytoscape_data = {
+                "nodes": [{"data": {"id": node["id"] },"classes": node["classes"]} for node in nodes],
+                "edges": [{"data": edge} for edge in edges]
+            }
+        
+            return cytoscape_data
         except Exception as e:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
@@ -37,6 +51,40 @@ class IndividuoReatoRepository:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
+
+    # Trova le informazioni riguardo un Individuo o di un Reato tramite un ID
+    # Args: <str> id
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni su tutti gli individui/reati.
+    @staticmethod
+    def getIndividuo_o_Reato(id):
+        if(id.startswith("I")):
+            print("individuo")
+            result=IndividuoRepository.get_node_info_by_nodeId(id)
+        else:
+            print("renato")
+            result=IndividuoReatoRepository.getReato_Info_BynodeId(id)
+            
+        return result
+        
+    # Recupera le informazioni sull'arco identificato da edge_id
+    # Args:
+    #     edge_id (str): L'ID dell'arco da cercare
+    # Returns:
+    #     list: Una lista di risultati contenenti le informazioni sull'arco.
+
+    @staticmethod
+    def getEdge_Info(edge_id):
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "MATCH ()-[r:Condannato|ImputatoDi]->() WHERE r.edgeId = $edgeId RETURN DISTINCT properties(r) AS r"
+            result = session.run(cypher_query,{"edgeId":edge_id}).data()
+            return result
+          
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []  # o solleva un'eccezione
         
 
 #################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################

@@ -26,7 +26,7 @@ function requestAllNodesIndividualCrimes() {
 }
 
 function requestDetailsOfNodeIndividualCrimes(id){
-  fetch("/CrimeMiner/individuo/getinfobynodeid/" + id, {
+  fetch("/CrimeMiner/individuoReato/getReatoIndividuoInfoById/" + id, {
     method: "GET"
   })
   .then(response => {
@@ -38,7 +38,10 @@ function requestDetailsOfNodeIndividualCrimes(id){
   })
   .then(data => {
     data = JSON.parse(data);
-    showDetailsOfNodeIndividualCrimes(data.result[0].n)
+    if(data.result[0].n != undefined)
+      showDetailsOfNodeIndividualIndividualCrimes(data.result[0].n)
+    if(data.result[0].r != undefined)
+      showDetailsOfNodeCrimeIndividualCrimes(data.result[0].r)
   })
   .catch(error => {
     console.error(error);
@@ -46,7 +49,7 @@ function requestDetailsOfNodeIndividualCrimes(id){
 }
 
 function requestDetailsOfEdgeIndividualCrimes(id){
-  fetch("/CrimeMiner/individuoIntercettazione/getinfobyedgeid/" + id, {
+  fetch("/CrimeMiner/individuoReato/getinfobyedgeid/" + id, {
     method: "GET"
   })
   .then(response => {
@@ -72,9 +75,16 @@ function createGraphIndividualCrimes(data) {
     elements: data,
     style: [ // Stile dei nodi e degli archi
       {
-        selector: 'node',
+        selector: '.Individuo',
         style: {
           'background-color': '#66CCFF',
+          'label': 'data(id)'
+        }
+      },
+      {
+        selector: '.Reato',
+        style: {
+          'background-color': '#FF0000',
           'label': 'data(id)'
         }
       },
@@ -151,9 +161,14 @@ function checkedNodesAndEdgesIndividualCrimes(){
   if(document.querySelector("#CheckNodes").checked){
     cyIndividualCrimes.style()
     .resetToDefault()
-    .selector('node')
+    .selector('.Individuo')
       .style({
         'background-color': '#66CCFF',
+        'label': 'data(id)'
+      })
+    .selector('.Reato')
+      .style({
+        'background-color': '#FF0000',
         'label': 'data(id)'
       })
     .update();
@@ -161,9 +176,13 @@ function checkedNodesAndEdgesIndividualCrimes(){
   else{
     cyIndividualCrimes.style()
     .resetToDefault()
-    .selector('node')
+    .selector('.Individuo')
       .style({
         'background-color': '#66CCFF'
+      })
+    .selector('.Reato')
+      .style({
+        'background-color': '#FF0000'
       })
     .update();
   }
@@ -192,25 +211,42 @@ function checkedNodesAndEdgesIndividualCrimes(){
   }
 }
 
-function showDetailsOfNodeIndividualCrimes(data){
-  document.querySelector(".infoEdge").style.display = "none";
-  document.querySelector(".infoNot").style.display = "none";
-  document.querySelector(".infoNode").style.display = "flex";
+function showDetailsOfNodeIndividualIndividualCrimes(data){
+  document.querySelector(".infoIndividualCrimesEdge").style.display = "none";
+  document.querySelector(".infoIndividualCrimesNot").style.display = "none";
+  document.querySelector(".infoIndividualCrimesNodeCrime").style.display = "none";
+  document.querySelector(".infoIndividualCrimesNodeIndividual").style.display = "flex";
 
   document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Individuo";
 
-  document.querySelector(".infoNodeIdContent").innerHTML = data.nodeId;
-  /*document.querySelector(".infoNodeSurnameContent").innerHTML = data.cognome;
-  document.querySelector(".infoNodeNameContent").innerHTML = data.nome;*/
-  document.querySelector(".infoNodeBirthContent").innerHTML = data.dataNascita;
-  document.querySelector(".infoNodeNationContent").innerHTML = data.nazioneResidenza;
-  document.querySelector(".infoNodeProvinceContent").innerHTML = data.provinciaResidenza;
-  document.querySelector(".infoNodeResidenceContent").innerHTML = data.cittaResidenza;
-  document.querySelector(".infoNodeAddressContent").innerHTML = data.indirizzoResidenza;
+  document.querySelector(".infoIndividualCrimesNodeIndividualIdContent").innerHTML = data.nodeId;
+  //document.querySelector(".infoIndividualCrimesNodeIndividualSurnameContent").innerHTML = data.cognome;
+  //document.querySelector(".infoNodeNameContent").innerHTML = data.nome;
+  document.querySelector(".infoIndividualCrimesNodeIndividualBirthContent").innerHTML = data.dataNascita;
+  document.querySelector(".infoIndividualCrimesNodeIndividualNationContent").innerHTML = data.nazioneResidenza;
+  document.querySelector(".infoIndividualCrimesNodeIndividualProvinceContent").innerHTML = data.provinciaResidenza;
+  document.querySelector(".infoIndividualCrimesNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
+  document.querySelector(".infoIndividualCrimesNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
+}
+
+function showDetailsOfNodeCrimeIndividualCrimes(data){
+  document.querySelector(".infoIndividualCrimesEdge").style.display = "none";
+  document.querySelector(".infoIndividualCrimesNot").style.display = "none";
+  document.querySelector(".infoIndividualCrimesNodeIndividual").style.display = "none";
+  document.querySelector(".infoIndividualCrimesNodeCrime").style.display = "flex";
+
+  document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Reato";
+
+  document.querySelector(".infoIndividualCrimesNodeCrimeIdContent").innerHTML = data.nodeId;
+  document.querySelector(".infoIndividualCrimesNodeCrimeNameContent").innerHTML = data.name;
+  document.querySelector(".infoIndividualCrimesNodeCrimeNormsContent").innerHTML = data.normeDiRiferimento;
+  document.querySelector(".infoIndividualCrimesNodeCrimeMinMonthsContent").innerHTML = data.minMonths;
+  document.querySelector(".infoIndividualCrimesNodeCrimeMaxMonthsContent").innerHTML = data.maxMonths;
 }
 
 function showDetailsOfEdgeIndividualCrimes(data){
-  document.querySelector(".infoNode").style.display = "none";
+  console.log(data);
+  /*document.querySelector(".infoNode").style.display = "none";
   document.querySelector(".infoNot").style.display = "none";
   document.querySelector(".infoEdge").style.display = "flex";
 
@@ -224,7 +260,7 @@ function showDetailsOfEdgeIndividualCrimes(data){
   document.querySelector(".infoEdgeTargetContent").innerHTML = data.targetNodeId;
 
   //if(data.contenuto.substring(0,400) == data.contenuto)
-    document.querySelector(".infoEdgeContentContent").innerHTML = data.contenuto;
+    document.querySelector(".infoEdgeContentContent").innerHTML = data.contenuto;*/
   /*else
     document.querySelector(".infoEdgeContentContent").innerHTML = data.contenuto.substring(0,300) + " ..."; */
 }

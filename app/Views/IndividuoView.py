@@ -30,23 +30,6 @@ class IndividuoView(View):
             return JsonResponse({"result": nodes})
         else:
             return JsonResponse({"error": "Nodes not found"}, status=404)
-        
-
-    #Fa riferimento alla getIndividuo_o_Reato(node_id) della repository IndividuoRepository e restituisce le informazioni dell'individuo con il node_Id
-    #Args in input: node_Id dell'individuo
-    #Result: una lista contenente le informazioni relative all'individuo con quel node_Id
-    @request_mapping("/getReatoIndividuoInfoById/<str:node_id>", method="get")
-    def get_Reato_o_Individuo_by_Id(self,request,node_id) -> JsonResponse:
-        nodes = self.individuo_repository.getIndividuo_o_Reato(node_id)
-        if nodes:
-            return JsonResponse({"result": nodes})
-        else:
-            return JsonResponse({"error": "Nodes not found"}, status=404)
-
-
-    
-
-
 
 ############################################# NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) #########################################################################
 

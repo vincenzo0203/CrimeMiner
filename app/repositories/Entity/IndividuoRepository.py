@@ -1,8 +1,7 @@
 from neomodel import StructuredNode, StringProperty, RelationshipTo, Relationship
 from neomodel import UniqueIdProperty, db
-from app.Models.Entity.IndividuoModel import IndividuoModel
+
 from app.Neo4jConnection import Neo4jDriver
-from app.repositories.Relationship.IndividuoReatoRepository import IndividuoReatoRepository
 import json
 
 # Questa classe fornisce metodi per recuperare informazioni sugli individui.
@@ -23,21 +22,6 @@ class IndividuoRepository:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
-    
-    # Trova le informazioni riguardo un Individuo o di un Reato tramite un ID
-    # Args: <str> id
-    # Returns:
-    #     List[dict]: Una lista di risultati contenenti le informazioni su tutti gli individui/reati.
-    @staticmethod
-    def getIndividuo_o_Reato(id):
-        if(id.startswith("I")):
-            print("individuo")
-            result=IndividuoRepository.get_node_info_by_nodeId(id)
-        else:
-            print("renato")
-            result=IndividuoReatoRepository.getReato_Info_BynodeId(id)
-            
-        return result
 
         
     # Ottiene le informazioni di un nodo dato il suo node_id.
