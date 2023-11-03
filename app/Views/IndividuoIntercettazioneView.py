@@ -38,3 +38,18 @@ class IndividuoIntercettazioneView(View):
     def Closeness(self, request) -> JsonResponse:
         node_list = self.IndividuoIntercettazione_repository.Closeness()
         return JsonResponse({"result":node_list})
+    
+    @request_mapping("/Betweenness/", method="get")
+    def Betweenness(self, request) -> JsonResponse:
+        node_list = self.IndividuoIntercettazione_repository.Betweenness()
+        return JsonResponse({"result":node_list})
+    
+    @request_mapping("/PageRank/", method="get")
+    def PageRank(self, request) -> JsonResponse:
+        node_list = self.IndividuoIntercettazione_repository.PageRank()
+        return JsonResponse({"result":node_list})
+    
+    @request_mapping("/WeightedPageRank/", method="get")
+    def WeightedPageRank(self, request) -> JsonResponse:
+        node_list = self.IndividuoIntercettazione_repository.WeightedPageRank()
+        return JsonResponse({"result":node_list})
