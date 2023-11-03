@@ -64,6 +64,7 @@ class IndividuoIntercettazioneRepository:
 #WITH gds.util.asNode(nodeId) AS node, score
 #RETURN node.nodeId AS id, score AS score
 #ORDER BY score DESC;
+#Inserire nel file conf di neo4j dbms.security.procedures.unrestricted=apoc.*, gds.*
 
 
     #Calcola la closeness dei vari nodi attraverso l'utilizzo del plugin graph data science di neo4j
