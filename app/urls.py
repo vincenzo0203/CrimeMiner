@@ -25,6 +25,7 @@ urlpattern.register(IndividuoReatoView)
 urlpatterns = [
     path('', views.app),
     path('chiamate_individui', views.individualWiretaps),
+    path('crimini_individui', views.individualCrimes),
 
     #Path per la registrazione di tutte le View del Backend funzionante con request mapping. Si crea una classe view, si definiscono le request mapping in questa classe creata
     #e si registra la view creata in urlpattern

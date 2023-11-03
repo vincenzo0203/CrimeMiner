@@ -6,3 +6,6 @@ def app(request):
 
 def individualWiretaps(request):
     return render(request, 'features/individualWiretaps.html')
+
+def individualCrimes(request):
+    return render(request, 'features/individualCrimes.html')

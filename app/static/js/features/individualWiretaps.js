@@ -18,6 +18,47 @@ function requestAllNodesIndividualWiretaps() {
   .then(data => {
     data = JSON.parse(data);
     createGraphIndividualWiretaps(data);
+    fillSourceAndTargetModalNewCallIndividualWiretaps(data.nodes)
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
+
+function requestDetailsOfNodeIndividualWiretaps(id){
+  fetch("/CrimeMiner/individuo/getinfobynodeid/" + id, {
+    method: "GET"
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      throw new Error('Errore nella richiesta.');
+    }
+  })
+  .then(data => {
+    data = JSON.parse(data);
+    showDetailsOfNodeIndividualWiretaps(data.result[0].n)
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
+
+function requestDetailsOfEdgeIndividualWiretaps(id){
+  fetch("/CrimeMiner/individuoIntercettazione/getinfobyedgeid/" + id, {
+    method: "GET"
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      throw new Error('Errore nella richiesta.');
+    }
+  })
+  .then(data => {
+    data = JSON.parse(data);
+    showDetailsOfEdgeIndividualWiretaps(data.result[0].r)
   })
   .catch(error => {
     console.error(error);
@@ -151,79 +192,91 @@ function checkedNodesAndEdgesIndividualWiretaps(){
   }
 }
 
-function requestDetailsOfNodeIndividualWiretaps(id){
-  fetch("/CrimeMiner/individuo/getinfobynodeid/" + id, {
-    method: "GET"
-  })
-  .then(response => {
-    if (response.ok) {
-      return response.text();
-    } else {
-      throw new Error('Errore nella richiesta.');
-    }
-  })
-  .then(data => {
-    data = JSON.parse(data);
-    showDetailsOfNodeIndividualWiretaps(data.result[0].n)
-  })
-  .catch(error => {
-    console.error(error);
-  });
-}
-
 function showDetailsOfNodeIndividualWiretaps(data){
-  document.querySelector(".infoEdge").style.display = "none";
-  document.querySelector(".infoNot").style.display = "none";
-  document.querySelector(".infoNode").style.display = "flex";
+  document.querySelector(".infoIndividualWiretapsEdge").style.display = "none";
+  document.querySelector(".infoIndividualWiretapsNot").style.display = "none";
+  document.querySelector(".infoIndividualWiretapsNode").style.display = "flex";
 
   document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Individuo";
 
-  document.querySelector(".infoNodeIdContent").innerHTML = data.nodeId;
-  /*document.querySelector(".infoNodeSurnameContent").innerHTML = data.cognome;
-  document.querySelector(".infoNodeNameContent").innerHTML = data.nome;*/
-  document.querySelector(".infoNodeBirthContent").innerHTML = data.dataNascita;
-  document.querySelector(".infoNodeNationContent").innerHTML = data.nazioneResidenza;
-  document.querySelector(".infoNodeProvinceContent").innerHTML = data.provinciaResidenza;
-  document.querySelector(".infoNodeResidenceContent").innerHTML = data.cittaResidenza;
-  document.querySelector(".infoNodeAddressContent").innerHTML = data.indirizzoResidenza;
-}
-
-function requestDetailsOfEdgeIndividualWiretaps(id){
-  fetch("/CrimeMiner/individuoIntercettazione/getinfobyedgeid/" + id, {
-    method: "GET"
-  })
-  .then(response => {
-    if (response.ok) {
-      return response.text();
-    } else {
-      throw new Error('Errore nella richiesta.');
-    }
-  })
-  .then(data => {
-    data = JSON.parse(data);
-    showDetailsOfEdgeIndividualWiretaps(data.result[0].r)
-  })
-  .catch(error => {
-    console.error(error);
-  });
+  document.querySelector(".infoIndividualWiretapsNodeIdContent").innerHTML = data.nodeId;
+  /*document.querySelector(".infoIndividualWiretapsNodeSurnameContent").innerHTML = data.cognome;
+  document.querySelector(".infoIndividualWiretapsNodeNameContent").innerHTML = data.nome;*/
+  document.querySelector(".infoIndividualWiretapsNodeBirthContent").innerHTML = data.dataNascita;
+  document.querySelector(".infoIndividualWiretapsNodeNationContent").innerHTML = data.nazioneResidenza;
+  document.querySelector(".infoIndividualWiretapsNodeProvinceContent").innerHTML = data.provinciaResidenza;
+  document.querySelector(".infoIndividualWiretapsNodeResidenceContent").innerHTML = data.cittaResidenza;
+  document.querySelector(".infoIndividualWiretapsNodeAddressContent").innerHTML = data.indirizzoResidenza;
 }
 
 function showDetailsOfEdgeIndividualWiretaps(data){
-  document.querySelector(".infoNode").style.display = "none";
-  document.querySelector(".infoNot").style.display = "none";
-  document.querySelector(".infoEdge").style.display = "flex";
+  document.querySelector(".infoIndividualWiretapsNode").style.display = "none";
+  document.querySelector(".infoIndividualWiretapsNot").style.display = "none";
+  document.querySelector(".infoIndividualWiretapsEdge").style.display = "flex";
 
   document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Chiamata";
 
-  document.querySelector(".infoEdgeIdContent").innerHTML = data.edgeId;
-  document.querySelector(".infoEdgeDateContent").innerHTML = data.data;
-  document.querySelector(".infoEdgeDurationContent").innerHTML = data.durata;
-  document.querySelector(".infoEdgeTimeContent").innerHTML = data.ora;
-  document.querySelector(".infoEdgeSourceContent").innerHTML = data.sourceNodeId;
-  document.querySelector(".infoEdgeTargetContent").innerHTML = data.targetNodeId;
+  document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML = data.edgeId;
+  document.querySelector(".infoIndividualWiretapsEdgeDateContent").innerHTML = data.data;
+  document.querySelector(".infoIndividualWiretapsEdgeDurationContent").innerHTML = data.durata;
+  document.querySelector(".infoIndividualWiretapsEdgeTimeContent").innerHTML = data.ora;
+  document.querySelector(".infoIndividualWiretapsEdgeSourceContent").innerHTML = data.sourceNodeId;
+  document.querySelector(".infoIndividualWiretapsEdgeTargetContent").innerHTML = data.targetNodeId;
 
   //if(data.contenuto.substring(0,400) == data.contenuto)
-    document.querySelector(".infoEdgeContentContent").innerHTML = data.contenuto;
+    document.querySelector(".infoIndividualWiretapsEdgeContentContent").innerHTML = data.contenuto;
   /*else
-    document.querySelector(".infoEdgeContentContent").innerHTML = data.contenuto.substring(0,300) + " ..."; */
+    document.querySelector(".infoIndividualWiretapsEdgeContentContent").innerHTML = data.contenuto.substring(0,300) + " ..."; */
+}
+
+function fillSourceAndTargetModalNewCallIndividualWiretaps(nodes){
+  let selectSource = document.querySelector(".modalIndividualWiretapsSource");
+  let selectTarget = document.querySelector(".modalIndividualWiretapsTarget");
+  for (let j = 0; j < nodes.length; j++) {
+    let opt = nodes[j].data.id;
+    let el1 = new Option(opt, opt);
+    let el2 = new Option(opt, opt);
+    selectSource.appendChild(el1);
+    selectTarget.appendChild(el2);
+  }
+}
+
+function sendNewCallToBackendIndividualWiretaps(){
+  let json;
+
+  if(document.querySelector(".modalIndividualWiretapsSource").value == document.querySelector(".modalIndividualWiretapsTarget").value)
+    json = `{
+                sourceId: ${document.querySelector(".modalIndividualWiretapsSource").value},
+                targetiD: ${document.querySelector(".modalIndividualWiretapsTarget").value},
+                date: ${document.querySelector(".modalIndividualWiretapsDate").value},
+                duration: ${document.querySelector(".modalIndividualWiretapsDuration").value},
+                time: ${document.querySelector(".modalIndividualWiretapsTime").value},
+                content: ${document.querySelector(".modalIndividualWiretapsTextarea").value},
+              }`;
+
+  console.log(json);
+  
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");
+      return response.text();
+    } else {
+      viewToastMessage("Registrazione Chiamata", "Errore nella registrazione della chiamata.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");
 }

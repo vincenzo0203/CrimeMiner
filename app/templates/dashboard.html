@@ -26,13 +26,23 @@
     <!--Cookie-->
     <script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
 
+    <!--Toast-->
+    <script type="text/javascript" src="{% static 'js/toast.js' %}"></script>
+
     <!--Dashboard-->
     <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
     <script type="text/javascript" src="{% static 'js/dashboard.js' %}"></script>
 
+    <!--Generic Layout of graph page-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/features/layoutPageGraph.css' %}">
+    
     <!--Individual Wiretaps-->
     <link rel="stylesheet" type="text/css" href="{% static 'css/features/individualWiretaps/individualWiretaps.css' %}">
     <script type="text/javascript" src="{% static 'js/features/individualWiretaps.js' %}"></script>
+
+    <!--Individual Crimes-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/features/individualCrimes/individualCrimes.css' %}">
+    <script type="text/javascript" src="{% static 'js/features/individualCrimes.js' %}"></script>
 
 </head>
 
@@ -88,7 +98,7 @@
                         </a>
                         <div class="sidebarCollapseMenu collapse multi-collapse" id="graphVisualization">
                           <button type="button" class="sidebarCollapseItem" onclick="requestPage('chiamate_individui', 'chiamate_individui', 'yes')"> Individui/Intercettazioni</button>
-                          <a class="sidebarCollapseItem" href="#">Individui/Crimini</a>
+                          <button type="button" class="sidebarCollapseItem" onclick="requestPage('crimini_individui', 'crimini_individui', 'yes')"> Individui/Crimini</button>
                           <a class="sidebarCollapseItem" href="#">Individui/Intercettazione Ambientale</a>
                           <a class="sidebarCollapseItem" href="#">Individui e Crimini/Intercettazione Ambientale</a>
                         </div>
@@ -101,6 +111,20 @@
 
     <div class="pageContent d-block">
       <!--Qui verranno inserite le varie pagine-->
+    </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+      <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">
+        <div class="toast-header">
+          <!--<img src="..." class="rounded me-2" alt="...">-->
+          <strong class="me-auto toast-header-content"></strong>
+          <!--<small>11 mins ago</small>-->
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          
+        </div>
+      </div>
     </div>
 </body>
 

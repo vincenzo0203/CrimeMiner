@@ -1,0 +1,162 @@
+{% load static %}
+
+<div class="d-flex w-100 bd-highlight">
+    <div class="cyContainer p-2 flex-grow-1 bd-highlight">
+      <div class="cyContent"></div>
+    </div>
+    <div class="accordionContainer p-2 bd-highlight">
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+              Proprietà
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+            <div class="accordion-body">
+              <div class="d-flex accordionLayoutMetrics">
+                <div class="d-flex flex-column">
+                  <div>
+                    Layout
+                  </div>
+                  <select class="form-select selectLayout" aria-label="Default select example" onchange="changeLayoutIndividualCrimes();">
+                    <option value="circle" selected>Cerchio</option>
+                    <option value="dagre">Dagre</option>
+                    <option value="fcose">Force Atlas</option>
+                  </select>
+                </div>
+                <div class="d-flex flex-column">
+                  <div>
+                    Metriche
+                  </div>
+                  <select class="form-select selectLayout" aria-label="Default select example" onchange="changeMetricIndividualCrimes();">
+                    <option value="normal" selected>Normal</option>
+                    <option value="beetweness">Beetweness</option>
+                    <option value="closeness">Closeness</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+            <button class="accordion-button collapsed accordionButtonTwo" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+              Dettagli
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+            <div class="accordion-body">
+              <div class="infoIndividualCrimeNode">
+
+                <div class="infoIndividualCrimeNodeId d-flex">
+                  <div>Identificativo</div>
+                  <div class="infoIndividualCrimeNodeIdContent"></div>
+                </div>
+                <!--<div class="infoIndividualCrimeNodeSurname d-flex">
+                  <div>Cognome</div>
+                  <div class="infoIndividualCrimeNodeSurnameContent"></div>
+                </div>
+                <div class="infoIndividualCrimeNodeName d-flex">
+                  <div>Nome</div>
+                  <div class="infoIndividualCrimeNodeNameContent"></div>
+                </div>-->
+                <div class="infoIndividualCrimeNodeBirth d-flex">
+                  <div>Data Nascita</div>
+                  <div class="infoIndividualCrimeNodeBirthContent"></div>
+                </div>
+                <div class="infoIndividualCrimeNodeNation d-flex">
+                  <div>Nazione Residenza</div>
+                  <div class="infoIndividualCrimeNodeNationContent"></div>
+                </div>
+                <div class="infoIndividualCrimeNodeProvince d-flex">
+                  <div>Provincia Residenza</div>
+                  <div class="infoIndividualCrimeNodeProvinceContent"></div>
+                </div>
+                <div class="infoIndividualCrimeNodeResidence d-flex">
+                  <div>Città Residenza</div>
+                  <div class="infoIndividualCrimeNodeResidenceContent"></div>
+                </div>
+                <div class="infoIndividualCrimeNodeAddress d-flex">
+                  <div>Indirizzo Residenza</div>
+                  <div class="infoIndividualCrimeNodeAddressContent"></div>
+                </div>
+              </div>
+
+              <div class="infoIndividualCrimeEdge">
+                <div class="infoIndividualCrimeEdgeId d-flex">
+                  <div>Identificativo</div>
+                  <div class="infoIndividualCrimeEdgeIdContent"></div>
+                </div>
+                <div class="infoIndividualCrimeEdgeDate d-flex">
+                  <div>Data</div>
+                  <div class="infoIndividualCrimeEdgeDateContent"></div>
+                </div>
+                <div class="infoIndividualCrimeEdgeDuration d-flex">
+                  <div>Durata chiamata</div>
+                  <div class="infoIndividualCrimeEdgeDurationContent"></div>
+                </div>
+                <div class="infoIndividualCrimeEdgeTime d-flex">
+                  <div>Ora chiamata</div>
+                  <div class="infoIndividualCrimeEdgeTimeContent"></div>
+                </div>
+                <div class="infoIndividualCrimeEdgeSource d-flex">
+                  <div>Mittente</div>
+                  <div class="infoIndividualCrimeEdgeSourceContent"></div>
+                </div>
+                <div class="infoIndividualCrimeEdgeTarget d-flex">
+                  <div>Destinatario</div>
+                  <div class="infoIndividualCrimeEdgeTargetContent"></div>
+                </div>
+                <div class="infoIndividualCrimeEdgeContent d-flex">
+                  <div>Contenuto</div>
+                  <div class="infoIndividualCrimeEdgeContentContent"></div>
+                </div>
+              </div>
+
+              <div class="infoIndividualCrimeNot">
+                Non ci sono informazioni da visualizzare al momento
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+              Impostazioni
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+            <div class="accordion-body">
+              <div class="d-flex accordionCheckboxNodeEdge">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" onclick="checkedNodesAndEdgesIndividualCrimes()" id="CheckNodes" checked>
+                  <label class="form-check-label" for="CheckNodes">
+                    Nomi Nodi
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" onclick="checkedNodesAndEdgesIndividualCrimes()" id="CheckEdges">
+                  <label class="form-check-label" for="CheckEdges">
+                    Nomi Archi
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+    </div>
+    
+</div>
+
+<!--Cookie-->
+<script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
+
+<script>
+  if (performance.navigation.type === 1 || performance.navigation.type === 2) { 
+    setCookie("page","chiamate_individui");
+    window.location.href = "/CrimeMiner/";
+  }
+</script>

@@ -58,7 +58,7 @@ function requestPage(page, state, push){
     .then(data => {
         if(push == "yes")
             history.pushState({ page: page }, '', state);
-
+        
         document.querySelector(".pageContent").innerHTML = data;
         selectionPage(page);
         
@@ -74,6 +74,11 @@ function requestPage(page, state, push){
 function selectionPage(page){
     if(page == "chiamate_individui"){
         individualWiretaps();
+    }
+
+    if(page == "crimini_individui"){
+        console.log(page)
+        individualCrimes();
     }
         
 }
