@@ -78,7 +78,9 @@ class IndividuoIntercettazioneRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
         
-##############################################################################################################################
+#################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
+
+"""
 
 # Restituisce un grafo di tutti gli individui e delle chiamate tra di loro.
 # Args: none
@@ -88,7 +90,7 @@ class IndividuoIntercettazioneRepository:
     def getGraph_Individui_HaChiamato(self) -> typing.Iterator[typing.Dict[str, str]]:
         try:
             session = Neo4jDriver.get_session()
-            query = """MATCH p= (user:Individuo)-[r:HaChiamato]->(m:Individuo) RETURN nodes(p) as n, relationships(p)[0] as e"""
+            query = ""MATCH p= (user:Individuo)-[r:HaChiamato]->(m:Individuo) RETURN nodes(p) as n, relationships(p)[0] as e""
             results = session.run(query).data()
             json_data = json.dumps(results, ensure_ascii=False, indent=2)
             return json_data
@@ -106,7 +108,7 @@ class IndividuoIntercettazioneRepository:
     def getAll_Ids_IndividuoIntercettazione(self) -> typing.List[str]:
         try: 
             session = Neo4jDriver.get_session()
-            query = """match(n:Individuo)-[r:HaChiamato]->()where n.nome=\"DURANTE\" and n.cognome=\"SINISCALCHI\" OR n.nome=\"BIAGIO\" and n.cognome=\"CAVA\" RETURN toString(r.sourceNodeId) as n, toString(r.targetNodeId) as k"""
+            query = ""match(n:Individuo)-[r:HaChiamato]->()where n.nome=\"DURANTE\" and n.cognome=\"SINISCALCHI\" OR n.nome=\"BIAGIO\" and n.cognome=\"CAVA\" RETURN toString(r.sourceNodeId) as n, toString(r.targetNodeId) as k""
             results = session.run(query).data()
             json_data = json.dumps(results, ensure_ascii=False, indent=2)
             return json_data
@@ -123,7 +125,7 @@ class IndividuoIntercettazioneRepository:
     def getGraph_Ids_Individui_HaChiamato(self) -> typing.Iterator[typing.Dict[str, str]]:
         try:
             session = Neo4jDriver.get_session()
-            query = """MATCH p= (user:Individuo)-[r:HaChiamato]->(m:Individuo) RETURN user.nodeId as n, m.nodeId as k"""
+            query = ""MATCH p= (user:Individuo)-[r:HaChiamato]->(m:Individuo) RETURN user.nodeId as n, m.nodeId as k""
             results = session.run(query).data()
             json_data = json.dumps(results, ensure_ascii=False, indent=2)
             return json_data
@@ -140,7 +142,7 @@ class IndividuoIntercettazioneRepository:
     def getGraph_NomeCognome_Individui_HaChiamato(self) -> typing.Iterator[typing.Dict[str, str]]:
         try:
             session = Neo4jDriver.get_session()
-            query = """MATCH p= (user:Individuo)-[r:HaChiamato]->(m:Individuo) RETURN user.nome+' '+user.cognome as n, m.nome+' '+m.cognome as k"""
+            query = ""MATCH p= (user:Individuo)-[r:HaChiamato]->(m:Individuo) RETURN user.nome+' '+user.cognome as n, m.nome+' '+m.cognome as k""
             results = session.run(query).data()
             json_data = json.dumps(results, ensure_ascii=False, indent=2)
             return json_data
@@ -158,7 +160,7 @@ class IndividuoIntercettazioneRepository:
     def getNome_Cognome_ById(self, id1: str) -> typing.List[str]:
         try:
             session = Neo4jDriver.get_session()
-            query = """MATCH (user:Individuo) where user.nodeId={id} return user.nome+' '+user.cognome as n"""
+            query = ""MATCH (user:Individuo) where user.nodeId={id} return user.nome+' '+user.cognome as n""
             results = session.run(query).data()
             json_data = json.dumps(results, ensure_ascii=False, indent=2)
             return json_data
@@ -181,7 +183,7 @@ class IndividuoIntercettazioneRepository:
     ) -> typing.Iterator[typing.Dict[str, str]]:
         try:
             session = Neo4jDriver.get_session()
-            query = """match(n:Individuo)-[r:HaChiamato]->()where n.nome={nome1} and n.cognome={cogn1} OR n.nome={nome2} and n.cognome={cogn2} RETURN toString(r.sourceNodeId) as n, toString(r.targetNodeId) as k"""
+            query = ""match(n:Individuo)-[r:HaChiamato]->()where n.nome={nome1} and n.cognome={cogn1} OR n.nome={nome2} and n.cognome={cogn2} RETURN toString(r.sourceNodeId) as n, toString(r.targetNodeId) as k""
 
             results = session.run(query, nome1=nome1, cogn1=cogn1, nome2=nome2, cogn2=cogn2).data()
             json_data = json.dumps(results, ensure_ascii=False, indent=2)
@@ -205,7 +207,7 @@ class IndividuoIntercettazioneRepository:
        
         try:
             session = Neo4jDriver.get_session()
-            query = """match(n:Individuo) where n.nome={nome} and n.cognome={cognome} return n.nodeId"""
+            query = ""match(n:Individuo) where n.nome={nome} and n.cognome={cognome} return n.nodeId""
 
             results = session.run(query, nome=nome, cognome=cognome).data()
             json_data = json.dumps(results, ensure_ascii=False, indent=2)
@@ -223,11 +225,11 @@ class IndividuoIntercettazioneRepository:
     def betweenness(self) -> typing.Iterator[typing.Dict[str, str]]:
         try:
             session = Neo4jDriver.get_session()
-            query = """CALL algo.betweenness.stream(\"Individuo\", \"HaChiamato\", {direction:\"both\"})\n"
+            query = ""CALL algo.betweenness.stream(\"Individuo\", \"HaChiamato\", {direction:\"both\"})\n"
                     + "YIELD nodeId, centrality\n"
                     + "MATCH (individuo:Individuo) WHERE id(individuo) = nodeId\n"
                     + "RETURN individuo.nodeId AS id,centrality AS score\n"
-                    + "ORDER BY centrality DESC;"""
+                    + "ORDER BY centrality DESC;""
 
             results = session.run(query).data()
             json_data = json.dumps(results, ensure_ascii=False, indent=2)
@@ -247,3 +249,4 @@ class IndividuoIntercettazioneRepository:
 #RETURN node.nodeId AS id, score AS score
 #ORDER BY score DESC;
 
+"""

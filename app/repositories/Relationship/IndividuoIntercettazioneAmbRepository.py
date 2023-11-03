@@ -23,6 +23,11 @@ class IndividuoIntercettazioneAmbRepository:
         except Exception as e:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
+        
+
+#################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
+
+"""
     
 #Recupera tutti i collegamenti tra nodi Individuo e InterceptionAmb e restituisce gli ID dei nodi sorgente e di destinazione.
 #Args: none
@@ -210,3 +215,5 @@ class IndividuoIntercettazioneAmbRepository:
         except Exception as e:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
+
+"""

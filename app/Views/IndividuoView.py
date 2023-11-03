@@ -30,7 +30,12 @@ class IndividuoView(View):
             return JsonResponse({"result": nodes})
         else:
             return JsonResponse({"error": "Nodes not found"}, status=404)
-   
+
+
+
+############################################# NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) #########################################################################
+
+"""
 
     #Fa riferimento alla get_node_info(id) della repository IndividuoRepository e restituisce le informazioni dell'individuo con l'id della entry individuo
     #NB. diverso dal nodeId
@@ -70,8 +75,6 @@ class IndividuoView(View):
         else:
             return JsonResponse({"error": "Nodes not found"}, status=404)
     
-
-    
     
     def get_closeness(self):
         closeness_data = self.individuo_repository.get_closeness()
@@ -88,3 +91,5 @@ class IndividuoView(View):
     def get_custom_proj(self, t1, t2):
         custom_proj_data = self.individuo_repository.get_custom_proj(t1, t2)
         return JsonResponse({"result": custom_proj_data})
+
+"""

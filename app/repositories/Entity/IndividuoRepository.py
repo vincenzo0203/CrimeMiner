@@ -7,15 +7,6 @@ import json
 # Questa classe fornisce metodi per recuperare informazioni sugli individui.
 class IndividuoRepository:
 
-    # Trova un individuo dato il suo node_id.
-    # Args:
-    #     node_id (str): L'ID del nodo dell'individuo da cercare.
-    # Returns:
-    #     IndividuoModel: Il modello dell'individuo trovato.
-    @staticmethod
-    def find_by_node_id(node_id):
-        return IndividuoModel.nodes.get(nodeId=node_id)
-    
     # Trova tutti gli individui.
     # Args: none
     # Returns:
@@ -31,23 +22,39 @@ class IndividuoRepository:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
+        
 
-    # Trova un individuo dato il suo nome.
+
+    # Ottiene le informazioni di un nodo dato il suo node_id.
     # Args:
-    #     nome (str): Il nome dell'individuo da cercare.
+    #     node_id (str): L'ID del nodo dell'individuo da cercare.
     # Returns:
     #     List[dict]: Una lista di risultati contenenti le informazioni sull'individuo trovato.
     @staticmethod
-    def find_by_nome(nome):
+    def get_node_info_by_nodeId(node_id):
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "MATCH (n:Individuo{nome:'" + nome + "'}) RETURN n"
-            results = session.run(cypher_query).data()
+            cypher_query = "MATCH (n) WHERE n.nodeId = $nodeId RETURN n"
+            results = session.run(cypher_query, {"nodeId": node_id}).data()
             return results
         except Exception as e:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
+
+#################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
+
+"""
+
+    # Trova un individuo dato il suo node_id.
+    # Args:
+    #     node_id (str): L'ID del nodo dell'individuo da cercare.
+    # Returns:
+    #     IndividuoModel: Il modello dell'individuo trovato.
+    @staticmethod
+    def find_by_node_id(node_id):
+        return IndividuoModel.nodes.get(nodeId=node_id)
+
 
     # Ottiene le informazioni di un nodo dato il suo node_id.
     # Args:
@@ -66,17 +73,17 @@ class IndividuoRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
 
-    # Ottiene le informazioni di un nodo dato il suo node_id.
+    # Trova un individuo dato il suo nome.
     # Args:
-    #     node_id (str): L'ID del nodo dell'individuo da cercare.
+    #     nome (str): Il nome dell'individuo da cercare.
     # Returns:
     #     List[dict]: Una lista di risultati contenenti le informazioni sull'individuo trovato.
     @staticmethod
-    def get_node_info_by_nodeId(node_id):
+    def find_by_nome(nome):
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "MATCH (n) WHERE n.nodeId = $nodeId RETURN n"
-            results = session.run(cypher_query, {"nodeId": node_id}).data()
+            cypher_query = "MATCH (n:Individuo{nome:'" + nome + "'}) RETURN n"
+            results = session.run(cypher_query).data()
             return results
         except Exception as e:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
@@ -259,3 +266,6 @@ class IndividuoRepository:
         )
         result, _ = db.cypher_query(cypher_query, {"t1": t1, "t2": t2})
         return [dict(zip(row.columns, row)) for row in result]
+
+        
+"""
