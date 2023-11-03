@@ -32,15 +32,14 @@ class IndividuoRepository:
     def getIndividuo_o_Reato(id):
         if(id.startswith("I")):
             print("individuo")
-            IndividuoRepository.get_node_info_by_nodeId(id)
+            result=IndividuoRepository.get_node_info_by_nodeId(id)
         else:
             print("renato")
-            IndividuoReatoRepository.getReato_Info_BynodeId(id)
+            result=IndividuoReatoRepository.getReato_Info_BynodeId(id)
             
+        return result
 
         
-
-
     # Ottiene le informazioni di un nodo dato il suo node_id.
     # Args:
     #     node_id (str): L'ID del nodo dell'individuo da cercare.
