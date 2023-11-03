@@ -21,6 +21,10 @@ class IndividuoReatoIntercettazioneAmbRepository:
             return []  # o solleva un'eccezione
 
 
+#################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
+
+"""
+
 # Recupera un grafo di relazioni tra individui e reati nell'ambito di intercettazioni ambientali, utilizzando ID.
 # Returns:
 # list: Una lista di risultati contenenti le informazioni sul grafo con ID.
@@ -42,11 +46,11 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def betweenness(self) -> Iterable[dict]:
         try:
             session = Neo4jDriver.get_session()
-            query = """CALL algo.betweenness.stream("Individuo", "HaChiamato|Condannato|Presente|Presente", {direction:"both"})
+            query = ""CALL algo.betweenness.stream("Individuo", "HaChiamato|Condannato|Presente|Presente", {direction:"both"})
                     YIELD nodeId, centrality
                     MATCH (individuo:Individuo) WHERE id(individuo) = nodeId
                     RETURN individuo.nodeId AS id, centrality AS score
-                    ORDER BY centrality DESC;"""
+                    ORDER BY centrality DESC;""
             result = session.run(query).data()
             return result
         except Exception as e:
@@ -62,11 +66,11 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def closeness(self) -> Iterable[dict]:
         try:
             session = Neo4jDriver.get_session()
-            query = """CALL algo.closeness.stream("Individuo", "HaChiamato|Condannato|Presente|Presente", {direction:"both"})
+            query = ""CALL algo.closeness.stream("Individuo", "HaChiamato|Condannato|Presente|Presente", {direction:"both"})
                     YIELD nodeId, centrality
                     MATCH (individuo:Individuo) WHERE id(individuo) = nodeId
                     RETURN individuo.nodeId AS id, centrality AS score
-                    ORDER BY centrality DESC;"""
+                    ORDER BY centrality DESC;""
             result = session.run(query).data()
             return result
         except Exception as e:
@@ -81,10 +85,10 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def page_rank(self) -> Iterable[dict]:
         try:
             session = Neo4jDriver.get_session()
-            query = """OPTIONAL MATCH (n1)
+            query = ""OPTIONAL MATCH (n1)
                     WITH collect(distinct n1) as nodes
                     CALL apoc.algo.pageRankWithConfig(nodes, {iterations: 10, types: 'HaChiamato|Condannato|Presente|Presente'}) YIELD node, score
-                    RETURN node.nodeId as id, score ORDER BY score DESC;"""
+                    RETURN node.nodeId as id, score ORDER BY score DESC;""
             result = session.run(query).data()
             return result
         except Exception as e:
@@ -98,9 +102,9 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def weighted_page_rank(self) -> Iterable[dict]:
         try:
             session = Neo4jDriver.get_session()
-            query = """//PRE CALCULATED WPR
+            query = ""//PRE CALCULATED WPR
                     MATCH (n)
-                    RETURN n.nodeId as id, n.wpr_pers as score ORDER BY score DESC;"""
+                    RETURN n.nodeId as id, n.wpr_pers as score ORDER BY score DESC;""
             result = session.run(query).data()
             return result
         except Exception as e:
@@ -115,9 +119,9 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def degree(self) -> Iterable[dict]:
         try:
             session = Neo4jDriver.get_session()
-            query = """MATCH (n)
+            query = ""MATCH (n)
                     WITH n, size((n)-[]->()) as score
-                    RETURN n.nodeId as id, score ORDER BY score DESC;"""
+                    RETURN n.nodeId as id, score ORDER BY score DESC;""
             result = session.run(query).data()
             return result
         except Exception as e:
@@ -132,10 +136,10 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def diameter(self) -> Iterable[dict]:
         try:
             session = Neo4jDriver.get_session()
-            query = """MATCH (a:Individuo), (b:Individuo) WHERE id(a) > id(b)
+            query = ""MATCH (a:Individuo), (b:Individuo) WHERE id(a) > id(b)
                     MATCH p=shortestPath((a)-[:Codannato|ImputatoDi|HaChiamato*]-(b))
                     RETURN length(p) AS len, extract(x IN nodes(p) | x.name) AS path
-                    ORDER BY len DESC LIMIT 1;"""
+                    ORDER BY len DESC LIMIT 1;""
             result = session.run(query).data()
             return result
         except Exception as e:
@@ -143,4 +147,4 @@ class IndividuoReatoIntercettazioneAmbRepository:
             print("Errore durante l'esecuzione della query per ottenere il diameter:", e)
             return []  # o solleva un'eccezione
 
-
+"""
