@@ -1,7 +1,5 @@
 {% load static %}
 
-{% block content %}
-
 <div class="d-flex w-100 bd-highlight">
     <div class="cyContainer p-2 flex-grow-1 bd-highlight">
       <div class="cyContent"></div>
@@ -11,45 +9,139 @@
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-              Dettagli
+              Proprietà
             </button>
           </h2>
           <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
             <div class="accordion-body">
-              <div class="d-flex flex-column">
-                <div>
-                  Layout
+              <div class="d-flex accordionLayoutMetrics">
+                <div class="d-flex flex-column">
+                  <div>
+                    Layout
+                  </div>
+                  <select class="form-select selectLayout" aria-label="Default select example" onchange="changeLayoutIndividualWiretaps();">
+                    <option value="circle" selected>Cerchio</option>
+                    <option value="dagre">Dagre</option>
+                    <option value="fcose">Force Atlas</option>
+                  </select>
                 </div>
-                <select class="form-select selectLayout" aria-label="Default select example" onchange="changeLayoutIndividualWiretaps();">
-                  <option value="circle" selected>Cerchio</option>
-                  <option value="dagre">Dagre</option>
-                  <option value="fcose">Force Atlas</option>
-                </select>
+                <div class="d-flex flex-column">
+                  <div>
+                    Metriche
+                  </div>
+                  <select class="form-select selectLayout" aria-label="Default select example" onchange="changeMetricIndividualWiretaps();">
+                    <option value="normal" selected>Normal</option>
+                    <option value="beetweness">Beetweness</option>
+                    <option value="closeness">Closeness</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-              Impostazioni
+            <button class="accordion-button collapsed accordionButtonTwo" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+              Dettagli
             </button>
           </h2>
           <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
             <div class="accordion-body">
-              <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              <div class="infoNode">
+
+                <div class="infoNodeId d-flex">
+                  <div>Identificativo</div>
+                  <div class="infoNodeIdContent"></div>
+                </div>
+                <!--<div class="infoNodeSurname d-flex">
+                  <div>Cognome</div>
+                  <div class="infoNodeSurnameContent"></div>
+                </div>
+                <div class="infoNodeName d-flex">
+                  <div>Nome</div>
+                  <div class="infoNodeNameContent"></div>
+                </div>-->
+                <div class="infoNodeBirth d-flex">
+                  <div>Data Nascita</div>
+                  <div class="infoNodeBirthContent"></div>
+                </div>
+                <div class="infoNodeNation d-flex">
+                  <div>Nazione Residenza</div>
+                  <div class="infoNodeNationContent"></div>
+                </div>
+                <div class="infoNodeProvince d-flex">
+                  <div>Provincia Residenza</div>
+                  <div class="infoNodeProvinceContent"></div>
+                </div>
+                <div class="infoNodeResidence d-flex">
+                  <div>Città Residenza</div>
+                  <div class="infoNodeResidenceContent"></div>
+                </div>
+                <div class="infoNodeAddress d-flex">
+                  <div>Indirizzo Residenza</div>
+                  <div class="infoNodeAddressContent"></div>
+                </div>
+              </div>
+
+              <div class="infoEdge">
+                <div class="infoEdgeId d-flex">
+                  <div>Identificativo</div>
+                  <div class="infoEdgeIdContent"></div>
+                </div>
+                <div class="infoEdgeDate d-flex">
+                  <div>Data</div>
+                  <div class="infoEdgeDateContent"></div>
+                </div>
+                <div class="infoEdgeDuration d-flex">
+                  <div>Durata chiamata</div>
+                  <div class="infoEdgeDurationContent"></div>
+                </div>
+                <div class="infoEdgeTime d-flex">
+                  <div>Ora chiamata</div>
+                  <div class="infoEdgeTimeContent"></div>
+                </div>
+                <div class="infoEdgeSource d-flex">
+                  <div>Mittente</div>
+                  <div class="infoEdgeSourceContent"></div>
+                </div>
+                <div class="infoEdgeTarget d-flex">
+                  <div>Destinatario</div>
+                  <div class="infoEdgeTargetContent"></div>
+                </div>
+                <div class="infoEdgeContent d-flex">
+                  <div>Contenuto</div>
+                  <div class="infoEdgeContentContent"></div>
+                </div>
+              </div>
+
+              <div class="infoNot">
+                Non ci sono informazioni da visualizzare al momento
+              </div>
             </div>
           </div>
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingThree">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-              Accordion Item #3
+              Impostazioni
             </button>
           </h2>
           <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
             <div class="accordion-body">
-              <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              <div class="d-flex accordionCheckboxNodeEdge">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" onclick="checkedNodesAndEdgesIndividualWiretaps()" id="CheckNodes" checked>
+                  <label class="form-check-label" for="CheckNodes">
+                    Nomi Nodi
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" onclick="checkedNodesAndEdgesIndividualWiretaps()" id="CheckEdges">
+                  <label class="form-check-label" for="CheckEdges">
+                    Nomi Archi
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -68,4 +160,3 @@
     window.location.href = "/CrimeMiner/";
   }
 </script>
-{% endblock %}
