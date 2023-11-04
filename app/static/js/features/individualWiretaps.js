@@ -67,7 +67,6 @@ function requestDetailsOfEdgeIndividualWiretaps(id){
 }
 
 function createGraphIndividualWiretaps(data) {
-
   cyIndividualWiretaps = cytoscape({
     container: document.querySelector('.cyContent'),
     elements: data,
@@ -119,6 +118,8 @@ function createGraphIndividualWiretaps(data) {
 function changeLayoutIndividualWiretaps() {
 
   if(document.querySelector(".selectLayout").value == 'circle'){
+    loadPage(2500);
+    
     cyIndividualWiretaps.layout({
       name: 'circle',
       animate: true,
@@ -127,6 +128,8 @@ function changeLayoutIndividualWiretaps() {
   }
 
   if(document.querySelector(".selectLayout").value == 'dagre'){
+    loadPage(7500);
+    
     cyIndividualWiretaps.layout({
       name: 'dagre',
       rankDir: 'TB',
@@ -141,6 +144,8 @@ function changeLayoutIndividualWiretaps() {
   }
 
   if(document.querySelector(".selectLayout").value == 'fcose'){
+    loadPage(3000);
+
     cyIndividualWiretaps.layout({
       name: 'fcose',
       spacingFactor: 3,
@@ -287,5 +292,5 @@ function sendNewCallToBackendIndividualWiretaps(){
     console.error(error);
   });*/
 
-  viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");
+  viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");  
 }

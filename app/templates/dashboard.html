@@ -29,6 +29,10 @@
     <!--Toast-->
     <script type="text/javascript" src="{% static 'js/toast.js' %}"></script>
 
+    <!--Load-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/load.css' %}">
+    <script type="text/javascript" src="{% static 'js/load.js' %}"></script>
+
     <!--Dashboard-->
     <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
     <script type="text/javascript" src="{% static 'js/dashboard.js' %}"></script>
@@ -109,7 +113,11 @@
         </div>
     </nav>
 
-    <div class="pageContent d-block">
+    <div class="loadingContainer">
+      <div class="loadingContent"></div>
+    </div>
+    
+    <div class="pageContent">
       <!--Qui verranno inserite le varie pagine-->
     </div>
 
