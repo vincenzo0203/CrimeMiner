@@ -75,7 +75,7 @@ function createGraphIndividualWiretaps(data) {
       {
         selector: 'node',
         style: {
-          'background-color': '#66CCFF',
+          'background-color': '#03a74f',
           'label': 'data(id)'
         }
       },
@@ -83,7 +83,7 @@ function createGraphIndividualWiretaps(data) {
         selector: 'edge',
         style: {
           'width': 2,
-          'line-color': '#333',
+          'line-color': '#dfdfdf',
           "curve-style": "bezier"
         }
       }
@@ -104,6 +104,14 @@ function createGraphIndividualWiretaps(data) {
     //questo per l'arco
     cyIndividualWiretaps.on('tap', 'edge', function(evt) {
       requestDetailsOfEdgeIndividualWiretaps(evt.target.id())
+    });
+
+    cyIndividualWiretaps.on('mouseover', 'edge', function (event) {
+      event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
+    });
+    
+    cyIndividualWiretaps.on('mouseout', 'edge', function (event) {
+      event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
     });
   });
 }

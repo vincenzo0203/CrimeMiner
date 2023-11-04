@@ -17,7 +17,6 @@ function requestAllNodesIndividualCrimes() {
   })
   .then(data => {
     data = JSON.parse(data);
-    console.log(data);
     createGraphIndividualCrimes(data);
   })
   .catch(error => {
@@ -77,14 +76,14 @@ function createGraphIndividualCrimes(data) {
       {
         selector: '.Individuo',
         style: {
-          'background-color': '#66CCFF',
+          'background-color': '#03a74f',
           'label': 'data(id)'
         }
       },
       {
         selector: '.Reato',
         style: {
-          'background-color': '#FF0000',
+          'background-color': '#c70c35',
           'label': 'data(id)'
         }
       },
@@ -92,10 +91,10 @@ function createGraphIndividualCrimes(data) {
         selector: 'edge',
         style: {
           'width': 2,
-          'line-color': '#333',
+          'line-color': '#dfdfdf',
           "curve-style": "bezier"
         }
-      }
+      },
     ],
     layout: {
       name: 'circle', //dagre  //fcose
@@ -113,6 +112,14 @@ function createGraphIndividualCrimes(data) {
     //questo per l'arco
     cyIndividualCrimes.on('tap', 'edge', function(evt) {
       requestDetailsOfEdgeIndividualCrimes(evt.target.id())
+    });
+
+    cyIndividualCrimes.on('mouseover', 'edge', function (event) {
+      event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
+    });
+    
+    cyIndividualCrimes.on('mouseout', 'edge', function (event) {
+      event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
     });
   });
 }
@@ -160,12 +167,12 @@ function checkedNodesAndEdgesIndividualCrimes(){
     .resetToDefault()
     .selector('.Individuo')
       .style({
-        'background-color': '#66CCFF',
+        'background-color': '#03a74f',
         'label': 'data(id)'
       })
     .selector('.Reato')
       .style({
-        'background-color': '#FF0000',
+        'background-color': '#c70c35',
         'label': 'data(id)'
       })
     .update();
@@ -175,11 +182,11 @@ function checkedNodesAndEdgesIndividualCrimes(){
     .resetToDefault()
     .selector('.Individuo')
       .style({
-        'background-color': '#66CCFF'
+        'background-color': '#03a74f'
       })
     .selector('.Reato')
       .style({
-        'background-color': '#FF0000'
+        'background-color': '#c70c35'
       })
     .update();
   }
@@ -190,7 +197,7 @@ function checkedNodesAndEdgesIndividualCrimes(){
     .selector('edge')
         .style({
           'width': 2,
-          'line-color': '#333',
+          'line-color': '#dfdfdf',
           "curve-style": "bezier",
           'label': 'data(id)'
         })
@@ -201,7 +208,7 @@ function checkedNodesAndEdgesIndividualCrimes(){
     .selector('edge')
         .style({
           'width': 2,
-          'line-color': '#333',
+          'line-color': '#dfdfdf',
           "curve-style": "bezier"
         })
     .update();
