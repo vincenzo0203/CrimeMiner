@@ -73,14 +73,14 @@ function requestPage(page, state, push){
 //funzione che richiama il metodo load delle varie pagine
 function selectionPage(page){
     if(page == "chiamate_individui"){
+        loadPage(2500);
         individualWiretaps();
     }
 
     if(page == "crimini_individui"){
         console.log(page)
         individualCrimes();
-    }
-        
+    }        
 }
 
 //funzione che si occupa della gestione delle finestre della single page application (SPA)

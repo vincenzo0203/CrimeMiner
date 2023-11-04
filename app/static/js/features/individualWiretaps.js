@@ -67,7 +67,6 @@ function requestDetailsOfEdgeIndividualWiretaps(id){
 }
 
 function createGraphIndividualWiretaps(data) {
-
   cyIndividualWiretaps = cytoscape({
     container: document.querySelector('.cyContent'),
     elements: data,
@@ -75,7 +74,7 @@ function createGraphIndividualWiretaps(data) {
       {
         selector: 'node',
         style: {
-          'background-color': '#66CCFF',
+          'background-color': '#03a74f',
           'label': 'data(id)'
         }
       },
@@ -83,7 +82,7 @@ function createGraphIndividualWiretaps(data) {
         selector: 'edge',
         style: {
           'width': 2,
-          'line-color': '#333',
+          'line-color': '#dfdfdf',
           "curve-style": "bezier"
         }
       }
@@ -105,12 +104,22 @@ function createGraphIndividualWiretaps(data) {
     cyIndividualWiretaps.on('tap', 'edge', function(evt) {
       requestDetailsOfEdgeIndividualWiretaps(evt.target.id())
     });
+
+    cyIndividualWiretaps.on('mouseover', 'edge', function (event) {
+      event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
+    });
+    
+    cyIndividualWiretaps.on('mouseout', 'edge', function (event) {
+      event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
+    });
   });
 }
 
 function changeLayoutIndividualWiretaps() {
 
   if(document.querySelector(".selectLayout").value == 'circle'){
+    loadPage(2500);
+    
     cyIndividualWiretaps.layout({
       name: 'circle',
       animate: true,
@@ -119,6 +128,8 @@ function changeLayoutIndividualWiretaps() {
   }
 
   if(document.querySelector(".selectLayout").value == 'dagre'){
+    loadPage(7500);
+    
     cyIndividualWiretaps.layout({
       name: 'dagre',
       rankDir: 'TB',
@@ -133,6 +144,8 @@ function changeLayoutIndividualWiretaps() {
   }
 
   if(document.querySelector(".selectLayout").value == 'fcose'){
+    loadPage(3000);
+
     cyIndividualWiretaps.layout({
       name: 'fcose',
       spacingFactor: 3,
@@ -279,5 +292,5 @@ function sendNewCallToBackendIndividualWiretaps(){
     console.error(error);
   });*/
 
-  viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");
+  viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");  
 }
