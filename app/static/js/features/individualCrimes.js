@@ -250,21 +250,44 @@ function showDetailsOfNodeCrimeIndividualCrimes(data){
 
 function showDetailsOfEdgeIndividualCrimes(data){
   console.log(data);
-  /*document.querySelector(".infoNode").style.display = "none";
-  document.querySelector(".infoNot").style.display = "none";
-  document.querySelector(".infoEdge").style.display = "flex";
+  document.querySelector(".infoIndividualCrimesNodeCrime").style.display = "none";
+  document.querySelector(".infoIndividualCrimesNot").style.display = "none";
+  document.querySelector(".infoIndividualCrimesNodeIndividual").style.display = "none";
+  document.querySelector(".infoIndividualCrimesEdge").style.display = "flex";
 
-  document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Chiamata";
+  if(data.entityType == "ImputatoDi")
+    document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Imputazione";
 
-  document.querySelector(".infoEdgeIdContent").innerHTML = data.edgeId;
-  document.querySelector(".infoEdgeDateContent").innerHTML = data.data;
-  document.querySelector(".infoEdgeDurationContent").innerHTML = data.durata;
-  document.querySelector(".infoEdgeTimeContent").innerHTML = data.ora;
-  document.querySelector(".infoEdgeSourceContent").innerHTML = data.sourceNodeId;
-  document.querySelector(".infoEdgeTargetContent").innerHTML = data.targetNodeId;
+  if(data.entityType == "Condannato")
+    document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Condannato";
 
-  //if(data.contenuto.substring(0,400) == data.contenuto)
-    document.querySelector(".infoEdgeContentContent").innerHTML = data.contenuto;*/
-  /*else
-    document.querySelector(".infoEdgeContentContent").innerHTML = data.contenuto.substring(0,300) + " ..."; */
+  document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML = data.edgeId;
+  document.querySelector(".infoIndividualCrimesEdgeIndividualContent").innerHTML = data.sourceNodeId;
+  document.querySelector(".infoIndividualCrimesEdgeCrimeContent").innerHTML = data.targetNodeId;
+
+  document.querySelector(".infoIndividualCrimesEdgeAggContainer").innerHTML = "";
+
+  if(data.agg_id != undefined){
+    document.querySelector(".infoIndividualCrimesEdgeAggTitle").style.display = "flex";
+    
+    for(let i=0; i<data.agg_id.length; i++){
+      console.log(data.agg_id[0])
+      document.querySelector(".infoIndividualCrimesEdgeAggContainer").innerHTML += `
+                                                                                      <div class="infoIndividualCrimesEdgeAgg d-flex">
+                                                                                        <div class="infoIndividualCrimesEdgeAggId d-flex">
+                                                                                          ${data.agg_id[i]}
+                                                                                        </div>
+                                                                                        <div class="infoIndividualCrimesEdgeAggDescription d-flex">
+                                                                                          ${data.agg_desc[i]}
+                                                                                        </div>
+                                                                                        <div class="infoIndividualCrimesEdgeAggNorms d-flex">
+                                                                                          ${data.agg_norm[i]}
+                                                                                        </div>
+                                                                                      </div>
+                                                                                  `;
+    }
+  }
+  else{
+    document.querySelector(".infoIndividualCrimesEdgeAggTitle").style.display = "none";
+  }
 }

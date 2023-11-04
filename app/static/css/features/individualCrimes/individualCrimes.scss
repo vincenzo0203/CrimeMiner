@@ -23,9 +23,36 @@
         display: none;
         flex-direction: column;
         
-        &Id,&Date,&Duration,&Time,&Source,&Target,&Content{
+        &Id,&Individual,&Crime{
             justify-content: space-between;
             gap: 2rem;
+        }
+
+        &AggTitle{
+            display: flex;
+        }
+
+        &AggTitle,&Agg{
+            justify-content: space-between;
+            gap: 1rem;
+
+            &Id{
+                width: 4rem;
+            }
+
+            &Description{
+                width: 12rem;
+            }
+
+            &Norms{
+                width: 9rem;
+            }
+        }
+
+        &AggContainer{
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
     }
 
