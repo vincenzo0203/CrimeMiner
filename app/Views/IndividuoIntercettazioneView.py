@@ -53,3 +53,18 @@ class IndividuoIntercettazioneView(View):
     def WeightedPageRank(self, request) -> JsonResponse:
         node_list = self.IndividuoIntercettazione_repository.WeightedPageRank()
         return JsonResponse({"result":node_list})
+    
+    @request_mapping("/Degree/", method="get")
+    def Degree(self, request) -> JsonResponse:
+        node_list = self.IndividuoIntercettazione_repository.Degree()
+        return JsonResponse({"result":node_list})
+    
+    @request_mapping("/InDegree/", method="get")
+    def InDegree(self, request) -> JsonResponse:
+        node_list = self.IndividuoIntercettazione_repository.InDegree()
+        return JsonResponse({"result":node_list})
+    
+    @request_mapping("/OutDegree/", method="get")
+    def OutDegree(self, request) -> JsonResponse:
+        node_list = self.IndividuoIntercettazione_repository.OutDegree()
+        return JsonResponse({"result":node_list})
