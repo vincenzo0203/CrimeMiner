@@ -109,12 +109,54 @@ class IndividuoIntercettazioneRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
         
-     #Calcola il Weighted Page Rank dei vari nodi attraverso l'utilizzo del plugin graph data science di neo4j
+    #Calcola il Weighted Page Rank dei vari nodi attraverso l'utilizzo del plugin graph data science di neo4j
     @staticmethod
     def WeightedPageRank():
         try:
             session = Neo4jDriver.get_session()
             cypher_query = "CALL gds.pageRank.stream('IndividuoIntercettazioni', {maxIterations: 10,dampingFactor: 0.85,relationshipWeightProperty: 'mesiTotali'})YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score RETURN node.nodeId AS id, score ORDER BY score DESC;"
+            results = session.run(cypher_query).data()
+            return results
+
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []  # o solleva un'eccezione
+        
+    #Calcola il Degree dei vari nodi attraverso l'utilizzo del plugin graph data science di neo4j
+    @staticmethod
+    def Degree():
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "CALL gds.degree.stream('IndividuoIntercettazioni', {orientation: 'UNDIRECTED'}) YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score RETURN node.nodeId AS id, score AS score ORDER BY score DESC;"
+            results = session.run(cypher_query).data()
+            return results
+
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []  # o solleva un'eccezione
+        
+    #Calcola In Degree dei vari nodi attraverso l'utilizzo del plugin graph data science di neo4j
+    @staticmethod
+    def InDegree():
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "CALL gds.degree.stream('IndividuoIntercettazioni', {orientation: 'REVERSE'}) YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score RETURN node.nodeId AS id, score AS score ORDER BY score DESC;"
+            results = session.run(cypher_query).data()
+            return results
+
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []  # o solleva un'eccezione
+    
+    #Calcola In Degree dei vari nodi attraverso l'utilizzo del plugin graph data science di neo4j
+    @staticmethod
+    def OutDegree():
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "CALL gds.degree.stream('IndividuoIntercettazioni', {orientation: 'NATURAL'}) YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score RETURN node.nodeId AS id, score AS score ORDER BY score DESC;"
             results = session.run(cypher_query).data()
             return results
 
