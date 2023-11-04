@@ -20,4 +20,40 @@ class IndividuoIntercettazioneAmbView(View):
         return JsonResponse({"result": graph_list})   
     
 
+    @request_mapping("/Closeness/", method="get")
+    def Closeness(self, request) -> JsonResponse:
+        node_list = self.individuoIntercettazioneAmb_repository.Closeness()
+        return JsonResponse({"result":node_list})
+    
+    @request_mapping("/Betweenness/", method="get")
+    def Betweenness(self, request) -> JsonResponse:
+        node_list = self.individuoIntercettazioneAmb_repository.Betweenness()
+        return JsonResponse({"result":node_list})
+    
+    @request_mapping("/PageRank/", method="get")
+    def PageRank(self, request) -> JsonResponse:
+        node_list = self.individuoIntercettazioneAmb_repository.PageRank()
+        return JsonResponse({"result":node_list})
+    
+    @request_mapping("/WeightedPageRank/", method="get")
+    def WeightedPageRank(self, request) -> JsonResponse:
+        node_list = self.individuoIntercettazioneAmb_repository.WeightedPageRank()
+        return JsonResponse({"result":node_list})
+    
+
+    @request_mapping("/Degree/", method="get")
+    def Degree(self, request) -> JsonResponse:
+        node_list = self.individuoIntercettazioneAmb_repository.Degree()
+        return JsonResponse({"result":node_list})
+    
+    @request_mapping("/InDegree/", method="get")
+    def InDegree(self, request) -> JsonResponse:
+        node_list = self.individuoIntercettazioneAmb_repository.InDegree()
+        return JsonResponse({"result":node_list})
+    
+    @request_mapping("/OutDegree/", method="get")
+    def OutDegree(self, request) -> JsonResponse:
+        node_list = self.individuoIntercettazioneAmb_repository.OutDegree()
+        return JsonResponse({"result":node_list})
+
     
