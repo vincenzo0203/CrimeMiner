@@ -1,7 +1,6 @@
-from neomodel import StructuredNode, StringProperty, RelationshipTo, Relationship
 from neomodel import UniqueIdProperty, db
-
 from app.Neo4jConnection import Neo4jDriver
+from app.Models.Entity.IndividuoModel import IndividuoModel
 import json
 
 # Questa classe fornisce metodi per recuperare informazioni sugli individui.
@@ -40,6 +39,8 @@ class IndividuoRepository:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
+        
+    
 
 #################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
 

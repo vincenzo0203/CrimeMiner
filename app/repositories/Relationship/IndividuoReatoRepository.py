@@ -1,5 +1,6 @@
 from typing import List
 from app.Neo4jConnection import Neo4jDriver
+from app.repositories.Entity.ReatoRepository import ReatoRepository
 from app.repositories.Entity.IndividuoRepository import IndividuoRepository
 
 # Questa classe fornisce metodi per recuperare informazioni sugli individui e i reati.
@@ -34,25 +35,8 @@ class IndividuoReatoRepository:
         except Exception as e:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
-    
-    # Ottiene le informazioni di un reato dato il suo id.
-    # Args:
-    #     id (str): L'ID del reato .
-    # Returns:
-    #     List[dict]: Una lista di risultati contenenti le informazioni sul reato.
-    @staticmethod
-    def getReato_Info_BynodeId(id):
-        try:
-            session = Neo4jDriver.get_session()
-            cypher_query = "MATCH (r:Reato) WHERE r.nodeId = $nodeId RETURN r"
-            results = session.run(cypher_query, {"nodeId": id}).data()
-            return results
-        except Exception as e:
-            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
-            print("Errore durante l'esecuzione della query Cypher:", e)
-            return []
-
-    # Trova le informazioni riguardo un Individuo o di un Reato tramite un ID
+        
+          # Trova le informazioni riguardo un Individuo o di un Reato tramite un ID
     # Args: <str> id
     # Returns:
     #     List[dict]: Una lista di risultati contenenti le informazioni su tutti gli individui/reati.
@@ -63,29 +47,9 @@ class IndividuoReatoRepository:
             result=IndividuoRepository.get_node_info_by_nodeId(id)
         else:
             print("renato")
-            result=IndividuoReatoRepository.getReato_Info_BynodeId(id)
+            result=ReatoRepository.getReato_Info_BynodeId(id)
             
         return result
-        
-    # Recupera le informazioni sull'arco identificato da edge_id
-    # Args:
-    #     edge_id (str): L'ID dell'arco da cercare
-    # Returns:
-    #     list: Una lista di risultati contenenti le informazioni sull'arco.
-
-    @staticmethod
-    def getEdge_Info(edge_id):
-        try:
-            session = Neo4jDriver.get_session()
-            cypher_query = "MATCH ()-[r:Condannato|ImputatoDi]->() WHERE r.edgeId = $edgeId RETURN DISTINCT properties(r) AS r"
-            result = session.run(cypher_query,{"edgeId":edge_id}).data()
-            return result
-          
-        except Exception as e:
-            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
-            print("Errore durante l'esecuzione della query Cypher:", e)
-            return []  # o solleva un'eccezione
-        
 
 #################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
 

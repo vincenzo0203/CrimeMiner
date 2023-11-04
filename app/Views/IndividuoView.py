@@ -30,6 +30,10 @@ class IndividuoView(View):
             return JsonResponse({"result": nodes})
         else:
             return JsonResponse({"error": "Nodes not found"}, status=404)
+<<<<<<< HEAD
+=======
+        
+>>>>>>> main
 
 ############################################# NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) #########################################################################
 
