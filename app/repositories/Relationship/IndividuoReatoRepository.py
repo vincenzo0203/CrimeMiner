@@ -1,5 +1,7 @@
 from typing import List
 from app.Neo4jConnection import Neo4jDriver
+from app.repositories.Entity.ReatoRepository import ReatoRepository
+from app.repositories.Entity.IndividuoRepository import IndividuoRepository
 
 # Questa classe fornisce metodi per recuperare informazioni sugli individui e i reati.
 class IndividuoReatoRepository:
@@ -20,24 +22,21 @@ class IndividuoReatoRepository:
         except Exception as e:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
-    
-    # Ottiene le informazioni di un reato dato il suo id.
-    # Args:
-    #     id (str): L'ID del reato .
-    # Returns:
-    #     List[dict]: Una lista di risultati contenenti le informazioni sul reato.
-    @staticmethod
-    def getReato_Info_BynodeId(id):
-        try:
-            session = Neo4jDriver.get_session()
-            cypher_query = "MATCH (r:Reato) WHERE r.nodeId = $nodeId RETURN r"
-            results = session.run(cypher_query, {"nodeId": id}).data()
-            return results
-        except Exception as e:
-            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
-            print("Errore durante l'esecuzione della query Cypher:", e)
-            return []
         
+          # Trova le informazioni riguardo un Individuo o di un Reato tramite un ID
+    # Args: <str> id
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni su tutti gli individui/reati.
+    @staticmethod
+    def getIndividuo_o_Reato(id):
+        if(id.startswith("I")):
+            print("individuo")
+            result=IndividuoRepository.get_node_info_by_nodeId(id)
+        else:
+            print("renato")
+            result=ReatoRepository.getReato_Info_BynodeId(id)
+            
+        return result
 
 #################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
 
