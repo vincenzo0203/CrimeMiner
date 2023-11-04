@@ -122,8 +122,7 @@ function changeLayoutIndividualCrimes() {
   if(document.querySelector(".selectLayout").value == 'circle'){
     cyIndividualCrimes.layout({
       name: 'circle',
-      animate: true,
-      animationDuration: 2000
+      animate: true
     }).run();
   }
 
@@ -136,8 +135,7 @@ function changeLayoutIndividualCrimes() {
       nodeSep: 120,
       edgeSep: 2,
       rankSep: 550,
-      animate: true,
-      animationDuration: 7000
+      animate: true
     }).run();
   }
 
@@ -145,8 +143,7 @@ function changeLayoutIndividualCrimes() {
     cyIndividualCrimes.layout({
       name: 'fcose',
       spacingFactor: 3,
-      animate: true,
-      animationDuration: 2000
+      animate: true
     }).run();
   }
 
