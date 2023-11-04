@@ -42,6 +42,12 @@ class IndividuoRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
         
+    
+
+#################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
+
+"""
+
     # Trova un individuo dato il suo node_id.
     # Args:
     #     node_id (str): L'ID del nodo dell'individuo da cercare.
@@ -50,12 +56,6 @@ class IndividuoRepository:
     @staticmethod
     def find_by_node_id(node_id):
         return IndividuoModel.nodes.get(nodeId=node_id)
-
-#################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
-
-"""
-
-
 
 
     # Ottiene le informazioni di un nodo dato il suo node_id.
