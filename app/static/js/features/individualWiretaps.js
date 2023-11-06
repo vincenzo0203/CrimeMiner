@@ -18,7 +18,6 @@ function requestAllNodesIndividualWiretaps() {
   })
   .then(data => {
     data = JSON.parse(data);
-    console.log(data);
     createGraphIndividualWiretaps(data);
     fillSourceAndTargetModalNewCallIndividualWiretaps(data.nodes)
   })

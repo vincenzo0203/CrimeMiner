@@ -18,6 +18,35 @@ function requestAllNodesIndividualCrimes() {
   .then(data => {
     data = JSON.parse(data);
     createGraphIndividualCrimes(data);
+    //fillSourceAndTargetModalNewCallIndividualCrimes(data.nodes)
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
+
+function requestSizeNodesIndividualCrimes(){
+  let metric;
+
+  if(document.querySelector(".selectMetrics").value == "Default")
+    metric = "findallgraph";
+  else
+    metric = document.querySelector(".selectMetrics").value;
+
+  fetch("/CrimeMiner/individuoReato/"+ metric +"/", {
+    method: "GET"
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      throw new Error('Errore nella richiesta.');
+    }
+  })
+  .then(data => {
+    data = JSON.parse(data);
+    //this['create'+  document.querySelector(".selectMetrics").value +'IndividualWiretaps'](data);
+    changeSizeNodesIndividualeWiretaps(data);
   })
   .catch(error => {
     console.error(error);
@@ -76,6 +105,8 @@ function createGraphIndividualCrimes(data) {
       {
         selector: '.Individuo',
         style: {
+          "width": "mapData(size, 0, 100, 20, 60)",
+          "height": "mapData(size, 0, 100, 20, 60)",
           'background-color': '#03a74f',
           'label': 'data(id)'
         }
@@ -83,6 +114,8 @@ function createGraphIndividualCrimes(data) {
       {
         selector: '.Reato',
         style: {
+          "width": "mapData(size, 0, 100, 20, 60)",
+          "height": "mapData(size, 0, 100, 20, 60)",
           'background-color': '#c70c35',
           'label': 'data(id)'
         }
@@ -124,6 +157,33 @@ function createGraphIndividualCrimes(data) {
   });
 }
 
+function changeSizeNodesIndividualeWiretaps(data){
+  let selectMetrics = document.querySelector(".selectMetrics").value;
+
+  if(selectMetrics == "Default"){
+    data = data.nodes;
+    for(let i = 0; i < data.length; i++)
+      cyIndividualWiretaps.$('#'+ data[i].data.id).data("size",data[i].data.size);
+  }
+  else{
+    data = data.result;
+    if(selectMetrics == "PageRank" || selectMetrics == "WeightedPageRank"|| selectMetrics == "Closeness")
+    for(let i = 0; i < data.length; i++){
+      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size*200);
+    }
+
+    if(selectMetrics == "Betweenness")
+    for(let i = 0; i < data.length; i++){
+      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size/10);
+    }
+
+    if(selectMetrics == "Degree" || selectMetrics == "InDegree" || selectMetrics == "OutDegree")
+    for(let i = 0; i < data.length; i++){
+      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size*3);
+    }
+  }
+}
+
 function changeLayoutIndividualCrimes() {
 
   if(document.querySelector(".selectLayout").value == 'circle'){
@@ -157,7 +217,7 @@ function changeLayoutIndividualCrimes() {
 }
 
 function changeMetricIndividualCrimes(){
-  
+  requestSizeNodesIndividualCrimes();
 }
 
 function checkedNodesAndEdgesIndividualCrimes(){
@@ -291,3 +351,57 @@ function showDetailsOfEdgeIndividualCrimes(data){
     document.querySelector(".infoIndividualCrimesEdgeAggTitle").style.display = "none";
   }
 }
+
+/*function fillSourceAndTargetModalNewCallIndividualCrimes(nodes){
+  let selectSource = document.querySelector(".modalIndividualCrimesSource");
+  let selectTarget = document.querySelector(".modalIndividualCrimesTarget");
+  for (let j = 0; j < nodes.length; j++) {
+    let opt = nodes[j].data.id;
+    let el = new Option(opt, opt);
+
+    if(nodes[j].data.id[0] == 'I')
+      selectSource.appendChild(el);
+
+    if(nodes[j].data.id[0] == 'R')
+      selectTarget.appendChild(el);
+  }
+}
+
+function sendNewCallToBackendIndividualCrimes(){
+  let json;
+
+  json = `{
+                sourceId: ${document.querySelector(".modalIndividualCrimesSource").value},
+                targetiD: ${document.querySelector(".modalIndividualCrimesTarget").value},
+                date: ${document.querySelector(".modalIndividualCrimesDate").value},
+                duration: ${document.querySelector(".modalIndividualCrimesDuration").value},
+                time: ${document.querySelector(".modalIndividualCrimesTime").value},
+                content: ${document.querySelector(".modalIndividualCrimesTextarea").value},
+              }`;
+
+  console.log(json);
+  
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");
+      return response.text();
+    } else {
+      viewToastMessage("Registrazione Chiamata", "Errore nella registrazione della chiamata.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+/*
+  viewToastMessage("Registrazione Codannato/ImputatoDi", "Registrazione avvenuta con successo.", "success");  
+}*/
