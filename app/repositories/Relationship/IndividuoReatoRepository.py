@@ -27,7 +27,7 @@ class IndividuoReatoRepository:
 
             # Creazione della struttura dati JSON compatibile con Cytoscape
             cytoscape_data = {
-                "nodes": [{"data": {"id": node["id"] },"classes": node["classes"]} for node in nodes],
+                "nodes": [{"data": {"id": node["id"] ,"size": 1},"classes": node["classes"]} for node in nodes],
                 "edges": [{"data": edge} for edge in edges]
             }
         
@@ -43,10 +43,8 @@ class IndividuoReatoRepository:
     @staticmethod
     def getIndividuo_o_Reato(id):
         if(id.startswith("I")):
-            print("individuo")
             result=IndividuoRepository.get_node_info_by_nodeId(id)
         else:
-            print("renato")
             result=ReatoRepository.getReato_Info_BynodeId(id)
             
         return result

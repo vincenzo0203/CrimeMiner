@@ -6,7 +6,7 @@
     </div>
     <div class="accordionContainer p-2 bd-highlight">
       <!-- Button trigger modal -->
-      <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalIndividualCrimes">
+      <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalIndividualEnviromentalTapping">
         Inserisci una nuova condanna o imputazione
       </button>-->
       <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -23,7 +23,7 @@
                   <div>
                     Layout
                   </div>
-                  <select class="form-select selectLayout" aria-label="Default select example" onchange="changeLayoutIndividualCrimes();">
+                  <select class="form-select selectLayout" aria-label="Default select example" onchange="changeLayoutIndividualEnviromentalTapping();">
                     <option value="circle" selected>Cerchio</option>
                     <option value="dagre">Dagre</option>
                     <option value="fcose">Force Atlas</option>
@@ -33,7 +33,7 @@
                   <div>
                     Metriche
                   </div>
-                  <select class="form-select selectMetrics" aria-label="Default select example" onchange="changeMetricIndividualCrimes();">
+                  <select class="form-select selectMetrics" aria-label="Default select example" onchange="changeMetricIndividualEnviromentalTapping();">
                     <option value="Default" selected>Default</option>
                     <option value="PageRank">PageRank</option>
                     <option value="WeightedPageRank">Weighted PageRank</option>
@@ -57,97 +57,91 @@
           <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
             <div class="accordion-body">
               <!--Individuo-->
-              <div class="infoIndividualCrimesNodeIndividual">
+              <div class="infoIndividualEnviromentalTappingNodeIndividual">
 
-                <div class="infoIndividualCrimesNodeIndividualId d-flex">
+                <div class="infoIndividualEnviromentalTappingNodeIndividualId d-flex">
                   <div>Identificativo</div>
-                  <div class="infoIndividualCrimesNodeIndividualIdContent"></div>
+                  <div class="infoIndividualEnviromentalTappingNodeIndividualIdContent"></div>
                 </div>
-                <!--<div class="infoIndividualCrimesNodeIndividualSurname d-flex">
+                <!--<div class="infoIndividualEnviromentalTappingNodeIndividualSurname d-flex">
                   <div>Cognome</div>
-                  <div class="infoIndividualCrimesNodeIndividualSurnameContent"></div>
+                  <div class="infoIndividualEnviromentalTappingNodeIndividualSurnameContent"></div>
                 </div>
-                <div class="infoIndividualCrimesNodeIndividualName d-flex">
+                <div class="infoIndividualEnviromentalTappingNodeIndividualName d-flex">
                   <div>Nome</div>
-                  <div class="infoIndividualCrimesNodeIndividualNameContent"></div>
+                  <div class="infoIndividualEnviromentalTappingNodeIndividualNameContent"></div>
                 </div>-->
-                <div class="infoIndividualCrimesNodeIndividualBirth d-flex">
+                <div class="infoIndividualEnviromentalTappingNodeIndividualBirth d-flex">
                   <div>Data Nascita</div>
-                  <div class="infoIndividualCrimesNodeIndividualBirthContent"></div>
+                  <div class="infoIndividualEnviromentalTappingNodeIndividualBirthContent"></div>
                 </div>
-                <div class="infoIndividualCrimesNodeIndividualNation d-flex">
+                <div class="infoIndividualEnviromentalTappingNodeIndividualNation d-flex">
                   <div>Nazione Residenza</div>
-                  <div class="infoIndividualCrimesNodeIndividualNationContent"></div>
+                  <div class="infoIndividualEnviromentalTappingNodeIndividualNationContent"></div>
                 </div>
-                <div class="infoIndividualCrimesNodeIndividualProvince d-flex">
+                <div class="infoIndividualEnviromentalTappingNodeIndividualProvince d-flex">
                   <div>Provincia Residenza</div>
-                  <div class="infoIndividualCrimesNodeIndividualProvinceContent"></div>
+                  <div class="infoIndividualEnviromentalTappingNodeIndividualProvinceContent"></div>
                 </div>
-                <div class="infoIndividualCrimesNodeIndividualResidence d-flex">
+                <div class="infoIndividualEnviromentalTappingNodeIndividualResidence d-flex">
                   <div>Città Residenza</div>
-                  <div class="infoIndividualCrimesNodeIndividualResidenceContent"></div>
+                  <div class="infoIndividualEnviromentalTappingNodeIndividualResidenceContent"></div>
                 </div>
-                <div class="infoIndividualCrimesNodeIndividualAddress d-flex">
+                <div class="infoIndividualEnviromentalTappingNodeIndividualAddress d-flex">
                   <div>Indirizzo Residenza</div>
-                  <div class="infoIndividualCrimesNodeIndividualAddressContent"></div>
+                  <div class="infoIndividualEnviromentalTappingNodeIndividualAddressContent"></div>
                 </div>
               </div>
 
-              <!--Reato-->
-              <div class="infoIndividualCrimesNodeCrime">
+              <!--Intercettazione Ambientale-->
+              <div class="infoIndividualEnviromentalTappingNodeEnviromentalTapping">
 
-                <div class="infoIndividualCrimesNodeCrimeId d-flex">
+                <div class="infoIndividualEnviromentalTappingNodeEnviromentalTappingId d-flex">
                   <div>Identificativo</div>
-                  <div class="infoIndividualCrimesNodeCrimeIdContent"></div>
+                  <div class="infoIndividualEnviromentalTappingNodeEnviromentalTappingIdContent"></div>
                 </div>
-                <div class="infoIndividualCrimesNodeCrimeName d-flex">
-                  <div>Nome</div>
-                  <div class="infoIndividualCrimesNodeCrimeNameContent"></div>
+                <div class="infoIndividualEnviromentalTappingNodeEnviromentalTappingDate d-flex">
+                  <div>Data</div>
+                  <div class="infoIndividualEnviromentalTappingNodeEnviromentalTappingDateContent"></div>
                 </div>
-                <div class="infoIndividualCrimesNodeCrimeNorms d-flex">
-                  <div>Norme</div>
-                  <div class="infoIndividualCrimesNodeCrimeNormsContent"></div>
+                <div class="infoIndividualEnviromentalTappingNodeEnviromentalTappingPlace d-flex">
+                  <div>Luogo</div>
+                  <div class="infoIndividualEnviromentalTappingNodeEnviromentalTappingPlaceContent"></div>
                 </div>
-                <div class="infoIndividualCrimesNodeCrimeMinMonths d-flex">
-                  <div>Mesi Minimi</div>
-                  <div class="infoIndividualCrimesNodeCrimeMinMonthsContent"></div>
-                </div>
-                <div class="infoIndividualCrimesNodeCrimeMaxMonths d-flex">
-                  <div>Mesi Massimi</div>
-                  <div class="infoIndividualCrimesNodeCrimeMaxMonthsContent"></div>
+                <div class="infoIndividualEnviromentalTappingNodeEnviromentalTappingContent d-flex">
+                  <div>Contenuto</div>
+                  <div class="infoIndividualEnviromentalTappingNodeEnviromentalTappingContentContent"></div>
                 </div>
               </div>
 
-              <div class="infoIndividualCrimesEdge">
-                <div class="infoIndividualCrimesEdgeId d-flex">
+              <div class="infoIndividualEnviromentalTappingEdge">
+                <div class="infoIndividualEnviromentalTappingEdgeId d-flex">
                   <div>Identificativo</div>
-                  <div class="infoIndividualCrimesEdgeIdContent"></div>
+                  <div class="infoIndividualEnviromentalTappingEdgeIdContent"></div>
                 </div>
-                <div class="infoIndividualCrimesEdgeIndividual d-flex">
+                <div class="infoIndividualEnviromentalTappingEdgeIndividual d-flex">
                   <div>Individuo</div>
-                  <div class="infoIndividualCrimesEdgeIndividualContent"></div>
+                  <div class="infoIndividualEnviromentalTappingEdgeIndividualContent"></div>
                 </div>
-                <div class="infoIndividualCrimesEdgeCrime d-flex">
+                <div class="infoIndividualEnviromentalTappingEdgeEnviromentalTapping d-flex">
                   <div>Reato</div>
-                  <div class="infoIndividualCrimesEdgeCrimeContent"></div>
+                  <div class="infoIndividualEnviromentalTappingEdgeEnviromentalTappingContent"></div>
                 </div>
-                <div class="infoIndividualCrimesEdgeAggTitle">
-                  <div class="infoIndividualCrimesEdgeAggTitleId d-flex">
-                    id
-                  </div>
-                  <div class="infoIndividualCrimesEdgeAggTitleDescription d-flex">
-                    descrizione
-                  </div>
-                  <div class="infoIndividualCrimesEdgeAggTitleNorms d-flex">
-                    norms
-                  </div>
+                <div class="infoIndividualEnviromentalTappingEdgeMonthsEntered d-flex">
+                  <div>Mesi Inputati</div>
+                  <div class="infoIndividualEnviromentalTappingEdgeMonthsEnteredContent"></div>
                 </div>
-                <div class="infoIndividualCrimesEdgeAggContainer">
-                  
+                <div class="infoIndividualEnviromentalTappingEdgeMonthsSentence d-flex">
+                  <div>Mesi Condanna</div>
+                  <div class="infoIndividualEnviromentalTappingEdgeMonthsSentenceContent"></div>
+                </div>
+                <div class="infoIndividualEnviromentalTappingEdgeMonthsTotal d-flex">
+                  <div>Mesi Totali</div>
+                  <div class="infoIndividualEnviromentalTappingEdgeMonthsTotalContent"></div>
                 </div>
               </div>
 
-              <div class="infoIndividualCrimesNot">
+              <div class="infoIndividualEnviromentalTappingNot">
                 Non ci sono informazioni da visualizzare al momento
               </div>
             </div>
@@ -163,13 +157,13 @@
             <div class="accordion-body">
               <div class="d-flex accordionCheckboxNodeEdge">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" onclick="checkedNodesAndEdgesIndividualCrimes()" id="CheckNodes" checked>
+                  <input class="form-check-input" type="checkbox" value="" onclick="checkedNodesAndEdgesIndividualEnviromentalTapping()" id="CheckNodes" checked>
                   <label class="form-check-label" for="CheckNodes">
                     Nomi Nodi
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" onclick="checkedNodesAndEdgesIndividualCrimes()" id="CheckEdges">
+                  <input class="form-check-input" type="checkbox" value="" onclick="checkedNodesAndEdgesIndividualEnviromentalTapping()" id="CheckEdges">
                   <label class="form-check-label" for="CheckEdges">
                     Nomi Archi
                   </label>
@@ -186,11 +180,11 @@
 
 <!-- Modal -->
 <!--
-<div class="modal fade" id="modalIndividualCrimes" tabindex="-1" aria-labelledby="modalIndividualCrimesLabel" aria-hidden="true">
+<div class="modal fade" id="modalIndividualEnviromentalTapping" tabindex="-1" aria-labelledby="modalIndividualEnviromentalTappingLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="modalIndividualCrimesLabel">Inserimento Condanna/Imputazione</h1>
+        <h1 class="modal-title fs-5" id="modalIndividualEnviromentalTappingLabel">Inserimento Condanna/Imputazione</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -198,13 +192,13 @@
           <div class="modalContainer">
             <div class="mb-3">
               <label for="recipient-source" class="col-form-label">Mittente</label>
-              <select class="form-select modalIndividualCrimesSource" class="form-control" id="recipient-source" aria-label="select example">
+              <select class="form-select modalIndividualEnviromentalTappingSource" class="form-control" id="recipient-source" aria-label="select example">
                 <option selected></option>
               </select>
             </div>
             <div class="mb-3">
               <label for="recipient-target" class="col-form-label">Destinatario</label>
-              <select class="form-select modalIndividualCrimesTarget" class="form-control" id="recipient-target" aria-label="select example">
+              <select class="form-select modalIndividualEnviromentalTappingTarget" class="form-control" id="recipient-target" aria-label="select example">
                 <option selected></option>
               </select>
             </div>
@@ -213,27 +207,27 @@
           <div class="modalContainer">
             <div class="mb-3">
               <label for="recipient-date" class="col-form-label">Data</label>
-              <input type="date" class="form-control modalIndividualCrimesDate" id="recipient-date">
+              <input type="date" class="form-control modalIndividualEnviromentalTappingDate" id="recipient-date">
             </div>
             <div class="mb-3">
               <label for="recipient-duration" class="col-form-label">Durata</label>
-              <input type="time" class="form-control modalIndividualCrimesDuration" id="recipient-duration" step="1">
+              <input type="time" class="form-control modalIndividualEnviromentalTappingDuration" id="recipient-duration" step="1">
             </div>
             <div class="mb-3">
               <label for="recipient-time" class="col-form-label">Ora</label>
-              <input type="time" class="form-control modalIndividualCrimesTime" id="recipient-time" step="1">
+              <input type="time" class="form-control modalIndividualEnviromentalTappingTime" id="recipient-time" step="1">
             </div>
           </div>
           
           <div class="mb-3">
             <label for="message-text" class="col-form-label">Contenuto Chiamata</label>
-            <textarea class="form-control modalIndividualCrimesTextarea" id="message-text"></textarea>
+            <textarea class="form-control modalIndividualEnviromentalTappingTextarea" id="message-text"></textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="sendNewCallToBackendIndividualCrimes()">Save changes</button>
+        <button type="button" class="btn btn-primary" onclick="sendNewCallToBackendIndividualEnviromentalTapping()">Save changes</button>
       </div>
     </div>
   </div>
@@ -244,7 +238,7 @@
 
 <script>
   if (performance.navigation.type === 1 || performance.navigation.type === 2) { 
-    setCookie("page","crimini_individui");
+    setCookie("page","intercettazioni_ambientali_individui");
     window.location.href = "/CrimeMiner/";
   }
 </script>

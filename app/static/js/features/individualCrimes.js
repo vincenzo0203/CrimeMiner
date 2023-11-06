@@ -46,7 +46,7 @@ function requestSizeNodesIndividualCrimes(){
   .then(data => {
     data = JSON.parse(data);
     //this['create'+  document.querySelector(".selectMetrics").value +'IndividualWiretaps'](data);
-    changeSizeNodesIndividualeWiretaps(data);
+    changeSizeNodesIndividualCrimes(data);
   })
   .catch(error => {
     console.error(error);
@@ -157,7 +157,7 @@ function createGraphIndividualCrimes(data) {
   });
 }
 
-function changeSizeNodesIndividualeWiretaps(data){
+function changeSizeNodesIndividualCrimes(data){
   let selectMetrics = document.querySelector(".selectMetrics").value;
 
   if(selectMetrics == "Default"){
@@ -227,11 +227,15 @@ function checkedNodesAndEdgesIndividualCrimes(){
     .resetToDefault()
     .selector('.Individuo')
       .style({
+        "width": "mapData(size, 0, 100, 20, 60)",
+        "height": "mapData(size, 0, 100, 20, 60)",
         'background-color': '#03a74f',
         'label': 'data(id)'
       })
     .selector('.Reato')
       .style({
+        "width": "mapData(size, 0, 100, 20, 60)",
+        "height": "mapData(size, 0, 100, 20, 60)",
         'background-color': '#c70c35',
         'label': 'data(id)'
       })
@@ -242,10 +246,14 @@ function checkedNodesAndEdgesIndividualCrimes(){
     .resetToDefault()
     .selector('.Individuo')
       .style({
+        "width": "mapData(size, 0, 100, 20, 60)",
+        "height": "mapData(size, 0, 100, 20, 60)",
         'background-color': '#03a74f'
       })
     .selector('.Reato')
       .style({
+        "width": "mapData(size, 0, 100, 20, 60)",
+        "height": "mapData(size, 0, 100, 20, 60)",
         'background-color': '#c70c35'
       })
     .update();

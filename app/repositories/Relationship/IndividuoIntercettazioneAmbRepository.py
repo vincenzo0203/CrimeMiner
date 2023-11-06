@@ -1,30 +1,76 @@
+from typing import List
 from app.Neo4jConnection import Neo4jDriver
-import json
 from app.Models.Entity.IndividuoModel import IndividuoModel
 from neomodel import UniqueIdProperty, db
+
+from app.repositories.Entity.IndividuoRepository import IndividuoRepository
+from app.repositories.Entity.IntercettazioneAmbRepository import IntercettazioneAmbRepository
 
 #Questa classe fornisce metodi per eseguire query su un database Neo4j che contiene dati sugli individui e le intercettazioni ambientali.
 class IndividuoIntercettazioneAmbRepository:
 
 
-#Recupera tutti gli individui presenti in intercettazioni ambientali e restituisce i loro ID.
-#Args: none
-# Returns:
-#   list: Una lista di tuple (n, e) rappresentanti gli ID dei nodi Individuo (n) e InterceptionAmb (e).
-
-    @staticmethod
-    def getIndividuiInIntercettazioneAmb():
+    # Recupera un grafo delle relazioni tra individui e intercettazioni (Presente).
+    # Args: none
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni sul grafo.
+    def getGraph_IndividuiIntercettazioneAmb(self) -> List[dict]:
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "MATCH (n:Individuo)-[r:Presente]->(i:IntercettazioneAmb) RETURN n.nodeId AS n, i.nodeId AS e"
-            results = session.run(cypher_query).data()
-            return results
+            individuo_nodes_query = "MATCH (n:Individuo) WHERE (n:Individuo)-[:Presente]->() RETURN DISTINCT n.nodeId AS id, n.entityType AS classes"
+            individuo_nodes = session.run(individuo_nodes_query).data()
 
+            intercettazioni_nodes_query = "MATCH (i:IntercettazioneAmb) WHERE ()-[:Presente]->(i:IntercettazioneAmb) RETURN DISTINCT i.nodeId AS id, i.entityType AS classes"
+            intercettazioni_nodes = session.run(intercettazioni_nodes_query).data()
+
+            nodes = individuo_nodes + intercettazioni_nodes
+
+            # Query per ottenere gli archi
+            edges_query = "MATCH ()-[r]->() WHERE ()-[r:Presente]->() RETURN r.sourceNodeId as source, r.targetNodeId as target, r.edgeId as id"
+            edges = session.run(edges_query).data()
+
+            # Creazione della struttura dati JSON compatibile con Cytoscape
+            cytoscape_data = {
+                "nodes": [{"data": {"id": node["id"] ,"size": 1},"classes": node["classes"]} for node in nodes],
+                "edges": [{"data": edge} for edge in edges]
+            }
+        
+            return cytoscape_data
         except Exception as e:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
         
+    # Trova le informazioni riguardo un Individuo o un'Intercettazione Ambientale tramite un ID
+    # Args: <str> id
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni su tutti gli individui/intercettazioniAmb.
+    @staticmethod
+    def getIndividuo_o_Intercettazione(id):
+        if(id.startswith("IA")):
+            result=IntercettazioneAmbRepository.get_node_info_by_nodeId(id)
+        else:
+            result=IndividuoRepository.get_node_info_by_nodeId(id)
+            
+        return result
 
+    # Recupera le informazioni sull'arco identificato da edge_id
+    # Args:
+    #     edge_id (str): L'ID dell'arco da cercare
+    # Returns:
+    #     list: Una lista di risultati contenenti le informazioni sull'arco.
+
+    @staticmethod
+    def getEdge_Info(edge_id):
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "MATCH ()-[r:Presente]->() WHERE r.edgeId = $edgeId RETURN DISTINCT properties(r) AS r"
+            result = session.run(cypher_query,{"edgeId":edge_id}).data()
+            return result
+          
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []  # o solleva un'eccezione
         
 
     #Calcola la closeness dei vari nodi attraverso l'utilizzo del plugin graph data science di neo4j

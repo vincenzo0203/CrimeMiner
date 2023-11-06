@@ -32,7 +32,7 @@ class IndividuoRepository:
     def get_node_info_by_nodeId(node_id):
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "MATCH (n) WHERE n.nodeId = $nodeId RETURN n"
+            cypher_query = "MATCH (n:Individuo) WHERE n.nodeId = $nodeId RETURN n"
             results = session.run(cypher_query, {"nodeId": node_id}).data()
             return results
         except Exception as e:

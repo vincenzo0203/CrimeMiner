@@ -47,7 +47,7 @@ function requestSizeNodesIndividualWiretaps(){
   .then(data => {
     data = JSON.parse(data);
     //this['create'+  document.querySelector(".selectMetrics").value +'IndividualWiretaps'](data);
-    changeSizeNodesIndividualeWiretaps(data);
+    changeSizeNodesIndividualWiretaps(data);
   })
   .catch(error => {
     console.error(error);
@@ -145,7 +145,7 @@ function createGraphIndividualWiretaps(data) {
   });
 }
 
-function changeSizeNodesIndividualeWiretaps(data){
+function changeSizeNodesIndividualWiretaps(data){
   let selectMetrics = document.querySelector(".selectMetrics").value;
 
   if(selectMetrics == "Default"){

@@ -1,0 +1,37 @@
+.infoIndividualEnviromentalTapping{
+    &NodeIndividual{
+        display: none;
+        flex-direction: column;
+
+        &Id,&Surname,&Name,&Birth,&Nation,&Province,&Residence,&Address{
+            justify-content: space-between;
+            gap: 2rem;
+        }
+    }
+
+    &NodeEnviromentalTapping{
+        display: none;
+        flex-direction: column;
+
+        &Id,&Date,&Place,&Content{
+            justify-content: space-between;
+            gap: 2rem;
+        }
+    }
+
+    &Edge{
+        display: none;
+        flex-direction: column;
+        
+        &Id,&Individual,&EnviromentalTapping,&MonthsEntered,&MonthsSentence,&MonthsTotal{
+            justify-content: space-between;
+            gap: 2rem;
+        }
+    }
+
+    &Not{
+        text-align: center;
+        padding: 1rem;
+    }
+}
+

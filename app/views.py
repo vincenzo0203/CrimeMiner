@@ -9,3 +9,6 @@ def individualWiretaps(request):
 
 def individualCrimes(request):
     return render(request, 'features/individualCrimes.html')
+
+def individualEnviromentalTapping(request):
+    return render(request, 'features/individualEnviromentalTapping.html')
