@@ -33,10 +33,15 @@
                   <div for="recipient-metrics" class="col-form-label">
                     Metriche
                   </div>
-                  <select class="form-select selectLayout" class="form-control" id="recipient-metrics" aria-label="Default select example" onchange="changeMetricIndividualWiretaps();">
-                    <option value="normal" selected>Normal</option>
-                    <option value="beetweness">Beetweness</option>
-                    <option value="closeness">Closeness</option>
+                  <select class="form-select selectMetrics" class="form-control" id="recipient-metrics" aria-label="Default select example" onchange="changeMetricIndividualWiretaps();">
+                    <option value="Default" selected>Default</option>
+                    <option value="PageRank">PageRank</option>
+                    <option value="WeightedPageRank">Weighted PageRank</option>
+                    <option value="Betweenness">Betweenness</option>
+                    <option value="Closeness">Closeness</option>
+                    <option value="Degree">Degree</option>
+                    <option value="InDegree">InDegree</option>
+                    <option value="OutDegree">OutDegree</option>
                   </select>
                 </div>
               </div>

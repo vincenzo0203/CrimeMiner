@@ -5,6 +5,7 @@ function individualWiretaps() {
 }
 
 function requestAllNodesIndividualWiretaps() {
+
   fetch("/CrimeMiner/individuoIntercettazione/findallnodes/", {
     method: "GET"
   })
@@ -17,9 +18,37 @@ function requestAllNodesIndividualWiretaps() {
   })
   .then(data => {
     data = JSON.parse(data);
-    console.log(data)
+    console.log(data);
     createGraphIndividualWiretaps(data);
     fillSourceAndTargetModalNewCallIndividualWiretaps(data.nodes)
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
+
+function requestSizeNodesIndividualWiretaps(){
+  let metric;
+
+  if(document.querySelector(".selectMetrics").value == "Default")
+    metric = "findallnodes";
+  else
+    metric = document.querySelector(".selectMetrics").value;
+
+  fetch("/CrimeMiner/individuoIntercettazione/"+ metric +"/", {
+    method: "GET"
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      throw new Error('Errore nella richiesta.');
+    }
+  })
+  .then(data => {
+    data = JSON.parse(data);
+    //this['create'+  document.querySelector(".selectMetrics").value +'IndividualWiretaps'](data);
+    changeSizeNodesIndividualeWiretaps(data);
   })
   .catch(error => {
     console.error(error);
@@ -74,6 +103,8 @@ function createGraphIndividualWiretaps(data) {
       {
         selector: 'node',
         style: {
+          "width": "mapData(size, 0, 100, 20, 60)",
+          "height": "mapData(size, 0, 100, 20, 60)",
           'background-color': '#03a74f',
           'label': 'data(id)'
         }
@@ -113,6 +144,33 @@ function createGraphIndividualWiretaps(data) {
       event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
     });
   });
+}
+
+function changeSizeNodesIndividualeWiretaps(data){
+  let selectMetrics = document.querySelector(".selectMetrics").value;
+
+  if(selectMetrics == "Default"){
+    data = data.nodes;
+    for(let i = 0; i < data.length; i++)
+      cyIndividualWiretaps.$('#'+ data[i].data.id).data("size",data[i].data.size);
+  }
+  else{
+    data = data.result;
+    if(selectMetrics == "PageRank" || selectMetrics == "WeightedPageRank"|| selectMetrics == "Closeness")
+    for(let i = 0; i < data.length; i++){
+      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size*200);
+    }
+
+    if(selectMetrics == "Betweenness")
+    for(let i = 0; i < data.length; i++){
+      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size/10);
+    }
+
+    if(selectMetrics == "Degree" || selectMetrics == "InDegree" || selectMetrics == "OutDegree")
+    for(let i = 0; i < data.length; i++){
+      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size*3);
+    }
+  }
 }
 
 function changeLayoutIndividualWiretaps() {
@@ -157,7 +215,7 @@ function changeLayoutIndividualWiretaps() {
 }
 
 function changeMetricIndividualWiretaps(){
-  
+  requestSizeNodesIndividualWiretaps();
 }
 
 function checkedNodesAndEdgesIndividualWiretaps(){
@@ -167,6 +225,8 @@ function checkedNodesAndEdgesIndividualWiretaps(){
     .resetToDefault()
     .selector('node')
       .style({
+        "width": "mapData(size, 0, 100, 20, 60)",
+        "height": "mapData(size, 0, 100, 20, 60)",
         'background-color': '#66CCFF',
         'label': 'data(id)'
       })
@@ -177,6 +237,8 @@ function checkedNodesAndEdgesIndividualWiretaps(){
     .resetToDefault()
     .selector('node')
       .style({
+        "width": "mapData(size, 0, 100, 20, 60)",
+        "height": "mapData(size, 0, 100, 20, 60)",
         'background-color': '#66CCFF'
       })
     .update();
