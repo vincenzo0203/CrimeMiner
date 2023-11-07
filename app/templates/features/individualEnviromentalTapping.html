@@ -1,5 +1,13 @@
+{% extends 'dashboard.html' %}
+
 {% load static %}
 
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/features/individualEnviromentalTapping/individualEnviromentalTapping.css' %}">
+<script type="text/javascript" src="{% static 'js/features/individualEnviromentalTapping.js' %}"></script>
+{% endblock %}
+
+{% block content %}
 <div class="d-flex w-100 bd-highlight">
     <div class="cyContainer p-2 flex-grow-1 bd-highlight">
       <div class="cyContent"></div>
@@ -187,68 +195,4 @@
     </div>
     
 </div>
-
-<!-- Modal -->
-<!--
-<div class="modal fade" id="modalIndividualEnviromentalTapping" tabindex="-1" aria-labelledby="modalIndividualEnviromentalTappingLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="modalIndividualEnviromentalTappingLabel">Inserimento Condanna/Imputazione</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="modalContainer">
-            <div class="mb-3">
-              <label for="recipient-source" class="col-form-label">Mittente</label>
-              <select class="form-select modalIndividualEnviromentalTappingSource" class="form-control" id="recipient-source" aria-label="select example">
-                <option selected></option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="recipient-target" class="col-form-label">Destinatario</label>
-              <select class="form-select modalIndividualEnviromentalTappingTarget" class="form-control" id="recipient-target" aria-label="select example">
-                <option selected></option>
-              </select>
-            </div>
-          </div>
-
-          <div class="modalContainer">
-            <div class="mb-3">
-              <label for="recipient-date" class="col-form-label">Data</label>
-              <input type="date" class="form-control modalIndividualEnviromentalTappingDate" id="recipient-date">
-            </div>
-            <div class="mb-3">
-              <label for="recipient-duration" class="col-form-label">Durata</label>
-              <input type="time" class="form-control modalIndividualEnviromentalTappingDuration" id="recipient-duration" step="1">
-            </div>
-            <div class="mb-3">
-              <label for="recipient-time" class="col-form-label">Ora</label>
-              <input type="time" class="form-control modalIndividualEnviromentalTappingTime" id="recipient-time" step="1">
-            </div>
-          </div>
-          
-          <div class="mb-3">
-            <label for="message-text" class="col-form-label">Contenuto Chiamata</label>
-            <textarea class="form-control modalIndividualEnviromentalTappingTextarea" id="message-text"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="sendNewCallToBackendIndividualEnviromentalTapping()">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>-->
-
-<!--Cookie-->
-<script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
-
-<script>
-  if (performance.navigation.type === 1 || performance.navigation.type === 2) { 
-    setCookie("page","intercettazioni_ambientali_individui");
-    window.location.href = "/CrimeMiner/";
-  }
-</script>
+{% endblock %}

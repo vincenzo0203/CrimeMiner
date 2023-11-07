@@ -1,8 +1,11 @@
 let cyIndividualCrimes;
+let cyEdgeTouchedIndividualCrimes  = "";
 
-function individualCrimes() {
-  requestAllNodesIndividualCrimes();
-}
+//funzione che permette di caricare script javascript al caricamento della pagina
+window.onload = function () {
+  document.querySelector(".navbarText").innerHTML = "Reati commessi dagli Individui";
+  requestAllNodesIndividualCrimes();  
+};
 
 function requestAllNodesIndividualCrimes() {
   fetch("/CrimeMiner/individuoReato/findallgraph/", {
@@ -146,14 +149,27 @@ function createGraphIndividualCrimes(data) {
     //questo per l'arco
     cyIndividualCrimes.on('tap', 'edge', function(evt) {
       requestDetailsOfEdgeIndividualCrimes(evt.target.id())
+      if(cyEdgeTouchedIndividualCrimes != "")
+        cyIndividualCrimes.edges("#"+ cyEdgeTouchedIndividualCrimes).style('line-color', '#dfdfdf');
+      cyEdgeTouchedIndividualCrimes = evt.target.id();
+      evt.target.style('line-color', '#FF0000');
+    });
+
+    cyIndividualCrimes.on('tap', function(evt) {
+      if(evt.target._private.container != undefined){
+        cyIndividualCrimes.$("#"+ cyEdgeTouchedIndividualCrimes).style('line-color', '#dfdfdf');
+        cyEdgeTouchedIndividualCrimes = "";
+      }
     });
 
     cyIndividualCrimes.on('mouseover', 'edge', function (event) {
-      event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
+      if(event.target.id() != cyEdgeTouchedIndividualCrimes)
+        event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
     });
     
     cyIndividualCrimes.on('mouseout', 'edge', function (event) {
-      event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
+      if(event.target.id() != cyEdgeTouchedIndividualCrimes)
+        event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
     });
   });
 }
@@ -300,6 +316,9 @@ function showDetailsOfNodeIndividualIndividualCrimes(data){
   document.querySelector(".infoIndividualCrimesNodeIndividualProvinceContent").innerHTML = data.provinciaResidenza;
   document.querySelector(".infoIndividualCrimesNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
   document.querySelector(".infoIndividualCrimesNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
+
+  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
+    document.querySelector(".accordionButtonTwo").click();
 }
 
 function showDetailsOfNodeCrimeIndividualCrimes(data){
@@ -315,6 +334,9 @@ function showDetailsOfNodeCrimeIndividualCrimes(data){
   document.querySelector(".infoIndividualCrimesNodeCrimeNormsContent").innerHTML = data.normeDiRiferimento;
   document.querySelector(".infoIndividualCrimesNodeCrimeMinMonthsContent").innerHTML = data.minMonths;
   document.querySelector(".infoIndividualCrimesNodeCrimeMaxMonthsContent").innerHTML = data.maxMonths;
+
+  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
+    document.querySelector(".accordionButtonTwo").click();
 }
 
 function showDetailsOfEdgeIndividualCrimes(data){
@@ -339,7 +361,6 @@ function showDetailsOfEdgeIndividualCrimes(data){
     document.querySelector(".infoIndividualCrimesEdgeAggTitle").style.display = "flex";
     
     for(let i=0; i<data.agg_id.length; i++){
-      console.log(data.agg_id[0])
       document.querySelector(".infoIndividualCrimesEdgeAggContainer").innerHTML += `
                                                                                       <div class="infoIndividualCrimesEdgeAgg d-flex">
                                                                                         <div class="infoIndividualCrimesEdgeAggId d-flex">
@@ -358,6 +379,9 @@ function showDetailsOfEdgeIndividualCrimes(data){
   else{
     document.querySelector(".infoIndividualCrimesEdgeAggTitle").style.display = "none";
   }
+
+  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
+    document.querySelector(".accordionButtonTwo").click();
 }
 
 function fillPropertyAccordionIndividualCrimes(data){

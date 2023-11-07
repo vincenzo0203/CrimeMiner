@@ -1,8 +1,11 @@
 let cyIndividualCrimesEnviromentalTapping;
+let cyEdgeTouchedIndividualCrimesEnviromentalTapping  = "";
 
-function individualCrimesEnviromentalTapping() {
-  requestAllNodesIndividualCrimesEnviromentalTapping();
-}
+//funzione che permette di caricare script javascript al caricamento della pagina
+window.onload = function () {
+  document.querySelector(".navbarText").innerHTML = "Intercettazione Ambientale e Reati commessi dagli Individui";
+  requestAllNodesIndividualCrimesEnviromentalTapping();   
+};
 
 function requestAllNodesIndividualCrimesEnviromentalTapping() {
   fetch("/CrimeMiner/individuoReatoIntercettazioneAmb/findallgraph/", {
@@ -17,7 +20,6 @@ function requestAllNodesIndividualCrimesEnviromentalTapping() {
   })
   .then(data => {
     data = JSON.parse(data);
-    console.log(data)
     createGraphIndividualCrimesEnviromentalTapping(data);
     fillPropertyAccordionIndividualCrimesEnviromentalTapping(data);
     //fillSourceAndTargetModalNewCallIndividualCrimesEnviromentalTapping(data.nodes)
@@ -157,14 +159,27 @@ function createGraphIndividualCrimesEnviromentalTapping(data) {
     //questo per l'arco
     cyIndividualCrimesEnviromentalTapping.on('tap', 'edge', function(evt) {
       requestDetailsOfEdgeIndividualCrimesEnviromentalTapping(evt.target.id())
+      if(cyEdgeTouchedIndividualCrimesEnviromentalTapping != "")
+        cyIndividualCrimesEnviromentalTapping.edges("#"+ cyEdgeTouchedIndividualCrimesEnviromentalTapping).style('line-color', '#dfdfdf');
+      cyEdgeTouchedIndividualCrimesEnviromentalTapping = evt.target.id();
+      evt.target.style('line-color', '#FF0000');
+    });
+
+    cyIndividualCrimesEnviromentalTapping.on('tap', function(evt) {
+      if(evt.target._private.container != undefined){
+        cyIndividualCrimesEnviromentalTapping.$("#"+ cyEdgeTouchedIndividualCrimesEnviromentalTapping).style('line-color', '#dfdfdf');
+        cyEdgeTouchedIndividualCrimesEnviromentalTapping = "";
+      }
     });
 
     cyIndividualCrimesEnviromentalTapping.on('mouseover', 'edge', function (event) {
-      event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
+      if(event.target.id() != cyEdgeTouchedIndividualCrimesEnviromentalTapping)
+        event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
     });
     
     cyIndividualCrimesEnviromentalTapping.on('mouseout', 'edge', function (event) {
-      event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
+      if(event.target.id() != cyEdgeTouchedIndividualCrimesEnviromentalTapping)
+        event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
     });
   });
 }
@@ -309,7 +324,9 @@ function checkedNodesAndEdgesIndividualCrimesEnviromentalTapping(){
 }
 
 function showDetailsOfNodeIndividualIndividualCrimesEnviromentalTapping(data){
-  document.querySelector(".infoIndividualCrimesEnviromentalTappingEdge").style.display = "none";
+  document.querySelector(".infoIndividualCrimesEnviromentalTappingEdgeIndividual").style.display = "none";
+  document.querySelector(".infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTapping").style.display = "none";
+  document.querySelector(".infoIndividualCrimesEnviromentalTappingEdgeIndividualCrime").style.display = "none";
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNot").style.display = "none";
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeEnviromentalTapping").style.display = "none";
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeCrime").style.display = "none";
@@ -325,6 +342,9 @@ function showDetailsOfNodeIndividualIndividualCrimesEnviromentalTapping(data){
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualProvinceContent").innerHTML = data.provinciaResidenza;
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
+
+  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
+    document.querySelector(".accordionButtonTwo").click();
 }
 
 function showDetailsOfNodeEnviromentalTappingIndividualCrimesEnviromentalTapping(data){
@@ -342,6 +362,9 @@ function showDetailsOfNodeEnviromentalTappingIndividualCrimesEnviromentalTapping
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeEnviromentalTappingDateContent").innerHTML = data.data;
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeEnviromentalTappingPlaceContent").innerHTML = data.luogo;
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeEnviromentalTappingContentContent").innerHTML = data.contenuto;
+
+  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
+    document.querySelector(".accordionButtonTwo").click();
 }
 
 function showDetailsOfNodeCrimeIndividualCrimesEnviromentalTapping(data){
@@ -360,6 +383,9 @@ function showDetailsOfNodeCrimeIndividualCrimesEnviromentalTapping(data){
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeCrimeNormsContent").innerHTML = data.normeDiRiferimento;
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeCrimeMinMonthsContent").innerHTML = data.minMonths;
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeCrimeMaxMonthsContent").innerHTML = data.maxMonths;
+
+  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
+    document.querySelector(".accordionButtonTwo").click();
 }
 
 function showDetailsOfEdgeIndividualCrimesEnviromentalTapping(data){
@@ -416,7 +442,7 @@ function showDetailsOfEdgeIndividualCrimesEnviromentalTapping(data){
       }
     }
     else{
-      document.querySelector(".infoIndividualCrimesEnviromentalTappingEdgeAggTitle").style.display = "none";
+      document.querySelector(".infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeAggTitle").style.display = "none";
     }
 
     if(data.entityType == "ImputatoDi"){}
@@ -440,6 +466,9 @@ function showDetailsOfEdgeIndividualCrimesEnviromentalTapping(data){
     document.querySelector(".infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingMonthsSentenceContent").innerHTML = data.mesiCondanna;
     document.querySelector(".infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingMonthsTotalContent").innerHTML = data.mesiTotali;
   }
+
+  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
+    document.querySelector(".accordionButtonTwo").click();
 }
 
 function fillPropertyAccordionIndividualCrimesEnviromentalTapping(data){

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CrimeMiner</title>
@@ -18,11 +18,11 @@
     <script type="text/javascript" src="{% static 'layout-base/layout-base.js' %}"></script>
     <script type="text/javascript" src="{% static 'cose-base/cose-base.js' %}"></script>
     <script type="text/javascript" src="{% static 'cytoscape-fcose/cytoscape-fcose.js' %}"></script>
-    
+
     <!--Cytoscape Dagre Library-->
     <script type="text/javascript" src="{% static 'dagre/dist/dagre.js' %}"></script>
     <script type="text/javascript" src="{% static 'cytoscape-dagre/cytoscape-dagre.js' %}"></script>
-    
+
     <!--Cookie-->
     <script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
 
@@ -39,98 +39,113 @@
 
     <!--Generic Layout of graph page-->
     <link rel="stylesheet" type="text/css" href="{% static 'css/features/layoutPageGraph.css' %}">
-    
-    <!--Individual Wiretaps-->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/features/individualWiretaps/individualWiretaps.css' %}">
-    <script type="text/javascript" src="{% static 'js/features/individualWiretaps.js' %}"></script>
 
-    <!--Individual Crimes-->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/features/individualCrimes/individualCrimes.css' %}">
-    <script type="text/javascript" src="{% static 'js/features/individualCrimes.js' %}"></script>
+    {% block head %}
+    {% endblock %}
 
-    <!--Individual Enviromental Tapping-->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/features/individualEnviromentalTapping/individualEnviromentalTapping.css' %}">
-    <script type="text/javascript" src="{% static 'js/features/individualEnviromentalTapping.js' %}"></script>
+  </head>
 
-    <!--Individual Crimes Enviromental Tapping-->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/features/IndividualCrimesEnviromentalTapping/IndividualCrimesEnviromentalTapping.css' %}">
-    <script type="text/javascript" src="{% static 'js/features/IndividualCrimesEnviromentalTapping.js' %}"></script>
-
-
-</head>
-
-<body>
+  <body>
 
     <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+      <div class="container-fluid">
+        <!--<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
                 aria-controls="offcanvasScrolling">
                 <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbarLogoContainer" href="#">
-              <img class="navbarLogo" src="{% static 'img/logo.png' %}">
-            </a>
+            </button>-->
 
-            <div class="offcanvas offcanvas-start d-block sidebar" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-                id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-                <!--se viene inserito il bottone del pinn, cambiare offcanvas-start con offcanvas-end, se i pulsanti dovessero essere switchati, inserire il pulsante commentato prima dell'altro-->
-                <div class="offcanvas-header offcanvas-start"> 
-                    
+        <div class="navbarText">
 
-                    <div>
-                        <button type="button" class="btn text-reset arrowLeftMenu" data-bs-dismiss="offcanvas" aria-label="Close">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="sidebarIcon" fill="currentColor"
-                                class="bi bi-arrow-left" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                    d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
-                            </svg>
-                        </button>
-                    </div>
-                    
-                    <!--Questo è il bottone per pinnare il menu, le sue funzioni stanno in dashboard.js-->
-                    <!--<button type="button" class="btn btnPinnableMenu" onclick="pinnableMenu()">
-                    </button>-->
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-end">
-
-                      <!-- questo tag li deve essere copiato per inserire altri menu a discesa-->
-                      <li class="nav-item">
-                        <a class="nav-link menuItem" href="#graphVisualization" aria-controls="#graphVisualization" role="button" data-bs-toggle="collapse" data-toggle="collapse">
-                          <div class="d-flex justify-content-between">
-                            <div class="d-flex align-items-center sidebarItem">
-                              <img class="sidebarIcon" src="{% static 'img/dashboardHeader/graphImg.png' %}">
-                              <div>Visualizzazione Grafici</div>
-                            </div>
-                            <div class="sidebarArrowContainer">
-                              <svg xmlns="http://www.w3.org/2000/svg" class="sidebarIconArrow sidebarIconToggleRight" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                              </svg>
-                            </div>
-                          </div>
-                        </a>
-                        <div class="sidebarCollapseMenu collapse multi-collapse" id="graphVisualization">
-                          <button type="button" class="sidebarCollapseItem" onclick="requestPage('chiamate_individui', 'chiamate_individui', 'yes')"> Individui/Intercettazioni</button>
-                          <button type="button" class="sidebarCollapseItem" onclick="requestPage('crimini_individui', 'crimini_individui', 'yes')"> Individui/Crimini</button>
-                          <button type="button" class="sidebarCollapseItem" onclick="requestPage('intercettazioni_ambientali_individui', 'intercettazioni_ambientali_individui', 'yes')"> Individui/Intercettazione Ambientale</button>
-                          <button type="button" class="sidebarCollapseItem" onclick="requestPage('intercettazioni_ambientali_crimini_individui', 'intercettazioni_ambientali_crimini_individui', 'yes')"> Individui e Crimini/Intercettazione Ambientale</button>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-            </div>
         </div>
+        
+        <a class="navbarLogoContainer" href="#">
+          <img class="navbarLogo" src="{% static 'img/logo.png' %}">
+        </a>
+      </div>
     </nav>
-
-    <!--Barra di caricamento delle pagine-->
-    <div class="loadingContainer">
-      <div class="loadingContent"></div>
-    </div>
     
-    <!--Qui verranno inserite le varie pagine-->
-    <div class="pageContent">
-      
+    <div class="sidebar">
+      <div class="sidebarContainer">
+        <ul class="sidebarUl">
+
+          <!-- questo tag li deve essere copiato per inserire altri menu a discesa-->
+          <li class="nav-item">
+            <a class="nav-link sidebarCollapse" href="#graphVisualization" aria-controls="#graphVisualization" role="button"
+              data-bs-toggle="collapse" data-toggle="collapse">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center sidebarItem">
+                  <img class="sidebarIcon" src="{% static 'img/dashboardHeader/graphImg.png' %}">
+                  <div>Visualizzazione Grafici</div>
+                </div>
+                <div class="sidebarArrowContainer">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="sidebarIconArrow sidebarIconToggleRight"
+                    fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                      d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                  </svg>
+                </div>
+              </div>
+            </a>
+            <div class="sidebarCollapseMenu collapse multi-collapse" id="graphVisualization">
+              <!--<button type="button" class="sidebarCollapseItem" onclick="requestPage('chiamate_individui', 'chiamate_individui', 'yes')"> Individui/Intercettazioni</button>
+                <button type="button" class="sidebarCollapseItem" onclick="requestPage('crimini_individui', 'crimini_individui', 'yes')"> Individui/Crimini</button>
+                <button type="button" class="sidebarCollapseItem" onclick="requestPage('intercettazioni_ambientali_individui', 'intercettazioni_ambientali_individui', 'yes')"> Individui/Intercettazione Ambientale</button>
+                <button type="button" class="sidebarCollapseItem" onclick="requestPage('intercettazioni_ambientali_crimini_individui', 'intercettazioni_ambientali_crimini_individui', 'yes')"> Individui e Crimini/Intercettazione Ambientale</button>-->
+              <a class="sidebarCollapseItem" href="{% url 'individualWiretaps' %}">
+                <div>
+                  <img class="sidebarCollapseItemImage" src="{% static 'img/dashboardHeader/individualWiretaps.png' %}">
+                </div>
+                <div class="sidebarCollapseItemText">
+                  Individui/Intercettazioni
+                </div>
+              </a>
+              <a class="sidebarCollapseItem" href="{% url 'individualCrimes' %}">
+                <div>
+                  <img class="sidebarCollapseItemImage" src="{% static 'img/dashboardHeader/individualCrimes.png' %}">
+                </div>
+                <div class="sidebarCollapseItemText">
+                  Individui/Crimini
+                </div>
+              </a>
+              <a class="sidebarCollapseItem" href="{% url 'individualEnviromentalTapping' %}">
+                <div>
+                  <img class="sidebarCollapseItemImage" src="{% static 'img/dashboardHeader/individualEnviromentalTapping.png' %}">
+                </div>
+                <div class="sidebarCollapseItemText">
+                  Individui/Intercettazione Ambientale
+                </div>
+              </a>
+              <a class="sidebarCollapseItem" href="{% url 'individualCrimesEnviromentalTapping' %}">
+                
+                <div>
+                  <img class="sidebarCollapseItemImage" src="{% static 'img/dashboardHeader/individualCrimesEnviromentalTapping.png' %}">
+                </div>
+                <div class="sidebarCollapseItemText">
+                  Individui e Crimini/Intercettazione Ambientale
+                </div>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <div class="pageContainer">
+      
+
+      <!--Barra di caricamento delle pagine-->
+      <div class="loadingContainer">
+        <div class="loadingContent"></div>
+      </div>
+
+      <!--Qui verranno inserite le varie pagine-->
+      <div class="pageContent">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+
+
 
     <!--Messaggi di notifica per le operazioni salvataggio-->
     <div class="toast-container position-fixed top-0 end-0 p-3">
@@ -142,10 +157,10 @@
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">
-          
+
         </div>
       </div>
     </div>
-</body>
+  </body>
 
 </html>

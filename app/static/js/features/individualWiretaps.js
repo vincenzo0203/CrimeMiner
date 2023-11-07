@@ -1,8 +1,12 @@
 let cyIndividualWiretaps;
+let cyEdgeTouchedIndividualWiretaps  = "";
 
-function individualWiretaps() {
-  requestAllNodesIndividualWiretaps();
-}
+//funzione che permette di caricare script javascript al caricamento della pagina
+window.onload = function () {
+  document.querySelector(".navbarText").innerHTML = "Intercettazione delle chiamate tra gli Individui";
+  loadPage(2500);
+  requestAllNodesIndividualWiretaps();    
+};
 
 function requestAllNodesIndividualWiretaps() {
 
@@ -135,14 +139,27 @@ function createGraphIndividualWiretaps(data) {
     //questo per l'arco
     cyIndividualWiretaps.on('tap', 'edge', function(evt) {
       requestDetailsOfEdgeIndividualWiretaps(evt.target.id())
+      if(cyEdgeTouchedIndividualWiretaps != "")
+      cyIndividualWiretaps.edges("#"+ cyEdgeTouchedIndividualWiretaps).style('line-color', '#dfdfdf');
+      cyEdgeTouchedIndividualWiretaps = evt.target.id();
+      evt.target.style('line-color', '#FF0000');
+    });
+
+    cyIndividualWiretaps.on('tap', function(evt) {
+      if(evt.target._private.container != undefined){
+        cyIndividualWiretaps.$("#"+ cyEdgeTouchedIndividualWiretaps).style('line-color', '#dfdfdf');
+        cyEdgeTouchedIndividualWiretaps = "";
+      }
     });
 
     cyIndividualWiretaps.on('mouseover', 'edge', function (event) {
-      event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
+      if(event.target.id() != cyEdgeTouchedIndividualWiretaps)
+        event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
     });
     
     cyIndividualWiretaps.on('mouseout', 'edge', function (event) {
-      event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
+      if(event.target.id() != cyEdgeTouchedIndividualWiretaps)
+        event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
     });
   });
 }
@@ -284,6 +301,9 @@ function showDetailsOfNodeIndividualWiretaps(data){
   document.querySelector(".infoIndividualWiretapsNodeProvinceContent").innerHTML = data.provinciaResidenza;
   document.querySelector(".infoIndividualWiretapsNodeResidenceContent").innerHTML = data.cittaResidenza;
   document.querySelector(".infoIndividualWiretapsNodeAddressContent").innerHTML = data.indirizzoResidenza;
+
+  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
+    document.querySelector(".accordionButtonTwo").click();
 }
 
 function showDetailsOfEdgeIndividualWiretaps(data){
@@ -299,11 +319,10 @@ function showDetailsOfEdgeIndividualWiretaps(data){
   document.querySelector(".infoIndividualWiretapsEdgeTimeContent").innerHTML = data.ora;
   document.querySelector(".infoIndividualWiretapsEdgeSourceContent").innerHTML = data.sourceNodeId;
   document.querySelector(".infoIndividualWiretapsEdgeTargetContent").innerHTML = data.targetNodeId;
+  document.querySelector(".infoIndividualWiretapsEdgeContentContent").innerHTML = data.contenuto;
 
-  //if(data.contenuto.substring(0,400) == data.contenuto)
-    document.querySelector(".infoIndividualWiretapsEdgeContentContent").innerHTML = data.contenuto;
-  /*else
-    document.querySelector(".infoIndividualWiretapsEdgeContentContent").innerHTML = data.contenuto.substring(0,300) + " ..."; */
+  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
+    document.querySelector(".accordionButtonTwo").click();
 }
 
 function fillPropertyAccordionIndividualWiretaps(data){

@@ -1,5 +1,13 @@
+{% extends 'dashboard.html' %}
+
 {% load static %}
 
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/features/individualWiretaps/individualWiretaps.css' %}">
+<script type="text/javascript" src="{% static 'js/features/individualWiretaps.js' %}"></script>
+{% endblock %}
+
+{% block content %}
 <div class="d-flex w-100 bd-highlight">
   <div class="cyContainer p-2 flex-grow-1 bd-highlight">
       <div class="cyContent"></div>
@@ -223,13 +231,4 @@
     </div>
   </div>
 </div>
-
-<!--Cookie-->
-<script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
-
-<script>
-  if (performance.navigation.type === 1 || performance.navigation.type === 2) { 
-    setCookie("page","chiamate_individui");
-    window.location.href = "/CrimeMiner/";
-  }
-</script>
+{% endblock %}

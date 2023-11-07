@@ -1,8 +1,11 @@
 let cyIndividualEnviromentalTapping;
+let cyEdgeTouchedIndividualEnviromentalTapping  = "";
 
-function individualEnviromentalTapping() {
-  requestAllNodesIndividualEnviromentalTapping();
-}
+//funzione che permette di caricare script javascript al caricamento della pagina
+window.onload = function () {
+  document.querySelector(".navbarText").innerHTML = "Intercettazione Ambientale tra gli Individui";
+  requestAllNodesIndividualEnviromentalTapping();   
+};
 
 function requestAllNodesIndividualEnviromentalTapping() {
   fetch("/CrimeMiner/individuoIntercettazioneAmb/graphall/", {
@@ -147,14 +150,27 @@ function createGraphIndividualEnviromentalTapping(data) {
     //questo per l'arco
     cyIndividualEnviromentalTapping.on('tap', 'edge', function(evt) {
       requestDetailsOfEdgeIndividualEnviromentalTapping(evt.target.id())
+      if(cyEdgeTouchedIndividualEnviromentalTapping != "")
+        cyIndividualEnviromentalTapping.edges("#"+ cyEdgeTouchedIndividualEnviromentalTapping).style('line-color', '#dfdfdf');
+      cyEdgeTouchedIndividualEnviromentalTapping = evt.target.id();
+      evt.target.style('line-color', '#FF0000');
+    });
+
+    cyIndividualEnviromentalTapping.on('tap', function(evt) {
+      if(evt.target._private.container != undefined){
+        cyIndividualEnviromentalTapping.$("#"+ cyEdgeTouchedIndividualEnviromentalTapping).style('line-color', '#dfdfdf');
+        cyEdgeTouchedIndividualEnviromentalTapping = "";
+      }
     });
 
     cyIndividualEnviromentalTapping.on('mouseover', 'edge', function (event) {
-      event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
+      if(event.target.id() != cyEdgeTouchedIndividualEnviromentalTapping)
+        event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
     });
     
     cyIndividualEnviromentalTapping.on('mouseout', 'edge', function (event) {
-      event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
+      if(event.target.id() != cyEdgeTouchedIndividualEnviromentalTapping)
+        event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
     });
   });
 }
@@ -301,6 +317,9 @@ function showDetailsOfNodeIndividualIndividualEnviromentalTapping(data){
   document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualProvinceContent").innerHTML = data.provinciaResidenza;
   document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
   document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
+
+  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
+    document.querySelector(".accordionButtonTwo").click();
 }
 
 function showDetailsOfNodeEnviromentalTappingIndividualEnviromentalTapping(data){
@@ -315,6 +334,9 @@ function showDetailsOfNodeEnviromentalTappingIndividualEnviromentalTapping(data)
   document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingDateContent").innerHTML = data.data;
   document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingPlaceContent").innerHTML = data.luogo;
   document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingContentContent").innerHTML = data.contenuto;
+
+  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
+    document.querySelector(".accordionButtonTwo").click();
 }
 
 function showDetailsOfEdgeIndividualEnviromentalTapping(data){
@@ -331,6 +353,9 @@ function showDetailsOfEdgeIndividualEnviromentalTapping(data){
   document.querySelector(".infoIndividualEnviromentalTappingEdgeMonthsEnteredContent").innerHTML = data.mesiImputati;
   document.querySelector(".infoIndividualEnviromentalTappingEdgeMonthsSentenceContent").innerHTML = data.mesiCondanna;
   document.querySelector(".infoIndividualEnviromentalTappingEdgeMonthsTotalContent").innerHTML = data.mesiTotali;
+
+  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
+    document.querySelector(".accordionButtonTwo").click();
 }
 
 function fillPropertyAccordionIndividualEnviromentalTapping(data){
