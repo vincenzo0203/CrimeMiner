@@ -10,7 +10,7 @@
         display: flex;
         flex-direction: column;
         gap:1rem;
-        width:25rem;
+        width:24rem;
         height: 92vh;
         overflow-x: hidden;
         overflow-y: auto;
@@ -48,8 +48,27 @@
         color: black;
     }
 
-    &LayoutMetrics,&CheckboxNodeEdge{
+    &NumberNodesEdges{
+        display: flex;
+        flex-direction: column;
+
+        &Nodes{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &Edges{
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    &LayoutMetrics{
         justify-content: space-between;
+    }
+
+    &CheckboxNodeEdge{
+        justify-content: space-around;
     }
 }
 

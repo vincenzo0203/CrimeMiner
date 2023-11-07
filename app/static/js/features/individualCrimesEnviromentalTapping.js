@@ -19,6 +19,7 @@ function requestAllNodesIndividualCrimesEnviromentalTapping() {
     data = JSON.parse(data);
     console.log(data)
     createGraphIndividualCrimesEnviromentalTapping(data);
+    fillPropertyAccordionIndividualCrimesEnviromentalTapping(data);
     //fillSourceAndTargetModalNewCallIndividualCrimesEnviromentalTapping(data.nodes)
   })
   .catch(error => {
@@ -439,6 +440,11 @@ function showDetailsOfEdgeIndividualCrimesEnviromentalTapping(data){
     document.querySelector(".infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingMonthsSentenceContent").innerHTML = data.mesiCondanna;
     document.querySelector(".infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingMonthsTotalContent").innerHTML = data.mesiTotali;
   }
+}
+
+function fillPropertyAccordionIndividualCrimesEnviromentalTapping(data){
+  document.querySelector(".accordionNumberNodesEdgesNodesContent").innerHTML = data.nodes.length;
+  document.querySelector(".accordionNumberNodesEdgesEdgesContent").innerHTML = data.edges.length;
 }
 
 /*function fillSourceAndTargetModalNewCallIndividualCrimesEnviromentalTapping(nodes){

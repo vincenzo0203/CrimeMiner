@@ -18,6 +18,7 @@ function requestAllNodesIndividualCrimes() {
   .then(data => {
     data = JSON.parse(data);
     createGraphIndividualCrimes(data);
+    fillPropertyAccordionIndividualCrimes(data);
     //fillSourceAndTargetModalNewCallIndividualCrimes(data.nodes)
   })
   .catch(error => {
@@ -317,7 +318,6 @@ function showDetailsOfNodeCrimeIndividualCrimes(data){
 }
 
 function showDetailsOfEdgeIndividualCrimes(data){
-  console.log(data);
   document.querySelector(".infoIndividualCrimesNodeCrime").style.display = "none";
   document.querySelector(".infoIndividualCrimesNot").style.display = "none";
   document.querySelector(".infoIndividualCrimesNodeIndividual").style.display = "none";
@@ -358,6 +358,11 @@ function showDetailsOfEdgeIndividualCrimes(data){
   else{
     document.querySelector(".infoIndividualCrimesEdgeAggTitle").style.display = "none";
   }
+}
+
+function fillPropertyAccordionIndividualCrimes(data){
+  document.querySelector(".accordionNumberNodesEdgesNodesContent").innerHTML = data.nodes.length;
+  document.querySelector(".accordionNumberNodesEdgesEdgesContent").innerHTML = data.edges.length;
 }
 
 /*function fillSourceAndTargetModalNewCallIndividualCrimes(nodes){

@@ -19,6 +19,7 @@ function requestAllNodesIndividualWiretaps() {
   .then(data => {
     data = JSON.parse(data);
     createGraphIndividualWiretaps(data);
+    fillPropertyAccordionIndividualWiretaps(data);
     fillSourceAndTargetModalNewCallIndividualWiretaps(data.nodes)
   })
   .catch(error => {
@@ -95,6 +96,7 @@ function requestDetailsOfEdgeIndividualWiretaps(id){
 }
 
 function createGraphIndividualWiretaps(data) {
+
   cyIndividualWiretaps = cytoscape({
     container: document.querySelector('.cyContent'),
     elements: data,
@@ -302,6 +304,11 @@ function showDetailsOfEdgeIndividualWiretaps(data){
     document.querySelector(".infoIndividualWiretapsEdgeContentContent").innerHTML = data.contenuto;
   /*else
     document.querySelector(".infoIndividualWiretapsEdgeContentContent").innerHTML = data.contenuto.substring(0,300) + " ..."; */
+}
+
+function fillPropertyAccordionIndividualWiretaps(data){
+  document.querySelector(".accordionNumberNodesEdgesNodesContent").innerHTML = data.nodes.length;
+  document.querySelector(".accordionNumberNodesEdgesEdgesContent").innerHTML = data.edges.length;
 }
 
 function fillSourceAndTargetModalNewCallIndividualWiretaps(nodes){

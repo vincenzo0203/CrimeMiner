@@ -18,31 +18,14 @@
           </h2>
           <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
             <div class="accordion-body">
-              <div class="d-flex accordionLayoutMetrics">
-                <div class="d-flex flex-column">
-                  <div>
-                    Layout
-                  </div>
-                  <select class="form-select selectLayout" aria-label="Default select example" onchange="changeLayoutIndividualEnviromentalTapping();">
-                    <option value="circle" selected>Cerchio</option>
-                    <option value="dagre">Dagre</option>
-                    <option value="fcose">Force Atlas</option>
-                  </select>
+              <div class="accordionNumberNodesEdges">
+                <div class="accordionNumberNodesEdgesNodes">
+                  <div>Nodi</div>
+                  <div class="accordionNumberNodesEdgesNodesContent"></div>
                 </div>
-                <div class="d-flex flex-column">
-                  <div>
-                    Metriche
-                  </div>
-                  <select class="form-select selectMetrics" aria-label="Default select example" onchange="changeMetricIndividualEnviromentalTapping();">
-                    <option value="Default" selected>Default</option>
-                    <option value="PageRank">PageRank</option>
-                    <option value="WeightedPageRank">Weighted PageRank</option>
-                    <option value="Betweenness">Betweenness</option>
-                    <option value="Closeness">Closeness</option>
-                    <option value="Degree">Degree</option>
-                    <option value="InDegree">InDegree</option>
-                    <option value="OutDegree">OutDegree</option>
-                  </select>
+                <div class="accordionNumberNodesEdgesEdges">
+                  <div>Archi</div>
+                  <div class="accordionNumberNodesEdgesEdgesContent"></div>
                 </div>
               </div>
             </div>
@@ -167,6 +150,33 @@
                   <label class="form-check-label" for="CheckEdges">
                     Nomi Archi
                   </label>
+                </div>
+              </div>
+              <div class="d-flex accordionLayoutMetrics">
+                <div class="d-flex flex-column">
+                  <div>
+                    Layout
+                  </div>
+                  <select class="form-select selectLayout" aria-label="Default select example" onchange="changeLayoutIndividualEnviromentalTapping();">
+                    <option value="circle" selected>Cerchio</option>
+                    <option value="dagre">Dagre</option>
+                    <option value="fcose">Force Atlas</option>
+                  </select>
+                </div>
+                <div class="d-flex flex-column">
+                  <div>
+                    Metriche
+                  </div>
+                  <select class="form-select selectMetrics" aria-label="Default select example" onchange="changeMetricIndividualEnviromentalTapping();">
+                    <option value="Default" selected>Default</option>
+                    <option value="PageRank">PageRank</option>
+                    <option value="WeightedPageRank">Weighted PageRank</option>
+                    <option value="Betweenness">Betweenness</option>
+                    <option value="Closeness">Closeness</option>
+                    <option value="Degree">Degree</option>
+                    <option value="InDegree">InDegree</option>
+                    <option value="OutDegree">OutDegree</option>
+                  </select>
                 </div>
               </div>
             </div>

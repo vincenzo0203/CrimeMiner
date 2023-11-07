@@ -18,6 +18,7 @@ function requestAllNodesIndividualEnviromentalTapping() {
   .then(data => {
     data = JSON.parse(data);
     createGraphIndividualEnviromentalTapping(data.result);
+    fillPropertyAccordionIndividualEnviromentalTapping(data.result);
     //fillSourceAndTargetModalNewCallIndividualEnviromentalTapping(data.nodes)
   })
   .catch(error => {
@@ -330,6 +331,11 @@ function showDetailsOfEdgeIndividualEnviromentalTapping(data){
   document.querySelector(".infoIndividualEnviromentalTappingEdgeMonthsEnteredContent").innerHTML = data.mesiImputati;
   document.querySelector(".infoIndividualEnviromentalTappingEdgeMonthsSentenceContent").innerHTML = data.mesiCondanna;
   document.querySelector(".infoIndividualEnviromentalTappingEdgeMonthsTotalContent").innerHTML = data.mesiTotali;
+}
+
+function fillPropertyAccordionIndividualEnviromentalTapping(data){
+  document.querySelector(".accordionNumberNodesEdgesNodesContent").innerHTML = data.nodes.length;
+  document.querySelector(".accordionNumberNodesEdgesEdgesContent").innerHTML = data.edges.length;
 }
 
 /*function fillSourceAndTargetModalNewCallIndividualEnviromentalTapping(nodes){
