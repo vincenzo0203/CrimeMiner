@@ -52,6 +52,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/features/individualEnviromentalTapping/individualEnviromentalTapping.css' %}">
     <script type="text/javascript" src="{% static 'js/features/individualEnviromentalTapping.js' %}"></script>
 
+    <!--Individual Crimes Enviromental Tapping-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/features/IndividualCrimesEnviromentalTapping/IndividualCrimesEnviromentalTapping.css' %}">
+    <script type="text/javascript" src="{% static 'js/features/IndividualCrimesEnviromentalTapping.js' %}"></script>
+
 
 </head>
 
@@ -109,7 +113,7 @@
                           <button type="button" class="sidebarCollapseItem" onclick="requestPage('chiamate_individui', 'chiamate_individui', 'yes')"> Individui/Intercettazioni</button>
                           <button type="button" class="sidebarCollapseItem" onclick="requestPage('crimini_individui', 'crimini_individui', 'yes')"> Individui/Crimini</button>
                           <button type="button" class="sidebarCollapseItem" onclick="requestPage('intercettazioni_ambientali_individui', 'intercettazioni_ambientali_individui', 'yes')"> Individui/Intercettazione Ambientale</button>
-                          <a class="sidebarCollapseItem" href="#">Individui e Crimini/Intercettazione Ambientale</a>
+                          <button type="button" class="sidebarCollapseItem" onclick="requestPage('intercettazioni_ambientali_crimini_individui', 'intercettazioni_ambientali_crimini_individui', 'yes')"> Individui e Crimini/Intercettazione Ambientale</button>
                         </div>
                       </li>
                     </ul>

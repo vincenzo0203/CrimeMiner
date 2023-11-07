@@ -1,0 +1,332 @@
+{% load static %}
+
+<div class="d-flex w-100 bd-highlight">
+    <div class="cyContainer p-2 flex-grow-1 bd-highlight">
+      <div class="cyContent"></div>
+    </div>
+    <div class="accordionContainer p-2 bd-highlight">
+      <!-- Button trigger modal -->
+      <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalIndividualCrimesEnviromentalTapping">
+        Inserisci una nuova condanna o imputazione
+      </button>-->
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+              Proprietà
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+            <div class="accordion-body">
+              <div class="d-flex accordionLayoutMetrics">
+                <div class="d-flex flex-column">
+                  <div>
+                    Layout
+                  </div>
+                  <select class="form-select selectLayout" aria-label="Default select example" onchange="changeLayoutIndividualCrimesEnviromentalTapping();">
+                    <option value="circle" selected>Cerchio</option>
+                    <option value="dagre">Dagre</option>
+                    <option value="fcose">Force Atlas</option>
+                  </select>
+                </div>
+                <div class="d-flex flex-column">
+                  <div>
+                    Metriche
+                  </div>
+                  <select class="form-select selectMetrics" aria-label="Default select example" onchange="changeMetricIndividualCrimesEnviromentalTapping();">
+                    <option value="Default" selected>Default</option>
+                    <option value="PageRank">PageRank</option>
+                    <option value="WeightedPageRank">Weighted PageRank</option>
+                    <option value="Betweenness">Betweenness</option>
+                    <option value="Closeness">Closeness</option>
+                    <option value="Degree">Degree</option>
+                    <option value="InDegree">InDegree</option>
+                    <option value="OutDegree">OutDegree</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+            <button class="accordion-button collapsed accordionButtonTwo" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+              Dettagli
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+            <div class="accordion-body">
+              <!--Individuo-->
+              <div class="infoIndividualCrimesEnviromentalTappingNodeIndividual">
+
+                <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualId d-flex">
+                  <div>Identificativo</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualIdContent"></div>
+                </div>
+                <!--<div class="infoIndividualCrimesEnviromentalTappingNodeIndividualSurname d-flex">
+                  <div>Cognome</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualSurnameContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualName d-flex">
+                  <div>Nome</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualNameContent"></div>
+                </div>-->
+                <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualBirth d-flex">
+                  <div>Data Nascita</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualBirthContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualNation d-flex">
+                  <div>Nazione Residenza</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualNationContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualProvince d-flex">
+                  <div>Provincia Residenza</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualProvinceContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualResidence d-flex">
+                  <div>Città Residenza</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualResidenceContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualAddress d-flex">
+                  <div>Indirizzo Residenza</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeIndividualAddressContent"></div>
+                </div>
+              </div>
+
+              <!--Intercettazione Ambientale-->
+              <div class="infoIndividualCrimesEnviromentalTappingNodeEnviromentalTapping">
+
+                <div class="infoIndividualCrimesEnviromentalTappingNodeEnviromentalTappingId d-flex">
+                  <div>Identificativo</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeEnviromentalTappingIdContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingNodeEnviromentalTappingDate d-flex">
+                  <div>Data</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeEnviromentalTappingDateContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingNodeEnviromentalTappingPlace d-flex">
+                  <div>Luogo</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeEnviromentalTappingPlaceContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingNodeEnviromentalTappingContent d-flex">
+                  <div>Contenuto</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeEnviromentalTappingContentContent"></div>
+                </div>
+              </div>
+
+              <!--Reato-->
+              <div class="infoIndividualCrimesEnviromentalTappingNodeCrime">
+
+                <div class="infoIndividualCrimesEnviromentalTappingNodeCrimeId d-flex">
+                  <div>Identificativo</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeCrimeIdContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingNodeCrimeName d-flex">
+                  <div>Nome</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeCrimeNameContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingNodeCrimeNorms d-flex">
+                  <div>Norme</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeCrimeNormsContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingNodeCrimeMinMonths d-flex">
+                  <div>Mesi Minimi</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeCrimeMinMonthsContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingNodeCrimeMaxMonths d-flex">
+                  <div>Mesi Massimi</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingNodeCrimeMaxMonthsContent"></div>
+                </div>
+              </div>
+
+              <!--Arco Individuo/Crimine-->
+              <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrime">
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeId d-flex">
+                  <div>Identificativo</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeIdContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeIndividual d-flex">
+                  <div>Individuo</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeIndividualContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeCrime d-flex">
+                  <div>Reato</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeCrimeContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeAggTitle">
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeAggTitleId d-flex">
+                    id
+                  </div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeAggTitleDescription d-flex">
+                    descrizione
+                  </div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeAggTitleNorms d-flex">
+                    norms
+                  </div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeAggContainer">
+                  
+                </div>
+              </div>
+
+              <!--Arco Individuo/Individuo-->
+              <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividual">
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualId d-flex">
+                  <div>Identificativo</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualIdContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualDate d-flex">
+                  <div>Data</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualDateContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualDuration d-flex">
+                  <div>Durata chiamata</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualDurationContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualTime d-flex">
+                  <div>Ora chiamata</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualTimeContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualSource d-flex">
+                  <div>Mittente</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualSourceContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualTarget d-flex">
+                  <div>Destinatario</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualTargetContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualContent d-flex">
+                  <div>Contenuto</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualContentContent"></div>
+                </div>
+              </div>
+
+              <!--Arco Individuo/Intercettazione Ambientale-->
+              <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTapping">
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingId d-flex">
+                  <div>Identificativo</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingIdContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingIndividual d-flex">
+                  <div>Individuo</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingIndividualContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingEnviromentalTapping d-flex">
+                  <div>Reato</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingEnviromentalTappingContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingMonthsEntered d-flex">
+                  <div>Mesi Inputati</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingMonthsEnteredContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingMonthsSentence d-flex">
+                  <div>Mesi Condanna</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingMonthsSentenceContent"></div>
+                </div>
+                <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingMonthsTotal d-flex">
+                  <div>Mesi Totali</div>
+                  <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingMonthsTotalContent"></div>
+                </div>
+              </div>
+
+              <div class="infoIndividualCrimesEnviromentalTappingNot">
+                Non ci sono informazioni da visualizzare al momento
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+              Impostazioni
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+            <div class="accordion-body">
+              <div class="d-flex accordionCheckboxNodeEdge">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" onclick="checkedNodesAndEdgesIndividualCrimesEnviromentalTapping()" id="CheckNodes" checked>
+                  <label class="form-check-label" for="CheckNodes">
+                    Nomi Nodi
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" onclick="checkedNodesAndEdgesIndividualCrimesEnviromentalTapping()" id="CheckEdges">
+                  <label class="form-check-label" for="CheckEdges">
+                    Nomi Archi
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+    </div>
+    
+</div>
+
+<!-- Modal -->
+<!--
+<div class="modal fade" id="modalIndividualCrimesEnviromentalTapping" tabindex="-1" aria-labelledby="modalIndividualCrimesEnviromentalTappingLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modalIndividualCrimesEnviromentalTappingLabel">Inserimento Condanna/Imputazione</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="modalContainer">
+            <div class="mb-3">
+              <label for="recipient-source" class="col-form-label">Mittente</label>
+              <select class="form-select modalIndividualCrimesEnviromentalTappingSource" class="form-control" id="recipient-source" aria-label="select example">
+                <option selected></option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="recipient-target" class="col-form-label">Destinatario</label>
+              <select class="form-select modalIndividualCrimesEnviromentalTappingTarget" class="form-control" id="recipient-target" aria-label="select example">
+                <option selected></option>
+              </select>
+            </div>
+          </div>
+
+          <div class="modalContainer">
+            <div class="mb-3">
+              <label for="recipient-date" class="col-form-label">Data</label>
+              <input type="date" class="form-control modalIndividualCrimesEnviromentalTappingDate" id="recipient-date">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-duration" class="col-form-label">Durata</label>
+              <input type="time" class="form-control modalIndividualCrimesEnviromentalTappingDuration" id="recipient-duration" step="1">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-time" class="col-form-label">Ora</label>
+              <input type="time" class="form-control modalIndividualCrimesEnviromentalTappingTime" id="recipient-time" step="1">
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Contenuto Chiamata</label>
+            <textarea class="form-control modalIndividualCrimesEnviromentalTappingTextarea" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="sendNewCallToBackendIndividualCrimesEnviromentalTapping()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>-->
+
+<!--Cookie-->
+<script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
+
+<script>
+  if (performance.navigation.type === 1 || performance.navigation.type === 2) { 
+    setCookie("page","intercettazioni_ambientali_crimini_individui");
+    window.location.href = "/CrimeMiner/";
+  }
+</script>

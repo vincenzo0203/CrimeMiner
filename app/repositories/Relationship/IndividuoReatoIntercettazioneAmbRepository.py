@@ -1,6 +1,8 @@
 from typing import Iterable
 from app.Neo4jConnection import Neo4jDriver
-import json
+from app.repositories.Entity.IndividuoRepository import IndividuoRepository
+from app.repositories.Entity.IntercettazioneAmbRepository import IntercettazioneAmbRepository
+from app.repositories.Entity.ReatoRepository import ReatoRepository
 
 #Questa classe fornisce metodi per l'accesso ai dati relativi alle relazioni tra individui, reati e intercettazioni ambientali.
 class IndividuoReatoIntercettazioneAmbRepository:
@@ -9,18 +11,69 @@ class IndividuoReatoIntercettazioneAmbRepository:
 # Args: none
 # Returns:
 # list: Una lista di risultati contenenti le informazioni sul grafo
-    def getRelationships_IndividuiReati(self) -> Iterable[dict]:       
+    def getRelationships_IndividuiReati_IntercettazioniAmb(self) -> Iterable[dict]:       
         try:
             session = Neo4jDriver.get_session()
-            query = "MATCH p=()-->() RETURN nodes(p) as n, relationships(p)[0] as e" 
-            result = session.run(query).data()
+            individuo_nodes_query = "MATCH (n:Individuo) WHERE (n:Individuo)-[:HaChiamato|Condannato|ImputatoDi|Presente]->() OR (n:Individuo)<-[:HaChiamato]->() RETURN DISTINCT n.nodeId AS id, n.entityType AS classes"
+            individuo_nodes = session.run(individuo_nodes_query).data()
+
+            reato_nodes_query = "MATCH (r:Reato) WHERE ()-[:Condannato|ImputatoDi]->(r:Reato) RETURN DISTINCT r.nodeId AS id, r.entityType AS classes"
+            reato_nodes = session.run(reato_nodes_query).data()
+
+            intercettazioni_nodes_query = "MATCH (i:IntercettazioneAmb) WHERE ()-[:Presente]->(i:IntercettazioneAmb) RETURN DISTINCT i.nodeId AS id, i.entityType AS classes"
+            intercettazioni_nodes = session.run(intercettazioni_nodes_query).data()
+
+            nodes = individuo_nodes + reato_nodes + intercettazioni_nodes
+
+            # Query per ottenere gli archi
+            edges_query = "MATCH ()-[r:HaChiamato|Condannato|ImputatoDi|Presente]->() RETURN r.sourceNodeId as source, r.targetNodeId as target, r.edgeId as id"
+            edges = session.run(edges_query).data()
+
+            # Creazione della struttura dati JSON compatibile con Cytoscape
+            cytoscape_data = {
+                "nodes": [{"data": {"id": node["id"] ,"size": 1},"classes": node["classes"]} for node in nodes],
+                "edges": [{"data": edge} for edge in edges]
+            }
+        
+            return cytoscape_data
+        except Exception as e:
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []
+
+    # Trova le informazioni riguardo un Individuo o un'Intercettazione Ambientale tramite un ID
+    # Args: <str> id
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni su tutti gli individui/intercettazioniAmb.
+    @staticmethod
+    def getIndividuo_o_Intercettazione_o_Reato(id):
+        if(id.startswith("IA")):
+            result=IntercettazioneAmbRepository.get_node_info_by_nodeId(id)
+        else:
+            if(id.startswith("I")):
+                result=IndividuoRepository.get_node_info_by_nodeId(id)
+            else:
+                result=ReatoRepository.getReato_Info_BynodeId(id)
+            
+        return result
+
+    # Recupera le informazioni sull'arco identificato da edge_id
+    # Args:
+    #     edge_id (str): L'ID dell'arco da cercare
+    # Returns:
+    #     list: Una lista di risultati contenenti le informazioni sull'arco.
+
+    @staticmethod
+    def getEdge_Info_More(edge_id):
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "MATCH ()-[r:Condannato|ImputatoDi|Presente|HaChiamato]->() WHERE r.edgeId = $edgeId RETURN DISTINCT properties(r) AS r"
+            result = session.run(cypher_query,{"edgeId":edge_id}).data()
             return result
+          
         except Exception as e:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
-            print("Errore durante l'esecuzione della query per ottenere i graph:", e)
+            print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
-
-
 
 
     #Calcola la closeness dei vari nodi attraverso l'utilizzo del plugin graph data science di neo4j

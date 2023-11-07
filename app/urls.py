@@ -27,6 +27,7 @@ urlpatterns = [
     path('chiamate_individui', views.individualWiretaps),
     path('crimini_individui', views.individualCrimes),
     path('intercettazioni_ambientali_individui', views.individualEnviromentalTapping),
+    path('intercettazioni_ambientali_crimini_individui', views.individualCrimesEnviromentalTapping),
 
     #Path per la registrazione di tutte le View del Backend funzionante con request mapping. Si crea una classe view, si definiscono le request mapping in questa classe creata
     #e si registra la view creata in urlpattern

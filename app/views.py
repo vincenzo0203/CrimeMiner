@@ -12,3 +12,6 @@ def individualCrimes(request):
 
 def individualEnviromentalTapping(request):
     return render(request, 'features/individualEnviromentalTapping.html')
+
+def individualCrimesEnviromentalTapping(request):
+    return render(request, 'features/individualCrimesEnviromentalTapping.html')

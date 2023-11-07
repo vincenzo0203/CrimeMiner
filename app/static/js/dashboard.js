@@ -84,6 +84,10 @@ function selectionPage(page){
     if(page == "intercettazioni_ambientali_individui"){
         individualEnviromentalTapping();
     }
+
+    if(page == "intercettazioni_ambientali_crimini_individui"){
+        individualCrimesEnviromentalTapping();
+    }
 }
 
 //funzione che si occupa della gestione delle finestre della single page application (SPA)
