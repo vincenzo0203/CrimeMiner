@@ -13,7 +13,7 @@ class Neo4jDriver:
             session = Neo4jDriver.get_session()
             Creazione_grafico_IndInt = "CALL gds.graph.project('IndividuoIntercettazioni', 'Individuo', 'HaChiamato' ,{relationshipProperties: 'mesiTotali'})"
             session.run(Creazione_grafico_IndInt)
-            Creazione_grafico_IndRea = "CALL gds.graph.project('IndividuoReati', ['Individuo','Reato'],{ImputatoDi: {orientation: 'UNDIRECTED'}, Condannato:{orientation: 'UNDIRECTED'}"+"},{relationshipProperties: 'mesiTotali'})"
+            Creazione_grafico_IndRea = "CALL gds.graph.project('IndividuoReati', ['Individuo','Reato'],['ImputatoDi', 'Condannato'],{relationshipProperties: 'mesiTotali'})"
             session.run(Creazione_grafico_IndRea)
             
 
