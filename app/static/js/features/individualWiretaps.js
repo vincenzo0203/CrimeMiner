@@ -228,7 +228,7 @@ function checkedNodesAndEdgesIndividualWiretaps(){
       .style({
         "width": "mapData(size, 0, 100, 20, 60)",
         "height": "mapData(size, 0, 100, 20, 60)",
-        'background-color': '#66CCFF',
+        'background-color': '#03a74f',
         'label': 'data(id)'
       })
     .update();
@@ -240,7 +240,7 @@ function checkedNodesAndEdgesIndividualWiretaps(){
       .style({
         "width": "mapData(size, 0, 100, 20, 60)",
         "height": "mapData(size, 0, 100, 20, 60)",
-        'background-color': '#66CCFF'
+        'background-color': '#03a74f'
       })
     .update();
   }
@@ -251,7 +251,7 @@ function checkedNodesAndEdgesIndividualWiretaps(){
     .selector('edge')
         .style({
           'width': 2,
-          'line-color': '#333',
+          'line-color': '#dfdfdf',
           "curve-style": "bezier",
           'label': 'data(id)'
         })
@@ -262,7 +262,7 @@ function checkedNodesAndEdgesIndividualWiretaps(){
     .selector('edge')
         .style({
           'width': 2,
-          'line-color': '#333',
+          'line-color': '#dfdfdf',
           "curve-style": "bezier"
         })
     .update();
