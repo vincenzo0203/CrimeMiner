@@ -17,7 +17,7 @@
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalIndividualWiretaps">
         Inserisci una nuova chiamata tra individui
       </button>
-      <div class="accordion" id="accordionPanelsStayOpenExample">
+      <div class="accordion" id="accordionPanelsProperties">
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
@@ -28,17 +28,21 @@
             <div class="accordion-body">
               <div class="accordionNumberNodesEdges">
                 <div class="accordionNumberNodesEdgesNodes">
-                  <div>Nodi</div>
+                  <div>Individui</div>
                   <div class="accordionNumberNodesEdgesNodesContent"></div>
                 </div>
+                <!--<hr></hr>-->
                 <div class="accordionNumberNodesEdgesEdges">
-                  <div>Archi</div>
+                  <div>Chiamate</div>
                   <div class="accordionNumberNodesEdgesEdgesContent"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="accordion" id="accordionPanelsDetails">
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
             <button class="accordion-button collapsed accordionButtonTwo" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
@@ -53,30 +57,37 @@
                   <div>Identificativo</div>
                   <div class="infoIndividualWiretapsNodeIdContent"></div>
                 </div>
+                <hr></hr>
                 <!--<div class="infoIndividualWiretapsNodeSurname d-flex">
                   <div>Cognome</div>
                   <div class="infoIndividualWiretapsNodeSurnameContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualWiretapsNodeName d-flex">
                   <div>Nome</div>
                   <div class="infoIndividualWiretapsNodeNameContent"></div>
-                </div>-->
+                </div>
+                <hr></hr>-->
                 <div class="infoIndividualWiretapsNodeBirth d-flex">
                   <div>Data Nascita</div>
                   <div class="infoIndividualWiretapsNodeBirthContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualWiretapsNodeNation d-flex">
                   <div>Nazione Residenza</div>
                   <div class="infoIndividualWiretapsNodeNationContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualWiretapsNodeProvince d-flex">
                   <div>Provincia Residenza</div>
                   <div class="infoIndividualWiretapsNodeProvinceContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualWiretapsNodeResidence d-flex">
                   <div>Città Residenza</div>
                   <div class="infoIndividualWiretapsNodeResidenceContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualWiretapsNodeAddress d-flex">
                   <div>Indirizzo Residenza</div>
                   <div class="infoIndividualWiretapsNodeAddressContent"></div>
@@ -88,26 +99,32 @@
                   <div>Identificativo</div>
                   <div class="infoIndividualWiretapsEdgeIdContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualWiretapsEdgeDate d-flex">
                   <div>Data</div>
                   <div class="infoIndividualWiretapsEdgeDateContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualWiretapsEdgeDuration d-flex">
                   <div>Durata chiamata</div>
                   <div class="infoIndividualWiretapsEdgeDurationContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualWiretapsEdgeTime d-flex">
                   <div>Ora chiamata</div>
                   <div class="infoIndividualWiretapsEdgeTimeContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualWiretapsEdgeSource d-flex">
                   <div>Mittente</div>
                   <div class="infoIndividualWiretapsEdgeSourceContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualWiretapsEdgeTarget d-flex">
                   <div>Destinatario</div>
                   <div class="infoIndividualWiretapsEdgeTargetContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualWiretapsEdgeContent d-flex">
                   <div>Contenuto</div>
                   <div class="infoIndividualWiretapsEdgeContentContent"></div>
@@ -120,6 +137,9 @@
             </div>
           </div>
         </div>
+      </div>
+        
+      <div class="accordion" id="accordionPanelsSettings">
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingThree">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
@@ -173,7 +193,6 @@
           </div>
         </div>
       </div>
-        
     </div>
     
 </div>

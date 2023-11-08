@@ -1,4 +1,5 @@
 let cyIndividualWiretaps;
+let cyNodeTouchedIndividualWiretaps  = "";
 let cyEdgeTouchedIndividualWiretaps  = "";
 
 //funzione che permette di caricare script javascript al caricamento della pagina
@@ -125,7 +126,9 @@ function createGraphIndividualWiretaps(data) {
     ],
     layout: {
       name: 'circle', //dagre  //fcose
-    }
+    },
+    minZoom: 0.2,
+    maxZoom: 2.0
   });
 
   //si aspetta che il grafo sia pronto per poter inserire per ogni nodo o arco un evento sul click
@@ -134,21 +137,39 @@ function createGraphIndividualWiretaps(data) {
     //questo per il nodo
     cyIndividualWiretaps.on('tap', 'node', function(evt) {
       requestDetailsOfNodeIndividualWiretaps(evt.target.id())
+      if(cyEdgeTouchedIndividualWiretaps != "")
+        cyIndividualWiretaps.edges("#"+ cyEdgeTouchedIndividualWiretaps).style('line-color', '#dfdfdf');
+
+      if(cyNodeTouchedIndividualWiretaps != "" || evt.target.classes() == undefined)
+        cyIndividualWiretaps.nodes("#"+ cyNodeTouchedIndividualWiretaps).style('background-color', '#03a74f');
+      cyNodeTouchedIndividualWiretaps = evt.target.id();
+      evt.target.style('background-color', '#991199');
     });
 
     //questo per l'arco
     cyIndividualWiretaps.on('tap', 'edge', function(evt) {
       requestDetailsOfEdgeIndividualWiretaps(evt.target.id())
-      if(cyEdgeTouchedIndividualWiretaps != "")
-      cyIndividualWiretaps.edges("#"+ cyEdgeTouchedIndividualWiretaps).style('line-color', '#dfdfdf');
+  
+      if(cyNodeTouchedIndividualWiretaps != "")
+        cyIndividualWiretaps.nodes("#"+ cyNodeTouchedIndividualWiretaps).style('background-color', '#03a74f');
+      
+      if(cyEdgeTouchedIndividualWiretaps != "" || evt.target.classes()[0] == "Individuo")
+        cyIndividualWiretaps.edges("#"+ cyEdgeTouchedIndividualWiretaps).style('line-color', '#dfdfdf');
       cyEdgeTouchedIndividualWiretaps = evt.target.id();
-      evt.target.style('line-color', '#FF0000');
+      evt.target.style('line-color', '#991199');
     });
 
     cyIndividualWiretaps.on('tap', function(evt) {
+      console.log(evt.target._private.container)
       if(evt.target._private.container != undefined){
-        cyIndividualWiretaps.$("#"+ cyEdgeTouchedIndividualWiretaps).style('line-color', '#dfdfdf');
-        cyEdgeTouchedIndividualWiretaps = "";
+        if(cyEdgeTouchedIndividualWiretaps != ""){
+          cyIndividualWiretaps.$("#"+ cyEdgeTouchedIndividualWiretaps).style('line-color', '#dfdfdf');
+          cyEdgeTouchedIndividualWiretaps = "";
+        }
+        if(cyNodeTouchedIndividualWiretaps != ""){
+          cyIndividualWiretaps.$("#"+ cyNodeTouchedIndividualWiretaps).style('background-color', '#03a74f');
+          cyNodeTouchedIndividualWiretaps = "";
+        }
       }
     });
 

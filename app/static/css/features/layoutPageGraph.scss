@@ -28,33 +28,43 @@
     }
 
     &-item{
-        //margin: 1rem;
-        border-radius: 4px;
+        border-radius: 10px !important;
     }
 
-    &-button:focus {
-        box-shadow: none;
+    &-button{
         border-color: rgba(0,0,0,.125);
-        background-color: white;
-    }
-    &-button:not(.collapsed){
-        background-color: white;
-        color: black;
+        border-radius: 10px !important;
+
+        &:focus {
+            box-shadow: inset 0 calc(-1 * 1px) 0 #dee2e6;
+        }
+
+        &:not(.collapsed){
+            background-color: white;
+            color: black;
+        }
+
+        .collapsed{
+            border-color: rgba(0, 0, 0, 0);
+        }
     }
 
     &NumberNodesEdges{
         display: flex;
         flex-direction: column;
+        gap:0.4rem;
 
-        &Nodes{
+        &Nodes,&Edges{
             display: flex;
             justify-content: space-between;
+
+            &Title{
+                font-weight: bold;
+            }
         }
 
-        &Edges{
-            display: flex;
-            justify-content: space-between;
-        }
+        //Se si cerca lo style del contenuto del div, quindi nodi e archi (identificati), sono nelle singole pagine 
+        //in quanto contengono informazioni diverse pagina per pagina
     }
 
     &LayoutMetrics{
@@ -64,6 +74,12 @@
     &CheckboxNodeEdge{
         justify-content: space-around;
     }
+}
+
+hr{
+    margin-top: 4px !important;
+    margin-bottom: 4px !important;
+    border-color: #00000052;
 }
 
 .cy{

@@ -17,7 +17,8 @@
       <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalIndividualCrimes">
         Inserisci una nuova condanna o imputazione
       </button>-->
-      <div class="accordion" id="accordionPanelsStayOpenExample">
+      <!--Proprietà-->
+      <div class="accordion" id="accordionPanelsProperties">
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
@@ -27,18 +28,44 @@
           <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
             <div class="accordion-body">
               <div class="accordionNumberNodesEdges">
+                <div class="accordionNumberNodesEdgesIndividual">
+                  <div>Individui</div>
+                  <div class="accordionNumberNodesEdgesIndividualContent"></div>
+                </div>
+                <!--<hr></hr>-->
+                <div class="accordionNumberNodesEdgesCrimes">
+                  <div>Reati</div>
+                  <div class="accordionNumberNodesEdgesCrimesContent"></div>
+                </div>
+                <!--<hr></hr>-->
+                <div class="accordionNumberNodesEdgesSentence">
+                  <div>Condanne</div>
+                  <div class="accordionNumberNodesEdgesSentenceContent"></div>
+                </div>
+                <!--<hr></hr>-->
+                <div class="accordionNumberNodesEdgesImputation">
+                  <div>Imputazioni</div>
+                  <div class="accordionNumberNodesEdgesImputationContent"></div>
+                </div>
+                <hr></hr>
                 <div class="accordionNumberNodesEdgesNodes">
-                  <div>Nodi</div>
+                  <div class="accordionNumberNodesEdgesNodesTitle">Totale Nodi</div>
                   <div class="accordionNumberNodesEdgesNodesContent"></div>
                 </div>
+                <!--<hr></hr>-->
                 <div class="accordionNumberNodesEdgesEdges">
-                  <div>Archi</div>
+                  <div class="accordionNumberNodesEdgesEdgesTitle">Totale Archi</div>
                   <div class="accordionNumberNodesEdgesEdgesContent"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <!--Dettagli-->
+      <div class="accordion" id="accordionPanelsDetails">
+        
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
             <button class="accordion-button collapsed accordionButtonTwo" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
@@ -54,30 +81,37 @@
                   <div>Identificativo</div>
                   <div class="infoIndividualCrimesNodeIndividualIdContent"></div>
                 </div>
+                <hr></hr>
                 <!--<div class="infoIndividualCrimesNodeIndividualSurname d-flex">
                   <div>Cognome</div>
                   <div class="infoIndividualCrimesNodeIndividualSurnameContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualCrimesNodeIndividualName d-flex">
                   <div>Nome</div>
                   <div class="infoIndividualCrimesNodeIndividualNameContent"></div>
-                </div>-->
+                </div>
+                <hr></hr>-->
                 <div class="infoIndividualCrimesNodeIndividualBirth d-flex">
                   <div>Data Nascita</div>
                   <div class="infoIndividualCrimesNodeIndividualBirthContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualCrimesNodeIndividualNation d-flex">
                   <div>Nazione Residenza</div>
                   <div class="infoIndividualCrimesNodeIndividualNationContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualCrimesNodeIndividualProvince d-flex">
                   <div>Provincia Residenza</div>
                   <div class="infoIndividualCrimesNodeIndividualProvinceContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualCrimesNodeIndividualResidence d-flex">
                   <div>Città Residenza</div>
                   <div class="infoIndividualCrimesNodeIndividualResidenceContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualCrimesNodeIndividualAddress d-flex">
                   <div>Indirizzo Residenza</div>
                   <div class="infoIndividualCrimesNodeIndividualAddressContent"></div>
@@ -91,18 +125,22 @@
                   <div>Identificativo</div>
                   <div class="infoIndividualCrimesNodeCrimeIdContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualCrimesNodeCrimeName d-flex">
                   <div>Nome</div>
                   <div class="infoIndividualCrimesNodeCrimeNameContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualCrimesNodeCrimeNorms d-flex">
                   <div>Norme</div>
                   <div class="infoIndividualCrimesNodeCrimeNormsContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualCrimesNodeCrimeMinMonths d-flex">
                   <div>Mesi Minimi</div>
                   <div class="infoIndividualCrimesNodeCrimeMinMonthsContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualCrimesNodeCrimeMaxMonths d-flex">
                   <div>Mesi Massimi</div>
                   <div class="infoIndividualCrimesNodeCrimeMaxMonthsContent"></div>
@@ -114,27 +152,32 @@
                   <div>Identificativo</div>
                   <div class="infoIndividualCrimesEdgeIdContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualCrimesEdgeIndividual d-flex">
                   <div>Individuo</div>
                   <div class="infoIndividualCrimesEdgeIndividualContent"></div>
                 </div>
+                <hr></hr>
                 <div class="infoIndividualCrimesEdgeCrime d-flex">
                   <div>Reato</div>
                   <div class="infoIndividualCrimesEdgeCrimeContent"></div>
                 </div>
-                <div class="infoIndividualCrimesEdgeAggTitle">
-                  <div class="infoIndividualCrimesEdgeAggTitleId d-flex">
-                    id
+                <!--<hr class="infoIndividualCrimesEdgeHr"></hr>-->
+                <div class="infoIndividualCrimesEdgeAggParent">
+                  <div class="infoIndividualCrimesEdgeAggTitle">
+                    <div class="infoIndividualCrimesEdgeAggTitleId d-flex">
+                      id
+                    </div>
+                    <div class="infoIndividualCrimesEdgeAggTitleDescription d-flex">
+                      descrizione
+                    </div>
+                    <div class="infoIndividualCrimesEdgeAggTitleNorms d-flex">
+                      norms
+                    </div>
                   </div>
-                  <div class="infoIndividualCrimesEdgeAggTitleDescription d-flex">
-                    descrizione
+                  <div class="infoIndividualCrimesEdgeAggContainer">
+                    
                   </div>
-                  <div class="infoIndividualCrimesEdgeAggTitleNorms d-flex">
-                    norms
-                  </div>
-                </div>
-                <div class="infoIndividualCrimesEdgeAggContainer">
-                  
                 </div>
               </div>
 
@@ -144,6 +187,11 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!--Impostazioni-->
+      <div class="accordion" id="accordionPanelsSettings">
+        
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingThree">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
