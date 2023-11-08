@@ -88,7 +88,7 @@ class IndividuoReatoRepository:
     def Betweenness():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "CALL gds.betweenness.stream('IndividuoReati') YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:ImputatoDi|Condannato]->() OR (node)<-[:ImputatoDi|Condannato]-() RETURN DISTINCT node.nodeId AS id, score AS size"
+            cypher_query = "CALL gds.betweenness.stream('IndividuoReati') YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE 'Individuo' IN labels(node) RETURN node.nodeId AS id, score AS size"
             results = session.run(cypher_query).data()
             return results
 
