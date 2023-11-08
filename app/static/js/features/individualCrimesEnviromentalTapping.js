@@ -1,5 +1,6 @@
 let cyIndividualCrimesEnviromentalTapping;
-let cyEdgeTouchedIndividualCrimesEnviromentalTapping  = "";
+let cyNodeTouchedIndividualCrimesEnviromentalTapping = "";
+let cyEdgeTouchedIndividualCrimesEnviromentalTapping = "";
 
 //funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
@@ -156,21 +157,56 @@ function createGraphIndividualCrimesEnviromentalTapping(data) {
     //questo per il nodo
     cyIndividualCrimesEnviromentalTapping.on('tap', 'node', function(evt) {
       requestDetailsOfNodeIndividualCrimesEnviromentalTapping(evt.target.id())
+
+      if(cyEdgeTouchedIndividualCrimesEnviromentalTapping != "")
+        cyIndividualCrimesEnviromentalTapping.edges("#"+ cyEdgeTouchedIndividualCrimesEnviromentalTapping).style('line-color', '#dfdfdf');
+
+      if(cyNodeTouchedIndividualCrimesEnviromentalTapping != "" || evt.target.classes() == undefined){
+        if(cyNodeTouchedIndividualCrimesEnviromentalTapping[0] == "R")
+            cyIndividualCrimesEnviromentalTapping.$("#"+ cyNodeTouchedIndividualCrimesEnviromentalTapping).style('background-color', '#c70c35');
+          else if(cyNodeTouchedIndividualCrimesEnviromentalTapping[1] == "A")
+              cyIndividualCrimesEnviromentalTapping.$("#"+ cyNodeTouchedIndividualCrimesEnviromentalTapping).style('background-color', '#d7bd1e');
+            else
+              cyIndividualCrimesEnviromentalTapping.$("#"+ cyNodeTouchedIndividualCrimesEnviromentalTapping).style('background-color', '#03a74f');
+      }
+      cyNodeTouchedIndividualCrimesEnviromentalTapping = evt.target.id();
+      evt.target.style('background-color', '#991199');
     });
 
     //questo per l'arco
     cyIndividualCrimesEnviromentalTapping.on('tap', 'edge', function(evt) {
       requestDetailsOfEdgeIndividualCrimesEnviromentalTapping(evt.target.id())
-      if(cyEdgeTouchedIndividualCrimesEnviromentalTapping != "")
+
+      if(cyNodeTouchedIndividualCrimesEnviromentalTapping != "" || evt.target.classes() == undefined){
+        if(cyNodeTouchedIndividualCrimesEnviromentalTapping[0] == "R")
+            cyIndividualCrimesEnviromentalTapping.$("#"+ cyNodeTouchedIndividualCrimesEnviromentalTapping).style('background-color', '#c70c35');
+          else if(cyNodeTouchedIndividualCrimesEnviromentalTapping[1] == "A")
+              cyIndividualCrimesEnviromentalTapping.$("#"+ cyNodeTouchedIndividualCrimesEnviromentalTapping).style('background-color', '#d7bd1e');
+            else
+              cyIndividualCrimesEnviromentalTapping.$("#"+ cyNodeTouchedIndividualCrimesEnviromentalTapping).style('background-color', '#03a74f');
+      }
+
+      if(cyEdgeTouchedIndividualCrimesEnviromentalTapping != "" || evt.target.classes()[0] == "Individuo" || evt.target.classes()[0] == "Reato" || evt.target.classes()[0] == "IntercettazioneAmb")
         cyIndividualCrimesEnviromentalTapping.edges("#"+ cyEdgeTouchedIndividualCrimesEnviromentalTapping).style('line-color', '#dfdfdf');
       cyEdgeTouchedIndividualCrimesEnviromentalTapping = evt.target.id();
-      evt.target.style('line-color', '#FF0000');
+      evt.target.style('line-color', '#991199');
     });
 
     cyIndividualCrimesEnviromentalTapping.on('tap', function(evt) {
-      if(evt.target._private.container != undefined){
-        cyIndividualCrimesEnviromentalTapping.$("#"+ cyEdgeTouchedIndividualCrimesEnviromentalTapping).style('line-color', '#dfdfdf');
-        cyEdgeTouchedIndividualCrimesEnviromentalTapping = "";
+      if(evt.target._private.container != undefined ){
+        if(cyEdgeTouchedIndividualCrimesEnviromentalTapping != ""){
+          cyIndividualCrimesEnviromentalTapping.$("#"+ cyEdgeTouchedIndividualCrimesEnviromentalTapping).style('line-color', '#dfdfdf');
+          cyEdgeTouchedIndividualCrimesEnviromentalTapping = "";
+        }
+        if(cyNodeTouchedIndividualCrimesEnviromentalTapping != ""){
+          if(cyNodeTouchedIndividualCrimesEnviromentalTapping[0] == "R")
+            cyIndividualCrimesEnviromentalTapping.$("#"+ cyNodeTouchedIndividualCrimesEnviromentalTapping).style('background-color', '#c70c35');
+          else if(cyNodeTouchedIndividualCrimesEnviromentalTapping[1] == "A")
+              cyIndividualCrimesEnviromentalTapping.$("#"+ cyNodeTouchedIndividualCrimesEnviromentalTapping).style('background-color', '#d7bd1e');
+            else
+              cyIndividualCrimesEnviromentalTapping.$("#"+ cyNodeTouchedIndividualCrimesEnviromentalTapping).style('background-color', '#03a74f');
+          cyNodeTouchedIndividualCrimesEnviromentalTapping = "";
+        }
       }
     });
 
@@ -427,7 +463,6 @@ function showDetailsOfEdgeIndividualCrimesEnviromentalTapping(data){
       document.querySelector(".infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeAggTitle").style.display = "flex";
       
       for(let i=0; i<data.agg_id.length; i++){
-        console.log(data.agg_id[0])
         document.querySelector(".infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeAggContainer").innerHTML += `
                                                                                         <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeAgg d-flex">
                                                                                           <div class="infoIndividualCrimesEnviromentalTappingEdgeIndividualCrimeAggId d-flex">

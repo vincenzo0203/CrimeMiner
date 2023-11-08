@@ -1,5 +1,6 @@
 let cyIndividualCrimes;
-let cyEdgeTouchedIndividualCrimes  = "";
+let cyNodeTouchedIndividualCrimes = "";
+let cyEdgeTouchedIndividualCrimes = "";
 
 //funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
@@ -146,21 +147,50 @@ function createGraphIndividualCrimes(data) {
     //questo per il nodo
     cyIndividualCrimes.on('tap', 'node', function(evt) {
       requestDetailsOfNodeIndividualCrimes(evt.target.id())
+
+      if(cyEdgeTouchedIndividualCrimes != "")
+        cyIndividualCrimes.edges("#"+ cyEdgeTouchedIndividualCrimes).style('line-color', '#dfdfdf');
+
+      if(cyNodeTouchedIndividualCrimes != "" || evt.target.classes() == undefined){
+        if(cyNodeTouchedIndividualCrimes[0] == "I")
+            cyIndividualCrimes.$("#"+ cyNodeTouchedIndividualCrimes).style('background-color', '#03a74f');
+          else
+            cyIndividualCrimes.$("#"+ cyNodeTouchedIndividualCrimes).style('background-color', '#c70c35');
+      }
+      cyNodeTouchedIndividualCrimes = evt.target.id();
+      evt.target.style('background-color', '#991199');
     });
 
     //questo per l'arco
     cyIndividualCrimes.on('tap', 'edge', function(evt) {
       requestDetailsOfEdgeIndividualCrimes(evt.target.id())
-      if(cyEdgeTouchedIndividualCrimes != "")
+
+      if(cyNodeTouchedIndividualCrimes != "" || evt.target.classes() == undefined){
+        if(cyNodeTouchedIndividualCrimes[0] == "I")
+            cyIndividualCrimes.$("#"+ cyNodeTouchedIndividualCrimes).style('background-color', '#03a74f');
+          else
+            cyIndividualCrimes.$("#"+ cyNodeTouchedIndividualCrimes).style('background-color', '#c70c35');
+      }
+
+      if(cyEdgeTouchedIndividualCrimes != "" || evt.target.classes()[0] == "Individuo" || evt.target.classes()[0] == "Reato")
         cyIndividualCrimes.edges("#"+ cyEdgeTouchedIndividualCrimes).style('line-color', '#dfdfdf');
       cyEdgeTouchedIndividualCrimes = evt.target.id();
-      evt.target.style('line-color', '#FF0000');
+      evt.target.style('line-color', '#991199');
     });
 
     cyIndividualCrimes.on('tap', function(evt) {
       if(evt.target._private.container != undefined){
-        cyIndividualCrimes.$("#"+ cyEdgeTouchedIndividualCrimes).style('line-color', '#dfdfdf');
-        cyEdgeTouchedIndividualCrimes = "";
+        if(cyEdgeTouchedIndividualCrimes != ""){
+          cyIndividualCrimes.$("#"+ cyEdgeTouchedIndividualCrimes).style('line-color', '#dfdfdf');
+          cyEdgeTouchedIndividualCrimes = "";
+        }
+        if(cyNodeTouchedIndividualCrimes != ""){
+          if(cyNodeTouchedIndividualCrimes[0] == "I")
+            cyIndividualCrimes.$("#"+ cyNodeTouchedIndividualCrimes).style('background-color', '#03a74f');
+          else
+            cyIndividualCrimes.$("#"+ cyNodeTouchedIndividualCrimes).style('background-color', '#c70c35');
+          cyNodeTouchedIndividualCrimes = "";
+        }
       }
     });
 
@@ -182,23 +212,23 @@ function changeSizeNodesIndividualCrimes(data){
   if(selectMetrics == "Default"){
     data = data.nodes;
     for(let i = 0; i < data.length; i++)
-      cyIndividualWiretaps.$('#'+ data[i].data.id).data("size",data[i].data.size);
+      cyIndividualCrimes.$('#'+ data[i].data.id).data("size",data[i].data.size);
   }
   else{
     data = data.result;
     if(selectMetrics == "PageRank" || selectMetrics == "WeightedPageRank"|| selectMetrics == "Closeness")
     for(let i = 0; i < data.length; i++){
-      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size*200);
+      cyIndividualCrimes.$('#'+ data[i].id).data("size",data[i].size*200);
     }
 
     if(selectMetrics == "Betweenness")
     for(let i = 0; i < data.length; i++){
-      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size/10);
+      cyIndividualCrimes.$('#'+ data[i].id).data("size",data[i].size/10);
     }
 
     if(selectMetrics == "Degree" || selectMetrics == "InDegree" || selectMetrics == "OutDegree")
     for(let i = 0; i < data.length; i++){
-      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size*3);
+      cyIndividualCrimes.$('#'+ data[i].id).data("size",data[i].size*3);
     }
   }
 }
@@ -360,7 +390,8 @@ function showDetailsOfEdgeIndividualCrimes(data){
   document.querySelector(".infoIndividualCrimesEdgeAggContainer").innerHTML = "";
 
   if(data.agg_id != undefined){
-    document.querySelector(".infoIndividualCrimesEdgeAggTitle").style.display = "flex";
+    //document.querySelector(".infoIndividualCrimesEdgeHr").style.display = "block";
+    document.querySelector(".infoIndividualCrimesEdgeAggParent").style.display = "block";
     
     for(let i=0; i<data.agg_id.length; i++){
       document.querySelector(".infoIndividualCrimesEdgeAggContainer").innerHTML += `
@@ -376,10 +407,14 @@ function showDetailsOfEdgeIndividualCrimes(data){
                                                                                         </div>
                                                                                       </div>
                                                                                   `;
+
+      if(i != data.agg_id.length - 1)
+        document.querySelector(".infoIndividualCrimesEdgeAggContainer").innerHTML += `<hr></hr>`;
     }
   }
   else{
-    document.querySelector(".infoIndividualCrimesEdgeAggTitle").style.display = "none";
+    //document.querySelector(".infoIndividualCrimesEdgeHr").style.display = "none";
+    document.querySelector(".infoIndividualCrimesEdgeAggParent").style.display = "none";
   }
 
   if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
@@ -387,6 +422,33 @@ function showDetailsOfEdgeIndividualCrimes(data){
 }
 
 function fillPropertyAccordionIndividualCrimes(data){
+  console.log(data.edges);
+  let counterIndividual = 0;
+  let counterCrime = 0;
+
+  let counterSentence = 0;
+  let counterImputation = 0;
+  for(let i = 0; i < data.nodes.length; i++){
+    if(data.nodes[i].classes == "Individuo")
+      counterIndividual++;
+
+    if(data.nodes[i].classes == "Reato")
+      counterCrime++;
+  }
+
+  for(let i = 0; i < data.edges.length; i++){
+    if(data.edges[i].data.classes == "Condannato")
+      counterSentence++;
+
+    if(data.edges[i].data.classes == "ImputatoDi")
+      counterImputation++;
+  }
+
+  document.querySelector(".accordionNumberNodesEdgesIndividualContent").innerHTML = counterIndividual;
+  document.querySelector(".accordionNumberNodesEdgesCrimesContent").innerHTML = counterCrime;
+  document.querySelector(".accordionNumberNodesEdgesSentenceContent").innerHTML = counterSentence;
+  document.querySelector(".accordionNumberNodesEdgesImputationContent").innerHTML = counterImputation;
+
   document.querySelector(".accordionNumberNodesEdgesNodesContent").innerHTML = data.nodes.length;
   document.querySelector(".accordionNumberNodesEdgesEdgesContent").innerHTML = data.edges.length;
 }

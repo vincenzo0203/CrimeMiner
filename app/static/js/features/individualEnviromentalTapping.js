@@ -1,4 +1,5 @@
 let cyIndividualEnviromentalTapping;
+let cyNodeTouchedIndividualEnviromentalTapping = ""
 let cyEdgeTouchedIndividualEnviromentalTapping  = "";
 
 //funzione che permette di caricare script javascript al caricamento della pagina
@@ -147,21 +148,49 @@ function createGraphIndividualEnviromentalTapping(data) {
     //questo per il nodo
     cyIndividualEnviromentalTapping.on('tap', 'node', function(evt) {
       requestDetailsOfNodeIndividualEnviromentalTapping(evt.target.id())
+      if(cyEdgeTouchedIndividualEnviromentalTapping != "")
+        cyIndividualEnviromentalTapping.edges("#"+ cyEdgeTouchedIndividualEnviromentalTapping).style('line-color', '#dfdfdf');
+
+      if(cyNodeTouchedIndividualEnviromentalTapping != "" || evt.target.classes() == undefined){
+        if(cyNodeTouchedIndividualEnviromentalTapping[0] == "IA")
+            cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#d7bd1e');
+          else
+            cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#03a74f');
+      }
+      cyNodeTouchedIndividualEnviromentalTapping = evt.target.id();
+      evt.target.style('background-color', '#991199');
     });
 
     //questo per l'arco
     cyIndividualEnviromentalTapping.on('tap', 'edge', function(evt) {
-      requestDetailsOfEdgeIndividualEnviromentalTapping(evt.target.id())
-      if(cyEdgeTouchedIndividualEnviromentalTapping != "")
+      requestDetailsOfEdgeIndividualEnviromentalTapping(evt.target.id());
+      if(cyNodeTouchedIndividualEnviromentalTapping != "" || evt.target.classes() == undefined){
+        if(cyNodeTouchedIndividualEnviromentalTapping[0] == "IA")
+            cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#d7bd1e');
+          else
+            cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#03a74f');
+      }
+      
+      if(cyEdgeTouchedIndividualEnviromentalTapping != "" || evt.target.classes()[0] == "Individuo" || evt.target.classes()[0] == "IntercettazioneAmb")
         cyIndividualEnviromentalTapping.edges("#"+ cyEdgeTouchedIndividualEnviromentalTapping).style('line-color', '#dfdfdf');
       cyEdgeTouchedIndividualEnviromentalTapping = evt.target.id();
-      evt.target.style('line-color', '#FF0000');
+      evt.target.style('line-color', '#991199');
     });
 
     cyIndividualEnviromentalTapping.on('tap', function(evt) {
       if(evt.target._private.container != undefined){
-        cyIndividualEnviromentalTapping.$("#"+ cyEdgeTouchedIndividualEnviromentalTapping).style('line-color', '#dfdfdf');
-        cyEdgeTouchedIndividualEnviromentalTapping = "";
+
+        if(cyEdgeTouchedIndividualEnviromentalTapping != ""){
+          cyIndividualEnviromentalTapping.$("#"+ cyEdgeTouchedIndividualEnviromentalTapping).style('line-color', '#dfdfdf');
+          cyEdgeTouchedIndividualEnviromentalTapping = "";
+        }
+        if(cyNodeTouchedIndividualEnviromentalTapping != ""){
+          if(cyNodeTouchedIndividualEnviromentalTapping[0] == "IA")
+            cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#d7bd1e');
+          else
+            cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#03a74f');
+          cyNodeTouchedIndividualEnviromentalTapping = "";
+        }
       }
     });
 
@@ -183,23 +212,23 @@ function changeSizeNodesIndividualEnviromentalTapping(data){
   if(selectMetrics == "Default"){
     data = data.nodes;
     for(let i = 0; i < data.length; i++)
-      cyIndividualWiretaps.$('#'+ data[i].data.id).data("size",data[i].data.size);
+      cyIndividualEnviromentalTapping.$('#'+ data[i].data.id).data("size",data[i].data.size);
   }
   else{
     data = data.result;
     if(selectMetrics == "PageRank" || selectMetrics == "WeightedPageRank"|| selectMetrics == "Closeness")
     for(let i = 0; i < data.length; i++){
-      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size*200);
+      cyIndividualEnviromentalTapping.$('#'+ data[i].id).data("size",data[i].size*200);
     }
 
     if(selectMetrics == "Betweenness")
     for(let i = 0; i < data.length; i++){
-      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size/10);
+      cyIndividualEnviromentalTapping.$('#'+ data[i].id).data("size",data[i].size/10);
     }
 
     if(selectMetrics == "Degree" || selectMetrics == "InDegree" || selectMetrics == "OutDegree")
     for(let i = 0; i < data.length; i++){
-      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size*3);
+      cyIndividualEnviromentalTapping.$('#'+ data[i].id).data("size",data[i].size*3);
     }
   }
 }
