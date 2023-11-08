@@ -135,7 +135,9 @@ function createGraphIndividualCrimes(data) {
     ],
     layout: {
       name: 'circle', //dagre  //fcose
-    }
+    },
+    minZoom: 0.8,
+    maxZoom: 2.0
   });
 
   //si aspetta che il grafo sia pronto per poter inserire per ogni nodo o arco un evento sul click
