@@ -181,23 +181,23 @@ function changeSizeNodesIndividualEnviromentalTapping(data){
   if(selectMetrics == "Default"){
     data = data.nodes;
     for(let i = 0; i < data.length; i++)
-      cyIndividualWiretaps.$('#'+ data[i].data.id).data("size",data[i].data.size);
+     cyIndividualEnviromentalTapping.$('#'+ data[i].data.id).data("size",data[i].data.size);
   }
   else{
     data = data.result;
     if(selectMetrics == "PageRank" || selectMetrics == "WeightedPageRank"|| selectMetrics == "Closeness")
     for(let i = 0; i < data.length; i++){
-      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size*200);
+      cyIndividualEnviromentalTapping.$('#'+ data[i].id).data("size",data[i].size*200);
     }
 
     if(selectMetrics == "Betweenness")
     for(let i = 0; i < data.length; i++){
-      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size/10);
+      cyIndividualEnviromentalTapping.$('#'+ data[i].id).data("size",data[i].size/10);
     }
 
     if(selectMetrics == "Degree" || selectMetrics == "InDegree" || selectMetrics == "OutDegree")
     for(let i = 0; i < data.length; i++){
-      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size*3);
+      cyIndividualEnviromentalTapping.$('#'+ data[i].id).data("size",data[i].size*3);
     }
   }
 }

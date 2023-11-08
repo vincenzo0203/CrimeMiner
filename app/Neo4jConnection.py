@@ -15,11 +15,13 @@ class Neo4jDriver:
             session.run(Creazione_grafico_IndInt)
             Creazione_grafico_IndRea = "CALL gds.graph.project('IndividuoReati', ['Individuo','Reato'],['ImputatoDi', 'Condannato'],{relationshipProperties: 'mesiTotali'})"
             session.run(Creazione_grafico_IndRea)
+            Creazione_grafico_IndIntAmb = "CALL gds.graph.project('IndividuoIntercettazioneAmb', ['Individuo','IntercettazioneAmb'],'Presente',{relationshipProperties: 'mesiTotali'})"
+            session.run(Creazione_grafico_IndIntAmb)
             
 
     @classmethod
     def close(cls):
-        if cls._driver is not None:
+        if cls._driver is not None: 
             cls._driver.close()
             cls._driver = None
 

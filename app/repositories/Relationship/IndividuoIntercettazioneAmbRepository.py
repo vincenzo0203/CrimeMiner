@@ -78,7 +78,7 @@ class IndividuoIntercettazioneAmbRepository:
     def Closeness():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "CALL gds.closeness.stream('IndividuoIntercettazioni') YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score RETURN node.nodeId AS id, score AS score ORDER BY score DESC;"
+            cypher_query = "CALL gds.closeness.stream('IndividuoIntercettazioneAmb') YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:Presente]->() OR (node)<-[:Presente]-() RETURN DISTINCT node.nodeId AS id, score AS size;"
             results = session.run(cypher_query).data()
             return results
 

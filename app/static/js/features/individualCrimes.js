@@ -175,28 +175,29 @@ function createGraphIndividualCrimes(data) {
 }
 
 function changeSizeNodesIndividualCrimes(data){
+  console.log(data);
   let selectMetrics = document.querySelector(".selectMetrics").value;
 
   if(selectMetrics == "Default"){
     data = data.nodes;
     for(let i = 0; i < data.length; i++)
-      cyIndividualWiretaps.$('#'+ data[i].data.id).data("size",data[i].data.size);
+      cyIndividualCrimes.$('#'+ data[i].data.id).data("size",data[i].data.size);
   }
   else{
     data = data.result;
     if(selectMetrics == "PageRank" || selectMetrics == "WeightedPageRank"|| selectMetrics == "Closeness")
     for(let i = 0; i < data.length; i++){
-      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size*200);
+      cyIndividualCrimes.$('#'+ data[i].id).data("size",data[i].size*200);
     }
 
     if(selectMetrics == "Betweenness")
     for(let i = 0; i < data.length; i++){
-      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size/10);
+      cyIndividualCrimes.$('#'+ data[i].id).data("size",data[i].size/10);
     }
 
     if(selectMetrics == "Degree" || selectMetrics == "InDegree" || selectMetrics == "OutDegree")
     for(let i = 0; i < data.length; i++){
-      cyIndividualWiretaps.$('#'+ data[i].id).data("size",data[i].size*3);
+      cyIndividualCrimes.$('#'+ data[i].id).data("size",data[i].size*3);
     }
   }
 }
