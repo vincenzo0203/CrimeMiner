@@ -147,7 +147,7 @@ function createGraphIndividualCrimesEnviromentalTapping(data) {
     layout: {
       name: 'circle', //dagre  //fcose
     },
-    minZoom: 0.09,
+    minZoom: 0.08,
     maxZoom: 2.0
   });
 

@@ -127,7 +127,7 @@ function createGraphIndividualWiretaps(data) {
     layout: {
       name: 'circle', //dagre  //fcose
     },
-    minZoom: 0.2,
+    minZoom: 0.18,
     maxZoom: 2.0
   });
 

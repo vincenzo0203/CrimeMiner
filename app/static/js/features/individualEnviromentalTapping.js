@@ -138,7 +138,7 @@ function createGraphIndividualEnviromentalTapping(data) {
     layout: {
       name: 'circle', //dagre  //fcose
     },
-    minZoom: 0.16,
+    minZoom: 0.14,
     maxZoom: 2.0
   });
 

@@ -137,7 +137,7 @@ function createGraphIndividualCrimes(data) {
     layout: {
       name: 'circle', //dagre  //fcose
     },
-    minZoom: 0.8,
+    minZoom: 0.6,
     maxZoom: 2.0
   });
 
