@@ -13,10 +13,19 @@ class Neo4jDriver:
             session = Neo4jDriver.get_session()
             Creazione_grafico_IndInt = "CALL gds.graph.project('IndividuoIntercettazioni', 'Individuo', 'HaChiamato' ,{relationshipProperties: 'mesiTotali'})"
             session.run(Creazione_grafico_IndInt)
-            Creazione_grafico_IndRea = "CALL gds.graph.project('IndividuoReati', ['Individuo','Reato'],{ImputatoDi: {orientation: 'UNDIRECTED'}, Condannato:{orientation: 'UNDIRECTED'}"+"},{relationshipProperties: 'ImputatoDi': 'mesiTotali'}"+"})"
+            Creazione_grafico_IndRea = "CALL gds.graph.project('IndividuoReati', ['Individuo','Reato'],{ImputatoDi: {orientation: 'UNDIRECTED'}, Condannato:{orientation: 'UNDIRECTED'} },{relationshipProperties: 'ImputatoDi': 'mesiTotali'} })"
             session.run(Creazione_grafico_IndRea)
+           
+            Creazione_grafico_IndIntAmbCloBet = "CALL gds.graph.project('IndividuoIntercettazioneAmbCloBet', ['Individuo','IntercettazioneAmb'],{Presente: {orientation:'UNDIRECTED'} },{relationshipProperties: 'mesiTotali'})"
+            session.run(Creazione_grafico_IndIntAmbCloBet)
             Creazione_grafico_IndIntAmb = "CALL gds.graph.project('IndividuoIntercettazioneAmb', ['Individuo','IntercettazioneAmb'],'Presente',{relationshipProperties: 'mesiTotali'})"
             session.run(Creazione_grafico_IndIntAmb)
+           
+            Creazione_grafico_IndReatoIntAmbCloBet = "CALL gds.graph.project('IndividuoReatoIntercettazioneAmbCloBet', ['Individuo','IntercettazioneAmb','Reato'], {HaChiamato: {orientation:'UNDIRECTED'},ImputatoDi: { orientation:'UNDIRECTED'},Condannato: {orientation: 'UNDIRECTED'},Presente: {orientation: 'UNDIRECTED' } } ,{relationshipProperties: 'mesiTotali'})"
+            session.run(Creazione_grafico_IndReatoIntAmbCloBet)
+            Creazione_grafico_IndReatoIntAmb = "CALL gds.graph.project('IndividuoReatoIntercettazioneAmb', ['Individuo','IntercettazioneAmb','Reato'], ['HaChiamato','ImputatoDi','Condannato','Presente'],{relationshipProperties: 'mesiTotali'})"
+            session.run(Creazione_grafico_IndReatoIntAmb)
+
             
 
     @classmethod

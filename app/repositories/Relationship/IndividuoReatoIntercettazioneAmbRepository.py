@@ -81,7 +81,7 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def Closeness():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "CALL gds.closeness.stream('IndividuoIntercettazioni') YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score RETURN node.nodeId AS id, score AS score ORDER BY score DESC;"
+            cypher_query = "CALL gds.closeness.stream('IndividuoReatoIntercettazioneAmbCloBet') YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:HaChiamato|ImputatoDi|Condannato|Presente]->() OR (node)<-[:HaChiamato|ImputatoDi|Condannato|Presente]-() RETURN DISTINCT node.nodeId AS id, score AS size"
             results = session.run(cypher_query).data()
             return results
 
@@ -95,7 +95,7 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def Betweenness():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "CALL gds.betweenness.stream('IndividuoIntercettazioni') YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score RETURN node.nodeId AS id, score AS score ORDER BY score DESC;"
+            cypher_query = "CALL gds.betweenness.stream('IndividuoReatoIntercettazioneAmbCloBet') YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:HaChiamato|ImputatoDi|Condannato|Presente]->() OR (node)<-[:HaChiamato|ImputatoDi|Condannato|Presente]-() RETURN DISTINCT node.nodeId AS id, score AS size"
             results = session.run(cypher_query).data()
             return results
 
@@ -109,7 +109,7 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def PageRank():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "CALL gds.pageRank.stream('IndividuoIntercettazioni', { maxIterations: 10, relationshipTypes: ['HaChiamato'] }) YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score RETURN node.nodeId AS id, score AS score ORDER BY score DESC;"
+            cypher_query = "CALL gds.pageRank.stream('IndividuoReatoIntercettazioneAmb', { maxIterations: 10, relationshipTypes: ['ImputatoDi', 'Condannato','HaChiamato','Presente'] }) YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:Presente|Condannato|ImputatoDi|HaChiamato]->() OR (node)<-[:Presente|Condannato|ImputatoDi|HaChiamato]-() RETURN node.nodeId AS id, score AS size"
             results = session.run(cypher_query).data()
             return results
 
@@ -123,7 +123,7 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def WeightedPageRank():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "CALL gds.pageRank.stream('IndividuoIntercettazioni', {maxIterations: 10,dampingFactor: 0.85,relationshipWeightProperty: 'mesiTotali'})YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score RETURN node.nodeId AS id, score ORDER BY score DESC;"
+            cypher_query = ""
             results = session.run(cypher_query).data()
             return results
 
@@ -137,7 +137,7 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def Degree():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = ""
+            cypher_query = "CALL gds.degree.stream('IndividuoReatoIntercettazioneAmb', {orientation: 'UNDIRECTED'}) YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:HaChiamato|ImputatoDi|Condannato|Presente]->() OR (node)<-[:HaChiamato|ImputatoDi|Condannato|Presente]-()  RETURN node.nodeId AS id, score AS size order by score desc"
             results = session.run(cypher_query).data()
             return results
 
@@ -151,7 +151,7 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def InDegree():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = ""
+            cypher_query = "CALL gds.degree.stream('IndividuoReatoIntercettazioneAmb', {orientation: 'REVERSE'}) YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:HaChiamato|ImputatoDi|Condannato|Presente]->() OR (node)<-[:HaChiamato|ImputatoDi|Condannato|Presente]-()  RETURN node.nodeId AS id, score AS size order by score desc"
             results = session.run(cypher_query).data()
             return results
 
@@ -165,7 +165,7 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def OutDegree():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = ""
+            cypher_query = "CALL gds.degree.stream('IndividuoReatoIntercettazioneAmb', {orientation: 'NATURAL'}) YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:HaChiamato|ImputatoDi|Condannato|Presente]->() OR (node)<-[:HaChiamato|ImputatoDi|Condannato|Presente]-()  RETURN node.nodeId AS id, score AS size order by score desc"
             results = session.run(cypher_query).data()
             return results
 
