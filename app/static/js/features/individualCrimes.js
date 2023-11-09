@@ -5,6 +5,7 @@ let cyEdgeTouchedIndividualCrimes = "";
 //funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Reati commessi dagli Individui";
+  loadPage(1500);
   requestAllNodesIndividualCrimes();  
 };
 
@@ -237,6 +238,8 @@ function changeSizeNodesIndividualCrimes(data){
 function changeLayoutIndividualCrimes() {
 
   if(document.querySelector(".selectLayout").value == 'circle'){
+    loadPage(1500);
+
     cyIndividualCrimes.layout({
       name: 'circle',
       animate: true
@@ -244,6 +247,8 @@ function changeLayoutIndividualCrimes() {
   }
 
   if(document.querySelector(".selectLayout").value == 'dagre'){
+    loadPage(1500);
+    
     cyIndividualCrimes.layout({
       name: 'dagre',
       rankDir: 'TB',
@@ -257,6 +262,8 @@ function changeLayoutIndividualCrimes() {
   }
 
   if(document.querySelector(".selectLayout").value == 'fcose'){
+    loadPage(1500);
+    
     cyIndividualCrimes.layout({
       name: 'fcose',
       spacingFactor: 3,

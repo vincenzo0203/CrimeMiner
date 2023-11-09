@@ -5,6 +5,7 @@ let cyEdgeTouchedIndividualCrimesEnviromentalTapping = "";
 //funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Intercettazione Ambientale e Reati commessi dagli Individui";
+  loadPage(2500);
   requestAllNodesIndividualCrimesEnviromentalTapping();   
 };
 
@@ -252,13 +253,18 @@ function changeSizeNodesIndividualCrimesEnviromentalTapping(data){
 function changeLayoutIndividualCrimesEnviromentalTapping() {
 
   if(document.querySelector(".selectLayout").value == 'circle'){
+    loadPage(3000);
+
     cyIndividualCrimesEnviromentalTapping.layout({
       name: 'circle',
-      animate: true
+      animate: true,
+      animationDuration: 2000
     }).run();
   }
 
   if(document.querySelector(".selectLayout").value == 'dagre'){
+    loadPage(8000);
+
     cyIndividualCrimesEnviromentalTapping.layout({
       name: 'dagre',
       rankDir: 'TB',
@@ -267,15 +273,19 @@ function changeLayoutIndividualCrimesEnviromentalTapping() {
       nodeSep: 120,
       edgeSep: 2,
       rankSep: 550,
-      animate: true
+      animate: true,
+      animationDuration: 7000
     }).run();
   }
 
   if(document.querySelector(".selectLayout").value == 'fcose'){
+    loadPage(3000);
+
     cyIndividualCrimesEnviromentalTapping.layout({
       name: 'fcose',
       spacingFactor: 3,
-      animate: true
+      animate: true,
+      animationDuration: 2000
     }).run();
   }
 

@@ -5,6 +5,7 @@ let cyEdgeTouchedIndividualEnviromentalTapping  = "";
 //funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Intercettazione Ambientale tra gli Individui";
+  loadPage(2500);
   requestAllNodesIndividualEnviromentalTapping();   
 };
 
@@ -237,6 +238,8 @@ function changeSizeNodesIndividualEnviromentalTapping(data){
 function changeLayoutIndividualEnviromentalTapping() {
 
   if(document.querySelector(".selectLayout").value == 'circle'){
+    loadPage(2500);
+
     cyIndividualEnviromentalTapping.layout({
       name: 'circle',
       animate: true
@@ -244,6 +247,8 @@ function changeLayoutIndividualEnviromentalTapping() {
   }
 
   if(document.querySelector(".selectLayout").value == 'dagre'){
+    loadPage(2500);
+
     cyIndividualEnviromentalTapping.layout({
       name: 'dagre',
       rankDir: 'TB',
@@ -257,6 +262,8 @@ function changeLayoutIndividualEnviromentalTapping() {
   }
 
   if(document.querySelector(".selectLayout").value == 'fcose'){
+    loadPage(2500);
+
     cyIndividualEnviromentalTapping.layout({
       name: 'fcose',
       spacingFactor: 3,
