@@ -26,7 +26,7 @@ class IndividuoReatoIntercettazioneAmbRepository:
             nodes = individuo_nodes + reato_nodes + intercettazioni_nodes
 
             # Query per ottenere gli archi
-            edges_query = "MATCH ()-[r:HaChiamato|Condannato|ImputatoDi|Presente]->() RETURN r.sourceNodeId as source, r.targetNodeId as target, r.edgeId as id"
+            edges_query = "MATCH ()-[r:HaChiamato|Condannato|ImputatoDi|Presente]->() RETURN r.sourceNodeId as source, r.targetNodeId as target, r.edgeId as id, r.entityType AS classes"
             edges = session.run(edges_query).data()
 
             # Creazione della struttura dati JSON compatibile con Cytoscape

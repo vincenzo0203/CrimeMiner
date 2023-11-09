@@ -1,6 +1,6 @@
 //funzione che permette di ruotare la freccia dei sottomenu scambiando due classi inserite nell'scss
 document.addEventListener('DOMContentLoaded', function() {
-    var navLinks = document.querySelectorAll('.nav-link');
+    let navLinks = document.querySelectorAll('.nav-link');
 
     navLinks.forEach(function(navLink) {
         navLink.addEventListener('click', function() {

@@ -7,6 +7,7 @@ window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Reati commessi dagli Individui";
   loadPage(1500);
   requestAllNodesIndividualCrimes();  
+  document.querySelector("#item-properties").click();
 };
 
 function requestAllNodesIndividualCrimes() {
@@ -357,8 +358,8 @@ function showDetailsOfNodeIndividualIndividualCrimes(data){
   document.querySelector(".infoIndividualCrimesNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
   document.querySelector(".infoIndividualCrimesNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
 
-  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
-    document.querySelector(".accordionButtonTwo").click();
+  if(document.querySelector("#item-details").checked == false)
+    document.querySelector("#item-details").click();
 }
 
 function showDetailsOfNodeCrimeIndividualCrimes(data){
@@ -375,8 +376,8 @@ function showDetailsOfNodeCrimeIndividualCrimes(data){
   document.querySelector(".infoIndividualCrimesNodeCrimeMinMonthsContent").innerHTML = data.minMonths;
   document.querySelector(".infoIndividualCrimesNodeCrimeMaxMonthsContent").innerHTML = data.maxMonths;
 
-  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
-    document.querySelector(".accordionButtonTwo").click();
+  if(document.querySelector("#item-details").checked == false)
+    document.querySelector("#item-details").click();
 }
 
 function showDetailsOfEdgeIndividualCrimes(data){
@@ -425,12 +426,11 @@ function showDetailsOfEdgeIndividualCrimes(data){
     document.querySelector(".infoIndividualCrimesEdgeAggParent").style.display = "none";
   }
 
-  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
-    document.querySelector(".accordionButtonTwo").click();
+  if(document.querySelector("#item-details").checked == false)
+    document.querySelector("#item-details").click();
 }
 
 function fillPropertyAccordionIndividualCrimes(data){
-  console.log(data.edges);
   let counterIndividual = 0;
   let counterCrime = 0;
 

@@ -6,7 +6,8 @@ let cyEdgeTouchedIndividualEnviromentalTapping  = "";
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Intercettazione Ambientale tra gli Individui";
   loadPage(2500);
-  requestAllNodesIndividualEnviromentalTapping();   
+  requestAllNodesIndividualEnviromentalTapping();
+  document.querySelector("#item-properties").click();
 };
 
 function requestAllNodesIndividualEnviromentalTapping() {
@@ -357,8 +358,8 @@ function showDetailsOfNodeIndividualIndividualEnviromentalTapping(data){
   document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
   document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
 
-  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
-    document.querySelector(".accordionButtonTwo").click();
+  if(document.querySelector("#item-details").checked == false)
+    document.querySelector("#item-details").click();
 }
 
 function showDetailsOfNodeEnviromentalTappingIndividualEnviromentalTapping(data){
@@ -374,8 +375,8 @@ function showDetailsOfNodeEnviromentalTappingIndividualEnviromentalTapping(data)
   document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingPlaceContent").innerHTML = data.luogo;
   document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingContentContent").innerHTML = data.contenuto;
 
-  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
-    document.querySelector(".accordionButtonTwo").click();
+  if(document.querySelector("#item-details").checked == false)
+    document.querySelector("#item-details").click();
 }
 
 function showDetailsOfEdgeIndividualEnviromentalTapping(data){
@@ -393,11 +394,27 @@ function showDetailsOfEdgeIndividualEnviromentalTapping(data){
   document.querySelector(".infoIndividualEnviromentalTappingEdgeMonthsSentenceContent").innerHTML = data.mesiCondanna;
   document.querySelector(".infoIndividualEnviromentalTappingEdgeMonthsTotalContent").innerHTML = data.mesiTotali;
 
-  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
-    document.querySelector(".accordionButtonTwo").click();
+  if(document.querySelector("#item-details").checked == false)
+    document.querySelector("#item-details").click();
 }
 
 function fillPropertyAccordionIndividualEnviromentalTapping(data){
+
+  let counterIndividual = 0;
+  let counterEnviromentalTapping = 0;
+
+  for(let i = 0; i < data.nodes.length; i++){
+    if(data.nodes[i].classes == "Individuo")
+      counterIndividual++;
+
+    if(data.nodes[i].classes == "IntercettazioneAmb")
+      counterEnviromentalTapping++;
+  }
+
+  document.querySelector(".accordionNumberNodesEdgesIndividualContent").innerHTML = counterIndividual;
+  document.querySelector(".accordionNumberNodesEdgesEnviromentalTappingContent").innerHTML = counterEnviromentalTapping;
+  document.querySelector(".accordionNumberNodesEdgesPresentContent").innerHTML = data.edges.length;
+
   document.querySelector(".accordionNumberNodesEdgesNodesContent").innerHTML = data.nodes.length;
   document.querySelector(".accordionNumberNodesEdgesEdgesContent").innerHTML = data.edges.length;
 }

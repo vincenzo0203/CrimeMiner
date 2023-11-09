@@ -6,7 +6,8 @@ let cyEdgeTouchedIndividualWiretaps  = "";
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Intercettazione delle chiamate tra gli Individui";
   loadPage(2500);
-  requestAllNodesIndividualWiretaps();    
+  requestAllNodesIndividualWiretaps();
+  document.querySelector("#item-properties").click();
 };
 
 function requestAllNodesIndividualWiretaps() {
@@ -160,7 +161,6 @@ function createGraphIndividualWiretaps(data) {
     });
 
     cyIndividualWiretaps.on('tap', function(evt) {
-      console.log(evt.target._private.container)
       if(evt.target._private.container != undefined){
         if(cyEdgeTouchedIndividualWiretaps != ""){
           cyIndividualWiretaps.$("#"+ cyEdgeTouchedIndividualWiretaps).style('line-color', '#dfdfdf');
@@ -323,8 +323,8 @@ function showDetailsOfNodeIndividualWiretaps(data){
   document.querySelector(".infoIndividualWiretapsNodeResidenceContent").innerHTML = data.cittaResidenza;
   document.querySelector(".infoIndividualWiretapsNodeAddressContent").innerHTML = data.indirizzoResidenza;
 
-  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
-    document.querySelector(".accordionButtonTwo").click();
+  if(document.querySelector("#item-details").checked == false)
+    document.querySelector("#item-details").click();
 }
 
 function showDetailsOfEdgeIndividualWiretaps(data){
@@ -342,8 +342,8 @@ function showDetailsOfEdgeIndividualWiretaps(data){
   document.querySelector(".infoIndividualWiretapsEdgeTargetContent").innerHTML = data.targetNodeId;
   document.querySelector(".infoIndividualWiretapsEdgeContentContent").innerHTML = data.contenuto;
 
-  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
-    document.querySelector(".accordionButtonTwo").click();
+  if(document.querySelector("#item-details").checked == false)
+    document.querySelector("#item-details").click();
 }
 
 function fillPropertyAccordionIndividualWiretaps(data){

@@ -1,3 +1,12 @@
+.accordion{
+    &NumberNodesEdges{
+        &Individual,&Crimes,&EnviromentalTapping,&Call,&Sentence,&Imputation,&Present{
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}
+
 .infoIndividualCrimesEnviromentalTapping{
     &NodeIndividual{
         display: none;

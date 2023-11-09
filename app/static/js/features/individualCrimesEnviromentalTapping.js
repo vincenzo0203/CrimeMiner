@@ -6,7 +6,8 @@ let cyEdgeTouchedIndividualCrimesEnviromentalTapping = "";
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Intercettazione Ambientale e Reati commessi dagli Individui";
   loadPage(2500);
-  requestAllNodesIndividualCrimesEnviromentalTapping();   
+  requestAllNodesIndividualCrimesEnviromentalTapping();
+  document.querySelector("#item-properties").click();
 };
 
 function requestAllNodesIndividualCrimesEnviromentalTapping() {
@@ -391,8 +392,8 @@ function showDetailsOfNodeIndividualIndividualCrimesEnviromentalTapping(data){
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
 
-  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
-    document.querySelector(".accordionButtonTwo").click();
+  if(document.querySelector("#item-details").checked == false)
+    document.querySelector("#item-details").click();
 }
 
 function showDetailsOfNodeEnviromentalTappingIndividualCrimesEnviromentalTapping(data){
@@ -411,8 +412,8 @@ function showDetailsOfNodeEnviromentalTappingIndividualCrimesEnviromentalTapping
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeEnviromentalTappingPlaceContent").innerHTML = data.luogo;
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeEnviromentalTappingContentContent").innerHTML = data.contenuto;
 
-  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
-    document.querySelector(".accordionButtonTwo").click();
+  if(document.querySelector("#item-details").checked == false)
+    document.querySelector("#item-details").click();
 }
 
 function showDetailsOfNodeCrimeIndividualCrimesEnviromentalTapping(data){
@@ -432,8 +433,8 @@ function showDetailsOfNodeCrimeIndividualCrimesEnviromentalTapping(data){
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeCrimeMinMonthsContent").innerHTML = data.minMonths;
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeCrimeMaxMonthsContent").innerHTML = data.maxMonths;
 
-  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
-    document.querySelector(".accordionButtonTwo").click();
+  if(document.querySelector("#item-details").checked == false)
+    document.querySelector("#item-details").click();
 }
 
 function showDetailsOfEdgeIndividualCrimesEnviromentalTapping(data){
@@ -514,11 +515,54 @@ function showDetailsOfEdgeIndividualCrimesEnviromentalTapping(data){
     document.querySelector(".infoIndividualCrimesEnviromentalTappingEdgeIndividualEnviromentalTappingMonthsTotalContent").innerHTML = data.mesiTotali;
   }
 
-  if(document.querySelector(".accordionButtonTwo").classList.contains("collapsed"))
-    document.querySelector(".accordionButtonTwo").click();
+  if(document.querySelector("#item-details").checked == false)
+    document.querySelector("#item-details").click();
 }
 
 function fillPropertyAccordionIndividualCrimesEnviromentalTapping(data){
+
+  let counterIndividual = 0;
+  let counterCrime = 0;
+  let counterEnviromentalTapping = 0;
+
+  let counterCall = 0;
+  let counterSentence = 0;
+  let counterImputation = 0;
+  let counterPresent = 0;
+  for(let i = 0; i < data.nodes.length; i++){
+    if(data.nodes[i].classes == "Individuo")
+      counterIndividual++;
+
+    if(data.nodes[i].classes == "Reato")
+      counterCrime++;
+
+    if(data.nodes[i].classes == "IntercettazioneAmb")
+      counterEnviromentalTapping++;
+  }
+
+  for(let i = 0; i < data.edges.length; i++){
+    if(data.edges[i].data.classes == "HaChiamato")
+      counterCall++;
+
+    if(data.edges[i].data.classes == "Condannato")
+      counterSentence++;
+
+    if(data.edges[i].data.classes == "ImputatoDi")
+      counterImputation++;
+
+    if(data.edges[i].data.classes == "Presente")
+      counterPresent++;
+  }
+
+
+  document.querySelector(".accordionNumberNodesEdgesIndividualContent").innerHTML = counterIndividual;
+  document.querySelector(".accordionNumberNodesEdgesCrimesContent").innerHTML = counterCrime;
+  document.querySelector(".accordionNumberNodesEdgesEnviromentalTappingContent").innerHTML = counterEnviromentalTapping;
+  document.querySelector(".accordionNumberNodesEdgesCallContent").innerHTML = counterCall;
+  document.querySelector(".accordionNumberNodesEdgesSentenceContent").innerHTML = counterSentence;
+  document.querySelector(".accordionNumberNodesEdgesImputationContent").innerHTML = counterImputation;
+  document.querySelector(".accordionNumberNodesEdgesPresentContent").innerHTML = counterPresent;
+  
   document.querySelector(".accordionNumberNodesEdgesNodesContent").innerHTML = data.nodes.length;
   document.querySelector(".accordionNumberNodesEdgesEdgesContent").innerHTML = data.edges.length;
 }

@@ -17,15 +17,25 @@
       <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalIndividualCrimes">
         Inserisci una nuova condanna o imputazione
       </button>-->
-      <!--Proprietà-->
-      <div class="accordion" id="accordionPanelsProperties">
+      <div class="accordion">
+
+        <!-- Properties -->
         <div class="accordion-item">
-          <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-              Proprietà
-            </button>
-          </h2>
-          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+          <input type="checkbox" id="item-properties" class="accordionCheckboxLabel"/>
+          <label for="item-properties" class="accordion-header">
+            <span class="accordion-header-container">
+              <div class="accordion-header-container-icon">
+                <ion-icon name="information-circle" class="accordion-icon"></ion-icon>
+              </div>
+              <div class="accordionButtonOne">Proprietà</div>
+            </span>
+            <span class="accordionArrow accordionIconToggleRight">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill accordionIconToggleRightSvg" viewBox="0 0 16 16">
+                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+              </svg>
+            </span>
+          </label>
+          <div class="accordion-content">
             <div class="accordion-body">
               <div class="accordionNumberNodesEdges">
                 <div class="accordionNumberNodesEdgesIndividual">
@@ -61,19 +71,26 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <!--Dettagli-->
-      <div class="accordion" id="accordionPanelsDetails">
-        
+  
+        <!-- Details -->
         <div class="accordion-item">
-          <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-            <button class="accordion-button collapsed accordionButtonTwo" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-              Dettagli
-            </button>
-          </h2>
-          <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+          <input type="checkbox" id="item-details" class="accordionCheckboxLabel"/>
+          <label for="item-details" class="accordion-header">
+            <span class="accordion-header-container">
+              <div class="accordion-header-container-icon">
+                <ion-icon name="color-wand-outline" class="accordion-icon"></ion-icon>
+              </div>
+              <div class="accordionButtonTwo">Dettagli</div>
+            </span>
+            <span class="accordionArrow accordionIconToggleRight">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill accordionIconToggleRightSvg" viewBox="0 0 16 16">
+                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+              </svg>
+            </span>
+          </label>
+          <div class="accordion-content">
             <div class="accordion-body">
+
               <!--Individuo-->
               <div class="infoIndividualCrimesNodeIndividual">
 
@@ -147,6 +164,7 @@
                 </div>
               </div>
 
+              <!--Archi-->
               <div class="infoIndividualCrimesEdge">
                 <div class="infoIndividualCrimesEdgeId d-flex">
                   <div>Identificativo</div>
@@ -187,18 +205,24 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <!--Impostazioni-->
-      <div class="accordion" id="accordionPanelsSettings">
-        
+  
+        <!-- Settings -->
         <div class="accordion-item">
-          <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-              Impostazioni
-            </button>
-          </h2>
-          <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+          <input type="checkbox" id="item-settings" class="accordionCheckboxLabel"/>
+          <label for="item-settings" class="accordion-header">
+            <span class="accordion-header-container">
+              <div class="accordion-header-container-icon">
+                <ion-icon name="cog" class="accordion-icon"></ion-icon>
+              </div>
+              <div class="accordionButtonThree">Impostazioni</div>
+            </span>
+            <span class="accordionArrow accordionIconToggleRight">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill accordionIconToggleRightSvg" viewBox="0 0 16 16">
+                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+              </svg>
+            </span>
+          </label>
+          <div class="accordion-content">
             <div class="accordion-body">
               <div class="d-flex accordionCheckboxNodeEdge">
                 <div class="form-check">
@@ -216,20 +240,20 @@
               </div>
               <div class="d-flex accordionLayoutMetrics">
                 <div class="d-flex flex-column">
-                  <div>
+                  <div for="recipient-layout" class="col-form-label">
                     Layout
                   </div>
-                  <select class="form-select selectLayout" aria-label="Default select example" onchange="changeLayoutIndividualCrimes();">
+                  <select class="form-select selectLayout" aria-label="Default select example" id="recipient-layout" onchange="changeLayoutIndividualCrimes();">
                     <option value="circle" selected>Cerchio</option>
                     <option value="dagre">Dagre</option>
                     <option value="fcose">Force Atlas</option>
                   </select>
                 </div>
                 <div class="d-flex flex-column">
-                  <div>
+                  <div for="recipient-metrics" class="col-form-label">
                     Metriche
                   </div>
-                  <select class="form-select selectMetrics" aria-label="Default select example" onchange="changeMetricIndividualCrimes();">
+                  <select class="form-select selectMetrics" aria-label="Default select example" id="recipient-metrics" onchange="changeMetricIndividualCrimes();">
                     <option value="Default" selected>Default</option>
                     <option value="PageRank">PageRank</option>
                     <option value="WeightedPageRank">Weighted PageRank</option>
@@ -245,7 +269,6 @@
           </div>
         </div>
       </div>
-        
     </div>
     
 </div>

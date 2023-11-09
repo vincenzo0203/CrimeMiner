@@ -27,8 +27,78 @@
         }
     }
 
+    &Icon{
+        //width: 1.5rem;
+        transition: all 0.75s;
+    
+        &Arrow{
+            width: 1rem;
+            transition: all 0.75s;
+        }
+    
+        &ToggleRight{
+            transform: rotate(0deg);
+
+            &Svg{
+                width: 1rem;
+                height: 1rem;
+                fill:#a30404;
+            }
+        }
+    
+        &ToggleDown{
+            transform: rotate(90deg);
+
+            &Svg{
+                width: 1rem;
+                height: 1rem;
+                fill:black;
+            }
+        }
+    }
+
+    //Other
     &-item{
-        border-radius: 10px !important;
+        background-color: #ffffff;
+        border-radius: 0.5rem !important;
+        box-shadow: 5px 5px 2.5px #dedede;
+
+        &:not(:last-child){
+            margin-bottom: 1em;
+        }
+    }
+
+
+    &-header{
+        padding: 1em;
+        font-size: 1em;
+        display: flex;
+        justify-content: space-between;
+        color: #a30404;
+        cursor: pointer;
+        font-weight: 500;
+
+        &-container{
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            padding-left: 1rem;
+        }
+    }
+
+    //Other
+    &-content{
+        color: #606060;
+        //font-size: 0.8rem;
+        line-height: 1.8rem;
+    }
+
+    //Other
+    &-icon{
+        display: flex;
+        align-items: center;
+        font-size: 25px;
+        
     }
 
     &-button{
@@ -72,9 +142,46 @@
     }
 
     &CheckboxNodeEdge{
+        padding: 1rem 1.25rem;
         justify-content: space-around;
     }
+
+    //Other
+    &CheckboxLabel{
+        display: none;
+        appearance: none;
+    }
+
+    //Other
+    &CheckboxLabel ~ label .accordionArrow{
+        display: inline-block;
+        transition: 1s;
+    }
+
+    //Other
+    &CheckboxLabel:checked ~ label{
+        color: #14161e;
+
+        & .accordionArrow{
+            transform: rotate(90deg);
+        }
+    }
+
+    //Other
+    &CheckboxLabel ~ .accordion-content{
+        max-height: 0;
+        overflow: hidden;
+        transition: 0.8s;
+    }
+
+    //Other
+    &CheckboxLabel:checked ~ .accordion-content{
+        max-height: 100vh;
+        transition: 2s;
+    }
 }
+
+
 
 hr{
     margin-top: 4px !important;
