@@ -74,7 +74,7 @@ class IndividuoReatoRepository:
     def Closeness():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "CALL gds.closeness.stream('IndividuoReati') YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE 'Individuo' IN labels(node) RETURN node.nodeId AS id, score AS size"
+            cypher_query = "CALL gds.closeness.stream('IndividuoReatiCloBet') YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:ImputatoDi|Condannato]->() OR (node)<-[:ImputatoDi|Condannato]-() RETURN node.nodeId AS id, score AS size"
             results = session.run(cypher_query).data()
             return results
 
@@ -88,7 +88,7 @@ class IndividuoReatoRepository:
     def Betweenness():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "CALL gds.betweenness.stream('IndividuoReati') YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE 'Individuo' IN labels(node) RETURN node.nodeId AS id, score AS size"
+            cypher_query = "CALL gds.betweenness.stream('IndividuoReatiCloBet') YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:ImputatoDi|Condannato]->() OR (node)<-[:ImputatoDi|Condannato]-() RETURN node.nodeId AS id, score AS size"
             results = session.run(cypher_query).data()
             return results
 
@@ -104,7 +104,7 @@ class IndividuoReatoRepository:
     def PageRank():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "CALL gds.pageRank.stream('IndividuoReati', {maxIterations: 10,relationshipTypes: ['ImputatoDi', 'Condannato']}) YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score RETURN node.nodeId AS id, score AS size"
+            cypher_query = "CALL gds.pageRank.stream('IndividuoReati', {maxIterations: 10,relationshipTypes: ['ImputatoDi', 'Condannato']}) YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:ImputatoDi|Condannato]->() OR (node)<-[:ImputatoDi|Condannato]-() RETURN node.nodeId AS id, score AS size"
             results = session.run(cypher_query).data()
             return results
 

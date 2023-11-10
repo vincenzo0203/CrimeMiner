@@ -106,7 +106,7 @@ class IndividuoIntercettazioneAmbRepository:
     def PageRank():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = "CALL gds.pageRank.stream('IndividuoIntercettazioneAmbCloBet', { maxIterations: 10, relationshipTypes: ['Presente'] }) YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:Presente]->() OR (node)<-[:Presente]-() RETURN node.nodeId AS id, score AS size"
+            cypher_query = "CALL gds.pageRank.stream('IndividuoIntercettazioneAmb', { maxIterations: 10, relationshipTypes: ['Presente'] }) YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:Presente]->() OR (node)<-[:Presente]-() RETURN node.nodeId AS id, score AS size"
             results = session.run(cypher_query).data()
             return results
 

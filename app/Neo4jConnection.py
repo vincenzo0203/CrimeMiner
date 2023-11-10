@@ -13,9 +13,12 @@ class Neo4jDriver:
             session = Neo4jDriver.get_session()
             Creazione_grafico_IndInt = "CALL gds.graph.project('IndividuoIntercettazioni', 'Individuo', 'HaChiamato' ,{relationshipProperties: 'mesiTotali'})"
             session.run(Creazione_grafico_IndInt)
-            Creazione_grafico_IndRea = "CALL gds.graph.project('IndividuoReati', ['Individuo','Reato'],{ImputatoDi: {orientation: 'UNDIRECTED'}, Condannato:{orientation: 'UNDIRECTED'} },{relationshipProperties: 'ImputatoDi': 'mesiTotali'} })"
+            
+            Creazione_grafico_IndReaCloBet = "CALL gds.graph.project('IndividuoReatiCloBet', ['Individuo','Reato'],{ImputatoDi: {orientation: 'UNDIRECTED'}, Condannato:{orientation: 'UNDIRECTED'} },{relationshipProperties: 'mesiTotali'})"
+            session.run(Creazione_grafico_IndReaCloBet)
+            Creazione_grafico_IndRea = "CALL gds.graph.project('IndividuoReati', ['Individuo','Reato'],['ImputatoDi','Condannato'],{relationshipProperties: 'mesiTotali'})"
             session.run(Creazione_grafico_IndRea)
-           
+
             Creazione_grafico_IndIntAmbCloBet = "CALL gds.graph.project('IndividuoIntercettazioneAmbCloBet', ['Individuo','IntercettazioneAmb'],{Presente: {orientation:'UNDIRECTED'} },{relationshipProperties: 'mesiTotali'})"
             session.run(Creazione_grafico_IndIntAmbCloBet)
             Creazione_grafico_IndIntAmb = "CALL gds.graph.project('IndividuoIntercettazioneAmb', ['Individuo','IntercettazioneAmb'],'Presente',{relationshipProperties: 'mesiTotali'})"
