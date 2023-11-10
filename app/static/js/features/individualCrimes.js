@@ -1,15 +1,23 @@
+//Variabile che conterrà il grafo che andremo a realizzare
 let cyIndividualCrimes;
+
+//Variabili che ci consentono di tener traccia del nodo o dell'arco da far tornare come prima
 let cyNodeTouchedIndividualCrimes = "";
 let cyEdgeTouchedIndividualCrimes = "";
 
-//funzione che permette di caricare script javascript al caricamento della pagina
+//Funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Reati commessi dagli Individui";
+
+  //Funzione che fa partire il caricamento
   loadPage(1500);
-  requestAllNodesIndividualCrimes();  
+  requestAllNodesIndividualCrimes();
+
+  //Comando che fa aprire all'avvio della pagina l'accordione delle proprietà
   document.querySelector("#item-properties").click();
 };
 
+//Funzione che effettua la richiesta al backend per caricare il grafo iniziale
 function requestAllNodesIndividualCrimes() {
   fetch("/CrimeMiner/individuoReato/findallgraph/", {
     method: "GET"
@@ -32,6 +40,7 @@ function requestAllNodesIndividualCrimes() {
   });
 }
 
+//Funzione che effettua la richiesta al backend per le metriche
 function requestSizeNodesIndividualCrimes(){
   let metric;
 
@@ -60,6 +69,7 @@ function requestSizeNodesIndividualCrimes(){
   });
 }
 
+//Funzione che effettua la richiesta al backend per i dettagli di un singolo nodo
 function requestDetailsOfNodeIndividualCrimes(id){
   fetch("/CrimeMiner/individuoReato/getReatoIndividuoInfoById/" + id, {
     method: "GET"
@@ -83,6 +93,7 @@ function requestDetailsOfNodeIndividualCrimes(id){
   });
 }
 
+//Funzione che effettua la richiesta al backend per i dettagli di un singolo arco
 function requestDetailsOfEdgeIndividualCrimes(id){
   fetch("/CrimeMiner/individuoReato/getinfobyedgeid/" + id, {
     method: "GET"
@@ -103,11 +114,13 @@ function requestDetailsOfEdgeIndividualCrimes(id){
   });
 }
 
+//Funzione che crea il grafo con le sue opportune proprietà
 function createGraphIndividualCrimes(data) {
 
+  //Creazione del grafico con assegnazione alla variabile
   cyIndividualCrimes = cytoscape({
     container: document.querySelector('.cyContent'),
-    elements: data,
+    elements: data, //Questi sono i dati ricevuti dal backend, preformattati come vuole la libreria
     style: [ // Stile dei nodi e degli archi
       {
         selector: '.Individuo',
@@ -143,30 +156,39 @@ function createGraphIndividualCrimes(data) {
     maxZoom: 2.0
   });
 
-  //si aspetta che il grafo sia pronto per poter inserire per ogni nodo o arco un evento sul click
+  //Si aspetta che il grafo sia pronto per poter inserire per ogni nodo o arco un evento sul click
   cyIndividualCrimes.ready(function () {
 
-    //questo per il nodo
+    //Funzione di click per il nodo
     cyIndividualCrimes.on('tap', 'node', function(evt) {
+
+      //Faccio la richiesta dei dettagli per il singolo nodo
       requestDetailsOfNodeIndividualCrimes(evt.target.id())
 
+      //Controllo se prima di cliccare il nodo era stato cliccato un arco, se l'esito è positivo riporto l'arco al suo colore iniziale
       if(cyEdgeTouchedIndividualCrimes != "")
         cyIndividualCrimes.edges("#"+ cyEdgeTouchedIndividualCrimes).style('line-color', '#dfdfdf');
 
+      //Controllo se prima di cliccare il nodo era stato cliccato un altro nodo, se l'esito è positivo riporto il nodo al suo colore iniziale
       if(cyNodeTouchedIndividualCrimes != "" || evt.target.classes() == undefined){
         if(cyNodeTouchedIndividualCrimes[0] == "I")
             cyIndividualCrimes.$("#"+ cyNodeTouchedIndividualCrimes).style('background-color', '#03a74f');
           else
             cyIndividualCrimes.$("#"+ cyNodeTouchedIndividualCrimes).style('background-color', '#c70c35');
       }
+
+      //Inserisco il nodo corrente nella variabile e gli cambio il colore
       cyNodeTouchedIndividualCrimes = evt.target.id();
       evt.target.style('background-color', '#991199');
     });
 
-    //questo per l'arco
+    //Funzione di click per l'arco
     cyIndividualCrimes.on('tap', 'edge', function(evt) {
+
+      //Faccio la richiesta dei dettagli per il singolo arco
       requestDetailsOfEdgeIndividualCrimes(evt.target.id())
 
+      //Controllo se prima di cliccare l'arco era stato cliccato un nodo, se l'esito è positivo riporto il nodo al suo colore iniziale
       if(cyNodeTouchedIndividualCrimes != "" || evt.target.classes() == undefined){
         if(cyNodeTouchedIndividualCrimes[0] == "I")
             cyIndividualCrimes.$("#"+ cyNodeTouchedIndividualCrimes).style('background-color', '#03a74f');
@@ -174,14 +196,22 @@ function createGraphIndividualCrimes(data) {
             cyIndividualCrimes.$("#"+ cyNodeTouchedIndividualCrimes).style('background-color', '#c70c35');
       }
 
+      //Controllo se prima di cliccare l'arco era stato cliccato un altro arco, se l'esito è positivo riporto l'arco al suo colore iniziale
       if(cyEdgeTouchedIndividualCrimes != "" || evt.target.classes()[0] == "Individuo" || evt.target.classes()[0] == "Reato")
         cyIndividualCrimes.edges("#"+ cyEdgeTouchedIndividualCrimes).style('line-color', '#dfdfdf');
+
+      //Inserisco l'arco corrente nella variabile e gli cambio il colore
       cyEdgeTouchedIndividualCrimes = evt.target.id();
       evt.target.style('line-color', '#991199');
     });
 
+    //Funzione di click sul background del grafo
     cyIndividualCrimes.on('tap', function(evt) {
+
+      //Controllo che sia stato effettivamente cliccata una zona diversa da nodi e archi
       if(evt.target._private.container != undefined){
+
+        //In caso di esito positivo controllo se ci stavano dei nodi o degli archi selezionati e li riporto come in origine
         if(cyEdgeTouchedIndividualCrimes != ""){
           cyIndividualCrimes.$("#"+ cyEdgeTouchedIndividualCrimes).style('line-color', '#dfdfdf');
           cyEdgeTouchedIndividualCrimes = "";
@@ -196,11 +226,13 @@ function createGraphIndividualCrimes(data) {
       }
     });
 
+    //Con questa funzione, quando passo sull'arco, cambia colore
     cyIndividualCrimes.on('mouseover', 'edge', function (event) {
       if(event.target.id() != cyEdgeTouchedIndividualCrimes)
         event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
     });
     
+    //Con questa funzione, quando non sto più col mouse sull'arco, torna al colore iniziale
     cyIndividualCrimes.on('mouseout', 'edge', function (event) {
       if(event.target.id() != cyEdgeTouchedIndividualCrimes)
         event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
@@ -208,6 +240,7 @@ function createGraphIndividualCrimes(data) {
   });
 }
 
+//Con questa funzione in base alla metrica decido di quanto moltiplicare il valore dei nodi per renderla visibile sul grafo
 function changeSizeNodesIndividualCrimes(data){
   console.log(data);
   let selectMetrics = document.querySelector(".selectMetrics").value;
@@ -236,6 +269,7 @@ function changeSizeNodesIndividualCrimes(data){
   }
 }
 
+//Con questa funzione cambio la visualizzazione del Layout del grafo tra circle, dagre e fcose
 function changeLayoutIndividualCrimes() {
 
   if(document.querySelector(".selectLayout").value == 'circle'){
@@ -274,10 +308,12 @@ function changeLayoutIndividualCrimes() {
 
 }
 
+//Funzione che richiama la request delle metriche
 function changeMetricIndividualCrimes(){
   requestSizeNodesIndividualCrimes();
 }
 
+//Funzione che si occupa di mostrare o meno gli identificativi dei nodi e degli archi sul grafo
 function checkedNodesAndEdgesIndividualCrimes(){
   //Controlla se la checkbox dei nodi è checkata, se si mostra l'id del nodo, in caso contrario no
   if(document.querySelector("#CheckNodes").checked){
@@ -341,6 +377,7 @@ function checkedNodesAndEdgesIndividualCrimes(){
   }
 }
 
+//Funzione che mostra i dettagli dei nodi della tipologia Individuo
 function showDetailsOfNodeIndividualIndividualCrimes(data){
   document.querySelector(".infoIndividualCrimesEdge").style.display = "none";
   document.querySelector(".infoIndividualCrimesNot").style.display = "none";
@@ -362,6 +399,7 @@ function showDetailsOfNodeIndividualIndividualCrimes(data){
     document.querySelector("#item-details").click();
 }
 
+//Funzione che mostra i dettagli dei nodi della tipologia Reato
 function showDetailsOfNodeCrimeIndividualCrimes(data){
   document.querySelector(".infoIndividualCrimesEdge").style.display = "none";
   document.querySelector(".infoIndividualCrimesNot").style.display = "none";
@@ -380,6 +418,7 @@ function showDetailsOfNodeCrimeIndividualCrimes(data){
     document.querySelector("#item-details").click();
 }
 
+//Funzione che mostra i dettagli degli archi
 function showDetailsOfEdgeIndividualCrimes(data){
   document.querySelector(".infoIndividualCrimesNodeCrime").style.display = "none";
   document.querySelector(".infoIndividualCrimesNot").style.display = "none";
@@ -430,6 +469,7 @@ function showDetailsOfEdgeIndividualCrimes(data){
     document.querySelector("#item-details").click();
 }
 
+//Funzione che mostra il numero di nodi e archi presenti nel grafo
 function fillPropertyAccordionIndividualCrimes(data){
   let counterIndividual = 0;
   let counterCrime = 0;

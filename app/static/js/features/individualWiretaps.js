@@ -1,15 +1,23 @@
+//Variabile che conterrà il grafo che andremo a realizzare
 let cyIndividualWiretaps;
+
+//Variabili che ci consentono di tener traccia del nodo o dell'arco da far tornare come prima
 let cyNodeTouchedIndividualWiretaps  = "";
 let cyEdgeTouchedIndividualWiretaps  = "";
 
-//funzione che permette di caricare script javascript al caricamento della pagina
+//Funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Intercettazione delle chiamate tra gli Individui";
+
+  //Funzione che fa partire il caricamento
   loadPage(2500);
   requestAllNodesIndividualWiretaps();
+
+  //Comando che fa aprire all'avvio della pagina l'accordione delle proprietà
   document.querySelector("#item-properties").click();
 };
 
+//Funzione che effettua la richiesta al backend per caricare il grafo iniziale
 function requestAllNodesIndividualWiretaps() {
 
   fetch("/CrimeMiner/individuoIntercettazione/findallnodes/", {
@@ -33,6 +41,7 @@ function requestAllNodesIndividualWiretaps() {
   });
 }
 
+//Funzione che effettua la richiesta al backend per le metriche
 function requestSizeNodesIndividualWiretaps(){
   let metric;
 
@@ -61,6 +70,7 @@ function requestSizeNodesIndividualWiretaps(){
   });
 }
 
+//Funzione che effettua la richiesta al backend per i dettagli di un singolo nodo
 function requestDetailsOfNodeIndividualWiretaps(id){
   fetch("/CrimeMiner/individuo/getinfobynodeid/" + id, {
     method: "GET"
@@ -81,6 +91,7 @@ function requestDetailsOfNodeIndividualWiretaps(id){
   });
 }
 
+//Funzione che effettua la richiesta al backend per i dettagli di un singolo arco
 function requestDetailsOfEdgeIndividualWiretaps(id){
   fetch("/CrimeMiner/individuoIntercettazione/getinfobyedgeid/" + id, {
     method: "GET"
@@ -101,11 +112,13 @@ function requestDetailsOfEdgeIndividualWiretaps(id){
   });
 }
 
+//Funzione che crea il grafo con le sue opportune proprietà
 function createGraphIndividualWiretaps(data) {
 
+  //Creazione del grafico con assegnazione alla variabile
   cyIndividualWiretaps = cytoscape({
     container: document.querySelector('.cyContent'),
-    elements: data,
+    elements: data, //Questi sono i dati ricevuti dal backend, preformattati come vuole la libreria
     style: [ // Stile dei nodi e degli archi
       {
         selector: 'node',
@@ -132,36 +145,54 @@ function createGraphIndividualWiretaps(data) {
     maxZoom: 2.0
   });
 
-  //si aspetta che il grafo sia pronto per poter inserire per ogni nodo o arco un evento sul click
+  //Si aspetta che il grafo sia pronto per poter inserire un evento
   cyIndividualWiretaps.ready(function () {
 
-    //questo per il nodo
+    //Funzione di click per il nodo
     cyIndividualWiretaps.on('tap', 'node', function(evt) {
+
+      //Faccio la richiesta dei dettagli per il singolo nodo
       requestDetailsOfNodeIndividualWiretaps(evt.target.id())
+
+      //Controllo se prima di cliccare il nodo era stato cliccato un arco, se l'esito è positivo riporto l'arco al suo colore iniziale
       if(cyEdgeTouchedIndividualWiretaps != "")
         cyIndividualWiretaps.edges("#"+ cyEdgeTouchedIndividualWiretaps).style('line-color', '#dfdfdf');
 
+      //Controllo se prima di cliccare il nodo era stato cliccato un altro nodo, se l'esito è positivo riporto il nodo al suo colore iniziale
       if(cyNodeTouchedIndividualWiretaps != "" || evt.target.classes() == undefined)
         cyIndividualWiretaps.nodes("#"+ cyNodeTouchedIndividualWiretaps).style('background-color', '#03a74f');
+
+      //Inserisco il nodo corrente nella variabile e gli cambio il colore
       cyNodeTouchedIndividualWiretaps = evt.target.id();
       evt.target.style('background-color', '#991199');
     });
 
-    //questo per l'arco
+    //Funzione di click per l'arco
     cyIndividualWiretaps.on('tap', 'edge', function(evt) {
+
+      //Faccio la richiesta dei dettagli per il singolo arco
       requestDetailsOfEdgeIndividualWiretaps(evt.target.id())
   
+      //Controllo se prima di cliccare l'arco era stato cliccato un nodo, se l'esito è positivo riporto il nodo al suo colore iniziale
       if(cyNodeTouchedIndividualWiretaps != "")
         cyIndividualWiretaps.nodes("#"+ cyNodeTouchedIndividualWiretaps).style('background-color', '#03a74f');
       
+      //Controllo se prima di cliccare l'arco era stato cliccato un altro arco, se l'esito è positivo riporto l'arco al suo colore iniziale
       if(cyEdgeTouchedIndividualWiretaps != "" || evt.target.classes()[0] == "Individuo")
         cyIndividualWiretaps.edges("#"+ cyEdgeTouchedIndividualWiretaps).style('line-color', '#dfdfdf');
+
+      //Inserisco l'arco corrente nella variabile e gli cambio il colore
       cyEdgeTouchedIndividualWiretaps = evt.target.id();
       evt.target.style('line-color', '#991199');
     });
 
+    //Funzione di click sul background del grafo
     cyIndividualWiretaps.on('tap', function(evt) {
+
+      //Controllo che sia stato effettivamente cliccata una zona diversa da nodi e archi
       if(evt.target._private.container != undefined){
+
+        //In caso di esito positivo controllo se ci stavano dei nodi o degli archi selezionati e li riporto come in origine
         if(cyEdgeTouchedIndividualWiretaps != ""){
           cyIndividualWiretaps.$("#"+ cyEdgeTouchedIndividualWiretaps).style('line-color', '#dfdfdf');
           cyEdgeTouchedIndividualWiretaps = "";
@@ -173,11 +204,13 @@ function createGraphIndividualWiretaps(data) {
       }
     });
 
+    //Con questa funzione, quando passo sull'arco, cambia colore
     cyIndividualWiretaps.on('mouseover', 'edge', function (event) {
       if(event.target.id() != cyEdgeTouchedIndividualWiretaps)
         event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
     });
     
+    //Con questa funzione, quando non sto più col mouse sull'arco, torna al colore iniziale
     cyIndividualWiretaps.on('mouseout', 'edge', function (event) {
       if(event.target.id() != cyEdgeTouchedIndividualWiretaps)
         event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
@@ -185,6 +218,7 @@ function createGraphIndividualWiretaps(data) {
   });
 }
 
+//Con questa funzione in base alla metrica decido di quanto moltiplicare il valore dei nodi per renderla visibile sul grafo
 function changeSizeNodesIndividualWiretaps(data){
   let selectMetrics = document.querySelector(".selectMetrics").value;
 
@@ -212,6 +246,7 @@ function changeSizeNodesIndividualWiretaps(data){
   }
 }
 
+//Con questa funzione cambio la visualizzazione del Layout del grafo tra circle, dagre e fcose
 function changeLayoutIndividualWiretaps() {
 
   if(document.querySelector(".selectLayout").value == 'circle'){
@@ -253,10 +288,12 @@ function changeLayoutIndividualWiretaps() {
 
 }
 
+//Funzione che richiama la request delle metriche
 function changeMetricIndividualWiretaps(){
   requestSizeNodesIndividualWiretaps();
 }
 
+//Funzione che si occupa di mostrare o meno gli identificativi dei nodi e degli archi sul grafo
 function checkedNodesAndEdgesIndividualWiretaps(){
   //Controlla se la checkbox dei nodi è checkata, se si mostra l'id del nodo, in caso contrario no
   if(document.querySelector("#CheckNodes").checked){
@@ -307,6 +344,7 @@ function checkedNodesAndEdgesIndividualWiretaps(){
   }
 }
 
+//Funzione che mostra i dettagli dei nodi
 function showDetailsOfNodeIndividualWiretaps(data){
   document.querySelector(".infoIndividualWiretapsEdge").style.display = "none";
   document.querySelector(".infoIndividualWiretapsNot").style.display = "none";
@@ -327,6 +365,7 @@ function showDetailsOfNodeIndividualWiretaps(data){
     document.querySelector("#item-details").click();
 }
 
+//Funzione che mostra i dettagli degli archi
 function showDetailsOfEdgeIndividualWiretaps(data){
   document.querySelector(".infoIndividualWiretapsNode").style.display = "none";
   document.querySelector(".infoIndividualWiretapsNot").style.display = "none";
@@ -346,7 +385,11 @@ function showDetailsOfEdgeIndividualWiretaps(data){
     document.querySelector("#item-details").click();
 }
 
+//Funzione che mostra il numero di nodi e archi presenti nel grafo
 function fillPropertyAccordionIndividualWiretaps(data){
+  document.querySelector(".accordionNumberNodesEdgesIndividualContent").innerHTML = data.nodes.length;
+  document.querySelector(".accordionNumberNodesEdgesCallContent").innerHTML = data.edges.length;
+
   document.querySelector(".accordionNumberNodesEdgesNodesContent").innerHTML = data.nodes.length;
   document.querySelector(".accordionNumberNodesEdgesEdgesContent").innerHTML = data.edges.length;
 }
