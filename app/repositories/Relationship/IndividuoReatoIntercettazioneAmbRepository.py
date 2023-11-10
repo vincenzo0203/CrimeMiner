@@ -123,7 +123,7 @@ class IndividuoReatoIntercettazioneAmbRepository:
     def WeightedPageRank():
         try:
             session = Neo4jDriver.get_session()
-            cypher_query = ""
+            cypher_query = "CALL gds.pageRank.stream('IndividuoReatoIntercettazioneAmbCloBet', {maxIterations: 10, dampingFactor: 0.85,relationshipWeightProperty: 'mesiTotali'})YIELD nodeId, score WITH gds.util.asNode(nodeId) AS node, score WHERE (node)-[:Presente|Condannato|ImputatoDi|HaChiamato]->() OR (node)<-[:Presente|Condannato|ImputatoDi|HaChiamato]-() RETURN DISTINCT node.nodeId AS id, score AS size"
             results = session.run(cypher_query).data()
             return results
 
