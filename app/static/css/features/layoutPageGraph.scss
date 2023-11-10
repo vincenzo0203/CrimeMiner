@@ -179,6 +179,21 @@
         max-height: 100vh;
         transition: 2s;
     }
+
+    .select{
+        &Layout,&Metrics{
+            font-size: 0.9rem;
+            box-shadow: none;
+            
+            &:focus{
+                border: 1px solid #dee2e6;
+            }
+
+            option{
+                margin: 0.5rem;
+            }
+        }
+    }
 }
 
 

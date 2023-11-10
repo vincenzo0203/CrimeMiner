@@ -1,15 +1,23 @@
+//Variabile che conterrà il grafo che andremo a realizzare
 let cyIndividualEnviromentalTapping;
+
+//Variabili che ci consentono di tener traccia del nodo o dell'arco da far tornare come prima
 let cyNodeTouchedIndividualEnviromentalTapping = ""
 let cyEdgeTouchedIndividualEnviromentalTapping  = "";
 
-//funzione che permette di caricare script javascript al caricamento della pagina
+//Funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Intercettazione Ambientale tra gli Individui";
+
+  //Funzione che fa partire il caricamento
   loadPage(2500);
   requestAllNodesIndividualEnviromentalTapping();
+
+  //Comando che fa aprire all'avvio della pagina l'accordione delle proprietà
   document.querySelector("#item-properties").click();
 };
 
+//Funzione che effettua la richiesta al backend per caricare il grafo iniziale
 function requestAllNodesIndividualEnviromentalTapping() {
   fetch("/CrimeMiner/individuoIntercettazioneAmb/graphall/", {
     method: "GET"
@@ -32,11 +40,12 @@ function requestAllNodesIndividualEnviromentalTapping() {
   });
 }
 
+//Funzione che effettua la richiesta al backend per le metriche
 function requestSizeNodesIndividualEnviromentalTapping(){
   let metric;
 
   if(document.querySelector(".selectMetrics").value == "Default")
-    metric = "findallgraph";
+    metric = "graphall";
   else
     metric = document.querySelector(".selectMetrics").value;
 
@@ -61,6 +70,7 @@ function requestSizeNodesIndividualEnviromentalTapping(){
   });
 }
 
+//Funzione che effettua la richiesta al backend per i dettagli di un singolo nodo
 function requestDetailsOfNodeIndividualEnviromentalTapping(id){
   fetch("/CrimeMiner/individuoIntercettazioneAmb/getIntercettazioneAmbIndividuoInfoById/" + id, {
     method: "GET"
@@ -84,6 +94,7 @@ function requestDetailsOfNodeIndividualEnviromentalTapping(id){
   });
 }
 
+//Funzione che effettua la richiesta al backend per i dettagli di un singolo arco
 function requestDetailsOfEdgeIndividualEnviromentalTapping(id){
   fetch("/CrimeMiner/individuoIntercettazioneAmb/getinfobyedgeid/" + id, {
     method: "GET"
@@ -104,11 +115,13 @@ function requestDetailsOfEdgeIndividualEnviromentalTapping(id){
   });
 }
 
+//Funzione che crea il grafo con le sue opportune proprietà
 function createGraphIndividualEnviromentalTapping(data) {
 
+  //Creazione del grafico con assegnazione alla variabile
   cyIndividualEnviromentalTapping = cytoscape({
     container: document.querySelector('.cyContent'),
-    elements: data,
+    elements: data, //Questi sono i dati ricevuti dal backend, preformattati come vuole la libreria
     style: [ // Stile dei nodi e degli archi
       {
         selector: '.Individuo',
@@ -144,28 +157,39 @@ function createGraphIndividualEnviromentalTapping(data) {
     maxZoom: 2.0
   });
 
-  //si aspetta che il grafo sia pronto per poter inserire per ogni nodo o arco un evento sul click
+  //Si aspetta che il grafo sia pronto per poter inserire per ogni nodo o arco un evento sul click
   cyIndividualEnviromentalTapping.ready(function () {
 
-    //questo per il nodo
+    //Funzione di click per il nodo
     cyIndividualEnviromentalTapping.on('tap', 'node', function(evt) {
+
+      //Faccio la richiesta dei dettagli per il singolo nodo
       requestDetailsOfNodeIndividualEnviromentalTapping(evt.target.id())
+
+      //Controllo se prima di cliccare il nodo era stato cliccato un arco, se l'esito è positivo riporto l'arco al suo colore iniziale
       if(cyEdgeTouchedIndividualEnviromentalTapping != "")
         cyIndividualEnviromentalTapping.edges("#"+ cyEdgeTouchedIndividualEnviromentalTapping).style('line-color', '#dfdfdf');
 
+      //Controllo se prima di cliccare il nodo era stato cliccato un altro nodo, se l'esito è positivo riporto il nodo al suo colore iniziale
       if(cyNodeTouchedIndividualEnviromentalTapping != "" || evt.target.classes() == undefined){
         if(cyNodeTouchedIndividualEnviromentalTapping[0] == "IA")
             cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#d7bd1e');
           else
             cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#03a74f');
       }
+
+      //Inserisco il nodo corrente nella variabile e gli cambio il colore
       cyNodeTouchedIndividualEnviromentalTapping = evt.target.id();
       evt.target.style('background-color', '#991199');
     });
 
-    //questo per l'arco
+    //Funzione di click per l'arco
     cyIndividualEnviromentalTapping.on('tap', 'edge', function(evt) {
+
+      //Faccio la richiesta dei dettagli per il singolo arco
       requestDetailsOfEdgeIndividualEnviromentalTapping(evt.target.id());
+
+      //Controllo se prima di cliccare l'arco era stato cliccato un nodo, se l'esito è positivo riporto il nodo al suo colore iniziale
       if(cyNodeTouchedIndividualEnviromentalTapping != "" || evt.target.classes() == undefined){
         if(cyNodeTouchedIndividualEnviromentalTapping[0] == "IA")
             cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#d7bd1e');
@@ -173,15 +197,22 @@ function createGraphIndividualEnviromentalTapping(data) {
             cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#03a74f');
       }
       
+      //Controllo se prima di cliccare l'arco era stato cliccato un altro arco, se l'esito è positivo riporto l'arco al suo colore iniziale
       if(cyEdgeTouchedIndividualEnviromentalTapping != "" || evt.target.classes()[0] == "Individuo" || evt.target.classes()[0] == "IntercettazioneAmb")
         cyIndividualEnviromentalTapping.edges("#"+ cyEdgeTouchedIndividualEnviromentalTapping).style('line-color', '#dfdfdf');
+
+      //Inserisco l'arco corrente nella variabile e gli cambio il colore
       cyEdgeTouchedIndividualEnviromentalTapping = evt.target.id();
       evt.target.style('line-color', '#991199');
     });
 
+    //Funzione di click sul background del grafo
     cyIndividualEnviromentalTapping.on('tap', function(evt) {
+
+      //Controllo che sia stato effettivamente cliccata una zona diversa da nodi e archi
       if(evt.target._private.container != undefined){
 
+        //In caso di esito positivo controllo se ci stavano dei nodi o degli archi selezionati e li riporto come in origine
         if(cyEdgeTouchedIndividualEnviromentalTapping != ""){
           cyIndividualEnviromentalTapping.$("#"+ cyEdgeTouchedIndividualEnviromentalTapping).style('line-color', '#dfdfdf');
           cyEdgeTouchedIndividualEnviromentalTapping = "";
@@ -196,11 +227,13 @@ function createGraphIndividualEnviromentalTapping(data) {
       }
     });
 
+    //Con questa funzione, quando passo sull'arco, cambia colore
     cyIndividualEnviromentalTapping.on('mouseover', 'edge', function (event) {
       if(event.target.id() != cyEdgeTouchedIndividualEnviromentalTapping)
         event.target.style('line-color', '#828282'); // Cambia il colore dell'arco al passaggio del mouse
     });
     
+    //Con questa funzione, quando non sto più col mouse sull'arco, torna al colore iniziale
     cyIndividualEnviromentalTapping.on('mouseout', 'edge', function (event) {
       if(event.target.id() != cyEdgeTouchedIndividualEnviromentalTapping)
         event.target.style('line-color', '#dfdfdf'); // Ripristina il colore dell'arco quando il mouse esce
@@ -208,6 +241,7 @@ function createGraphIndividualEnviromentalTapping(data) {
   });
 }
 
+//Con questa funzione in base alla metrica decido di quanto moltiplicare il valore dei nodi per renderla visibile sul grafo
 function changeSizeNodesIndividualEnviromentalTapping(data){
   let selectMetrics = document.querySelector(".selectMetrics").value;
 
@@ -236,6 +270,7 @@ function changeSizeNodesIndividualEnviromentalTapping(data){
   }
 }
 
+//Con questa funzione cambio la visualizzazione del Layout del grafo tra circle, dagre e fcose
 function changeLayoutIndividualEnviromentalTapping() {
 
   if(document.querySelector(".selectLayout").value == 'circle'){
@@ -274,10 +309,12 @@ function changeLayoutIndividualEnviromentalTapping() {
 
 }
 
+//Funzione che richiama la request delle metriche
 function changeMetricIndividualEnviromentalTapping(){
   requestSizeNodesIndividualEnviromentalTapping();
 }
 
+//Funzione che si occupa di mostrare o meno gli identificativi dei nodi e degli archi sul grafo
 function checkedNodesAndEdgesIndividualEnviromentalTapping(){
   //Controlla se la checkbox dei nodi è checkata, se si mostra l'id del nodo, in caso contrario no
   if(document.querySelector("#CheckNodes").checked){
@@ -341,6 +378,7 @@ function checkedNodesAndEdgesIndividualEnviromentalTapping(){
   }
 }
 
+//Funzione che mostra i dettagli dei nodi della tipologia Individuo
 function showDetailsOfNodeIndividualIndividualEnviromentalTapping(data){
   document.querySelector(".infoIndividualEnviromentalTappingEdge").style.display = "none";
   document.querySelector(".infoIndividualEnviromentalTappingNot").style.display = "none";
@@ -362,6 +400,7 @@ function showDetailsOfNodeIndividualIndividualEnviromentalTapping(data){
     document.querySelector("#item-details").click();
 }
 
+//Funzione che mostra i dettagli dei nodi della tipologia Intercettazione Ambientale
 function showDetailsOfNodeEnviromentalTappingIndividualEnviromentalTapping(data){
   document.querySelector(".infoIndividualEnviromentalTappingEdge").style.display = "none";
   document.querySelector(".infoIndividualEnviromentalTappingNot").style.display = "none";
@@ -379,6 +418,7 @@ function showDetailsOfNodeEnviromentalTappingIndividualEnviromentalTapping(data)
     document.querySelector("#item-details").click();
 }
 
+//Funzione che mostra i dettagli degli archi
 function showDetailsOfEdgeIndividualEnviromentalTapping(data){
   document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTapping").style.display = "none";
   document.querySelector(".infoIndividualEnviromentalTappingNot").style.display = "none";
@@ -398,6 +438,7 @@ function showDetailsOfEdgeIndividualEnviromentalTapping(data){
     document.querySelector("#item-details").click();
 }
 
+//Funzione che mostra il numero di nodi e archi presenti nel grafo
 function fillPropertyAccordionIndividualEnviromentalTapping(data){
 
   let counterIndividual = 0;
