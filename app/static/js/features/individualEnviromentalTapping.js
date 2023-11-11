@@ -172,7 +172,7 @@ function createGraphIndividualEnviromentalTapping(data) {
 
       //Controllo se prima di cliccare il nodo era stato cliccato un altro nodo, se l'esito è positivo riporto il nodo al suo colore iniziale
       if(cyNodeTouchedIndividualEnviromentalTapping != "" || evt.target.classes() == undefined){
-        if(cyNodeTouchedIndividualEnviromentalTapping[0] == "IA")
+        if(cyNodeTouchedIndividualEnviromentalTapping[1] == "A")
             cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#d7bd1e');
           else
             cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#03a74f');
@@ -191,7 +191,7 @@ function createGraphIndividualEnviromentalTapping(data) {
 
       //Controllo se prima di cliccare l'arco era stato cliccato un nodo, se l'esito è positivo riporto il nodo al suo colore iniziale
       if(cyNodeTouchedIndividualEnviromentalTapping != "" || evt.target.classes() == undefined){
-        if(cyNodeTouchedIndividualEnviromentalTapping[0] == "IA")
+        if(cyNodeTouchedIndividualEnviromentalTapping[1] == "A")
             cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#d7bd1e');
           else
             cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#03a74f');
@@ -218,7 +218,7 @@ function createGraphIndividualEnviromentalTapping(data) {
           cyEdgeTouchedIndividualEnviromentalTapping = "";
         }
         if(cyNodeTouchedIndividualEnviromentalTapping != ""){
-          if(cyNodeTouchedIndividualEnviromentalTapping[0] == "IA")
+          if(cyNodeTouchedIndividualEnviromentalTapping[1] == "A")
             cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#d7bd1e');
           else
             cyIndividualEnviromentalTapping.$("#"+ cyNodeTouchedIndividualEnviromentalTapping).style('background-color', '#03a74f');
