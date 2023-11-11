@@ -15,6 +15,7 @@ window.onload = function () {
   //Funzione che fa partire il caricamento
   loadPage(2500);
   requestAllNodesIndividualWiretaps();
+  checkedSourceAndTargetModalIndividualWiretaps();
 
   //Comando che fa aprire all'avvio della pagina l'accordione delle proprietà
   document.querySelector("#item-properties").click();
@@ -396,6 +397,28 @@ function checkedAnonymizationIndividualWiretaps(){
   }
 }
 
+function checkedSourceAndTargetModalIndividualWiretaps(){
+
+  if(document.querySelector("#CheckSourceExisting").checked){
+    document.querySelector(".accordionSource").style.display = "none";
+    document.querySelector(".modalIndividualWiretapsSource").disabled = false;
+  }
+  else{
+    document.querySelector(".accordionSource").style.display = "block";
+    document.querySelector(".modalIndividualWiretapsSource").disabled = true;
+  }
+
+  if(document.querySelector("#CheckTargetExisting").checked){
+    document.querySelector(".accordionTarget").style.display = "none";
+    document.querySelector(".modalIndividualWiretapsTarget").disabled = false;
+  }
+  else{
+    document.querySelector(".accordionTarget").style.display = "block";
+    document.querySelector(".modalIndividualWiretapsTarget").disabled = true;
+  }
+
+}
+
 //Funzione che mostra i dettagli dei nodi
 function showDetailsOfNodeIndividualWiretaps(data){
   document.querySelector(".infoIndividualWiretapsEdge").style.display = "none";
@@ -472,17 +495,142 @@ function fillSourceAndTargetModalNewCallIndividualWiretaps(nodes){
   }
 }
 
+function fillAddModalIndividualWiretaps(){
+  
+  //Checkbox
+  document.querySelector("#CheckSourceExisting").checked = false;
+  document.querySelector("#CheckTargetExisting").checked = false;
+
+  //Mittente
+  document.querySelector(".accordionSource").style.display = "block";
+  document.querySelector(".modalIndividualWiretapsSourceSurname").value = "";
+  document.querySelector(".modalIndividualWiretapsSourceName").value = "";
+  document.querySelector(".modalIndividualWiretapsSourceDate").value = "";
+  document.querySelector(".modalIndividualWiretapsSourceNation").value = "";
+  document.querySelector(".modalIndividualWiretapsSourceProvince").value = "";
+  document.querySelector(".modalIndividualWiretapsSourceCity").value = "";
+  document.querySelector(".modalIndividualWiretapsSourceAddress").value = "";
+
+  if(document.querySelector(".accordionSource").childNodes[1].childNodes[3].classList.contains("show")){
+    document.querySelector(".accordionSource").childNodes[1].childNodes[3].classList.remove("show");
+    document.querySelector(".accordionSource").childNodes[1].childNodes[1].childNodes[1].classList.add("collapsed");
+  }
+    
+  //Destinatario
+  document.querySelector(".accordionTarget").style.display = "block";
+  document.querySelector(".modalIndividualWiretapsTargetSurname").value = "";
+  document.querySelector(".modalIndividualWiretapsTargetName").value = "";
+  document.querySelector(".modalIndividualWiretapsTargetDate").value = "";
+  document.querySelector(".modalIndividualWiretapsTargetNation").value = "";
+  document.querySelector(".modalIndividualWiretapsTargetProvince").value = "";
+  document.querySelector(".modalIndividualWiretapsTargetCity").value = "";
+  document.querySelector(".modalIndividualWiretapsTargetAddress").value = "";
+
+  if(document.querySelector(".accordionTarget").childNodes[1].childNodes[3].classList.contains("show")){
+    document.querySelector(".accordionTarget").childNodes[1].childNodes[3].classList.remove("show");
+    document.querySelector(".accordionTarget").childNodes[1].childNodes[1].childNodes[1].classList.add("collapsed");
+  }
+
+
+  //Chiamata
+  document.querySelector(".modalIndividualWiretapsSource").selectedIndex = 0;
+  document.querySelector(".modalIndividualWiretapsTarget").selectedIndex = 0;
+  document.querySelector(".modalIndividualWiretapsSource").disabled = true;
+  document.querySelector(".modalIndividualWiretapsTarget").disabled = true;
+  document.querySelector(".modalIndividualWiretapsDate").value = "";
+  document.querySelector(".modalIndividualWiretapsDuration").value = "";
+  document.querySelector(".modalIndividualWiretapsTime").value = "";
+  document.querySelector(".modalIndividualWiretapsTextarea").value = "";
+
+}
+
+function fillUpdateModalCallIndividualWiretaps(){
+
+  let [day, month, year] = document.querySelector(".infoIndividualWiretapsEdgeDateContent").innerHTML.split('/');
+  
+  //Checkbox
+  document.querySelector("#CheckSourceExisting").checked = true;
+  document.querySelector("#CheckTargetExisting").checked = true;
+
+  //Mittente
+  document.querySelector(".accordionSource").style.display = "none";
+    
+  //Destinatario
+  document.querySelector(".accordionTarget").style.display = "none";
+
+
+  //Chiamata
+  document.querySelector(".modalIndividualWiretapsSource").value = document.querySelector(".infoIndividualWiretapsEdgeSourceContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsTarget").value = document.querySelector(".infoIndividualWiretapsEdgeTargetContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsSource").disabled = false;
+  document.querySelector(".modalIndividualWiretapsTarget").disabled = false;
+  document.querySelector(".modalIndividualWiretapsDate").value = `${year}-${month}-${day}`;
+  document.querySelector(".modalIndividualWiretapsDuration").value = document.querySelector(".infoIndividualWiretapsEdgeDurationContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsTime").value = document.querySelector(".infoIndividualWiretapsEdgeTimeContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsTextarea").value = document.querySelector(".infoIndividualWiretapsEdgeContentContent").innerHTML;
+
+}
+
+function fillUpdateModalIndividualIndividualWiretaps(){
+  let [day, month, year] = document.querySelector(".infoIndividualWiretapsNodeBirthContent").innerHTML.split('/');
+
+  //Individuo
+  document.querySelector(".modalIndividualWiretapsIndividualSurname").value = document.querySelector(".infoIndividualWiretapsNodeSurnameContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsIndividualName").value = document.querySelector(".infoIndividualWiretapsNodeNameContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsIndividualDate").value = `${year}-${month}-${day}`;
+  document.querySelector(".modalIndividualWiretapsIndividualNation").value = document.querySelector(".infoIndividualWiretapsNodeNationContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsIndividualProvince").value = document.querySelector(".infoIndividualWiretapsNodeProvinceContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsIndividualCity").value = document.querySelector(".infoIndividualWiretapsNodeResidenceContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsIndividualAddress").value = document.querySelector(".infoIndividualWiretapsNodeAddressContent").innerHTML;
+
+}
+
+function openModalAddNewCallIndividualWiretaps(){
+  document.querySelector(".modalFormAddUpdateCall").style.display = "flex";
+  document.querySelector(".modalFormUpdateIndividual").style.display = "none";
+  document.querySelector("#modalIndividualWiretapsLabel").innerHTML = "Inserimento nuova intercettazione telefonica";
+
+  fillAddModalIndividualWiretaps();
+}
+
+function openModalUpdateCallIndividualWiretaps(){
+  document.querySelector(".modalFormAddUpdateCall").style.display = "flex";
+  document.querySelector(".modalFormUpdateIndividual").style.display = "none";
+  document.querySelector("#modalIndividualWiretapsLabel").innerHTML = "Modifica intercettazione telefonica";
+
+  fillUpdateModalCallIndividualWiretaps();
+}
+
+function openModalDeleteCallIndividualWiretaps(){
+  document.querySelector("#modalDeleteIndividualWiretapsLabel").innerHTML = "Cancellazione intercettazione telefonica";
+  document.querySelector(".modalDeleteIndividualWiretapsBody").innerHTML = "Sei sicuro di voler cancellare questa chiamata? Verranno cancellati solamente i dati dell'intercettazione lasciando invariati i dati degli individui";
+}
+
+function openModalUpdateIndividualIndividualWiretaps(){
+  document.querySelector(".modalFormAddUpdateCall").style.display = "none";
+  document.querySelector(".modalFormUpdateIndividual").style.display = "flex";
+  document.querySelector("#modalIndividualWiretapsLabel").innerHTML = "Modifica individuo";
+
+  fillUpdateModalIndividualIndividualWiretaps();
+}
+
+function openModalDeleteIndividualIndividualWiretaps(){
+  document.querySelector("#modalDeleteIndividualWiretapsLabel").innerHTML = "Cancellazione individuo";
+  document.querySelector(".modalDeleteIndividualWiretapsBody").innerHTML = "Sei sicuro di voler cancellare questo individuo?";
+}
+
 function sendNewCallToBackendIndividualWiretaps(){
   let json;
 
-  if(document.querySelector(".modalIndividualWiretapsSource").value == document.querySelector(".modalIndividualWiretapsTarget").value)
+  if(document.querySelector(".modalIndividualWiretapsSource").value != document.querySelector(".modalIndividualWiretapsTarget").value)
     json = `{
-                sourceId: ${document.querySelector(".modalIndividualWiretapsSource").value},
-                targetiD: ${document.querySelector(".modalIndividualWiretapsTarget").value},
-                date: ${document.querySelector(".modalIndividualWiretapsDate").value},
-                duration: ${document.querySelector(".modalIndividualWiretapsDuration").value},
-                time: ${document.querySelector(".modalIndividualWiretapsTime").value},
-                content: ${document.querySelector(".modalIndividualWiretapsTextarea").value},
+                "edgeId": "${document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML}",
+                "sourceId": "${document.querySelector(".modalIndividualWiretapsSource").value}",
+                "targetiD": "${document.querySelector(".modalIndividualWiretapsTarget").value}",
+                "date": "${document.querySelector(".modalIndividualWiretapsDate").value}",
+                "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
+                "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
+                "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}",
               }`;
 
   console.log(json);
@@ -510,4 +658,206 @@ function sendNewCallToBackendIndividualWiretaps(){
   });*/
 
   viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");  
+}
+
+function sendUpdateCallToBackendIndividualWiretaps(){
+  let json;
+
+  if(document.querySelector(".modalIndividualWiretapsSource").value != document.querySelector(".modalIndividualWiretapsTarget").value)
+    json = `{
+                "edgeId": "${document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML}",
+                "sourceId": "${document.querySelector(".modalIndividualWiretapsSource").value}",
+                "targetiD": "${document.querySelector(".modalIndividualWiretapsTarget").value}",
+                "date": "${document.querySelector(".modalIndividualWiretapsDate").value}",
+                "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
+                "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
+                "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}",
+              }`;
+
+  console.log(json);
+  
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");
+      return response.text();
+    } else {
+      viewToastMessage("Modifica Chiamata", "Errore nella modifica della chiamata.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
+}
+
+function sendUpdateIndividualToBackendIndividualWiretaps(){
+  let json;
+
+  json = `{
+            "nodeId": "${document.querySelector(".infoIndividualWiretapsNodeIdContent").innerHTML}",
+            "surname": "${document.querySelector(".modalIndividualWiretapsIndividualSurname").value}",
+            "name": "${document.querySelector(".modalIndividualWiretapsIndividualName").value}",
+            "date": "${document.querySelector(".modalIndividualWiretapsIndividualDate").value}",
+            "nation": "${document.querySelector(".modalIndividualWiretapsIndividualNation").value}",
+            "province": "${document.querySelector(".modalIndividualWiretapsIndividualProvince").value}",
+            "city": "${document.querySelector(".modalIndividualWiretapsIndividualCity").value}",
+            "address": "${document.querySelector(".modalIndividualWiretapsIndividualAddress").value}",
+          }`;
+
+  console.log(json);
+  
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");
+      return response.text();
+    } else {
+      viewToastMessage("Modifica Chiamata", "Errore nella modifica della chiamata.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
+}
+
+function sendIdToDeleteIndividualWiretaps(){
+  let id;
+  let url;
+
+  if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Cancellazione intercettazione telefonica"){
+    id = document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML;
+    url = "";
+  }
+    
+
+  if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Cancellazione individuo"){
+    id = document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML;
+    url = ""
+  }
+    
+
+  /*fetch(url, { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");
+      return response.text();
+    } else {
+      viewToastMessage("Registrazione Chiamata", "Errore nella registrazione della chiamata.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Cancellazione intercettazione telefonica")
+    viewToastMessage("Cancellazione Chiamata", "Cancellazione avvenuta con successo.", "success");  
+
+  if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Cancellazione individuo")
+    viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");  
+}
+
+function deleteNodeIndividualWiretaps(){
+  let id = document.querySelector(".infoIndividualWiretapsNodeIdContent").innerHTML;
+
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");
+      return response.text();
+    } else {
+      viewToastMessage("Modifica Chiamata", "Errore nella modifica della chiamata.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");
+}
+
+function deleteEdgeIndividualWiretaps(){
+  let id = document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML;
+
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");
+      return response.text();
+    } else {
+      viewToastMessage("Modifica Chiamata", "Errore nella modifica della chiamata.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  viewToastMessage("Cancellazione Chiamata", "Cancellazione avvenuta con successo.", "success");
+}
+
+function selectFunctionToRegisterDateIndividualWiretaps(){
+  if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Inserimento nuova intercettazione telefonica")
+    sendNewCallToBackendIndividualWiretaps();
+
+  if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Modifica intercettazione telefonica")
+    sendUpdateCallToBackendIndividualWiretaps();
+
+  if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Modifica individuo")
+    sendUpdateIndividualToBackendIndividualWiretaps();
+}
+
+function selectFunctionToDeleteDateIndividualWiretaps(){
+  if(document.querySelector("#modalDeleteIndividualWiretapsLabel").innerHTML == "Cancellazione individuo")
+    deleteNodeIndividualWiretaps();
+
+  if(document.querySelector("#modalDeleteIndividualWiretapsLabel").innerHTML == "Cancellazione intercettazione telefonica")
+    deleteEdgeIndividualWiretaps();
 }
