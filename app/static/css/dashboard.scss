@@ -13,17 +13,18 @@ html,body{
 
 .pageContainer{
     width:100%;
-    padding-left: 250px;
+    padding-left: 275px;
     display: flex;
     flex-direction: column;
 }
 
 .navbar{
     background-color: #73879C;
+    height: 3.5rem;
 
     &Text{
         font-weight: bold;
-        font-size: 1.1rem;
+        font-size: 1.4rem;
     }
 
     &LogoContainer{
@@ -31,19 +32,25 @@ html,body{
     }
 
     &Logo{
-        width: 8vh;
-        min-width:8rem;
+        width:12rem;
     }
 }
 
 .sidebar{
     position: absolute;
-    height: 95vh;
-    width: 250px;
+    //height: 95vh;
+    height: 100vh;
+    width: 275px;
     background-color: #f8f9fa;
 
     &Container{
-        padding:0.5rem;
+        padding: 0.5rem 0rem;
+
+        &Logo{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
     }
 
     &Ul{
@@ -53,6 +60,7 @@ html,body{
         padding-left: 0;
         margin-bottom: 0;
         list-style: none;
+        margin-top: 1.5rem;
     }
 
     &Item{
@@ -61,7 +69,7 @@ html,body{
     }
 
     &Icon{
-        width: 1.5rem;
+        width: 1.8rem;
         transition: all 0.75s;
     
         &Arrow{
@@ -79,13 +87,14 @@ html,body{
     }
 
     &Collapse{
-        padding: 0.8rem 0;
+        padding: 0.8rem 0.75rem 0.8rem 0.5rem;
 
         &Menu{
             margin-top: 0.5rem;
             display: flex;
             flex-direction: column;
             gap: 0.2rem;
+            background-color: #eeefef;
             //background-color: #f8f9fa;
         }
     
@@ -95,18 +104,20 @@ html,body{
             gap:0.4rem;
 
             font-size: 0.9rem;
-            padding: 0.25rem 1rem;
+            padding: 0.75rem 1.75rem 0.75rem 2.5rem;
             text-align: inherit;
             text-decoration: none;
             color: rgb(0,0,0,0.65);
             transition: color .15s ease-in-out;
     
             &:hover{
-                color: rgb(0,0,0,0.8);
+                color: #a30404;
+                border: 1px solid #a30404;
+                border-radius: 4px;
             }
 
             &Image{
-                width: 1.5rem;
+                width: 2rem;
             }
 
             &Text{

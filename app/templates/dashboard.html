@@ -52,25 +52,17 @@
 
   <body>
 
-    <nav class="navbar navbar-light bg-light">
-      <div class="container-fluid">
-        <!--<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-                aria-controls="offcanvasScrolling">
-                <span class="navbar-toggler-icon"></span>
-            </button>-->
-
-        <div class="navbarText">
-
-        </div>
-        
-        <a class="navbarLogoContainer" href="#">
-          <img class="navbarLogo" src="{% static 'img/logo.png' %}">
-        </a>
-      </div>
-    </nav>
+    
     
     <div class="sidebar">
       <div class="sidebarContainer">
+        <div class="sidebarContainerLogo">
+          <a class="navbarLogoContainer" href="#">
+            <img class="navbarLogo" src="{% static 'img/logo.png' %}">
+          </a>
+        </div>
+        
+
         <ul class="sidebarUl">
 
           <!-- questo tag li deve essere copiato per inserire altri menu a discesa-->
@@ -83,10 +75,13 @@
                   <div>Visualizzazione Grafici</div>
                 </div>
                 <div class="sidebarArrowContainer">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="sidebarIconArrow sidebarIconToggleRight"
+                  <!--<svg xmlns="http://www.w3.org/2000/svg" class="sidebarIconArrow sidebarIconToggleRight"
                     fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
                       d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                  </svg>-->
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-caret-right-fill sidebarIconArrow sidebarIconToggleRight" viewBox="0 0 16 16">
+                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
                   </svg>
                 </div>
               </div>
@@ -101,7 +96,8 @@
                   <img class="sidebarCollapseItemImage" src="{% static 'img/dashboardHeader/individualWiretaps.png' %}">
                 </div>
                 <div class="sidebarCollapseItemText">
-                  Individui/Intercettazioni
+                  Intercettazioni Telefoniche
+                  <!--Individui/Intercettazioni-->
                 </div>
               </a>
               <a class="sidebarCollapseItem" href="{% url 'individualCrimes' %}">
@@ -109,7 +105,8 @@
                   <img class="sidebarCollapseItemImage" src="{% static 'img/dashboardHeader/individualCrimes.png' %}">
                 </div>
                 <div class="sidebarCollapseItemText">
-                  Individui/Crimini
+                  Crimini
+                  <!--Individui/Crimini-->
                 </div>
               </a>
               <a class="sidebarCollapseItem" href="{% url 'individualEnviromentalTapping' %}">
@@ -117,7 +114,8 @@
                   <img class="sidebarCollapseItemImage" src="{% static 'img/dashboardHeader/individualEnviromentalTapping.png' %}">
                 </div>
                 <div class="sidebarCollapseItemText">
-                  Individui/Intercettazione Ambientale
+                  Intercettazioni Ambientali
+                  <!--Individui/Intercettazione Ambientale-->
                 </div>
               </a>
               <a class="sidebarCollapseItem" href="{% url 'individualCrimesEnviromentalTapping' %}">
@@ -126,7 +124,8 @@
                   <img class="sidebarCollapseItemImage" src="{% static 'img/dashboardHeader/individualCrimesEnviromentalTapping.png' %}">
                 </div>
                 <div class="sidebarCollapseItemText">
-                  Individui e Crimini/Intercettazione Ambientale
+                  All In One
+                  <!--Individui e Crimini/Intercettazione Ambientale-->
                 </div>
               </a>
             </div>
@@ -136,6 +135,23 @@
     </div>
 
     <div class="pageContainer">
+
+      <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+          <!--<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+                  aria-controls="offcanvasScrolling">
+                  <span class="navbar-toggler-icon"></span>
+              </button>-->
+  
+          <div class="navbarText">
+  
+          </div>
+          
+          <!--<a class="navbarLogoContainer" href="#"> 
+            <img class="navbarLogo" src="{% static 'img/logo.png' %}">
+          </a>-->
+        </div>
+      </nav>
       
 
       <!--Barra di caricamento delle pagine-->

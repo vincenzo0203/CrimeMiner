@@ -3,9 +3,10 @@
     &Container{
         display: flex;
         flex-direction: column;
-        gap:1rem;
+        gap:1.5rem;
         width:24rem;
         height: 92vh;
+        padding-top: 1.5rem !important;
         overflow-x: hidden;
         overflow-y: auto;
 
@@ -193,6 +194,10 @@
                 margin: 0.5rem;
             }
         }
+    }
+
+    &ButtonOne, &ButtonTwo, &ButtonThree{
+        font-weight: 600;
     }
 }
 
