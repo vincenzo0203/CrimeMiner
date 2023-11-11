@@ -5,6 +5,9 @@ let cyIndividualCrimes;
 let cyNodeTouchedIndividualCrimes = "";
 let cyEdgeTouchedIndividualCrimes = "";
 
+//Variabile che ci consente di tener traccia dell'id dell'utente quando si anonimizza
+let cyNodeIdDataIndividualCrimes  = "";
+
 //Funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Reati commessi dagli Individui";
@@ -15,6 +18,13 @@ window.onload = function () {
 
   //Comando che fa aprire all'avvio della pagina l'accordione delle proprietà
   document.querySelector("#item-properties").click();
+
+  //Controllo se devo anonimizzare i dati
+  if(!document.cookie.includes("anonymization"))
+      document.cookie = "anonymization=no";
+    else
+      if(getCookie("anonymization") == "yes")
+        document.querySelector("#CheckAnonymization").checked = true;
 };
 
 //Funzione che effettua la richiesta al backend per caricare il grafo iniziale
@@ -242,7 +252,6 @@ function createGraphIndividualCrimes(data) {
 
 //Con questa funzione in base alla metrica decido di quanto moltiplicare il valore dei nodi per renderla visibile sul grafo
 function changeSizeNodesIndividualCrimes(data){
-  console.log(data);
   let selectMetrics = document.querySelector(".selectMetrics").value;
 
   if(selectMetrics == "Default"){
@@ -313,6 +322,27 @@ function changeMetricIndividualCrimes(){
   requestSizeNodesIndividualCrimes();
 }
 
+//Funzione che anonimizza i dati dell'Individuo
+function anonymizationNodeDetailsIndividualCrimes(flag){
+
+  if(flag == "yes"){
+
+    cyNodeIdDataIndividualCrimes = document.querySelector(".infoIndividualCrimesNodeIndividualIdContent").innerHTML;
+
+    document.querySelector(".infoIndividualCrimesNodeIndividualSurnameContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualNameContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualBirthContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualNationContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualProvinceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualAddressContent").innerHTML = "*********";
+  }
+  else{
+    if(cyNodeIdDataIndividualCrimes != "")
+      requestDetailsOfNodeIndividualCrimes(cyNodeIdDataIndividualCrimes)
+  }
+}
+
 //Funzione che si occupa di mostrare o meno gli identificativi dei nodi e degli archi sul grafo
 function checkedNodesAndEdgesIndividualCrimes(){
   //Controlla se la checkbox dei nodi è checkata, se si mostra l'id del nodo, in caso contrario no
@@ -377,6 +407,27 @@ function checkedNodesAndEdgesIndividualCrimes(){
   }
 }
 
+//Funzione che inserisce nei cookie il valore dell'anonimizzazione e chiama un'altra funzione per la modifica nel layout
+function checkedAnonymizationIndividualCrimes(){
+  if(document.querySelector("#CheckAnonymization").checked == true){
+
+    if(!document.cookie.includes("anonymization"))
+      document.cookie = "anonymization=yes";
+    else
+      setCookie("anonymization","yes");
+    
+      anonymizationNodeDetailsIndividualCrimes("yes");
+  }
+  else{
+    if(!document.cookie.includes("anonymization"))
+      document.cookie = "anonymization=no";
+    else
+      setCookie("anonymization","no");
+    
+      anonymizationNodeDetailsIndividualCrimes("no");
+  }
+}
+
 //Funzione che mostra i dettagli dei nodi della tipologia Individuo
 function showDetailsOfNodeIndividualIndividualCrimes(data){
   document.querySelector(".infoIndividualCrimesEdge").style.display = "none";
@@ -387,13 +438,28 @@ function showDetailsOfNodeIndividualIndividualCrimes(data){
   document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Individuo";
 
   document.querySelector(".infoIndividualCrimesNodeIndividualIdContent").innerHTML = data.nodeId;
-  //document.querySelector(".infoIndividualCrimesNodeIndividualSurnameContent").innerHTML = data.cognome;
-  //document.querySelector(".infoNodeNameContent").innerHTML = data.nome;
-  document.querySelector(".infoIndividualCrimesNodeIndividualBirthContent").innerHTML = data.dataNascita;
-  document.querySelector(".infoIndividualCrimesNodeIndividualNationContent").innerHTML = data.nazioneResidenza;
-  document.querySelector(".infoIndividualCrimesNodeIndividualProvinceContent").innerHTML = data.provinciaResidenza;
-  document.querySelector(".infoIndividualCrimesNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
-  document.querySelector(".infoIndividualCrimesNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
+  
+  if(getCookie("anonymization") == "yes"){
+
+    cyNodeIdDataIndividualCrimes = data.nodeId;
+
+    document.querySelector(".infoIndividualCrimesNodeIndividualSurnameContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualNameContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualBirthContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualNationContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualProvinceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualAddressContent").innerHTML = "*********";
+  }
+  else{
+    document.querySelector(".infoIndividualCrimesNodeIndividualSurnameContent").innerHTML = data.cognome;
+    document.querySelector(".infoIndividualCrimesNodeIndividualNameContent").innerHTML = data.nome;
+    document.querySelector(".infoIndividualCrimesNodeIndividualBirthContent").innerHTML = data.dataNascita;
+    document.querySelector(".infoIndividualCrimesNodeIndividualNationContent").innerHTML = data.nazioneResidenza;
+    document.querySelector(".infoIndividualCrimesNodeIndividualProvinceContent").innerHTML = data.provinciaResidenza;
+    document.querySelector(".infoIndividualCrimesNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
+    document.querySelector(".infoIndividualCrimesNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
+  }
 
   if(document.querySelector("#item-details").checked == false)
     document.querySelector("#item-details").click();

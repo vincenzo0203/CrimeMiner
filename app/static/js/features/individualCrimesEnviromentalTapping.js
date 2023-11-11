@@ -5,6 +5,9 @@ let cyIndividualCrimesEnviromentalTapping;
 let cyNodeTouchedIndividualCrimesEnviromentalTapping = "";
 let cyEdgeTouchedIndividualCrimesEnviromentalTapping = "";
 
+//Variabile che ci consente di tener traccia dell'id dell'utente quando si anonimizza
+let cyNodeIdDataIndividualCrimesEnviromentalTapping  = "";
+
 //Funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Intercettazione Ambientale e Reati commessi dagli Individui";
@@ -15,6 +18,13 @@ window.onload = function () {
 
   //Comando che fa aprire all'avvio della pagina l'accordione delle proprietà
   document.querySelector("#item-properties").click();
+
+  //Controllo se devo anonimizzare i dati
+  if(!document.cookie.includes("anonymization"))
+      document.cookie = "anonymization=no";
+    else
+      if(getCookie("anonymization") == "yes")
+        document.querySelector("#CheckAnonymization").checked = true;
 };
 
 //Funzione che effettua la richiesta al backend per caricare il grafo iniziale
@@ -331,6 +341,27 @@ function changeMetricIndividualCrimesEnviromentalTapping(){
   requestSizeNodesIndividualCrimesEnviromentalTapping();
 }
 
+//Funzione che anonimizza i dati dell'Individuo
+function anonymizationNodeDetailsIndividualCrimesEnviromentalTapping(flag){
+
+  if(flag == "yes"){
+
+    cyNodeIdDataIndividualCrimesEnviromentalTapping = document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualIdContent").innerHTML;
+
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualSurnameContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNameContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualBirthContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNationContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualProvinceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualAddressContent").innerHTML = "*********";
+  }
+  else{
+    if(cyNodeIdDataIndividualCrimesEnviromentalTapping != "")
+      requestDetailsOfNodeIndividualCrimesEnviromentalTapping(cyNodeIdDataIndividualCrimesEnviromentalTapping)
+  }
+}
+
 //Funzione che si occupa di mostrare o meno gli identificativi dei nodi e degli archi sul grafo
 function checkedNodesAndEdgesIndividualCrimesEnviromentalTapping(){
   //Controlla se la checkbox dei nodi è checkata, se si mostra l'id del nodo, in caso contrario no
@@ -408,6 +439,27 @@ function checkedNodesAndEdgesIndividualCrimesEnviromentalTapping(){
   }
 }
 
+//Funzione che inserisce nei cookie il valore dell'anonimizzazione e chiama un'altra funzione per la modifica nel layout
+function checkedAnonymizationIndividualCrimesEnviromentalTapping(){
+  if(document.querySelector("#CheckAnonymization").checked == true){
+
+    if(!document.cookie.includes("anonymization"))
+      document.cookie = "anonymization=yes";
+    else
+      setCookie("anonymization","yes");
+    
+      anonymizationNodeDetailsIndividualCrimesEnviromentalTapping("yes");
+  }
+  else{
+    if(!document.cookie.includes("anonymization"))
+      document.cookie = "anonymization=no";
+    else
+      setCookie("anonymization","no");
+    
+      anonymizationNodeDetailsIndividualCrimesEnviromentalTapping("no");
+  }
+}
+
 //Funzione che mostra i dettagli dei nodi della tipologia Individuo
 function showDetailsOfNodeIndividualIndividualCrimesEnviromentalTapping(data){
   document.querySelector(".infoIndividualCrimesEnviromentalTappingEdgeIndividual").style.display = "none";
@@ -421,13 +473,27 @@ function showDetailsOfNodeIndividualIndividualCrimesEnviromentalTapping(data){
   document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Individuo";
 
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualIdContent").innerHTML = data.nodeId;
-  //document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualSurnameContent").innerHTML = data.cognome;
-  //document.querySelector(".infoNodeNameContent").innerHTML = data.nome;
-  document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualBirthContent").innerHTML = data.dataNascita;
-  document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNationContent").innerHTML = data.nazioneResidenza;
-  document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualProvinceContent").innerHTML = data.provinciaResidenza;
-  document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
-  document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
+
+  if(getCookie("anonymization") == "yes"){
+    cyNodeIdDataIndividualCrimesEnviromentalTapping = data.nodeId;
+
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualSurnameContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNameContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualBirthContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNationContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualProvinceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualAddressContent").innerHTML = "*********";
+  }
+  else{
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualSurnameContent").innerHTML = data.cognome;
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNameContent").innerHTML = data.nome;
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualBirthContent").innerHTML = data.dataNascita;
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNationContent").innerHTML = data.nazioneResidenza;
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualProvinceContent").innerHTML = data.provinciaResidenza;
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
+  }
 
   if(document.querySelector("#item-details").checked == false)
     document.querySelector("#item-details").click();

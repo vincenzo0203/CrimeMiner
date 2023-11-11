@@ -144,7 +144,9 @@
 
     &CheckboxNodeEdge{
         padding: 1rem 1.25rem;
-        justify-content: space-around;
+        column-gap: 3rem;
+        row-gap: 0.5rem;
+        //justify-content: space-around;
     }
 
     //Other
