@@ -1,13 +1,9 @@
+//funzione che crea un caricamento fittizio
 function loadPage(delay) {
     startLoading(delay)
 }
 
-/* function simulateLoading(delay) {
-    return new Promise(resolve => {
-        setTimeout(resolve, delay); // Simula un caricamento lungo quanto il valore inserito al posto di delay
-    });
-} */
-
+//funzione che fa comparire la schermata di caricamento
 function startLoading(delay) {
     document.querySelector(".loadingContainer").style.display = 'flex';
 
