@@ -16,13 +16,16 @@ class IndividuoModel(StructuredNode):
     indirizzoResidenza = StringProperty()
     cognome = StringProperty()
     nome = StringProperty()
-    codice = StringProperty()
+    #codice = StringProperty()
     capResidenza = StringProperty()
     cittaResidenza = StringProperty()
     nazioneResidenza = StringProperty()
-    pseudonimo = StringProperty()
+    #pseudonimo = StringProperty()
+
 
     # Valori Interi
+    mesiImputati=IntegerProperty()
+    mesiTotali=IntegerProperty()
     lng = IntegerProperty()
     lat = IntegerProperty()
     community = IntegerProperty()
