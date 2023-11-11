@@ -214,7 +214,7 @@
                   <div for="recipient-layout" class="col-form-label">
                     Layout
                   </div>
-                  <select class="form-select selectLayout" id="recipient-layout" aria-label="Default select example" onchange="changeLayoutIndividualWiretaps();">
+                  <select class="form-select selectLayout" class="form-control" id="recipient-layout" aria-label="Default select example" onchange="changeLayoutIndividualWiretaps();">
                     <option value="circle" selected>Cerchio</option>
                     <option value="dagre">Dagre</option>
                     <option value="fcose">Force Atlas</option>
@@ -224,7 +224,7 @@
                   <div for="recipient-metrics" class="col-form-label">
                     Metriche
                   </div>
-                  <select class="form-select selectMetrics" id="recipient-metrics" aria-label="Default select example" onchange="changeMetricIndividualWiretaps();">
+                  <select class="form-select selectMetrics" class="form-control" id="recipient-metrics" aria-label="Default select example" onchange="changeMetricIndividualWiretaps();">
                     <option value="Default" selected>Default</option>
                     <option value="PageRank">PageRank</option>
                     <option value="WeightedPageRank">Weighted PageRank</option>
@@ -249,46 +249,133 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="modalIndividualWiretapsLabel">Inserimento Chiamata</h1>
+        <h1 class="modal-title fs-5" id="modalIndividualWiretapsLabel">Nuova Intercettazione</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="modalContainer">
-            <div class="mb-3">
-              <label for="recipient-source" class="col-form-label">Mittente</label>
-              <select class="form-select modalIndividualWiretapsSource" class="form-control" id="recipient-source" aria-label="select example">
-                <option selected></option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="recipient-target" class="col-form-label">Destinatario</label>
-              <select class="form-select modalIndividualWiretapsTarget" class="form-control" id="recipient-target" aria-label="select example">
-                <option selected></option>
-              </select>
-            </div>
+        <nav>
+          <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-2-tab" data-bs-toggle="tab" data-bs-target="#nav-2" type="button" role="tab" aria-controls="nav-2" aria-selected="true">2</button>
+            <button class="nav-link" id="nav-1-tab" data-bs-toggle="tab" data-bs-target="#nav-1" type="button" role="tab" aria-controls="nav-1" aria-selected="false">1</button>
+            <button class="nav-link" id="nav-0-tab" data-bs-toggle="tab" data-bs-target="#nav-0" type="button" role="tab" aria-controls="nav-0" aria-selected="false">0</button>
           </div>
-
-          <div class="modalContainer">
-            <div class="mb-3">
-              <label for="recipient-date" class="col-form-label">Data</label>
-              <input type="date" class="form-control modalIndividualWiretapsDate" id="recipient-date">
-            </div>
-            <div class="mb-3">
-              <label for="recipient-duration" class="col-form-label">Durata</label>
-              <input type="time" class="form-control modalIndividualWiretapsDuration" id="recipient-duration" step="1">
-            </div>
-            <div class="mb-3">
-              <label for="recipient-time" class="col-form-label">Ora</label>
-              <input type="time" class="form-control modalIndividualWiretapsTime" id="recipient-time" step="1">
-            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
+            <form>
+              <div class="modalContainer">
+                <div class="mb-3">
+                  <label for="recipient-source" class="col-form-label">Mittente</label>
+                  <select class="form-select modalIndividualWiretapsSource" class="form-control" id="recipient-source" aria-label="select example">
+                    <option selected></option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-target" class="col-form-label">Destinatario</label>
+                  <select class="form-select modalIndividualWiretapsTarget" class="form-control" id="recipient-target" aria-label="select example">
+                    <option selected></option>
+                  </select>
+                </div>
+              </div>
+    
+              <div class="modalContainer">
+                <div class="mb-3">
+                  <label for="recipient-date" class="col-form-label">Data</label>
+                  <input type="date" class="form-control modalIndividualWiretapsDate" id="recipient-date">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-duration" class="col-form-label">Durata</label>
+                  <input type="time" class="form-control modalIndividualWiretapsDuration" id="recipient-duration" step="1">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-time" class="col-form-label">Ora</label>
+                  <input type="time" class="form-control modalIndividualWiretapsTime" id="recipient-time" step="1">
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Contenuto Chiamata</label>
+                <textarea class="form-control modalIndividualWiretapsTextarea" id="message-text"></textarea>
+              </div>
+            </form>
           </div>
-          
-          <div class="mb-3">
-            <label for="message-text" class="col-form-label">Contenuto Chiamata</label>
-            <textarea class="form-control modalIndividualWiretapsTextarea" id="message-text"></textarea>
+          <div class="tab-pane fade" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
+            <form>
+              <div class="modalContainer">
+                <div class="mb-3">
+                  <label for="recipient-source" class="col-form-label">Mittente</label>
+                  <select class="form-select modalIndividualWiretapsSource" class="form-control" id="recipient-source" aria-label="select example">
+                    <option selected></option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-target" class="col-form-label">Destinatario</label>
+                  <select class="form-select modalIndividualWiretapsTarget" class="form-control" id="recipient-target" aria-label="select example">
+                    <option selected></option>
+                  </select>
+                </div>
+              </div>
+    
+              <div class="modalContainer">
+                <div class="mb-3">
+                  <label for="recipient-date" class="col-form-label">Data</label>
+                  <input type="date" class="form-control modalIndividualWiretapsDate" id="recipient-date">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-duration" class="col-form-label">Durata</label>
+                  <input type="time" class="form-control modalIndividualWiretapsDuration" id="recipient-duration" step="1">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-time" class="col-form-label">Ora</label>
+                  <input type="time" class="form-control modalIndividualWiretapsTime" id="recipient-time" step="1">
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Contenuto Chiamata</label>
+                <textarea class="form-control modalIndividualWiretapsTextarea" id="message-text"></textarea>
+              </div>
+            </form>
           </div>
-        </form>
+          <div class="tab-pane fade" id="nav-0" role="tabpanel" aria-labelledby="nav-0-tab">
+            <form>
+              <div class="modalContainer">
+                <div class="mb-3">
+                  <label for="recipient-source" class="col-form-label">Mittente</label>
+                  <select class="form-select modalIndividualWiretapsSource" class="form-control" id="recipient-source" aria-label="select example">
+                    <option selected></option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-target" class="col-form-label">Destinatario</label>
+                  <select class="form-select modalIndividualWiretapsTarget" class="form-control" id="recipient-target" aria-label="select example">
+                    <option selected></option>
+                  </select>
+                </div>
+              </div>
+    
+              <div class="modalContainer">
+                <div class="mb-3">
+                  <label for="recipient-date" class="col-form-label">Data</label>
+                  <input type="date" class="form-control modalIndividualWiretapsDate" id="recipient-date">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-duration" class="col-form-label">Durata</label>
+                  <input type="time" class="form-control modalIndividualWiretapsDuration" id="recipient-duration" step="1">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-time" class="col-form-label">Ora</label>
+                  <input type="time" class="form-control modalIndividualWiretapsTime" id="recipient-time" step="1">
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Contenuto Chiamata</label>
+                <textarea class="form-control modalIndividualWiretapsTextarea" id="message-text"></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
