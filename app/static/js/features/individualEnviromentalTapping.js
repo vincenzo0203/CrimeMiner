@@ -63,7 +63,10 @@ function requestSizeNodesIndividualEnviromentalTapping(){
     data = JSON.parse(data);
     console.log(data);
     //this['create'+  document.querySelector(".selectMetrics").value +'IndividualWiretaps'](data);
-    changeSizeNodesIndividualEnviromentalTapping(data);
+    if(metric != "graphall")
+      changeSizeNodesIndividualEnviromentalTapping(data);
+    else
+      changeSizeNodesIndividualEnviromentalTapping(data.result);
   })
   .catch(error => {
     console.error(error);
