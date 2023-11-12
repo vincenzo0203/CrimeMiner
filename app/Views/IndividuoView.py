@@ -33,7 +33,7 @@ class IndividuoView(View):
         else:
             return JsonResponse({"error": "Nodes not found"}, status=404)
         
-
+                
     @request_mapping("/createNode/", method="post")
     def create_Node(self,request) -> JsonResponse:
         try:

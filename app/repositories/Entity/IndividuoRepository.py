@@ -39,8 +39,37 @@ class IndividuoRepository:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
-        
     
+    # Ottiene tutti i nodeId presenti nel database e ritorna il massimo degli id
+    # Args:
+    #   none
+    # Returns:
+    #   string: il massimo nodeId presente
+    @staticmethod
+    def get_max_node_id():
+            max_node_id = None
+            max_number = -1  # Un valore iniziale molto basso per confronto
+            try:
+                session = Neo4jDriver.get_session()
+                result = session.run("MATCH (n:Individuo) RETURN n.nodeId AS nodeId")
+                
+                for record in result:
+                    node_id = record["nodeId"]
+                    # Estrai la parte numerica dalla stringa nodeId
+                    numeric_part = int(node_id[1:])
+                    
+                    # Confronto con il massimo attuale
+                    if numeric_part > max_number:
+                        max_number = numeric_part
+                        max_node_id = node_id
+
+                return max_node_id
+            except Exception as e:
+                # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+                print("Errore durante l'esecuzione della query Cypher:", e)
+                return None  # Restituisci None anziché una lista vuota in caso di errore
+
+
 
 #################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
 
