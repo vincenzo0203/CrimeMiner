@@ -6,7 +6,7 @@ let cyNodeTouchedIndividualEnviromentalTapping = ""
 let cyEdgeTouchedIndividualEnviromentalTapping  = "";
 
 //Variabile che ci consente di tener traccia dell'id dell'utente quando si anonimizza
-let cyNodeIdDataIndividualEnviromentalTapping  = "";
+let cyNodeDataIndividualEnviromentalTapping  = "";
 
 //Funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
@@ -331,9 +331,6 @@ function changeMetricIndividualEnviromentalTapping(){
 function anonymizationNodeDetailsIndividualEnviromentalTapping(flag){
 
   if(flag == "yes"){
-
-    cyNodeIdDataIndividualEnviromentalTapping = document.querySelector('.infoIndividualEnviromentalTappingNodeIndividualIdContent').innerHTML;
-
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualSurnameContent").innerHTML = "*********";
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNameContent").innerHTML = "*********";
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualBirthContent").innerHTML = "*********";
@@ -343,8 +340,15 @@ function anonymizationNodeDetailsIndividualEnviromentalTapping(flag){
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualAddressContent").innerHTML = "*********";
   }
   else{
-    if(cyNodeIdDataIndividualEnviromentalTapping != "")
-      requestDetailsOfNodeIndividualEnviromentalTapping(cyNodeIdDataIndividualEnviromentalTapping)
+    if(cyNodeDataIndividualEnviromentalTapping != ""){
+      document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualSurnameContent").innerHTML = cyNodeDataIndividualEnviromentalTapping.surname;
+      document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNameContent").innerHTML = cyNodeDataIndividualEnviromentalTapping.name;
+      document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualBirthContent").innerHTML = cyNodeDataIndividualEnviromentalTapping.date;
+      document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNationContent").innerHTML = cyNodeDataIndividualEnviromentalTapping.nation;
+      document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualProvinceContent").innerHTML = cyNodeDataIndividualEnviromentalTapping.province;
+      document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualResidenceContent").innerHTML = cyNodeDataIndividualEnviromentalTapping.city;
+      document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualAddressContent").innerHTML = cyNodeDataIndividualEnviromentalTapping.address;
+    }
   }
 }
 
@@ -444,8 +448,18 @@ function showDetailsOfNodeIndividualIndividualEnviromentalTapping(data){
 
   document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualIdContent").innerHTML = data.nodeId;
 
+  cyNodeDataIndividualEnviromentalTapping = JSON.parse(`{
+                                                "nodeId": "${data.nodeId}",
+                                                "surname": "${data.cognome}",
+                                                "name": "${data.nome}",
+                                                "date": "${data.dataNascita}",
+                                                "nation": "${data.nazioneResidenza}",
+                                                "province": "${data.provinciaResidenza}",
+                                                "city": "${data.cittaResidenza}",
+                                                "address": "${data.indirizzoResidenza}"
+                                              }`);
+
   if(getCookie("anonymization") == "yes"){
-    cyNodeIdDataIndividualEnviromentalTapping = data.nodeId;
 
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualSurnameContent").innerHTML = "*********";
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNameContent").innerHTML = "*********";

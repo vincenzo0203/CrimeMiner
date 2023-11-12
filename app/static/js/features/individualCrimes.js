@@ -6,7 +6,7 @@ let cyNodeTouchedIndividualCrimes = "";
 let cyEdgeTouchedIndividualCrimes = "";
 
 //Variabile che ci consente di tener traccia dell'id dell'utente quando si anonimizza
-let cyNodeIdDataIndividualCrimes  = "";
+let cyNodeDataIndividualCrimes  = "";
 
 //Funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
@@ -327,8 +327,6 @@ function anonymizationNodeDetailsIndividualCrimes(flag){
 
   if(flag == "yes"){
 
-    cyNodeIdDataIndividualCrimes = document.querySelector(".infoIndividualCrimesNodeIndividualIdContent").innerHTML;
-
     document.querySelector(".infoIndividualCrimesNodeIndividualSurnameContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesNodeIndividualNameContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesNodeIndividualBirthContent").innerHTML = "*********";
@@ -338,8 +336,15 @@ function anonymizationNodeDetailsIndividualCrimes(flag){
     document.querySelector(".infoIndividualCrimesNodeIndividualAddressContent").innerHTML = "*********";
   }
   else{
-    if(cyNodeIdDataIndividualCrimes != "")
-      requestDetailsOfNodeIndividualCrimes(cyNodeIdDataIndividualCrimes)
+    if(cyNodeDataIndividualCrimes != ""){
+      document.querySelector(".infoIndividualCrimesNodeIndividualSurnameContent").innerHTML = cyNodeDataIndividualCrimes.surname;
+      document.querySelector(".infoIndividualCrimesNodeIndividualNameContent").innerHTML = cyNodeDataIndividualCrimes.name;
+      document.querySelector(".infoIndividualCrimesNodeIndividualBirthContent").innerHTML = cyNodeDataIndividualCrimes.date;
+      document.querySelector(".infoIndividualCrimesNodeIndividualNationContent").innerHTML = cyNodeDataIndividualCrimes.nation;
+      document.querySelector(".infoIndividualCrimesNodeIndividualProvinceContent").innerHTML = cyNodeDataIndividualCrimes.province;
+      document.querySelector(".infoIndividualCrimesNodeIndividualResidenceContent").innerHTML = cyNodeDataIndividualCrimes.city;
+      document.querySelector(".infoIndividualCrimesNodeIndividualAddressContent").innerHTML = cyNodeDataIndividualCrimes.address;
+    }
   }
 }
 
@@ -439,9 +444,18 @@ function showDetailsOfNodeIndividualIndividualCrimes(data){
 
   document.querySelector(".infoIndividualCrimesNodeIndividualIdContent").innerHTML = data.nodeId;
   
-  if(getCookie("anonymization") == "yes"){
+  cyNodeDataIndividualCrimes = JSON.parse(`{
+                                            "nodeId": "${data.nodeId}",
+                                            "surname": "${data.cognome}",
+                                            "name": "${data.nome}",
+                                            "date": "${data.dataNascita}",
+                                            "nation": "${data.nazioneResidenza}",
+                                            "province": "${data.provinciaResidenza}",
+                                            "city": "${data.cittaResidenza}",
+                                            "address": "${data.indirizzoResidenza}"
+                                          }`);
 
-    cyNodeIdDataIndividualCrimes = data.nodeId;
+  if(getCookie("anonymization") == "yes"){
 
     document.querySelector(".infoIndividualCrimesNodeIndividualSurnameContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesNodeIndividualNameContent").innerHTML = "*********";

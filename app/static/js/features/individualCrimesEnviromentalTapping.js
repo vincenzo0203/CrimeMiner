@@ -6,7 +6,7 @@ let cyNodeTouchedIndividualCrimesEnviromentalTapping = "";
 let cyEdgeTouchedIndividualCrimesEnviromentalTapping = "";
 
 //Variabile che ci consente di tener traccia dell'id dell'utente quando si anonimizza
-let cyNodeIdDataIndividualCrimesEnviromentalTapping  = "";
+let cyNodeDataIndividualCrimesEnviromentalTapping  = "";
 
 //Funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
@@ -345,9 +345,6 @@ function changeMetricIndividualCrimesEnviromentalTapping(){
 function anonymizationNodeDetailsIndividualCrimesEnviromentalTapping(flag){
 
   if(flag == "yes"){
-
-    cyNodeIdDataIndividualCrimesEnviromentalTapping = document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualIdContent").innerHTML;
-
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualSurnameContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNameContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualBirthContent").innerHTML = "*********";
@@ -357,8 +354,15 @@ function anonymizationNodeDetailsIndividualCrimesEnviromentalTapping(flag){
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualAddressContent").innerHTML = "*********";
   }
   else{
-    if(cyNodeIdDataIndividualCrimesEnviromentalTapping != "")
-      requestDetailsOfNodeIndividualCrimesEnviromentalTapping(cyNodeIdDataIndividualCrimesEnviromentalTapping)
+    if(cyNodeDataIndividualCrimesEnviromentalTapping != ""){
+      document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualSurnameContent").innerHTML = cyNodeDataIndividualCrimesEnviromentalTapping.surname;
+      document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNameContent").innerHTML = cyNodeDataIndividualCrimesEnviromentalTapping.name;
+      document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualBirthContent").innerHTML = cyNodeDataIndividualCrimesEnviromentalTapping.date;
+      document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNationContent").innerHTML = cyNodeDataIndividualCrimesEnviromentalTapping.nation;
+      document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualProvinceContent").innerHTML = cyNodeDataIndividualCrimesEnviromentalTapping.province;
+      document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualResidenceContent").innerHTML = cyNodeDataIndividualCrimesEnviromentalTapping.city;
+      document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualAddressContent").innerHTML = cyNodeDataIndividualCrimesEnviromentalTapping.address;
+    }
   }
 }
 
@@ -474,8 +478,18 @@ function showDetailsOfNodeIndividualIndividualCrimesEnviromentalTapping(data){
 
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualIdContent").innerHTML = data.nodeId;
 
+  cyNodeDataIndividualCrimesEnviromentalTapping = JSON.parse(`{
+                                                          "nodeId": "${data.nodeId}",
+                                                          "surname": "${data.cognome}",
+                                                          "name": "${data.nome}",
+                                                          "date": "${data.dataNascita}",
+                                                          "nation": "${data.nazioneResidenza}",
+                                                          "province": "${data.provinciaResidenza}",
+                                                          "city": "${data.cittaResidenza}",
+                                                          "address": "${data.indirizzoResidenza}"
+                                                        }`);
+
   if(getCookie("anonymization") == "yes"){
-    cyNodeIdDataIndividualCrimesEnviromentalTapping = data.nodeId;
 
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualSurnameContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNameContent").innerHTML = "*********";

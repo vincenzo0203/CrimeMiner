@@ -6,7 +6,7 @@ let cyNodeTouchedIndividualWiretaps  = "";
 let cyEdgeTouchedIndividualWiretaps  = "";
 
 //Variabile che ci consente di tener traccia dell'id dell'utente quando si anonimizza
-let cyNodeIdDataIndividualWiretaps  = "";
+let cyNodeDataIndividualWiretaps  = "";
 
 //Funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
@@ -309,8 +309,6 @@ function anonymizationNodeDetailsIndividualWiretaps(flag){
 
   if(flag == "yes"){
 
-    cyNodeIdDataIndividualWiretaps = document.querySelector('.infoIndividualWiretapsNodeIdContent').innerHTML;
-
     document.querySelector(".infoIndividualWiretapsNodeSurnameContent").innerHTML = "*********";
     document.querySelector(".infoIndividualWiretapsNodeNameContent").innerHTML = "*********";
     document.querySelector(".infoIndividualWiretapsNodeBirthContent").innerHTML = "*********";
@@ -320,8 +318,14 @@ function anonymizationNodeDetailsIndividualWiretaps(flag){
     document.querySelector(".infoIndividualWiretapsNodeAddressContent").innerHTML = "*********";
   }
   else{
-    if(cyNodeIdDataIndividualWiretaps != "")
-      requestDetailsOfNodeIndividualWiretaps(cyNodeIdDataIndividualWiretaps)
+    if(cyNodeDataIndividualWiretaps != "")
+      document.querySelector(".infoIndividualWiretapsNodeSurnameContent").innerHTML = cyNodeDataIndividualWiretaps.surname;
+      document.querySelector(".infoIndividualWiretapsNodeNameContent").innerHTML = cyNodeDataIndividualWiretaps.name;
+      document.querySelector(".infoIndividualWiretapsNodeBirthContent").innerHTML = cyNodeDataIndividualWiretaps.date;
+      document.querySelector(".infoIndividualWiretapsNodeNationContent").innerHTML = cyNodeDataIndividualWiretaps.nation;
+      document.querySelector(".infoIndividualWiretapsNodeProvinceContent").innerHTML = cyNodeDataIndividualWiretaps.province;
+      document.querySelector(".infoIndividualWiretapsNodeResidenceContent").innerHTML = cyNodeDataIndividualWiretaps.city;
+      document.querySelector(".infoIndividualWiretapsNodeAddressContent").innerHTML = cyNodeDataIndividualWiretaps.address;
   }
 }
 
@@ -429,8 +433,18 @@ function showDetailsOfNodeIndividualWiretaps(data){
 
   document.querySelector(".infoIndividualWiretapsNodeIdContent").innerHTML = data.nodeId;
 
+  cyNodeDataIndividualWiretaps = JSON.parse(`{
+                                                "nodeId": "${data.nodeId}",
+                                                "surname": "${data.cognome}",
+                                                "name": "${data.nome}",
+                                                "date": "${data.dataNascita}",
+                                                "nation": "${data.nazioneResidenza}",
+                                                "province": "${data.provinciaResidenza}",
+                                                "city": "${data.cittaResidenza}",
+                                                "address": "${data.indirizzoResidenza}"
+                                              }`);
+
   if(getCookie("anonymization") == "yes"){
-    cyNodeIdDataIndividualWiretaps = data.nodeId;
 
     document.querySelector(".infoIndividualWiretapsNodeSurnameContent").innerHTML = "*********";
     document.querySelector(".infoIndividualWiretapsNodeNameContent").innerHTML = "*********";
