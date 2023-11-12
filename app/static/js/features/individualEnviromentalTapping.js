@@ -5,6 +5,9 @@ let cyIndividualEnviromentalTapping;
 let cyNodeTouchedIndividualEnviromentalTapping = ""
 let cyEdgeTouchedIndividualEnviromentalTapping  = "";
 
+//Variabile che ci consente di tener traccia dell'id dell'utente quando si anonimizza
+let cyNodeIdDataIndividualEnviromentalTapping  = "";
+
 //Funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Intercettazione Ambientale tra gli Individui";
@@ -15,6 +18,13 @@ window.onload = function () {
 
   //Comando che fa aprire all'avvio della pagina l'accordione delle proprietà
   document.querySelector("#item-properties").click();
+
+  //Controllo se devo anonimizzare i dati
+  if(!document.cookie.includes("anonymization"))
+      document.cookie = "anonymization=no";
+    else
+      if(getCookie("anonymization") == "yes")
+        document.querySelector("#CheckAnonymization").checked = true;
 };
 
 //Funzione che effettua la richiesta al backend per caricare il grafo iniziale
@@ -317,6 +327,27 @@ function changeMetricIndividualEnviromentalTapping(){
   requestSizeNodesIndividualEnviromentalTapping();
 }
 
+//Funzione che anonimizza i dati dell'Individuo
+function anonymizationNodeDetailsIndividualEnviromentalTapping(flag){
+
+  if(flag == "yes"){
+
+    cyNodeIdDataIndividualEnviromentalTapping = document.querySelector('.infoIndividualEnviromentalTappingNodeIndividualIdContent').innerHTML;
+
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualSurnameContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNameContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualBirthContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNationContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualProvinceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualAddressContent").innerHTML = "*********";
+  }
+  else{
+    if(cyNodeIdDataIndividualEnviromentalTapping != "")
+      requestDetailsOfNodeIndividualEnviromentalTapping(cyNodeIdDataIndividualEnviromentalTapping)
+  }
+}
+
 //Funzione che si occupa di mostrare o meno gli identificativi dei nodi e degli archi sul grafo
 function checkedNodesAndEdgesIndividualEnviromentalTapping(){
   //Controlla se la checkbox dei nodi è checkata, se si mostra l'id del nodo, in caso contrario no
@@ -381,6 +412,27 @@ function checkedNodesAndEdgesIndividualEnviromentalTapping(){
   }
 }
 
+//Funzione che inserisce nei cookie il valore dell'anonimizzazione e chiama un'altra funzione per la modifica nel layout
+function checkedAnonymizationIndividualEnviromentalTapping(){
+  if(document.querySelector("#CheckAnonymization").checked == true){
+
+    if(!document.cookie.includes("anonymization"))
+      document.cookie = "anonymization=yes";
+    else
+      setCookie("anonymization","yes");
+    
+      anonymizationNodeDetailsIndividualEnviromentalTapping("yes");
+  }
+  else{
+    if(!document.cookie.includes("anonymization"))
+      document.cookie = "anonymization=no";
+    else
+      setCookie("anonymization","no");
+    
+      anonymizationNodeDetailsIndividualEnviromentalTapping("no");
+  }
+}
+
 //Funzione che mostra i dettagli dei nodi della tipologia Individuo
 function showDetailsOfNodeIndividualIndividualEnviromentalTapping(data){
   document.querySelector(".infoIndividualEnviromentalTappingEdge").style.display = "none";
@@ -391,13 +443,27 @@ function showDetailsOfNodeIndividualIndividualEnviromentalTapping(data){
   document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Individuo";
 
   document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualIdContent").innerHTML = data.nodeId;
-  //document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualSurnameContent").innerHTML = data.cognome;
-  //document.querySelector(".infoNodeNameContent").innerHTML = data.nome;
-  document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualBirthContent").innerHTML = data.dataNascita;
-  document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNationContent").innerHTML = data.nazioneResidenza;
-  document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualProvinceContent").innerHTML = data.provinciaResidenza;
-  document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
-  document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
+
+  if(getCookie("anonymization") == "yes"){
+    cyNodeIdDataIndividualEnviromentalTapping = data.nodeId;
+
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualSurnameContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNameContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualBirthContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNationContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualProvinceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualAddressContent").innerHTML = "*********";
+  }
+  else{
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualSurnameContent").innerHTML = data.cognome;
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNameContent").innerHTML = data.nome;
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualBirthContent").innerHTML = data.dataNascita;
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNationContent").innerHTML = data.nazioneResidenza;
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualProvinceContent").innerHTML = data.provinciaResidenza;
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
+  }
 
   if(document.querySelector("#item-details").checked == false)
     document.querySelector("#item-details").click();
