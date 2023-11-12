@@ -1,7 +1,9 @@
 from django.http import JsonResponse
 from django.views import View
 from app.repositories.Relationship.IndividuoIntercettazioneRepository import IndividuoIntercettazioneRepository
+from app.repositories.Entity.IndividuoRepository import IndividuoRepository
 from django_request_mapping import request_mapping
+import json
 
 
 @request_mapping("/individuoIntercettazione")    
@@ -68,3 +70,37 @@ class IndividuoIntercettazioneView(View):
     def OutDegree(self, request) -> JsonResponse:
         node_list = self.IndividuoIntercettazione_repository.OutDegree()
         return JsonResponse({"result":node_list})
+    
+
+    @request_mapping("/creaIntercettazione/", method="post")
+    def create_Node(self,request) -> JsonResponse:  
+
+        try:
+            data = json.loads(request.body)
+            print(data)
+            id1_individuo=None
+            id2_individuo=None
+            # Esegui la tua query e ottieni il risultato
+            
+            if "source" in data and not "nodeId" in data["source"]:
+                individuo_repository = IndividuoRepository()
+                id1_individuo = individuo_repository.CreaIndividuo(data["source"])
+            else:
+                id1_individuo=data["source"].get("IdNode")
+
+            if "target" in data and not "nodeId" in data["target"]:
+                individuo_repository = IndividuoRepository()
+                id2_individuo = individuo_repository.CreaIndividuo(data["target"])
+            else:
+                id2_individuo=data["target"].get("IdNode")
+
+
+            intercettazione_result = self.IndividuoIntercettazione_repository.CreaIntercettazione(data["call"],id1_individuo,id2_individuo)
+
+            # Restituisci il risultato con status 100 se la query è andata bene
+            return JsonResponse({"status": 100, "result": intercettazione_result})
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            # Se si verifica un errore, restituisci status 500 e il messaggio di errore
+            return JsonResponse({"error_message": str(e)}, status=500)

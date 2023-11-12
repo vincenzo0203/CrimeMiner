@@ -1,6 +1,8 @@
 import typing
 from app.Neo4jConnection import Neo4jDriver
 import json
+from app.Models.Relationship.HaChiamatoModel import HaChiamatoModel
+from datetime import datetime
 
 #Questa classe fornisce metodi per eseguire query su un database Neo4j contenente informazioni sugli individui e le chiamate tra di loro.
 class IndividuoIntercettazioneRepository:
@@ -164,6 +166,70 @@ class IndividuoIntercettazioneRepository:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
+        
+
+    @staticmethod
+    def CreaIntercettazione(data,id1,id2):
+        try:
+            haChiamato_model = HaChiamatoModel(
+            timestamp = IndividuoIntercettazioneRepository.CalcolaTimeStamp(),
+            edgeId = IndividuoIntercettazioneRepository.get_max_edge_id(),
+            
+            entityType = "HaChiamato",    
+            data = data.get("Data"),
+            name = data.get("Name"),
+            ora = data.get("Ora"),
+            durata = data.get("Durata"),
+            contenuto = data.get("Contenuto"),
+            sourceNodeId = id1,
+            targetNodeId = id2,
+            )
+
+            haChiamato_model.save()
+            return haChiamato_model.edgeId
+        
+        except Exception as e:
+            # Gestione degli altri errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante il salvataggio dell'individuo:", e)
+            return []
+        
+    @staticmethod
+    def CalcolaTimeStamp():
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        return f"I{timestamp}"
+
+    # Ottiene tutti i nodeId presenti nel database e ritorna il massimo degli id
+    # Args:
+    #   none
+    # Returns:
+    #   string: il massimo nodeId presente
+    @staticmethod
+    def get_max_edge_id():
+            max_edge_id = None
+            max_number = -1  # Un valore iniziale molto basso per confronto
+            try:
+                session = Neo4jDriver.get_session()
+                result = session.run("MATCH ()-[r:HaChiamato]->() RETURN r.valore AS edgeId")
+                
+                for record in result:
+                    edge_id = record["edgeId"]
+                    # Estrai la parte numerica dalla stringa edgeId
+                    numeric_part = int(edge_id[2:])  # Assume che i primi due caratteri siano "IT"
+
+                    # Confronto con il massimo attuale
+                    if numeric_part > max_number:
+                        max_number = numeric_part
+                        max_edge_id = edge_id
+
+                
+                numeric_part1=max_number+1
+                edge_id1=f"IT{numeric_part1}"
+
+                return edge_id1
+            except Exception as e:
+                # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+                print("Errore durante l'esecuzione della query Cypher:", e)
+                return None  # Restituisci None anziché una lista vuota in caso di errore
         
 #################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
 

@@ -39,6 +39,44 @@ class IndividuoRepository:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
+        
+
+    @staticmethod
+    def CreaIndividuo(data):
+        try:
+             # Crea un'istanza di IndividuoModel
+            idNodo=IndividuoRepository.get_max_node_id()
+
+            individuo_model = IndividuoModel(
+            nodeId=idNodo,
+            entityType="Individuo",
+            name=idNodo,
+            mesiImputati=0,
+            mesiTotali=0,
+            lng = 0,
+            lat = 0,
+            community = 0,
+            isIndagato = False,
+            provinciaResidenza = data.get("provinciaResidenza"),
+            luogoNascita = data.get("luogoNascita"),
+            dataNascita = data.get("dataNascita"),
+            indirizzoResidenza = data.get("indirizzoResidenza"),
+            cognome = data.get("cognome"),
+            nome = data.get("nome"),
+            capResidenza = data.get("capResidenza"),
+            cittaResidenza = data.get("cittaResidenza"),
+            nazioneResidenza = data.get("nazioneResidenza"),
+            )
+
+            individuo_model.save()
+            return individuo_model.nodeId
+        
+        except Exception as e:
+            # Gestione degli altri errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante il salvataggio dell'individuo:", e)
+            return []
+        
+    
     
     # Ottiene tutti i nodeId presenti nel database e ritorna il massimo degli id
     # Args:
@@ -62,12 +100,18 @@ class IndividuoRepository:
                     if numeric_part > max_number:
                         max_number = numeric_part
                         max_node_id = node_id
+                
+                numeric_part1=max_number+1
+                node_id1=f"I{numeric_part1}"
 
-                return max_node_id
+                return node_id1
             except Exception as e:
                 # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
                 print("Errore durante l'esecuzione della query Cypher:", e)
                 return None  # Restituisci None anziché una lista vuota in caso di errore
+            
+            
+
 
 
 

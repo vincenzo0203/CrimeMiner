@@ -3,7 +3,7 @@ from django.views import View
 from app.repositories.Entity.IndividuoRepository import IndividuoRepository
 from django_request_mapping import request_mapping
 from app.Models.Entity.IndividuoModel import IndividuoModel
-import json
+
 
 @request_mapping("/individuo")
 class IndividuoView(View):
@@ -33,46 +33,8 @@ class IndividuoView(View):
         else:
             return JsonResponse({"error": "Nodes not found"}, status=404)
         
-                
-    @request_mapping("/createNode/", method="post")
-    def create_Node(self,request) -> JsonResponse:
-        try:
-            data = json.loads(request.body)
-        except json.JSONDecodeError:
-            return JsonResponse({"error": "Invalid JSON data"}, status=400)
 
-        # Crea un'istanza di IndividuoModel
-        individuo_model = IndividuoModel(
-            nodeId="ValoreNodo",
-            entityType="Individuo",
-            name=data.get("CoincideconnodeID"),
-            mesiImputati=0,
-            mesiTotali=0,
-            lng = 0,
-            lat = 0,
-            community = 0,
-            isIndagato = False,
-            provinciaResidenza = data.get("provinciaResidenza"),
-            luogoNascita = data.get("luogoNascita"),
-            dataNascita = data.get("dataNascita"),
-            indirizzoResidenza = data.get("indirizzoResidenza"),
-            cognome = data.get("cognome"),
-            nome = data.get("nome"),
-            capResidenza = data.get("capResidenza"),
-            cittaResidenza = data.get("cittaResidenza"),
-            nazioneResidenza = data.get("nazioneResidenza"),
-        )
-
-        
-        try:
-            data = json.loads(request.body)
-            # Esegui la tua query e ottieni il risultato
-            result = self.individuo_repository.CreaIntercettazione(individuo_model)
-            # Restituisci il risultato con status 100 se la query è andata bene
-            return JsonResponse({"status": 100, "result": result})
-        except Exception as e:
-            # Se si verifica un errore, restituisci status 104 e il messaggio di errore
-            return JsonResponse({"status": 104, "error_message": str(e)}, status=500)
+    
     
         
 
