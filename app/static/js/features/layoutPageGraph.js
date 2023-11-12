@@ -1,6 +1,6 @@
 //funzione che permette il funzionamento delle frecce dell'accordion
 document.addEventListener('DOMContentLoaded', function() {
-    let accordionItems = document.querySelectorAll('.accordion-item');
+    let accordionItems = document.querySelectorAll('.accordion-item-graph');
   
     accordionItems.forEach(function(accordionItem) {
       accordionItem.childNodes[1].addEventListener('click', function() {
