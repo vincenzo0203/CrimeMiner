@@ -620,22 +620,83 @@ function openModalDeleteIndividualIndividualWiretaps(){
 }
 
 function sendNewCallToBackendIndividualWiretaps(){
-  let json;
 
-  if(document.querySelector(".modalIndividualWiretapsSource").value != document.querySelector(".modalIndividualWiretapsTarget").value)
-    json = `{
-                "edgeId": "${document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML}",
-                "sourceId": "${document.querySelector(".modalIndividualWiretapsSource").value}",
-                "targetiD": "${document.querySelector(".modalIndividualWiretapsTarget").value}",
-                "date": "${document.querySelector(".modalIndividualWiretapsDate").value}",
-                "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
-                "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
-                "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}",
-              }`;
+  let [year, month, day] = "";
 
-  console.log(json);
+  let json = `{`;
+
+  if(!document.querySelector("#CheckSourceExisting").checked){
+    [year, month, day] = document.querySelector(".modalIndividualWiretapsSourceDate").value.split('-');
+
+    json += ` "source" : {
+                            "surname": "${document.querySelector(".modalIndividualWiretapsSourceSurname").value}",
+                            "name": "${document.querySelector(".modalIndividualWiretapsSourceName").value}",
+                            "date": "${day}/${month}/${year}",
+                            "nation": "${document.querySelector(".modalIndividualWiretapsSourceNation").value}",
+                            "province": "${document.querySelector(".modalIndividualWiretapsSourceProvince").value}",
+                            "city": "${document.querySelector(".modalIndividualWiretapsSourceCity").value}",
+                            "address": "${document.querySelector(".modalIndividualWiretapsSourceAddress").value}",
+                          },
+            `;
+  }
+
+  if(!document.querySelector("#CheckTargetExisting").checked){
+    [year, month, day] = document.querySelector(".modalIndividualWiretapsTargetDate").value.split('-');
+    
+    json += ` "target" : {
+                            "surname": "${document.querySelector(".modalIndividualWiretapsTargetSurname").value}",
+                            "name": "${document.querySelector(".modalIndividualWiretapsTargetName").value}",
+                            "date": "${day}/${month}/${year}",
+                            "nation": "${document.querySelector(".modalIndividualWiretapsTargetNation").value}",
+                            "province": "${document.querySelector(".modalIndividualWiretapsTargetProvince").value}",
+                            "city": "${document.querySelector(".modalIndividualWiretapsTargetCity").value}",
+                            "address": "${document.querySelector(".modalIndividualWiretapsTargetAddress").value}",
+                          },
+            `;
+  }
+
+  [year, month, day] = document.querySelector(".modalIndividualWiretapsDate").value.split('-');
   
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  if(document.querySelector("#CheckSourceExisting").checked && document.querySelector("#CheckTargetExisting").checked){
+    if(document.querySelector(".modalIndividualWiretapsSource").value != document.querySelector(".modalIndividualWiretapsTarget").value){
+      
+      json += `  "call" : {
+                            "sourceId": "${document.querySelector(".modalIndividualWiretapsSource").value}",
+                            "targetiD": "${document.querySelector(".modalIndividualWiretapsTarget").value}",
+                            "date": "${day}/${month}/${year}",
+                            "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
+                            "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
+                            "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}",
+                          }
+      `;
+    }
+      
+  }
+  else{
+    json += `  "call" : {`;
+
+    if(document.querySelector("#CheckSourceExisting").checked) 
+    json += `
+              "sourceId": "${document.querySelector(".modalIndividualWiretapsSource").value}",
+            `;
+    
+    if(document.querySelector("#CheckTargetExisting").checked)
+    json += `
+              "targetId": "${document.querySelector(".modalIndividualWiretapsTarget").value}",
+            `;
+  
+    json += `
+              "date": "${day}/${month}/${year}",
+              "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
+              "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
+              "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}",
+            }
+    `;
+  }
+
+  json += `}`;
+  
+  fetch("/CrimeMiner/individuoIntercettazione/CreaIntercettazione", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -645,7 +706,7 @@ function sendNewCallToBackendIndividualWiretaps(){
   .then(response => {
     if (response.ok) {
       viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");
-      return response.text();
+      //return response.text();
     } else {
       viewToastMessage("Registrazione Chiamata", "Errore nella registrazione della chiamata.", "error");
     }
@@ -655,9 +716,9 @@ function sendNewCallToBackendIndividualWiretaps(){
   //})
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
-  viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");  
+  //viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");  
 }
 
 function sendUpdateCallToBackendIndividualWiretaps(){
