@@ -351,6 +351,7 @@ function anonymizationNodeDetailsIndividualCrimesEnviromentalTapping(flag){
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNationContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualProvinceContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualCapContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualAddressContent").innerHTML = "*********";
   }
   else{
@@ -361,6 +362,7 @@ function anonymizationNodeDetailsIndividualCrimesEnviromentalTapping(flag){
       document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNationContent").innerHTML = cyNodeDataIndividualCrimesEnviromentalTapping.nation;
       document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualProvinceContent").innerHTML = cyNodeDataIndividualCrimesEnviromentalTapping.province;
       document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualResidenceContent").innerHTML = cyNodeDataIndividualCrimesEnviromentalTapping.city;
+      document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualCapContent").innerHTML = cyNodeDataIndividualCrimesEnviromentalTapping.cap;
       document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualAddressContent").innerHTML = cyNodeDataIndividualCrimesEnviromentalTapping.address;
     }
   }
@@ -479,15 +481,16 @@ function showDetailsOfNodeIndividualIndividualCrimesEnviromentalTapping(data){
   document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualIdContent").innerHTML = data.nodeId;
 
   cyNodeDataIndividualCrimesEnviromentalTapping = JSON.parse(`{
-                                                          "nodeId": "${data.nodeId}",
-                                                          "surname": "${data.cognome}",
-                                                          "name": "${data.nome}",
-                                                          "date": "${data.dataNascita}",
-                                                          "nation": "${data.nazioneResidenza}",
-                                                          "province": "${data.provinciaResidenza}",
-                                                          "city": "${data.cittaResidenza}",
-                                                          "address": "${data.indirizzoResidenza}"
-                                                        }`);
+                                                                "nodeId": "${data.nodeId}",
+                                                                "surname": "${data.cognome}",
+                                                                "name": "${data.nome}",
+                                                                "date": "${data.dataNascita}",
+                                                                "nation": "${data.nazioneResidenza}",
+                                                                "province": "${data.provinciaResidenza}",
+                                                                "city": "${data.cittaResidenza}",
+                                                                "cap": "${data.capResidenza}",
+                                                                "address": "${data.indirizzoResidenza}"
+                                                              }`);
 
   if(getCookie("anonymization") == "yes"){
 
@@ -497,6 +500,7 @@ function showDetailsOfNodeIndividualIndividualCrimesEnviromentalTapping(data){
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualNationContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualProvinceContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualCapContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesEnviromentalTappingNodeIndividualAddressContent").innerHTML = "*********";
   }
   else{

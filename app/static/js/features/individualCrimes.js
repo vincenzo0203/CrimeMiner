@@ -333,6 +333,7 @@ function anonymizationNodeDetailsIndividualCrimes(flag){
     document.querySelector(".infoIndividualCrimesNodeIndividualNationContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesNodeIndividualProvinceContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesNodeIndividualResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualCapContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesNodeIndividualAddressContent").innerHTML = "*********";
   }
   else{
@@ -343,6 +344,7 @@ function anonymizationNodeDetailsIndividualCrimes(flag){
       document.querySelector(".infoIndividualCrimesNodeIndividualNationContent").innerHTML = cyNodeDataIndividualCrimes.nation;
       document.querySelector(".infoIndividualCrimesNodeIndividualProvinceContent").innerHTML = cyNodeDataIndividualCrimes.province;
       document.querySelector(".infoIndividualCrimesNodeIndividualResidenceContent").innerHTML = cyNodeDataIndividualCrimes.city;
+      document.querySelector(".infoIndividualCrimesNodeIndividualCapContent").innerHTML = cyNodeDataIndividualCrimes.cap;
       document.querySelector(".infoIndividualCrimesNodeIndividualAddressContent").innerHTML = cyNodeDataIndividualCrimes.address;
     }
   }
@@ -452,6 +454,7 @@ function showDetailsOfNodeIndividualIndividualCrimes(data){
                                             "nation": "${data.nazioneResidenza}",
                                             "province": "${data.provinciaResidenza}",
                                             "city": "${data.cittaResidenza}",
+                                            "cap": "${data.capResidenza}",
                                             "address": "${data.indirizzoResidenza}"
                                           }`);
 
@@ -463,6 +466,7 @@ function showDetailsOfNodeIndividualIndividualCrimes(data){
     document.querySelector(".infoIndividualCrimesNodeIndividualNationContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesNodeIndividualProvinceContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesNodeIndividualResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualCrimesNodeIndividualCapContent").innerHTML = "*********";
     document.querySelector(".infoIndividualCrimesNodeIndividualAddressContent").innerHTML = "*********";
   }
   else{
@@ -472,6 +476,7 @@ function showDetailsOfNodeIndividualIndividualCrimes(data){
     document.querySelector(".infoIndividualCrimesNodeIndividualNationContent").innerHTML = data.nazioneResidenza;
     document.querySelector(".infoIndividualCrimesNodeIndividualProvinceContent").innerHTML = data.provinciaResidenza;
     document.querySelector(".infoIndividualCrimesNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
+    document.querySelector(".infoIndividualCrimesNodeIndividualCapContent").innerHTML = data.capResidenza;
     document.querySelector(".infoIndividualCrimesNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
   }
 

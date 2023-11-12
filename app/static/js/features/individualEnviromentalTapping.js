@@ -337,6 +337,7 @@ function anonymizationNodeDetailsIndividualEnviromentalTapping(flag){
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNationContent").innerHTML = "*********";
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualProvinceContent").innerHTML = "*********";
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualCapContent").innerHTML = "*********";
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualAddressContent").innerHTML = "*********";
   }
   else{
@@ -347,6 +348,7 @@ function anonymizationNodeDetailsIndividualEnviromentalTapping(flag){
       document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNationContent").innerHTML = cyNodeDataIndividualEnviromentalTapping.nation;
       document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualProvinceContent").innerHTML = cyNodeDataIndividualEnviromentalTapping.province;
       document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualResidenceContent").innerHTML = cyNodeDataIndividualEnviromentalTapping.city;
+      document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualCapContent").innerHTML = cyNodeDataIndividualEnviromentalTapping.cap;
       document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualAddressContent").innerHTML = cyNodeDataIndividualEnviromentalTapping.address;
     }
   }
@@ -456,6 +458,7 @@ function showDetailsOfNodeIndividualIndividualEnviromentalTapping(data){
                                                 "nation": "${data.nazioneResidenza}",
                                                 "province": "${data.provinciaResidenza}",
                                                 "city": "${data.cittaResidenza}",
+                                                "cap": "${data.capResidenza}",
                                                 "address": "${data.indirizzoResidenza}"
                                               }`);
 
@@ -467,6 +470,7 @@ function showDetailsOfNodeIndividualIndividualEnviromentalTapping(data){
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNationContent").innerHTML = "*********";
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualProvinceContent").innerHTML = "*********";
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualCapContent").innerHTML = "*********";
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualAddressContent").innerHTML = "*********";
   }
   else{
@@ -476,6 +480,7 @@ function showDetailsOfNodeIndividualIndividualEnviromentalTapping(data){
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualNationContent").innerHTML = data.nazioneResidenza;
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualProvinceContent").innerHTML = data.provinciaResidenza;
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualResidenceContent").innerHTML = data.cittaResidenza;
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualCapContent").innerHTML = data.capResidenza;
     document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualAddressContent").innerHTML = data.indirizzoResidenza;
   }
 

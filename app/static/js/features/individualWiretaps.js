@@ -315,6 +315,7 @@ function anonymizationNodeDetailsIndividualWiretaps(flag){
     document.querySelector(".infoIndividualWiretapsNodeNationContent").innerHTML = "*********";
     document.querySelector(".infoIndividualWiretapsNodeProvinceContent").innerHTML = "*********";
     document.querySelector(".infoIndividualWiretapsNodeResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualWiretapsNodeCapContent").innerHTML = "*********";
     document.querySelector(".infoIndividualWiretapsNodeAddressContent").innerHTML = "*********";
   }
   else{
@@ -325,6 +326,7 @@ function anonymizationNodeDetailsIndividualWiretaps(flag){
       document.querySelector(".infoIndividualWiretapsNodeNationContent").innerHTML = cyNodeDataIndividualWiretaps.nation;
       document.querySelector(".infoIndividualWiretapsNodeProvinceContent").innerHTML = cyNodeDataIndividualWiretaps.province;
       document.querySelector(".infoIndividualWiretapsNodeResidenceContent").innerHTML = cyNodeDataIndividualWiretaps.city;
+      document.querySelector(".infoIndividualWiretapsNodeCapContent").innerHTML = cyNodeDataIndividualWiretaps.cap;
       document.querySelector(".infoIndividualWiretapsNodeAddressContent").innerHTML = cyNodeDataIndividualWiretaps.address;
   }
 }
@@ -441,6 +443,7 @@ function showDetailsOfNodeIndividualWiretaps(data){
                                                 "nation": "${data.nazioneResidenza}",
                                                 "province": "${data.provinciaResidenza}",
                                                 "city": "${data.cittaResidenza}",
+                                                "cap": "${data.capResidenza}",
                                                 "address": "${data.indirizzoResidenza}"
                                               }`);
 
@@ -452,6 +455,7 @@ function showDetailsOfNodeIndividualWiretaps(data){
     document.querySelector(".infoIndividualWiretapsNodeNationContent").innerHTML = "*********";
     document.querySelector(".infoIndividualWiretapsNodeProvinceContent").innerHTML = "*********";
     document.querySelector(".infoIndividualWiretapsNodeResidenceContent").innerHTML = "*********";
+    document.querySelector(".infoIndividualWiretapsNodeCapContent").innerHTML = "*********";
     document.querySelector(".infoIndividualWiretapsNodeAddressContent").innerHTML = "*********";
   }
   else{
@@ -461,6 +465,7 @@ function showDetailsOfNodeIndividualWiretaps(data){
     document.querySelector(".infoIndividualWiretapsNodeNationContent").innerHTML = data.nazioneResidenza;
     document.querySelector(".infoIndividualWiretapsNodeProvinceContent").innerHTML = data.provinciaResidenza;
     document.querySelector(".infoIndividualWiretapsNodeResidenceContent").innerHTML = data.cittaResidenza;
+    document.querySelector(".infoIndividualWiretapsNodeCapContent").innerHTML = data.capResidenza;
     document.querySelector(".infoIndividualWiretapsNodeAddressContent").innerHTML = data.indirizzoResidenza;
   }
 
@@ -523,6 +528,7 @@ function fillAddModalIndividualWiretaps(){
   document.querySelector(".modalIndividualWiretapsSourceNation").value = "";
   document.querySelector(".modalIndividualWiretapsSourceProvince").value = "";
   document.querySelector(".modalIndividualWiretapsSourceCity").value = "";
+  document.querySelector(".modalIndividualWiretapsSourceCap").value = "";
   document.querySelector(".modalIndividualWiretapsSourceAddress").value = "";
 
   if(document.querySelector(".accordionSource").childNodes[1].childNodes[3].classList.contains("show")){
@@ -538,6 +544,7 @@ function fillAddModalIndividualWiretaps(){
   document.querySelector(".modalIndividualWiretapsTargetNation").value = "";
   document.querySelector(".modalIndividualWiretapsTargetProvince").value = "";
   document.querySelector(".modalIndividualWiretapsTargetCity").value = "";
+  document.querySelector(".modalIndividualWiretapsTargetCap").value = "";
   document.querySelector(".modalIndividualWiretapsTargetAddress").value = "";
 
   if(document.querySelector(".accordionTarget").childNodes[1].childNodes[3].classList.contains("show")){
@@ -595,6 +602,7 @@ function fillUpdateModalIndividualIndividualWiretaps(){
   document.querySelector(".modalIndividualWiretapsIndividualNation").value = document.querySelector(".infoIndividualWiretapsNodeNationContent").innerHTML;
   document.querySelector(".modalIndividualWiretapsIndividualProvince").value = document.querySelector(".infoIndividualWiretapsNodeProvinceContent").innerHTML;
   document.querySelector(".modalIndividualWiretapsIndividualCity").value = document.querySelector(".infoIndividualWiretapsNodeResidenceContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsIndividualCap").value = document.querySelector(".infoIndividualWiretapsNodeCapContent").innerHTML;
   document.querySelector(".modalIndividualWiretapsIndividualAddress").value = document.querySelector(".infoIndividualWiretapsNodeAddressContent").innerHTML;
 
 }
@@ -643,13 +651,13 @@ function sendNewCallToBackendIndividualWiretaps(){
     [year, month, day] = document.querySelector(".modalIndividualWiretapsSourceDate").value.split('-');
 
     json += ` "source" : {
-                            "surname": "${document.querySelector(".modalIndividualWiretapsSourceSurname").value}",
-                            "name": "${document.querySelector(".modalIndividualWiretapsSourceName").value}",
-                            "date": "${day}/${month}/${year}",
-                            "nation": "${document.querySelector(".modalIndividualWiretapsSourceNation").value}",
-                            "province": "${document.querySelector(".modalIndividualWiretapsSourceProvince").value}",
-                            "city": "${document.querySelector(".modalIndividualWiretapsSourceCity").value}",
-                            "address": "${document.querySelector(".modalIndividualWiretapsSourceAddress").value}",
+                            "cognome": "${document.querySelector(".modalIndividualWiretapsSourceSurname").value}",
+                            "nome": "${document.querySelector(".modalIndividualWiretapsSourceName").value}",
+                            "dataNascita": "${day}/${month}/${year}",
+                            "nazioneResidenza": "${document.querySelector(".modalIndividualWiretapsSourceNation").value}",
+                            "provinciaResidenza": "${document.querySelector(".modalIndividualWiretapsSourceProvince").value}",
+                            "cittaResidenza": "${document.querySelector(".modalIndividualWiretapsSourceCity").value}",
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsSourceAddress").value}",
                           },
             `;
   }
@@ -658,13 +666,13 @@ function sendNewCallToBackendIndividualWiretaps(){
     [year, month, day] = document.querySelector(".modalIndividualWiretapsTargetDate").value.split('-');
     
     json += ` "target" : {
-                            "surname": "${document.querySelector(".modalIndividualWiretapsTargetSurname").value}",
-                            "name": "${document.querySelector(".modalIndividualWiretapsTargetName").value}",
-                            "date": "${day}/${month}/${year}",
-                            "nation": "${document.querySelector(".modalIndividualWiretapsTargetNation").value}",
-                            "province": "${document.querySelector(".modalIndividualWiretapsTargetProvince").value}",
-                            "city": "${document.querySelector(".modalIndividualWiretapsTargetCity").value}",
-                            "address": "${document.querySelector(".modalIndividualWiretapsTargetAddress").value}",
+                            "cognome": "${document.querySelector(".modalIndividualWiretapsTargetSurname").value}",
+                            "nome": "${document.querySelector(".modalIndividualWiretapsTargetName").value}",
+                            "dataNascita": "${day}/${month}/${year}",
+                            "nazioneResidenza": "${document.querySelector(".modalIndividualWiretapsTargetNation").value}",
+                            "provinciaResidenza": "${document.querySelector(".modalIndividualWiretapsTargetProvince").value}",
+                            "cittaResidenza": "${document.querySelector(".modalIndividualWiretapsTargetCity").value}",
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsTargetAddress").value}",
                           },
             `;
   }
