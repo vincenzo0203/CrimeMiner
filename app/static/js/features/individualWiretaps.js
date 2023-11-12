@@ -661,6 +661,12 @@ function sendNewCallToBackendIndividualWiretaps(){
                           },
             `;
   }
+  else{
+    json += ` "source" : {
+        "nodeId": "${document.querySelector(".modalIndividualWiretapsSource").value}"
+      },
+    `;
+  }
 
   if(!document.querySelector("#CheckTargetExisting").checked){
     [year, month, day] = document.querySelector(".modalIndividualWiretapsTargetDate").value.split('-');
@@ -675,6 +681,12 @@ function sendNewCallToBackendIndividualWiretaps(){
                             "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsTargetAddress").value}",
                           },
             `;
+  }
+  else{
+    json += ` "target" : {
+        "nodeId": "${document.querySelector(".modalIndividualWiretapsTarget").value}"
+      },
+    `;
   }
 
   [year, month, day] = document.querySelector(".modalIndividualWiretapsDate").value.split('-');
@@ -692,7 +704,6 @@ function sendNewCallToBackendIndividualWiretaps(){
                           }
       `;
     }
-      
   }
   else{
     json += `  "call" : {`;
