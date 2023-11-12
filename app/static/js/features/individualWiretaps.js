@@ -718,7 +718,7 @@ function sendNewCallToBackendIndividualWiretaps(){
 
   json += `}`;
   
-  fetch("/CrimeMiner/individuoIntercettazione/CreaIntercettazione", {
+  fetch("/CrimeMiner/individuoIntercettazione/creaIntercettazione/", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
