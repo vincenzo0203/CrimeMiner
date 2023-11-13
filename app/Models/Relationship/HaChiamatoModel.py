@@ -1,15 +1,16 @@
 from neomodel import Relationship, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
 from django.db import models
+from app.Models.Entity.IndividuoModel import Individuo
 
 class HaChiamatoModel(Relationship):
     type = "HaChiamato"
 
     # Valori Long
-    id = IntegerProperty(primary_key=True, generated_value=True)
+    #id = IntegerProperty(primary_key=True, generated_value=True)
     timestamp = IntegerProperty()
 
     # Valori String
-    edgeId = StringProperty(primary_key=True, generated_value="uuid", json_property="relId")
+    edgeId = StringProperty( generated_value="uuid", json_property="relId")
     data = StringProperty()
     entityType = StringProperty()
     name = StringProperty()
@@ -24,5 +25,6 @@ class HaChiamatoModel(Relationship):
     targetNodeId = StringProperty(json_property="targetid")
 
     #Sezione di definizione delle relazioni
+    haChiamatoList = RelationshipTo('Individuo', 'HaChiamato')
     #source = RelationshipTo("Individuo", start_node=True, rel_name="HA_CHIAMATO")
     #target = RelationshipTo("Individuo", end_node=True, rel_name="HA_CHIAMATO")

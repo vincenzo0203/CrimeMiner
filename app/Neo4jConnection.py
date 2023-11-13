@@ -1,4 +1,5 @@
 from neo4j import GraphDatabase
+from neomodel import config
 
 class Neo4jDriver:
     _uri = "bolt://localhost:7687"
@@ -8,6 +9,7 @@ class Neo4jDriver:
 
     @classmethod
     def initialize(cls):
+        config.DATABASE_URL = f'bolt://{cls._user}:{cls._password}@localhost:7687'
         if cls._driver is None:
             cls._driver = GraphDatabase.driver(cls._uri, auth=(cls._user, cls._password))
             session = Neo4jDriver.get_session()

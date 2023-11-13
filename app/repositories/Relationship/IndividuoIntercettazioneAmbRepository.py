@@ -1,6 +1,6 @@
 from typing import List
 from app.Neo4jConnection import Neo4jDriver
-from app.Models.Entity.IndividuoModel import IndividuoModel
+from app.Models.Entity.IndividuoModel import Individuo
 from neomodel import UniqueIdProperty, db
 
 from app.repositories.Entity.IndividuoRepository import IndividuoRepository

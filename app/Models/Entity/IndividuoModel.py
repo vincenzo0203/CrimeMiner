@@ -1,7 +1,7 @@
 from neomodel import StructuredRel,StructuredNode, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
 from django.db import models
 
-class IndividuoModel(StructuredNode):
+class Individuo(StructuredNode):
 
     # Valori Long
     idIndividuo = IntegerProperty(primary_key=True, generated_value=True)

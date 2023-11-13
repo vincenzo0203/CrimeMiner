@@ -1,6 +1,6 @@
 from neomodel import UniqueIdProperty, db
 from app.Neo4jConnection import Neo4jDriver
-from app.Models.Entity.IndividuoModel import IndividuoModel
+from app.Models.Entity.IndividuoModel import Individuo
 
 # Questa classe fornisce metodi per recuperare informazioni sugli individui.
 class IntercettazioneAmbRepository:

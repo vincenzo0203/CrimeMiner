@@ -1,6 +1,6 @@
 from neomodel import UniqueIdProperty, db
 from app.Neo4jConnection import Neo4jDriver
-from app.Models.Entity.IndividuoModel import IndividuoModel
+from app.Models.Entity.IndividuoModel import Individuo
 import json
 
 # Questa classe fornisce metodi per recuperare informazioni sugli individui.
@@ -47,7 +47,7 @@ class IndividuoRepository:
              # Crea un'istanza di IndividuoModel
             idNodo=IndividuoRepository.get_max_node_id()
 
-            individuo_model = IndividuoModel(
+            individuo_model = Individuo(
             nodeId=idNodo,
             entityType="Individuo",
             name=idNodo,
@@ -69,6 +69,7 @@ class IndividuoRepository:
             )
 
             individuo_model.save()
+
             return individuo_model.nodeId
         
         except Exception as e:
@@ -101,10 +102,10 @@ class IndividuoRepository:
                         max_number = numeric_part
                         max_node_id = node_id
                 
-                numeric_part1=max_number+1
-                node_id1=f"I{numeric_part1}"
+                result_numeric=max_number+1
+                result_node_id=f"I{result_numeric}"
 
-                return node_id1
+                return result_node_id
             except Exception as e:
                 # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
                 print("Errore durante l'esecuzione della query Cypher:", e)

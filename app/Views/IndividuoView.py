@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.views import View
 from app.repositories.Entity.IndividuoRepository import IndividuoRepository
 from django_request_mapping import request_mapping
-from app.Models.Entity.IndividuoModel import IndividuoModel
+from app.Models.Entity.IndividuoModel import Individuo
 
 
 @request_mapping("/individuo")

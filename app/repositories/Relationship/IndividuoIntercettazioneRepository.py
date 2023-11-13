@@ -2,6 +2,7 @@ import typing
 from app.Neo4jConnection import Neo4jDriver
 import json
 from app.Models.Relationship.HaChiamatoModel import HaChiamatoModel
+from app.Models.Entity.IndividuoModel import Individuo
 from datetime import datetime
 
 #Questa classe fornisce metodi per eseguire query su un database Neo4j contenente informazioni sugli individui e le chiamate tra di loro.
@@ -171,32 +172,42 @@ class IndividuoIntercettazioneRepository:
     @staticmethod
     def CreaIntercettazione(data,id1,id2):
         try:
-            haChiamato_model = HaChiamatoModel(
-            timestamp = IndividuoIntercettazioneRepository.CalcolaTimeStamp(),
-            edgeId = IndividuoIntercettazioneRepository.get_max_edge_id(),
-            
-            entityType = "HaChiamato",    
-            data = data.get("Data"),
-            name = data.get("Name"),
-            ora = data.get("Ora"),
-            durata = data.get("Durata"),
-            contenuto = data.get("Contenuto"),
-            sourceNodeId = id1,
-            targetNodeId = id2,
-            )
+            times=int(IndividuoIntercettazioneRepository.CalcolaTimeStamp())
+            edge=IndividuoIntercettazioneRepository.get_max_edge_id()
+
+            nodo1 = Individuo.nodes.get(nodeId=id1)
+            nodo2 = Individuo.nodes.get(nodeId=id2)
+
+            haChiamato_model = HaChiamatoModel()
+            haChiamato_model.timestamp = times
+            haChiamato_model.edgeId = edge
+            haChiamato_model.data = data.get("Data")
+            haChiamato_model.entityType = "HaChiamato"
+            haChiamato_model.name = "Name"
+            haChiamato_model.ora = data.get("Ora")
+            haChiamato_model.durata = data.get("Durata")
+            haChiamato_model.contenuto = data.get("Contenuto")
+            haChiamato_model.sourceNodeId = id1
+            haChiamato_model.targetNodeId = id2
+
+            nodo1.haChiamatoList.connect(haChiamato_model)
+            nodo2.haChiamatoList.connect(haChiamato_model)
 
             haChiamato_model.save()
+
+
+
             return haChiamato_model.edgeId
         
         except Exception as e:
             # Gestione degli altri errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
-            print("Errore durante il salvataggio dell'individuo:", e)
+            print("Errore durante il salvataggio dell'intercettazione:", e)
             return []
         
     @staticmethod
     def CalcolaTimeStamp():
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        return f"I{timestamp}"
+        return timestamp
 
     # Ottiene tutti i nodeId presenti nel database e ritorna il massimo degli id
     # Args:
@@ -209,23 +220,21 @@ class IndividuoIntercettazioneRepository:
             max_number = -1  # Un valore iniziale molto basso per confronto
             try:
                 session = Neo4jDriver.get_session()
-                result = session.run("MATCH ()-[r:HaChiamato]->() RETURN r.valore AS edgeId")
-                
+                result = session.run("MATCH ()-[r:HaChiamato]->() RETURN r.edgeId AS edgeId")
                 for record in result:
                     edge_id = record["edgeId"]
                     # Estrai la parte numerica dalla stringa edgeId
                     numeric_part = int(edge_id[2:])  # Assume che i primi due caratteri siano "IT"
-
                     # Confronto con il massimo attuale
                     if numeric_part > max_number:
                         max_number = numeric_part
                         max_edge_id = edge_id
 
                 
-                numeric_part1=max_number+1
-                edge_id1=f"IT{numeric_part1}"
+                result_numeric_part=max_number+1
+                result_edge_id=f"IT{result_numeric_part}"
 
-                return edge_id1
+                return result_edge_id
             except Exception as e:
                 # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
                 print("Errore durante l'esecuzione della query Cypher:", e)

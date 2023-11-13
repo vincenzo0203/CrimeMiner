@@ -76,23 +76,29 @@ class IndividuoIntercettazioneView(View):
     def create_Node(self,request) -> JsonResponse:  
 
         try:
-            data = json.loads(request.body)
-            print(data)
+            #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
+            data =json.loads(json.loads(request.body)) 
+            print(f"Tipo di 'data': {type(data)}")
+
             id1_individuo=None
             id2_individuo=None
+
             # Esegui la tua query e ottieni il risultato
             
-            if "source" in data and not "nodeId" in data["source"]:
+            if  not "nodeId" in data["source"]:
                 individuo_repository = IndividuoRepository()
                 id1_individuo = individuo_repository.CreaIndividuo(data["source"])
             else:
-                id1_individuo=data["source"].get("IdNode")
+                id1_individuo=data["source"].get("nodeId")
+                print(id1_individuo)
 
-            if "target" in data and not "nodeId" in data["target"]:
+
+            if  not "nodeId" in data["target"]:
                 individuo_repository = IndividuoRepository()
                 id2_individuo = individuo_repository.CreaIndividuo(data["target"])
             else:
-                id2_individuo=data["target"].get("IdNode")
+                id2_individuo=data["target"].get("nodeId")
+                print(id2_individuo)
 
 
             intercettazione_result = self.IndividuoIntercettazione_repository.CreaIntercettazione(data["call"],id1_individuo,id2_individuo)
