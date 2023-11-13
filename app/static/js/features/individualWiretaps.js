@@ -45,7 +45,29 @@ function requestAllNodesIndividualWiretaps() {
     data = JSON.parse(data);
     createGraphIndividualWiretaps(data);
     fillPropertyAccordionIndividualWiretaps(data);
-    fillSourceAndTargetModalNewCallIndividualWiretaps(data.nodes)
+    requestAllNodesModalIndividualWiretaps();
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
+
+//Funzione che effettua la richiesta al backend per caricare i nomi del mittente e del ricevente nella modale
+function requestAllNodesModalIndividualWiretaps() {
+
+  fetch("/CrimeMiner/individuo/findAllSurnameName/", {
+    method: "GET"
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      throw new Error('Errore nella richiesta.');
+    }
+  })
+  .then(data => {
+    data = JSON.parse(data);
+    fillSourceAndTargetModalNewCallIndividualWiretaps(data.result)
   })
   .catch(error => {
     console.error(error);
@@ -506,9 +528,18 @@ function fillSourceAndTargetModalNewCallIndividualWiretaps(nodes){
   let selectSource = document.querySelector(".modalIndividualWiretapsSource");
   let selectTarget = document.querySelector(".modalIndividualWiretapsTarget");
   for (let j = 0; j < nodes.length; j++) {
-    let opt = nodes[j].data.id;
-    let el1 = new Option(opt, opt);
-    let el2 = new Option(opt, opt);
+    let opt = nodes[j].nodeId;
+    let text = nodes[j].cognome + " " + nodes[j].nome;
+    let el1;
+    let el2;
+    if(text == "null null"){
+      el1 = new Option(opt, opt);
+      el2 = new Option(opt, opt);
+    }
+    else{
+      el1 = new Option(opt+" "+text, opt);
+      el2 = new Option(opt+" "+text, opt);
+    }
     selectSource.appendChild(el1);
     selectTarget.appendChild(el2);
   }
@@ -657,7 +688,7 @@ function sendNewCallToBackendIndividualWiretaps(){
                             "nazioneResidenza": "${document.querySelector(".modalIndividualWiretapsSourceNation").value}",
                             "provinciaResidenza": "${document.querySelector(".modalIndividualWiretapsSourceProvince").value}",
                             "cittaResidenza": "${document.querySelector(".modalIndividualWiretapsSourceCity").value}",
-                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsSourceAddress").value}",
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsSourceAddress").value}"
                           },
             `;
   }
@@ -678,7 +709,7 @@ function sendNewCallToBackendIndividualWiretaps(){
                             "nazioneResidenza": "${document.querySelector(".modalIndividualWiretapsTargetNation").value}",
                             "provinciaResidenza": "${document.querySelector(".modalIndividualWiretapsTargetProvince").value}",
                             "cittaResidenza": "${document.querySelector(".modalIndividualWiretapsTargetCity").value}",
-                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsTargetAddress").value}",
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsTargetAddress").value}"
                           },
             `;
   }
@@ -700,7 +731,7 @@ function sendNewCallToBackendIndividualWiretaps(){
                             "date": "${day}/${month}/${year}",
                             "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
                             "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
-                            "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}",
+                            "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}"
                           }
       `;
     }
@@ -722,7 +753,7 @@ function sendNewCallToBackendIndividualWiretaps(){
               "date": "${day}/${month}/${year}",
               "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
               "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
-              "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}",
+              "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}"
             }
     `;
   }
@@ -744,14 +775,9 @@ function sendNewCallToBackendIndividualWiretaps(){
       viewToastMessage("Registrazione Chiamata", "Errore nella registrazione della chiamata.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
   .catch(error => {
     console.error(error);
-  });
-
-  //viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");  
+  }); 
 }
 
 function sendUpdateCallToBackendIndividualWiretaps(){

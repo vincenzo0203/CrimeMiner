@@ -18,6 +18,15 @@ class IndividuoView(View):
     def find_all(self, request) -> JsonResponse:
         individuo_list = self.individuo_repository.find_all()
         return JsonResponse({"result": individuo_list})
+    
+    
+    #Fa riferimento alla find_all_surname_name() della repository IndividuoRepository e restituisce l'identificativo, il cognome e il nome di tutti gli individui 
+    #Args in input: none
+    #Restituisce result, che è una lista contenete l'identificativo, il cognome e il nome degli individui 
+    @request_mapping("/findAllSurnameName/", method="get")
+    def find_all(self, request) -> JsonResponse:
+        individuo_list = self.individuo_repository.find_all_surname_name()
+        return JsonResponse({"result":individuo_list})
 
 
     #Fa riferimento alla get_node_info_by_nodeId(node_id) della repository IndividuoRepository e restituisce le informazioni dell'individuo con il node_Id

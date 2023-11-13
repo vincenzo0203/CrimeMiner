@@ -21,6 +21,22 @@ class IndividuoRepository:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
+        
+    # Restituisce tutti i nodeId, cognomi e nomi degli individui.
+    # Args: none
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni su tutti gli individui.
+    @staticmethod
+    def find_all_surname_name():
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "MATCH (n:Individuo) RETURN n.nodeId AS nodeId, n.cognome AS cognome, n.nome AS nome"
+            results = session.run(cypher_query).data()
+            return results
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []
 
         
     # Ottiene le informazioni di un nodo dato il suo node_id.
