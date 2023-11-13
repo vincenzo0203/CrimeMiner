@@ -14,12 +14,12 @@
     </div>
     <div class="accordionContainer p-3 bd-highlight">
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalIndividualWiretaps" onclick="openModalAddNewCallIndividualWiretaps()">
+      <button type="button" class="btn btn-success accordionContainerButtonAdd" data-bs-toggle="modal" data-bs-target="#modalIndividualWiretaps" onclick="openModalAddNewCallIndividualWiretaps()">
         Inserisci una nuova chiamata tra individui
       </button>
-      <div class="accordion">
 
-        <!-- Properties -->
+      <!-- Properties -->
+      <div class="accordion">
         <div class="accordion-item accordion-item-graph">
           <input type="checkbox" id="item-properties" class="accordionCheckboxLabel"/>
           <label for="item-properties" class="accordion-header">
@@ -63,8 +63,8 @@
         </div>
       </div>
 
+      <!-- Details -->
       <div class="accordion">
-        <!-- Details -->
         <div class="accordion-item accordion-item-graph">
           <input type="checkbox" id="item-details" class="accordionCheckboxLabel"/>
           <label for="item-details" class="accordion-header">
@@ -105,17 +105,17 @@
                 </div>
                 <hr></hr>
                 <div class="infoIndividualWiretapsNodeNation d-flex">
-                  <div>Nazione Residenza</div>
+                  <div>Paese</div>
                   <div class="infoIndividualWiretapsNodeNationContent"></div>
                 </div>
                 <hr></hr>
                 <div class="infoIndividualWiretapsNodeProvince d-flex">
-                  <div>Provincia Residenza</div>
+                  <div>Provincia</div>
                   <div class="infoIndividualWiretapsNodeProvinceContent"></div>
                 </div>
                 <hr></hr>
                 <div class="infoIndividualWiretapsNodeResidence d-flex">
-                  <div>Città Residenza</div>
+                  <div>Città</div>
                   <div class="infoIndividualWiretapsNodeResidenceContent"></div>
                 </div>
                 <hr></hr>
@@ -125,7 +125,7 @@
                 </div>
                 <hr></hr>
                 <div class="infoIndividualWiretapsNodeAddress d-flex">
-                  <div>Indirizzo Residenza</div>
+                  <div>Indirizzo</div>
                   <div class="infoIndividualWiretapsNodeAddressContent"></div>
                 </div>
 
@@ -202,8 +202,8 @@
         </div>
       </div>
 
+      <!-- Settings -->
       <div class="accordion">
-        <!-- Settings -->
         <div class="accordion-item accordion-item-graph">
           <input type="checkbox" id="item-settings" class="accordionCheckboxLabel"/>
           <label for="item-settings" class="accordion-header">
@@ -337,7 +337,7 @@
                           <input type="date" class="form-control modalIndividualWiretapsSourceDate" id="recipient-date-source" step="1">
                         </div>
                         <div class="mb-3">
-                          <label for="recipient-nation-source" class="col-form-label">Nazionalità</label>
+                          <label for="recipient-nation-source" class="col-form-label">Paese</label>
                           <input type="text" class="form-control modalIndividualWiretapsSourceNation" id="recipient-nation-source">
                         </div>
                       </div>
@@ -387,7 +387,7 @@
                           <input type="date" class="form-control modalIndividualWiretapsTargetDate" id="recipient-date-target" step="1">
                         </div>
                         <div class="mb-3">
-                          <label for="recipient-nation-target" class="col-form-label">Nazionalità</label>
+                          <label for="recipient-nation-target" class="col-form-label">Paese</label>
                           <input type="text" class="form-control modalIndividualWiretapsTargetNation" id="recipient-nation-target">
                         </div>
                       </div>
@@ -467,7 +467,7 @@
                   <input type="date" class="form-control modalIndividualWiretapsIndividualDate" id="recipient-date-individual" step="1">
                 </div>
                 <div class="mb-3">
-                  <label for="recipient-nation-individual" class="col-form-label">Nazionalità</label>
+                  <label for="recipient-nation-individual" class="col-form-label">Paese</label>
                   <input type="text" class="form-control modalIndividualWiretapsIndividualNation" id="recipient-nation-individual">
                 </div>
               </div>
@@ -572,7 +572,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Indietro</button>
-        <button type="button" class="btn btn-primary" onclick="selectFunctionToRegisterDateIndividualWiretaps()">Salva</button>
+        <button type="button" class="btn btn-success modalButtonSave" onclick="selectFunctionToRegisterDateIndividualWiretaps()">Salva</button>
       </div>
     </div>
   </div>
