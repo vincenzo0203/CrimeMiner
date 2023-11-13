@@ -22,7 +22,6 @@ class Individuo(StructuredNode):
     nazioneResidenza = StringProperty()
     #pseudonimo = StringProperty()
 
-
     # Valori Interi
     mesiImputati=IntegerProperty()
     mesiTotali=IntegerProperty()
