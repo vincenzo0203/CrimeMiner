@@ -26,6 +26,16 @@
             -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
             background-color: #cfcfcf;
         }
+
+        &ButtonAdd{
+            background-color: #03a74f;
+            color: white;
+
+            :hover,:focus{
+                background-color: #03a74f;
+                color: white;
+            }
+        }
     }
 
     &Icon{
@@ -267,5 +277,15 @@ hr{
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+    }
+
+    &ButtonSave{
+        background-color: #03a74f;
+        color: white;
+
+        :hover,:focus{
+            background-color: #03a74f;
+            color: white;
+        }
     }
 }
