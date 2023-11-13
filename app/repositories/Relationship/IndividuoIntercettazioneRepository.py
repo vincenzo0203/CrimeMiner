@@ -1,7 +1,7 @@
 import typing
 from app.Neo4jConnection import Neo4jDriver
 import json
-from app.Models.Relationship.HaChiamatoModel import HaChiamatoModel
+from app.Models.Relationship.HaChiamatoModel import HaChiamato
 from app.Models.Entity.IndividuoModel import Individuo
 from datetime import datetime
 
@@ -178,7 +178,7 @@ class IndividuoIntercettazioneRepository:
             nodo1 = Individuo.nodes.get(nodeId=id1)
             nodo2 = Individuo.nodes.get(nodeId=id2)
 
-            haChiamato_model = HaChiamatoModel()
+            haChiamato_model = HaChiamato()
             haChiamato_model.timestamp = times
             haChiamato_model.edgeId = edge
             haChiamato_model.data = data.get("Data")
@@ -189,6 +189,7 @@ class IndividuoIntercettazioneRepository:
             haChiamato_model.contenuto = data.get("Contenuto")
             haChiamato_model.sourceNodeId = id1
             haChiamato_model.targetNodeId = id2
+
 
             nodo1.haChiamatoList.connect(haChiamato_model)
             nodo2.haChiamatoList.connect(haChiamato_model)

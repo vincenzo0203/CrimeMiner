@@ -2,15 +2,15 @@ from neomodel import Relationship, RelationshipTo, StringProperty, IntegerProper
 from django.db import models
 from app.Models.Entity.IndividuoModel import Individuo
 
-class HaChiamatoModel(Relationship):
+class HaChiamato(Relationship):
     type = "HaChiamato"
 
     # Valori Long
-    #id = IntegerProperty(primary_key=True, generated_value=True)
+    idHaChiamato = IntegerProperty(primary_key=True, generated_value=True)
     timestamp = IntegerProperty()
 
     # Valori String
-    edgeId = StringProperty( generated_value="uuid", json_property="relId")
+    edgeId = StringProperty(primary_key=True, json_property="edgeId")
     data = StringProperty()
     entityType = StringProperty()
     name = StringProperty()
