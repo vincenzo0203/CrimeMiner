@@ -624,17 +624,17 @@ function fillUpdateModalCallIndividualWiretaps(){
 }
 
 function fillUpdateModalIndividualIndividualWiretaps(){
-  let [day, month, year] = document.querySelector(".infoIndividualWiretapsNodeBirthContent").innerHTML.split('/');
+  let [day, month, year] = cyNodeDataIndividualWiretaps.date.split('/');
 
   //Individuo
-  document.querySelector(".modalIndividualWiretapsIndividualSurname").value = document.querySelector(".infoIndividualWiretapsNodeSurnameContent").innerHTML;
-  document.querySelector(".modalIndividualWiretapsIndividualName").value = document.querySelector(".infoIndividualWiretapsNodeNameContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsIndividualSurname").value = cyNodeDataIndividualWiretaps.surname;
+  document.querySelector(".modalIndividualWiretapsIndividualName").value = cyNodeDataIndividualWiretaps.name;
   document.querySelector(".modalIndividualWiretapsIndividualDate").value = `${year}-${month}-${day}`;
-  document.querySelector(".modalIndividualWiretapsIndividualNation").value = document.querySelector(".infoIndividualWiretapsNodeNationContent").innerHTML;
-  document.querySelector(".modalIndividualWiretapsIndividualProvince").value = document.querySelector(".infoIndividualWiretapsNodeProvinceContent").innerHTML;
-  document.querySelector(".modalIndividualWiretapsIndividualCity").value = document.querySelector(".infoIndividualWiretapsNodeResidenceContent").innerHTML;
-  document.querySelector(".modalIndividualWiretapsIndividualCap").value = document.querySelector(".infoIndividualWiretapsNodeCapContent").innerHTML;
-  document.querySelector(".modalIndividualWiretapsIndividualAddress").value = document.querySelector(".infoIndividualWiretapsNodeAddressContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsIndividualNation").value = cyNodeDataIndividualWiretaps.nation;
+  document.querySelector(".modalIndividualWiretapsIndividualProvince").value = cyNodeDataIndividualWiretaps.province;
+  document.querySelector(".modalIndividualWiretapsIndividualCity").value = cyNodeDataIndividualWiretaps.city;
+  document.querySelector(".modalIndividualWiretapsIndividualCap").value = cyNodeDataIndividualWiretaps.cap;
+  document.querySelector(".modalIndividualWiretapsIndividualAddress").value = cyNodeDataIndividualWiretaps.address;
 
 }
 
