@@ -425,6 +425,7 @@ function checkedAnonymizationIndividualWiretaps(){
   }
 }
 
+//Funzione che controlla dalle checkbox della modale se il mittente o il destinatario sono già registrati
 function checkedSourceAndTargetModalIndividualWiretaps(){
 
   if(document.querySelector("#CheckSourceExisting").checked){
@@ -524,9 +525,16 @@ function fillPropertyAccordionIndividualWiretaps(data){
   document.querySelector(".accordionNumberNodesEdgesEdgesContent").innerHTML = data.edges.length;
 }
 
+//Funzione che inserisce nelle select della modale gli individui da scegliere se già registrati
 function fillSourceAndTargetModalNewCallIndividualWiretaps(nodes){
   let selectSource = document.querySelector(".modalIndividualWiretapsSource");
   let selectTarget = document.querySelector(".modalIndividualWiretapsTarget");
+
+  for (let i = 1; i < selectSource.length; i++){
+    selectSource.remove(i);
+    selectTarget.remove(i);
+  }
+
   for (let j = 0; j < nodes.length; j++) {
     let opt = nodes[j].nodeId;
     let text = nodes[j].cognome + " " + nodes[j].nome;
@@ -545,6 +553,7 @@ function fillSourceAndTargetModalNewCallIndividualWiretaps(nodes){
   }
 }
 
+//Funzione che cancella i valori degli input nella modale
 function fillAddModalIndividualWiretaps(){
   
   //Checkbox
@@ -596,6 +605,7 @@ function fillAddModalIndividualWiretaps(){
 
 }
 
+//Funzione che inserisce i campi della chiamata nella modale
 function fillUpdateModalCallIndividualWiretaps(){
 
   let [day, month, year] = document.querySelector(".infoIndividualWiretapsEdgeDateContent").innerHTML.split('/');
@@ -623,21 +633,23 @@ function fillUpdateModalCallIndividualWiretaps(){
 
 }
 
+//Funzione che inserisce i campi dell'individuo nella modale
 function fillUpdateModalIndividualIndividualWiretaps(){
-  let [day, month, year] = document.querySelector(".infoIndividualWiretapsNodeBirthContent").innerHTML.split('/');
+  let [day, month, year] = cyNodeDataIndividualWiretaps.date.split('/');
 
   //Individuo
-  document.querySelector(".modalIndividualWiretapsIndividualSurname").value = document.querySelector(".infoIndividualWiretapsNodeSurnameContent").innerHTML;
-  document.querySelector(".modalIndividualWiretapsIndividualName").value = document.querySelector(".infoIndividualWiretapsNodeNameContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsIndividualSurname").value = cyNodeDataIndividualWiretaps.surname;
+  document.querySelector(".modalIndividualWiretapsIndividualName").value = cyNodeDataIndividualWiretaps.name;
   document.querySelector(".modalIndividualWiretapsIndividualDate").value = `${year}-${month}-${day}`;
-  document.querySelector(".modalIndividualWiretapsIndividualNation").value = document.querySelector(".infoIndividualWiretapsNodeNationContent").innerHTML;
-  document.querySelector(".modalIndividualWiretapsIndividualProvince").value = document.querySelector(".infoIndividualWiretapsNodeProvinceContent").innerHTML;
-  document.querySelector(".modalIndividualWiretapsIndividualCity").value = document.querySelector(".infoIndividualWiretapsNodeResidenceContent").innerHTML;
-  document.querySelector(".modalIndividualWiretapsIndividualCap").value = document.querySelector(".infoIndividualWiretapsNodeCapContent").innerHTML;
-  document.querySelector(".modalIndividualWiretapsIndividualAddress").value = document.querySelector(".infoIndividualWiretapsNodeAddressContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsIndividualNation").value = cyNodeDataIndividualWiretaps.nation;
+  document.querySelector(".modalIndividualWiretapsIndividualProvince").value = cyNodeDataIndividualWiretaps.province;
+  document.querySelector(".modalIndividualWiretapsIndividualCity").value = cyNodeDataIndividualWiretaps.city;
+  document.querySelector(".modalIndividualWiretapsIndividualCap").value = cyNodeDataIndividualWiretaps.cap;
+  document.querySelector(".modalIndividualWiretapsIndividualAddress").value = cyNodeDataIndividualWiretaps.address;
 
 }
 
+//Funzione che all'apertura della modale di aggiunta cambia dei campi della modale e richiama la funzione per fillare gli input
 function openModalAddNewCallIndividualWiretaps(){
   document.querySelector(".modalFormAddUpdateCall").style.display = "flex";
   document.querySelector(".modalFormUpdateIndividual").style.display = "none";
@@ -646,6 +658,7 @@ function openModalAddNewCallIndividualWiretaps(){
   fillAddModalIndividualWiretaps();
 }
 
+//Funzione che all'apertura della modale di modifica cambia dei campi della modale e richiama la funzione per fillare gli input
 function openModalUpdateCallIndividualWiretaps(){
   document.querySelector(".modalFormAddUpdateCall").style.display = "flex";
   document.querySelector(".modalFormUpdateIndividual").style.display = "none";
@@ -654,11 +667,13 @@ function openModalUpdateCallIndividualWiretaps(){
   fillUpdateModalCallIndividualWiretaps();
 }
 
+//Funzione che all'apertura della modale di conferma eliminazione cambia i campi per la chiamata
 function openModalDeleteCallIndividualWiretaps(){
   document.querySelector("#modalDeleteIndividualWiretapsLabel").innerHTML = "Cancellazione intercettazione telefonica";
   document.querySelector(".modalDeleteIndividualWiretapsBody").innerHTML = "Sei sicuro di voler cancellare questa chiamata? Verranno cancellati solamente i dati dell'intercettazione lasciando invariati i dati degli individui";
 }
 
+//Funzione che all'apertura della modale di modifica cambia dei campi della modale e richiama la funzione per fillare gli input
 function openModalUpdateIndividualIndividualWiretaps(){
   document.querySelector(".modalFormAddUpdateCall").style.display = "none";
   document.querySelector(".modalFormUpdateIndividual").style.display = "flex";
@@ -667,11 +682,13 @@ function openModalUpdateIndividualIndividualWiretaps(){
   fillUpdateModalIndividualIndividualWiretaps();
 }
 
+//Funzione che all'apertura della modale di conferma eliminazione cambia i campi per l'individuo
 function openModalDeleteIndividualIndividualWiretaps(){
   document.querySelector("#modalDeleteIndividualWiretapsLabel").innerHTML = "Cancellazione individuo";
   document.querySelector(".modalDeleteIndividualWiretapsBody").innerHTML = "Sei sicuro di voler cancellare questo individuo?";
 }
 
+//Funzione che manda al backend una nuova chiamata da inserire (e enventualmente i nuovi individui)
 function sendNewCallToBackendIndividualWiretaps(){
 
   let [year, month, day] = "";
@@ -770,16 +787,20 @@ function sendNewCallToBackendIndividualWiretaps(){
   .then(response => {
     if (response.ok) {
       viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");
+      returnToCreationPageIndividualWiretaps();
       //return response.text();
     } else {
       viewToastMessage("Registrazione Chiamata", "Errore nella registrazione della chiamata.", "error");
+      returnToCreationPageIndividualWiretaps();
     }
   })
   .catch(error => {
     console.error(error);
-  }); 
+  });
+
 }
 
+//Funzione che manda al backend i dati da aggiornare della chiamata
 function sendUpdateCallToBackendIndividualWiretaps(){
   let json;
 
@@ -821,6 +842,7 @@ function sendUpdateCallToBackendIndividualWiretaps(){
   viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
 }
 
+//Funzione che manda al backend i dati da aggiornare dell'individuo
 function sendUpdateIndividualToBackendIndividualWiretaps(){
   let json;
 
@@ -862,51 +884,7 @@ function sendUpdateIndividualToBackendIndividualWiretaps(){
   viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
 }
 
-function sendIdToDeleteIndividualWiretaps(){
-  let id;
-  let url;
-
-  if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Cancellazione intercettazione telefonica"){
-    id = document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML;
-    url = "";
-  }
-    
-
-  if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Cancellazione individuo"){
-    id = document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML;
-    url = ""
-  }
-    
-
-  /*fetch(url, { //FUNZIONE PER INSERIRE I DATI
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(json)
-  })
-  .then(response => {
-    if (response.ok) {
-      viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");
-      return response.text();
-    } else {
-      viewToastMessage("Registrazione Chiamata", "Errore nella registrazione della chiamata.", "error");
-    }
-  })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
-  .catch(error => {
-    console.error(error);
-  });*/
-
-  if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Cancellazione intercettazione telefonica")
-    viewToastMessage("Cancellazione Chiamata", "Cancellazione avvenuta con successo.", "success");  
-
-  if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Cancellazione individuo")
-    viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");  
-}
-
+//Funzione che invia al backend l'individuo da cancellare
 function deleteNodeIndividualWiretaps(){
   let id = document.querySelector(".infoIndividualWiretapsNodeIdContent").innerHTML;
 
@@ -919,15 +897,11 @@ function deleteNodeIndividualWiretaps(){
   })
   .then(response => {
     if (response.ok) {
-      viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");
-      return response.text();
+      viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");
     } else {
-      viewToastMessage("Modifica Chiamata", "Errore nella modifica della chiamata.", "error");
+      viewToastMessage("Cancellazione Individuo", "Errore nella cancellazione dell'individuo'.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
   .catch(error => {
     console.error(error);
   });*/
@@ -935,6 +909,7 @@ function deleteNodeIndividualWiretaps(){
   viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");
 }
 
+//Funzione che invia al backend la chiamata da cancellare
 function deleteEdgeIndividualWiretaps(){
   let id = document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML;
 
@@ -947,10 +922,10 @@ function deleteEdgeIndividualWiretaps(){
   })
   .then(response => {
     if (response.ok) {
-      viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");
+      viewToastMessage("Cancellazione Chiamata", "Cancellazione avvenuta con successo.", "success");
       return response.text();
     } else {
-      viewToastMessage("Modifica Chiamata", "Errore nella modifica della chiamata.", "error");
+      viewToastMessage("Cancellazione Chiamata", "Errore nella cancellazione della chiamata.", "error");
     }
   })
   //.then(data => {
@@ -963,6 +938,7 @@ function deleteEdgeIndividualWiretaps(){
   viewToastMessage("Cancellazione Chiamata", "Cancellazione avvenuta con successo.", "success");
 }
 
+//Funzione che decide se devo richiamare la funzione di aggiunta di una chiamata (compresa di due nuovi individui se inseriti) o di modifica di un individuo o modifica di una chiamata
 function selectFunctionToRegisterDateIndividualWiretaps(){
   if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Inserimento nuova intercettazione telefonica")
     sendNewCallToBackendIndividualWiretaps();
@@ -974,10 +950,42 @@ function selectFunctionToRegisterDateIndividualWiretaps(){
     sendUpdateIndividualToBackendIndividualWiretaps();
 }
 
+//Funzione che decide se devo richiamare la funzione di cancellazione di un individuo o una chiamata
 function selectFunctionToDeleteDateIndividualWiretaps(){
   if(document.querySelector("#modalDeleteIndividualWiretapsLabel").innerHTML == "Cancellazione individuo")
     deleteNodeIndividualWiretaps();
 
   if(document.querySelector("#modalDeleteIndividualWiretapsLabel").innerHTML == "Cancellazione intercettazione telefonica")
     deleteEdgeIndividualWiretaps();
+}
+
+function returnToCreationPageIndividualWiretaps(){
+
+  document.querySelector(".btnCloseModalAddUpdate").click();
+  document.querySelector(".btnCloseModalDelete").click();
+
+  //Funzione che fa partire il caricamento
+  loadPage(500);
+  requestAllNodesIndividualWiretaps();
+  checkedSourceAndTargetModalIndividualWiretaps();
+
+  //Comando che fa aprire all'avvio della pagina l'accordion delle proprietà
+  if(document.querySelector("#item-properties").checked == false)
+    document.querySelector("#item-properties").click();
+
+  if(document.querySelector("#item-details").checked == true){
+    document.querySelector(".infoIndividualWiretapsEdge").style.display = "none";
+    document.querySelector(".infoIndividualWiretapsNode").style.display = "none";
+    document.querySelector(".infoIndividualWiretapsNot").style.display = "flex";
+
+    document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli";
+    document.querySelector("#item-details").click();
+  } 
+
+  if(document.querySelector("#item-settings").checked == true)
+    document.querySelector("#item-settings").click();
+
+  //Controllo se devo anonimizzare i dati
+  if(getCookie("anonymization") == "yes")
+    document.querySelector("#CheckAnonymization").checked = true;
 }
