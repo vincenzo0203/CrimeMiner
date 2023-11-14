@@ -15,6 +15,7 @@ window.onload = function () {
   //Funzione che fa partire il caricamento
   loadPage(1500);
   requestAllNodesIndividualCrimes();
+  checkedIndividualModalIndividualCrimes()
 
   //Comando che fa aprire all'avvio della pagina l'accordione delle proprietà
   document.querySelector("#item-properties").click();
@@ -43,7 +44,29 @@ function requestAllNodesIndividualCrimes() {
     data = JSON.parse(data);
     createGraphIndividualCrimes(data);
     fillPropertyAccordionIndividualCrimes(data);
-    //fillSourceAndTargetModalNewCallIndividualCrimes(data.nodes)
+    requestAllNodesModalIndividualCrimes();
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
+
+//Funzione che effettua la richiesta al backend per caricare i nomi del'individuo e del crimine nella modale
+function requestAllNodesModalIndividualCrimes() {
+
+  fetch("/CrimeMiner/individuoReato/findAllIndividualCrime/", {
+    method: "GET"
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      throw new Error('Errore nella richiesta.');
+    }
+  })
+  .then(data => {
+    data = JSON.parse(data);
+    fillIndividualModalNewSentenceImputationIndividualCrimes(data.result);
   })
   .catch(error => {
     console.error(error);
@@ -435,6 +458,19 @@ function checkedAnonymizationIndividualCrimes(){
   }
 }
 
+//Funzione che controlla dalle checkbox della modale se l'individuo è già registrato
+function checkedIndividualModalIndividualCrimes(){
+
+  if(document.querySelector("#CheckIndividualExisting").checked){
+    document.querySelector(".accordionIndividual").style.display = "none";
+    document.querySelector(".modalIndividualCrimesIndividual").disabled = false;
+  }
+  else{
+    document.querySelector(".accordionIndividual").style.display = "block";
+    document.querySelector(".modalIndividualCrimesIndividual").disabled = true;
+  }
+}
+
 //Funzione che mostra i dettagli dei nodi della tipologia Individuo
 function showDetailsOfNodeIndividualIndividualCrimes(data){
   document.querySelector(".infoIndividualCrimesEdge").style.display = "none";
@@ -586,32 +622,350 @@ function fillPropertyAccordionIndividualCrimes(data){
   document.querySelector(".accordionNumberNodesEdgesEdgesContent").innerHTML = data.edges.length;
 }
 
-/*function fillSourceAndTargetModalNewCallIndividualCrimes(nodes){
-  let selectSource = document.querySelector(".modalIndividualCrimesSource");
-  let selectTarget = document.querySelector(".modalIndividualCrimesTarget");
+//Funzione che inserisce nelle select della modale gli individui da scegliere se già registrati e i reati
+function fillIndividualModalNewSentenceImputationIndividualCrimes(nodes){
+  let selectIndividual = document.querySelector(".modalIndividualCrimesIndividual");
+  let selectCrime = document.querySelector(".modalIndividualCrimesCrime");
+
+  for (let i = 1; i < selectIndividual.length; i++){
+    selectIndividual.remove(i);
+  }
+
+  for (let i = 1; i < selectCrime.length; i++){
+    selectCrime.remove(i);
+  }
+
   for (let j = 0; j < nodes.length; j++) {
-    let opt = nodes[j].data.id;
-    let el = new Option(opt, opt);
+    let opt = nodes[j].nodeId;
+    let text;
+    let el1;
 
-    if(nodes[j].data.id[0] == 'I')
-      selectSource.appendChild(el);
+    if(opt[0] == "I"){
 
-    if(nodes[j].data.id[0] == 'R')
-      selectTarget.appendChild(el);
+      text = nodes[j].cognome + " " + nodes[j].nome;
+
+      if(text == "null null"){
+        el1 = new Option(opt, opt);
+      }
+      else{
+        el1 = new Option(opt+" "+text, opt);
+      }
+
+      selectIndividual.appendChild(el1);
+    }
+
+    if(opt[0] == "R"){
+      text = nodes[j].nome;
+
+      if(text == "null"){
+        el1 = new Option(opt, opt);
+      }
+      else{
+        el1 = new Option(opt+" "+text, opt);
+      }
+
+      selectCrime.appendChild(el1);
+    }
   }
 }
 
-function sendNewCallToBackendIndividualCrimes(){
-  let json;
+//Funzione che cancella i valori degli input nella modale
+function fillAddModalIndividualCrimes(){
+  
+  //Checkbox
+  document.querySelector("#CheckIndividualExisting").checked = false;
 
-  json = `{
-                sourceId: ${document.querySelector(".modalIndividualCrimesSource").value},
-                targetiD: ${document.querySelector(".modalIndividualCrimesTarget").value},
-                date: ${document.querySelector(".modalIndividualCrimesDate").value},
-                duration: ${document.querySelector(".modalIndividualCrimesDuration").value},
-                time: ${document.querySelector(".modalIndividualCrimesTime").value},
-                content: ${document.querySelector(".modalIndividualCrimesTextarea").value},
-              }`;
+  //Mittente
+  document.querySelector(".accordionIndividual").style.display = "block";
+  document.querySelector(".modalIndividualCrimesIndividualAddSurname").value = "";
+  document.querySelector(".modalIndividualCrimesIndividualAddName").value = "";
+  document.querySelector(".modalIndividualCrimesIndividualAddDate").value = "";
+  document.querySelector(".modalIndividualCrimesIndividualAddNation").value = "";
+  document.querySelector(".modalIndividualCrimesIndividualAddProvince").value = "";
+  document.querySelector(".modalIndividualCrimesIndividualAddCity").value = "";
+  document.querySelector(".modalIndividualCrimesIndividualAddCap").value = "";
+  document.querySelector(".modalIndividualCrimesIndividualAddAddress").value = "";
+
+  if(document.querySelector(".accordionIndividual").childNodes[1].childNodes[3].classList.contains("show")){
+    document.querySelector(".accordionIndividual").childNodes[1].childNodes[3].classList.remove("show");
+    document.querySelector(".accordionIndividual").childNodes[1].childNodes[1].childNodes[1].classList.add("collapsed");
+  }
+
+
+  //Chiamata
+  document.querySelector(".modalIndividualCrimesIndividual").selectedIndex = 0;
+  document.querySelector(".modalIndividualCrimesCrime").selectedIndex = 0;
+  document.querySelector(".modalIndividualCrimesTipology").selectedIndex = 0;
+  document.querySelector(".modalIndividualCrimesIndividual").disabled = true;
+  /*document.querySelector(".modalIndividualWiretapsDate").value = "";
+  document.querySelector(".modalIndividualWiretapsDuration").value = "";
+  document.querySelector(".modalIndividualWiretapsTime").value = "";
+  document.querySelector(".modalIndividualWiretapsTextarea").value = "";*/
+
+}
+
+//Funzione che inserisce i campi della chiamata nella modale
+function fillUpdateModalSentenceImputationIndividualWiretaps(){
+
+  //let [day, month, year] = document.querySelector(".infoIndividualWiretapsEdgeDateContent").innerHTML.split('/');
+  
+  //Checkbox
+  document.querySelector("#CheckIndividualExisting").checked = true;
+
+  //Individuo
+  document.querySelector(".accordionIndividual").style.display = "none";
+
+  //Imputazione o Condanna
+  document.querySelector(".modalIndividualCrimesIndividual").value = document.querySelector(".infoIndividualCrimesEdgeIndividualContent").innerHTML;
+  document.querySelector(".modalIndividualCrimesCrime").value = document.querySelector(".infoIndividualCrimesEdgeCrimeContent").innerHTML;
+  document.querySelector(".modalIndividualCrimesIndividual").disabled = false;
+  document.querySelector(".modalIndividualCrimesTipology").disabled = false;
+
+  if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica imputazione")
+    document.querySelector(".modalIndividualCrimesTipology").value = "ImputatoDi";
+
+  if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica condanna")
+    document.querySelector(".modalIndividualCrimesTipology").value = "Condannato";
+  /*document.querySelector(".modalIndividualWiretapsDate").value = `${year}-${month}-${day}`;
+  document.querySelector(".modalIndividualWiretapsDuration").value = document.querySelector(".infoIndividualWiretapsEdgeDurationContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsTime").value = document.querySelector(".infoIndividualWiretapsEdgeTimeContent").innerHTML;
+  document.querySelector(".modalIndividualWiretapsTextarea").value = document.querySelector(".infoIndividualWiretapsEdgeContentContent").innerHTML;*/
+
+}
+
+//Funzione che inserisce i campi dell'individuo nella modale
+function fillUpdateModalIndividualIndividualCrimes(){
+  let [day, month, year] = cyNodeDataIndividualCrimes.date.split('/');
+  
+  //Individuo
+  document.querySelector(".modalIndividualCrimesIndividualSurname").value = cyNodeDataIndividualCrimes.surname;
+  document.querySelector(".modalIndividualCrimesIndividualName").value = cyNodeDataIndividualCrimes.name;
+  document.querySelector(".modalIndividualCrimesIndividualDate").value = `${year}-${month}-${day}`;
+  document.querySelector(".modalIndividualCrimesIndividualNation").value = cyNodeDataIndividualCrimes.nation;
+  document.querySelector(".modalIndividualCrimesIndividualProvince").value = cyNodeDataIndividualCrimes.province;
+  document.querySelector(".modalIndividualCrimesIndividualCity").value = cyNodeDataIndividualCrimes.city;
+  document.querySelector(".modalIndividualCrimesIndividualCap").value = cyNodeDataIndividualCrimes.cap;
+  document.querySelector(".modalIndividualCrimesIndividualAddress").value = cyNodeDataIndividualCrimes.address;
+}
+
+//Funzione che all'apertura della modale di aggiunta cambia dei campi della modale e richiama la funzione per fillare gli input
+function openModalAddNewSentenceImputationIndividualCrimes(){
+  document.querySelector(".modalFormAddUpdateCall").style.display = "flex";
+  document.querySelector(".modalFormUpdateIndividual").style.display = "none";
+  document.querySelector("#modalIndividualCrimesLabel").innerHTML = "Inserimento nuova condanna o imputazione";
+
+  fillAddModalIndividualCrimes();
+}
+
+//Funzione che all'apertura della modale di modifica cambia dei campi della modale e richiama la funzione per fillare gli input
+function openModalUpdateSentenceImputationIndividualCrimes(){
+
+  if(document.querySelector(".accordionButtonTwo").innerHTML == "Dettagli Imputazione")
+    document.querySelector("#modalIndividualCrimesLabel").innerHTML = "Modifica imputazione";
+  else
+    document.querySelector("#modalIndividualCrimesLabel").innerHTML = "Modifica condanna";
+
+  document.querySelector(".modalFormAddUpdateCall").style.display = "flex";
+  document.querySelector(".modalFormUpdateIndividual").style.display = "none";
+
+  fillUpdateModalSentenceImputationIndividualWiretaps();
+}
+
+//Funzione che all'apertura della modale di conferma eliminazione cambia i campi per la chiamata
+function openModalDeleteSentenceImputationIndividualCrimes(){
+  if(document.querySelector(".accordionButtonTwo").innerHTML == "Dettagli Condannato"){
+    document.querySelector("#modalDeleteIndividualCrimesLabel").innerHTML = "Cancellazione condanna";
+    document.querySelector(".modalDeleteIndividualCrimesBody").innerHTML = "Sei sicuro di voler cancellare questa condanna? Verranno cancellati i dati relativi alla condanna e i mesi condanna dell'individuo";
+  }
+
+  if(document.querySelector(".accordionButtonTwo").innerHTML == "Dettagli Imputazione"){
+    document.querySelector("#modalDeleteIndividualCrimesLabel").innerHTML = "Cancellazione imputazione";
+    document.querySelector(".modalDeleteIndividualCrimesBody").innerHTML = "Sei sicuro di voler cancellare questa imputazione? Verranno cancellati i dati relativi all'imputazione e i mesi imputati dell'individuo";
+  }
+}
+
+//Funzione che all'apertura della modale di conferma eliminazione cambia i campi per l'individuo
+function openModalDeleteIndividualIndividualCrimes(){
+  document.querySelector("#modalDeleteIndividualCrimesLabel").innerHTML = "Cancellazione individuo";
+  document.querySelector(".modalDeleteIndividualCrimesBody").innerHTML = "Sei sicuro di voler cancellare questo individuo?";
+}
+
+//Funzione che all'apertura della modale di modifica cambia dei campi della modale e richiama la funzione per fillare gli input
+function openModalUpdateIndividualIndividualCrimes(){
+  document.querySelector(".modalFormAddUpdateCall").style.display = "none";
+  document.querySelector(".modalFormUpdateIndividual").style.display = "flex";
+  document.querySelector("#modalIndividualCrimesLabel").innerHTML = "Modifica individuo";
+
+  fillUpdateModalIndividualIndividualCrimes();
+}
+
+                          //Funzione che manda al backend una nuova chiamata da inserire (e enventualmente i nuovi individui)
+function sendNewImputationSentenceToBackendIndividualCrimes(){
+
+  let [year, month, day] = "";
+
+  let json = `{`;
+
+  if(!document.querySelector("#CheckIndividualExisting").checked){
+    [year, month, day] = document.querySelector(".modalIndividualCrimesIndividualAddDate").value.split('-');
+
+    json += ` "individual" : {
+                            "cognome": "${document.querySelector(".modalIndividualCrimesIndividualAddSurname").value}",
+                            "nome": "${document.querySelector(".modalIndividualCrimesIndividualAddName").value}",
+                            "dataNascita": "${day}/${month}/${year}",
+                            "nazioneResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddNation").value}",
+                            "provinciaResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddProvince").value}",
+                            "cittaResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddCity").value}",
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddAddress").value}"
+                          },
+            `;
+  }
+  else{
+    json += ` "individual" : {
+        "nodeId": "${document.querySelector(".modalIndividualCrimesIndividual").value}"
+      },
+    `;
+  }
+
+  json += ` "crime" : {
+      "nodeId": "${document.querySelector(".modalIndividualCrimesCrime").value}"
+    },
+  `;
+
+  json += ` "edge" : {`;
+
+  if(document.querySelector("#CheckIndividualExisting").checked)
+    json += `"individualId": "${document.querySelector(".modalIndividualCrimesIndividual").value}",`;
+  
+  json += ` 
+            "crimeId": "${document.querySelector(".modalIndividualCrimesCrime").value}",
+            "tipologyEdge": "${document.querySelector(".modalIndividualCrimesTipology").value}",
+          `;
+
+  json += `}`;
+
+  /*[year, month, day] = document.querySelector(".modalIndividualWiretapsDate").value.split('-');
+  
+  if(document.querySelector("#CheckSourceExisting").checked && document.querySelector("#CheckTargetExisting").checked){
+    if(document.querySelector(".modalIndividualWiretapsSource").value != document.querySelector(".modalIndividualWiretapsTarget").value){
+      
+      json += `  "call" : {
+                            "sourceId": "${document.querySelector(".modalIndividualWiretapsSource").value}",
+                            "targetiD": "${document.querySelector(".modalIndividualWiretapsTarget").value}",
+                            "date": "${day}/${month}/${year}",
+                            "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
+                            "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
+                            "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}"
+                          }
+      `;
+    }
+  }
+  else{
+    json += `  "call" : {`;
+
+    if(document.querySelector("#CheckSourceExisting").checked) 
+    json += `
+              "sourceId": "${document.querySelector(".modalIndividualWiretapsSource").value}",
+            `;
+    
+    if(document.querySelector("#CheckTargetExisting").checked)
+    json += `
+              "targetId": "${document.querySelector(".modalIndividualWiretapsTarget").value}",
+            `;
+  
+    json += `
+              "date": "${day}/${month}/${year}",
+              "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
+              "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
+              "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}"
+            }
+    `;
+  }*/
+
+  json += `}`;
+
+  console.log(json);
+  
+  /*fetch("/CrimeMiner/individuoIntercettazione/CreaIntercettazione", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+
+      if(document.querySelector(".modalIndividualCrimesTipology").value == "ImputatoDi")
+        viewToastMessage("Registrazione Imputazione", "Registrazione avvenuta con successo.", "success");
+
+      if(document.querySelector(".modalIndividualCrimesTipology").value == "Condannato")
+        viewToastMessage("Registrazione Condanna", "Registrazione avvenuta con successo.", "success");
+
+      returnToCreationPageIndividualCrimes();
+    } else {
+      if(document.querySelector(".modalIndividualCrimesTipology").value == "ImputatoDi")
+        viewToastMessage("Registrazione Imputazione", "Errore nella registrazione dell'imputazione.", "error");
+
+      if(document.querySelector(".modalIndividualCrimesTipology").value == "Condannato")
+        viewToastMessage("Registrazione Condanna", "Errore nella registrazione della condanna.", "error");
+    }
+  })
+  .catch(error => {
+    console.error(error);
+  });*/
+
+}
+
+//Funzione che manda al backend i dati da aggiornare dell'imputazione o della condanna
+function sendUpdateImputationSentenceToBackendIndividualCrimes(){
+  let [year, month, day] = "";
+
+  let json = `{`;
+
+  if(!document.querySelector("#CheckIndividualExisting").checked){
+    [year, month, day] = document.querySelector(".modalIndividualCrimesIndividualAddDate").value.split('-');
+
+    json += ` "individual" : {
+                            "cognome": "${document.querySelector(".modalIndividualCrimesIndividualAddSurname").value}",
+                            "nome": "${document.querySelector(".modalIndividualCrimesIndividualAddName").value}",
+                            "dataNascita": "${day}/${month}/${year}",
+                            "nazioneResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddNation").value}",
+                            "provinciaResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddProvince").value}",
+                            "cittaResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddCity").value}",
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddAddress").value}"
+                          },
+            `;
+  }
+  else{
+    json += ` "individual" : {
+        "nodeId": "${document.querySelector(".modalIndividualCrimesIndividual").value}"
+      },
+    `;
+  }
+
+  json += ` "crime" : {
+      "nodeId": "${document.querySelector(".modalIndividualCrimesCrime").value}"
+    },
+  `;
+
+  if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica condanna")
+    json += ` "sentence" : {`;
+  
+  if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica imputazione")
+    json += ` "imputation" : {`;
+
+  json += `
+            "edgeId": "${document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML}",
+            "individualId": "${document.querySelector(".modalIndividualCrimesIndividual").value}",
+            "crimeId": "${document.querySelector(".modalIndividualCrimesCrime").value}",
+            "tipology": "${document.querySelector(".modalIndividualCrimesTipology").value}"}`;
+   /*         "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
+            "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
+            "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}",
+          }`;*/
+    
+  json += `}`;
 
   console.log(json);
   
@@ -624,10 +978,19 @@ function sendNewCallToBackendIndividualCrimes(){
   })
   .then(response => {
     if (response.ok) {
-      viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");
-      return response.text();
+      if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica condanna")
+        viewToastMessage("Modifica Condanna", "Modifica avvenuta con successo.", "success");
+
+      if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica imputazione")
+        viewToastMessage("Modifica Imputazione", "Modifica avvenuta con successo.", "success");
+      
+      returnToCreationPageIndividualCrimes()
     } else {
-      viewToastMessage("Registrazione Chiamata", "Errore nella registrazione della chiamata.", "error");
+      if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica condanna")
+        viewToastMessage("Modifica Condanna", "Errore nella modifica della condanna.", "error");
+
+      if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica imputazione")
+        viewToastMessage("Modifica Imputazione", "Errore nella modifica dell'imputazione.", "error");
     }
   })
   //.then(data => {
@@ -636,6 +999,188 @@ function sendNewCallToBackendIndividualCrimes(){
   .catch(error => {
     console.error(error);
   });*/
-/*
-  viewToastMessage("Registrazione Codannato/ImputatoDi", "Registrazione avvenuta con successo.", "success");  
-}*/
+
+  viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
+}
+
+//Funzione che manda al backend i dati da aggiornare dell'individuo
+function sendUpdateIndividualToBackendIndividualCrimes(){
+  let json;
+
+  json = `{
+            "nodeId": "${document.querySelector(".infoIndividualCrimesNodeIndividualIdContent").innerHTML}",
+            "surname": "${document.querySelector(".modalIndividualCrimesIndividualSurname").value}",
+            "name": "${document.querySelector(".modalIndividualCrimesIndividualName").value}",
+            "date": "${document.querySelector(".modalIndividualCrimesIndividualDate").value}",
+            "nation": "${document.querySelector(".modalIndividualCrimesIndividualNation").value}",
+            "province": "${document.querySelector(".modalIndividualCrimesIndividualProvince").value}",
+            "city": "${document.querySelector(".modalIndividualCrimesIndividualCity").value}",
+            "address": "${document.querySelector(".modalIndividualCrimesIndividualAddress").value}",
+          }`;
+
+  console.log(json);
+  
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Modifica Individuo", "Modifica avvenuta con successo.", "success");
+      returnToCreationPageIndividualCrimes()
+    } else {
+      viewToastMessage("Modifica Individuo", "Errore nella modifica dell'individuo.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  viewToastMessage("Modifica Individuo", "Modifica avvenuta con successo.", "success");  
+}
+
+//Funzione che invia al backend l'individuo da cancellare
+function deleteNodeIndividualCrimes(){
+  let id = document.querySelector(".infoIndividualCrimesNodeIndividualIdContent").innerHTML;
+
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");
+      returnToCreationPageIndividualCrimes();
+    } else {
+      viewToastMessage("Cancellazione Individuo", "Errore nella cancellazione dell'individuo'.", "error");
+    }
+  })
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");
+}
+
+//Funzione che invia al backend l'imputazione da cancellare
+function deleteEdgeImputationIndividualCrimes(){
+  let id = document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML;
+
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Cancellazione Imputazione", "Cancellazione avvenuta con successo.", "success");
+      returnToCreationPageIndividualCrimes();
+    } else {
+      viewToastMessage("Cancellazione Imputazione", "Errore nella cancellazione dell'imputazione.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  viewToastMessage("Cancellazione Imputazione", "Cancellazione avvenuta con successo.", "success");
+}
+
+//Funzione che invia al backend la condanna da cancellare
+function deleteEdgeSentenceIndividualCrimes(){
+  let id = document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML;
+
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Cancellazione Condanna", "Cancellazione avvenuta con successo.", "success");
+      returnToCreationPageIndividualCrimes();
+    } else {
+      viewToastMessage("Cancellazione Condanna", "Errore nella cancellazione della condanna.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  viewToastMessage("Cancellazione Condanna", "Cancellazione avvenuta con successo.", "success");
+}
+
+//Funzione che decide se devo richiamare la funzione di aggiunta di una chiamata (compresa di due nuovi individui se inseriti) o di modifica di un individuo o modifica di una chiamata
+function selectFunctionToRegisterDateIndividualCrimes(){
+  if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Inserimento nuova condanna o imputazione")
+    sendNewImputationSentenceToBackendIndividualCrimes();
+
+  if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica condanna" || document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica imputazione")
+    sendUpdateImputationSentenceToBackendIndividualCrimes();
+
+  if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica individuo")
+    sendUpdateIndividualToBackendIndividualCrimes();
+}
+
+//Funzione che decide se devo richiamare la funzione di cancellazione di un individuo, di un'imputazione o di una condanna
+function selectFunctionToDeleteDateIndividualCrimes(){
+  if(document.querySelector("#modalDeleteIndividualCrimesLabel").innerHTML == "Cancellazione individuo")
+    deleteNodeIndividualCrimes();
+
+  if(document.querySelector("#modalDeleteIndividualCrimesLabel").innerHTML == "Cancellazione imputazione")
+    deleteEdgeImputationIndividualCrimes();
+
+  if(document.querySelector("#modalDeleteIndividualCrimesLabel").innerHTML == "Cancellazione condanna")
+    deleteEdgeSentenceIndividualCrimes();
+}
+
+//Funzione di ricaricamento della pagina quando creo, modifico o cancello dati nel grafo
+function returnToCreationPageIndividualCrimes(){
+
+  document.querySelector(".btnCloseModalAddUpdate").click();
+  document.querySelector(".btnCloseModalDelete").click();
+
+  //Funzione che fa partire il caricamento
+  loadPage(1500);
+  requestAllNodesIndividualCrimes();
+  checkedIndividualModalIndividualCrimes();
+
+  //Comando che fa aprire all'avvio della pagina l'accordion delle proprietà
+  if(document.querySelector("#item-properties").checked == false)
+    document.querySelector("#item-properties").click();
+
+  if(document.querySelector("#item-details").checked == true){
+    document.querySelector(".infoIndividualWiretapsEdge").style.display = "none";
+    document.querySelector(".infoIndividualWiretapsNode").style.display = "none";
+    document.querySelector(".infoIndividualWiretapsNot").style.display = "flex";
+
+    document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli";
+    document.querySelector("#item-details").click();
+  } 
+
+  if(document.querySelector("#item-settings").checked == true)
+    document.querySelector("#item-settings").click();
+
+  //Controllo se devo anonimizzare i dati
+  if(getCookie("anonymization") == "yes")
+    document.querySelector("#CheckAnonymization").checked = true;
+}
