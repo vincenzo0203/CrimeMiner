@@ -100,11 +100,10 @@ class IndividuoIntercettazioneView(View):
                 id2_individuo=data["target"].get("nodeId")
                 print(id2_individuo)
 
-
             intercettazione_result = self.IndividuoIntercettazione_repository.CreaIntercettazione(data["call"],id1_individuo,id2_individuo)
 
             # Restituisci il risultato con status 100 se la query è andata bene
-            return JsonResponse({"status": 100, "result": intercettazione_result})
+            return JsonResponse({"status": 100, "result": intercettazione_result},status=100)
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON data"}, status=400)
         except Exception as e:

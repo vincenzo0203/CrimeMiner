@@ -1,5 +1,5 @@
 from neomodel import db
-from app.Models.Entity.ReatoModel import ReatoModel
+from app.Models.Entity.ReatoModel import Reato
 from app.Neo4jConnection import Neo4jDriver
 import json
 

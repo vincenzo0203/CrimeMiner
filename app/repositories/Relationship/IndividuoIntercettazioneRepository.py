@@ -181,6 +181,9 @@ class IndividuoIntercettazioneRepository:
             haChiamato_model = HaChiamato()
             haChiamato_model.timestamp = times
             haChiamato_model.edgeId = edge
+            haChiamato_model.mesiCondanna=0
+            haChiamato_model.mesiImputati=0
+            haChiamato_model.mesiTotali=0
             haChiamato_model.data = data.get("Data")
             haChiamato_model.entityType = "HaChiamato"
             haChiamato_model.name = "Name"

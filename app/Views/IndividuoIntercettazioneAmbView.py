@@ -2,6 +2,9 @@ from django.http import JsonResponse
 from django.views import View
 from app.repositories.Relationship.IndividuoIntercettazioneAmbRepository import IndividuoIntercettazioneAmbRepository
 from django_request_mapping import request_mapping
+from app.repositories.Entity.IndividuoRepository import IndividuoRepository
+from app.repositories.Entity.IntercettazioneAmbRepository import IntercettazioneAmbRepository
+import json
 
 @request_mapping("/individuoIntercettazioneAmb")
 class IndividuoIntercettazioneAmbView(View):
@@ -77,5 +80,38 @@ class IndividuoIntercettazioneAmbView(View):
     def OutDegree(self, request) -> JsonResponse:
         node_list = self.individuoIntercettazioneAmb_repository.OutDegree()
         return JsonResponse({"result":node_list})
+    
+
+    @request_mapping("/creaIntercettazioneAmb/", method="post")
+    def create_Node(self,request) -> JsonResponse:  
+
+        try:
+            #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
+            data =json.loads(json.loads(request.body)) 
+            print(f"Tipo di 'data': {type(data)}")
+
+            id_individuo=None
+
+            # Esegui la tua query e ottieni il risultato
+            
+            if  not "nodeId" in data["individuo"]:
+                individuo_repository = IndividuoRepository()
+                id_individuo = individuo_repository.CreaIndividuo(data["source"])
+            else:
+                id_individuo=data["source"].get("nodeId")
+                print(id_individuo)
+
+            intercettazioneAmb_repository = IntercettazioneAmbRepository()
+            id_intercettazioneAmb = intercettazioneAmb_repository.CreaIntercettazioneAmb(data["intercettazione"])
+
+            presente_result = self.individuoIntercettazioneAmb_repository.CreaPresenteIntercettazioneAmb(data["call"],id_individuo,id_intercettazioneAmb)
+
+            # Restituisci il risultato con status 100 se la query è andata bene
+            return JsonResponse({"status": 100, "result": presente_result})
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            # Se si verifica un errore, restituisci status 500 e il messaggio di errore
+            return JsonResponse({"error_message": str(e)}, status=500)
 
     

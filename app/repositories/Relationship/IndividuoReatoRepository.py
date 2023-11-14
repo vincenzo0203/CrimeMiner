@@ -178,6 +178,25 @@ class IndividuoReatoRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []  # o solleva un'eccezione
 
+    @staticmethod
+    def CreaImputazione(data,id_individuo,id_reato):
+        try:
+           print("Qualcosa")
+        
+        except Exception as e:
+            # Gestione degli altri errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante il salvataggio dell'inputazione:", e)
+            return []
+        
+    @staticmethod
+    def CreaCondanna(data,id_individuo,id_reato):
+        try:
+           print("Qualcosa")
+        
+        except Exception as e:
+            # Gestione degli altri errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante il salvataggio della condanna:", e)
+            return []
 
 
 

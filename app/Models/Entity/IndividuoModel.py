@@ -1,5 +1,7 @@
 from neomodel import StructuredRel,StructuredNode, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
 from django.db import models
+from app.Models.Entity.ReatoModel import Reato
+from app.Models.Entity.IntercettazioneAmbModel import IntercettazioneAmb
 
 class Individuo(StructuredNode):
 
@@ -22,6 +24,7 @@ class Individuo(StructuredNode):
     nazioneResidenza = StringProperty()
     #pseudonimo = StringProperty()
 
+
     # Valori Interi
     mesiImputati=IntegerProperty()
     mesiTotali=IntegerProperty()
@@ -34,6 +37,15 @@ class Individuo(StructuredNode):
 
     #Sezione di definizione delle relazioni con entity
     haChiamatoList = RelationshipTo('Individuo', 'HaChiamato')
+        
+    #Sezione di definizione delle relazioni con entity
+    CondannatoList = RelationshipTo('Reato', 'Condannato')
+
+    #Sezione di definizione delle relazioni con entity
+    ImputatoDiList = RelationshipTo('Reato', 'ImputatoDi')
+
+    #Sezione di definizione delle relazioni con entity
+    PresenteList=RelationshipTo('IntercettazioneAmb','Presente')
 
     
 

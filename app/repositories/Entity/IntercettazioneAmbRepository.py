@@ -38,3 +38,13 @@ class IntercettazioneAmbRepository:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
+        
+    @staticmethod
+    def CreaIntercettazioneAmb(data):
+        try:
+            print("qualcosa")
+        
+        except Exception as e:
+            # Gestione degli altri errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante il salvataggio dell'intercettazioneAmb:", e)
+            return []

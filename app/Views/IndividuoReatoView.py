@@ -1,7 +1,9 @@
 from django.http import JsonResponse
 from django.views import View
 from app.repositories.Relationship.IndividuoReatoRepository import IndividuoReatoRepository
+from app.repositories.Entity.IndividuoRepository import IndividuoRepository
 from django_request_mapping import request_mapping
+import json
 
 @request_mapping("/individuoReato")
 class IndividuoReatoView(View):
@@ -87,3 +89,38 @@ class IndividuoReatoView(View):
     def OutDegree(self, request) -> JsonResponse:
         node_list = self.individuoReato_repository.OutDegree()
         return JsonResponse({"result":node_list})
+
+
+    @request_mapping("/creaIndReato/", method="post")
+    def create_Node(self,request) -> JsonResponse:  
+
+        try:
+            #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
+            data =json.loads(json.loads(request.body)) 
+            print(f"Tipo di 'data': {type(data)}")
+
+            id_individuo=None
+            id_reato=data["reato"].get("nodeId")
+ 
+
+            # Esegui la tua query e ottieni il risultato
+            if  not "nodeId" in data["individuo"]:
+                individuo_repository = IndividuoRepository()
+                id_individuo = individuo_repository.CreaIndividuo(data["individuo"])
+            else:
+                id_individuo=data["individuo"].get("nodeId")
+                print(id_individuo)
+
+
+            if  not "Condannato" in data:
+                intercettazione_result = self.individuoReato_repository.CreaImputazione(data["imputato"],id_individuo,id_reato)
+            else:
+                intercettazione_result = self.individuoReato_repository.CreaCondanna(data["condannato"],id_individuo,id_reato)
+
+            # Restituisci il risultato con status 100 se la query è andata bene
+            return JsonResponse({"status": 100, "result": intercettazione_result})
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            # Se si verifica un errore, restituisci status 500 e il messaggio di errore
+            return JsonResponse({"error_message": str(e)}, status=500)
