@@ -42,6 +42,15 @@ class IndividuoReatoView(View):
             return JsonResponse({"result": edge})
         else:
             return JsonResponse({"error": "Nodes not found"}, status=404)
+        
+    
+    #Fa riferimento alla find_all_name() della repository ReatoRepository e restituisce l'identificativo e il nome di tutti i reati 
+    #Args in input: none
+    #Restituisce result, che è una lista contenete l'identificativo e il nome dei reati 
+    @request_mapping("/findAllIndividualCrime/", method="get")
+    def find_allIndividualCrime(self, request) -> JsonResponse:
+        node_list = self.individuoReato_repository.getModalIndividuoReato()
+        return JsonResponse({"result":node_list})
 
 
     @request_mapping("/Closeness/", method="get")

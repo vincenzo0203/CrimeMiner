@@ -36,7 +36,7 @@ class IndividuoReatoRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
         
-          # Trova le informazioni riguardo un Individuo o di un Reato tramite un ID
+    # Trova le informazioni riguardo un Individuo o di un Reato tramite un ID
     # Args: <str> id
     # Returns:
     #     List[dict]: Una lista di risultati contenenti le informazioni su tutti gli individui/reati.
@@ -49,6 +49,15 @@ class IndividuoReatoRepository:
             
         return result
     
+    # Prende le informazioni riguardo un Individuo e di un Reato per il caricamento dei dati nella modale
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni su tutti gli individui e reati.
+    @staticmethod
+    def getModalIndividuoReato():
+        resultIndividual=IndividuoRepository.find_all_surname_name()
+        resultCrime=ReatoRepository.find_all_name()
+        
+        return resultIndividual + resultCrime
     # Recupera le informazioni sull'arco identificato da edge_id
     # Args:
     #     edge_id (str): L'ID dell'arco da cercare
