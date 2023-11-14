@@ -91,6 +91,7 @@ class IndividuoIntercettazioneAmbView(View):
             print(f"Tipo di 'data': {type(data)}")
 
             id_individuo=None
+            id_intercettazioneAmb=None
 
             # Esegui la tua query e ottieni il risultato
             
@@ -98,11 +99,14 @@ class IndividuoIntercettazioneAmbView(View):
                 individuo_repository = IndividuoRepository()
                 id_individuo = individuo_repository.CreaIndividuo(data["source"])
             else:
-                id_individuo=data["source"].get("nodeId")
+                id_individuo=data["individuo"].get("nodeId")
                 print(id_individuo)
 
-            intercettazioneAmb_repository = IntercettazioneAmbRepository()
-            id_intercettazioneAmb = intercettazioneAmb_repository.CreaIntercettazioneAmb(data["intercettazione"])
+            if  not "nodeId" in data["intercettazione"]:
+                intercettazioneAmb_repository = IntercettazioneAmbRepository()
+                id_intercettazioneAmb = intercettazioneAmb_repository.CreaIntercettazioneAmb(data["intercettazione"])
+            else:
+                id_intercettazioneAmb=data["intercettazione"].get("nodeId")
 
             presente_result = self.individuoIntercettazioneAmb_repository.CreaPresenteIntercettazioneAmb(data["call"],id_individuo,id_intercettazioneAmb)
 
