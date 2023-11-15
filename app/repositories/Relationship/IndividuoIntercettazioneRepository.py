@@ -171,35 +171,32 @@ class IndividuoIntercettazioneRepository:
 
     @staticmethod
     def CreaIntercettazione(data,id1,id2):
+        print("sono nella funzione creaIntercettazione")
         try:
+            haChiamato_model = HaChiamato()
             times=int(IndividuoIntercettazioneRepository.CalcolaTimeStamp())
             edge=IndividuoIntercettazioneRepository.get_max_edge_id()
 
             nodo1 = Individuo.nodes.get(nodeId=id1)
             nodo2 = Individuo.nodes.get(nodeId=id2)
 
-            haChiamato_model = HaChiamato()
+            haChiamato_model = nodo1.haChiamatoList.connect(nodo2)
+
             haChiamato_model.timestamp = times
             haChiamato_model.edgeId = edge
             haChiamato_model.mesiCondanna=0
             haChiamato_model.mesiImputati=0
             haChiamato_model.mesiTotali=0
-            haChiamato_model.data = data.get("Data")
+            haChiamato_model.data = data.get("date")
             haChiamato_model.entityType = "HaChiamato"
             haChiamato_model.name = "Name"
-            haChiamato_model.ora = data.get("Ora")
-            haChiamato_model.durata = data.get("Durata")
-            haChiamato_model.contenuto = data.get("Contenuto")
+            haChiamato_model.ora = data.get("time")
+            haChiamato_model.durata = data.get("duration")
+            haChiamato_model.contenuto = data.get("content")
             haChiamato_model.sourceNodeId = id1
             haChiamato_model.targetNodeId = id2
 
-
-            nodo1.haChiamatoList.connect(haChiamato_model)
-            nodo2.haChiamatoList.connect(haChiamato_model)
-
             haChiamato_model.save()
-
-
 
             return haChiamato_model.edgeId
         

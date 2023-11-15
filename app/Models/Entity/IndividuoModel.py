@@ -1,5 +1,6 @@
-from neomodel import StructuredRel,StructuredNode, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
+from neomodel import RelationshipFrom,StructuredNode, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
 from django.db import models
+from app.Models.Relationship.HaChiamatoModel import HaChiamato
 from app.Models.Entity.ReatoModel import Reato
 from app.Models.Entity.IntercettazioneAmbModel import IntercettazioneAmb
 
@@ -35,8 +36,11 @@ class Individuo(StructuredNode):
     # Valori Booleani
     isIndagato = BooleanProperty()
 
-    #Sezione di definizione delle relazioni con entity
-    haChiamatoList = RelationshipTo('Individuo', 'HaChiamato')
+    
+    # Sezione di definizione delle relazioni
+    haChiamatoList = RelationshipTo("Individuo", "HaChiamato", model=HaChiamato)
+   
+   #haChiamatoList = RelationshipFrom("Individuo", "HaChiamato")
         
     #Sezione di definizione delle relazioni con entity
     CondannatoList = RelationshipTo('Reato', 'Condannato')
@@ -46,6 +50,8 @@ class Individuo(StructuredNode):
 
     #Sezione di definizione delle relazioni con entity
     PresenteList=RelationshipTo('IntercettazioneAmb','Presente')
+
+
 
     
 

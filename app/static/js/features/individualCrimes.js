@@ -886,7 +886,7 @@ function sendNewImputationSentenceToBackendIndividualCrimes(){
 
   console.log(json);
   
-  /*fetch("/CrimeMiner/individuoIntercettazione/CreaIntercettazione", {
+  fetch("/CrimeMiner/individuoIntercettazione/creaIndReato/", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -913,7 +913,7 @@ function sendNewImputationSentenceToBackendIndividualCrimes(){
   })
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
 }
 

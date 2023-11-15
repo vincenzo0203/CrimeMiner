@@ -93,7 +93,7 @@ class IndividuoReatoView(View):
 
     @request_mapping("/creaIndReato/", method="post")
     def create_Node(self,request) -> JsonResponse:  
-
+        print("ciao sono nella")
         try:
             #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
             data =json.loads(json.loads(request.body)) 

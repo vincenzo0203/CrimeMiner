@@ -1,8 +1,7 @@
-from neomodel import Relationship, RelationshipTo,RelationshipFrom, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
+from neomodel import StructuredRel,Relationship, RelationshipTo,RelationshipFrom, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
 from django.db import models
-from app.Models.Entity.IndividuoModel import Individuo
 
-class HaChiamato(Relationship):
+class HaChiamato(StructuredRel):
     type = "HaChiamato"
 
     # Valori Long
@@ -25,6 +24,4 @@ class HaChiamato(Relationship):
     sourceNodeId = StringProperty(json_property="sourceid")
     targetNodeId = StringProperty(json_property="targetid")
 
-    #Sezione di definizione delle relazioni
-    haChiamatoList = RelationshipTo('Individuo', 'HaChiamato')
-    haChiamatoList = RelationshipFrom('Individuo','HaChiamato')
+    element_id_property = 'edgeId'
