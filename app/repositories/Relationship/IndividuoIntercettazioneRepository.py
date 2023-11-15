@@ -4,6 +4,9 @@ import json
 from app.Models.Relationship.HaChiamatoModel import HaChiamato
 from app.Models.Entity.IndividuoModel import Individuo
 from datetime import datetime
+from app.Models.Relationship.HaChiamatoModel import HaChiamato
+import neomodel
+
 
 #Questa classe fornisce metodi per eseguire query su un database Neo4j contenente informazioni sugli individui e le chiamate tra di loro.
 class IndividuoIntercettazioneRepository:
@@ -240,6 +243,39 @@ class IndividuoIntercettazioneRepository:
                 # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
                 print("Errore durante l'esecuzione della query Cypher:", e)
                 return None  # Restituisci None anziché una lista vuota in caso di errore
+            
+
+    @staticmethod
+    def  EditEdgeIndividuoIntercettazione(data):
+            try:                
+
+                sourceId=data["source"].get("nodeId")
+                targetId=data["target"].get("nodeId")
+
+                source_node = Individuo.nodes.get(nodeId=sourceId)
+                target_node = Individuo.nodes.get(nodeId=targetId)
+
+                HaChiamato=source_node.haChiamatoList.relationship(target_node)
+                
+                #HaChiamato.sourceNodeId=data["source"].get("nodeId")
+                #HaChiamato.targetNodeId=data["target"].get("nodeId")
+                HaChiamato.ora=data["call"].get("time")
+                HaChiamato.durata=data["call"].get("duration")
+                HaChiamato.contenuto=data["call"].get("content")
+
+                
+                if data.get("date")!="":
+                    HaChiamato.data=data.get("date")                
+
+                HaChiamato.save()
+                
+
+                return HaChiamato
+            except Exception as e:
+                # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+                print("Errore durante l'esecuzione della query Cypher:", e)
+                return None  # Restituisci None anziché una lista vuota in caso di errore
+   
         
 #################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
 

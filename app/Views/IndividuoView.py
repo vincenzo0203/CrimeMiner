@@ -3,6 +3,7 @@ from django.views import View
 from app.repositories.Entity.IndividuoRepository import IndividuoRepository
 from django_request_mapping import request_mapping
 from app.Models.Entity.IndividuoModel import Individuo
+import json
 
 
 @request_mapping("/individuo")
@@ -42,6 +43,41 @@ class IndividuoView(View):
         else:
             return JsonResponse({"error": "Nodes not found"}, status=404)
         
+
+    @request_mapping("/modificaIndividuo/", method="post")
+    def edit_Node_Individuo(self,request) -> JsonResponse:  
+        try:            
+            
+            data = json.loads(json.loads(request.body))
+            print(data)
+            
+            individuo_repository = IndividuoRepository()
+            individuo_repository.EditIndividuo(data)
+            
+            return JsonResponse({"status": 100, "result": "Tutto apposto"})
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            # Se si verifica un errore, restituisci status 500 e il messaggio di errore
+            return JsonResponse({"error_message": str(e)}, status=500)
+        
+    @request_mapping("/eliminaIndividuo/", method="post")
+    def delete_Node_Individuo(self,request) -> JsonResponse:  
+        print("sono in eliminaNodo")
+        try:            
+            
+            data = json.loads(json.loads(request.body))
+            print(data)
+            
+            individuo_repository = IndividuoRepository()
+            individuo_repository.DeleteIndividuo(data)
+            
+            return JsonResponse({"status": 100, "result": "Tutto apposto"})
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            # Se si verifica un errore, restituisci status 500 e il messaggio di errore
+            return JsonResponse({"error_message": str(e)}, status=500)
 
     
     

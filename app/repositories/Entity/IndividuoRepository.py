@@ -127,7 +127,44 @@ class IndividuoRepository:
                 print("Errore durante l'esecuzione della query Cypher:", e)
                 return None  # Restituisci None anziché una lista vuota in caso di errore
             
+
+    @staticmethod
+    def  EditIndividuo(data):
+            try:                
+                nodo= Individuo.nodes.get(nodeId=data.get("nodeId"))
+                
+                nodo.cognome=data.get("surname")
+                nodo.nome=data.get("name")
+                nodo.nazioneResidenza=data.get("nation")
+                nodo.cittaResidenza=data.get("city")
+                nodo.provinciaResidenza=data.get("province")
+                nodo.indirizzoResidenza=data.get("address")
+                nodo.capResidenza=data.get("cap")
+                
+                if data.get("date")!="":
+                    nodo.dataNascita=data.get("date")                
+
+                nodo.save()
+                
+                return nodo
+            except Exception as e:
+                # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+                print("Errore durante l'esecuzione della query Cypher:", e)
+                return None  # Restituisci None anziché una lista vuota in caso di errore
             
+    @staticmethod
+    def  DeleteIndividuo(data):
+            try:                
+                nodo= Individuo.nodes.get(nodeId=data.get("nodeId"))
+    
+                nodo.delete()
+                
+                return nodo
+            except Exception as e:
+                # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+                print("Errore durante l'esecuzione della query Cypher:", e)
+                return None  # Restituisci None anziché una lista vuota in caso di errore
+   
 
 
 

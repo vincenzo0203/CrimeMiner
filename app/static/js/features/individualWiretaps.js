@@ -888,7 +888,7 @@ function sendUpdateCallToBackendIndividualWiretaps(){
 
   console.log(json);
   
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoIntercettazione/modificaIntInd/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -903,12 +903,10 @@ function sendUpdateCallToBackendIndividualWiretaps(){
       viewToastMessage("Modifica Chiamata", "Errore nella modifica della chiamata.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
+
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
 }
@@ -926,11 +924,13 @@ function sendUpdateIndividualToBackendIndividualWiretaps(){
             "province": "${document.querySelector(".modalIndividualWiretapsIndividualProvince").value}",
             "city": "${document.querySelector(".modalIndividualWiretapsIndividualCity").value}",
             "address": "${document.querySelector(".modalIndividualWiretapsIndividualAddress").value}",
+            "cap": "${document.querySelector(".modalIndividualWiretapsIndividualCap").value}",
+
           }`;
 
   console.log(json);
   
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuo/modificaIndividuo/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -945,12 +945,10 @@ function sendUpdateIndividualToBackendIndividualWiretaps(){
       viewToastMessage("Modifica Chiamata", "Errore nella modifica della chiamata.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
+
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
 }
@@ -959,7 +957,7 @@ function sendUpdateIndividualToBackendIndividualWiretaps(){
 function deleteNodeIndividualWiretaps(){
   let id = document.querySelector(".infoIndividualWiretapsNodeIdContent").innerHTML;
 
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  fetch("", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -976,7 +974,7 @@ function deleteNodeIndividualWiretaps(){
   })
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");
 }

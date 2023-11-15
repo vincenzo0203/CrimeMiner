@@ -96,13 +96,10 @@ class IndividuoReatoView(View):
         try:            
             #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
             data = json.loads(json.loads(request.body))
-            #dataJson=json.dumps(data)
             print(data)
-
             id_individuo=None
             id_reato=data["crime"].get("nodeId")
             imputazione=data["edge"].get("tipologyEdge")
-            print(imputazione)
 
             # Esegui la tua query e ottieni il risultato
             if  not "nodeId" in data["individual"]:
@@ -112,16 +109,17 @@ class IndividuoReatoView(View):
                 id_individuo=data["individual"].get("nodeId")
 
             if  imputazione=="ImputatoDi":
-                print("ciao2")
-                intercettazione_result = self.individuoReato_repository.CreaImputazione(id_individuo,id_reato)
+                self.individuoReato_repository.CreaImputazione(id_individuo,id_reato)
             else:
-                print("prova")
-                intercettazione_result = self.individuoReato_repository.CreaCondanna(id_individuo,id_reato)
+                self.individuoReato_repository.CreaCondanna(id_individuo,id_reato)
 
-            # Restituisci il risultato con status 100 se la query è andata bene
-            return JsonResponse({"status": 100, "result": intercettazione_result})
+            # Restituisci il risultato con status 200 se la query è andata bene
+            return JsonResponse({"status": 200,'result': id_individuo})
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON data"}, status=400)
         except Exception as e:
             # Se si verifica un errore, restituisci status 500 e il messaggio di errore
             return JsonResponse({"error_message": str(e)}, status=500)
+        
+
+    

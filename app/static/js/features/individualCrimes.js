@@ -816,7 +816,8 @@ function sendNewImputationSentenceToBackendIndividualCrimes(){
                             "nazioneResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddNation").value}",
                             "provinciaResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddProvince").value}",
                             "cittaResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddCity").value}",
-                            "indirizzoResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddAddress").value}"
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddAddress").value}",
+                            "capResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddCap").value}"
                           },
             `;
   }
@@ -934,6 +935,7 @@ function sendUpdateImputationSentenceToBackendIndividualCrimes(){
                             "provinciaResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddProvince").value}",
                             "cittaResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddCity").value}",
                             "indirizzoResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddAddress").value}"
+                            "capResidenza": "${document.querySelector(".modalIndividualCrimesIndividualCap").value}"
                           },
             `;
   }
@@ -969,7 +971,7 @@ function sendUpdateImputationSentenceToBackendIndividualCrimes(){
 
   console.log(json);
   
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoReato/modificaIndReato/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -993,12 +995,10 @@ function sendUpdateImputationSentenceToBackendIndividualCrimes(){
         viewToastMessage("Modifica Imputazione", "Errore nella modifica dell'imputazione.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
+
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
 }
@@ -1016,11 +1016,12 @@ function sendUpdateIndividualToBackendIndividualCrimes(){
             "province": "${document.querySelector(".modalIndividualCrimesIndividualProvince").value}",
             "city": "${document.querySelector(".modalIndividualCrimesIndividualCity").value}",
             "address": "${document.querySelector(".modalIndividualCrimesIndividualAddress").value}",
+            "cap": "${document.querySelector(".modalIndividualCrimesIndividualCap").value}"
           }`;
 
   console.log(json);
   
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuo/modificaIndividuo/", { //FUNZIONE PER MODIFICARE IL PORCO DIO DI INDIVIDUO
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1035,12 +1036,9 @@ function sendUpdateIndividualToBackendIndividualCrimes(){
       viewToastMessage("Modifica Individuo", "Errore nella modifica dell'individuo.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Modifica Individuo", "Modifica avvenuta con successo.", "success");  
 }

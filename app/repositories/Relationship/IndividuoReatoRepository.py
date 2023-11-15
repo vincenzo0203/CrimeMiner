@@ -191,7 +191,7 @@ class IndividuoReatoRepository:
             nodo1 = Individuo.nodes.get(nodeId=id_individuo)
             nodo2 = Reato.nodes.get(nodeId=id_reato)
 
-            ImputatoDi_model = nodo1.CondannatoList.connect(nodo2)
+            ImputatoDi_model = nodo1.ImputatoDiList.connect(nodo2)
 
             ImputatoDi_model.edgeId = edge
 
@@ -220,14 +220,14 @@ class IndividuoReatoRepository:
     def CreaCondanna(id_individuo,id_reato):
         try:
             Condannato_model = Condannato()
-            edge=IndividuoReatoRepository.get_max_edge_condannato_id()
+            #edge=IndividuoReatoRepository.get_max_edge_condannato_id()
 
             nodo1 = Individuo.nodes.get(nodeId=id_individuo)
             nodo2 = Reato.nodes.get(nodeId=id_reato)
 
             Condannato_model = nodo1.CondannatoList.connect(nodo2)
 
-            Condannato_model.edgeId = edge
+            #Condannato_model.edgeId = edge
 
             mesiCondanna = ((nodo2.maxMonths + nodo2.minMonths )/2)
           
@@ -311,7 +311,7 @@ class IndividuoReatoRepository:
                 return None  # Restituisci None anziché una lista vuota in caso di errore
 
 
-
+   
 
 
 
