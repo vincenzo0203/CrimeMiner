@@ -558,7 +558,7 @@ function showDetailsOfEdgeIndividualEnviromentalTapping(data){
   document.querySelector(".infoIndividualEnviromentalTappingNodeIndividual").style.display = "none";
   document.querySelector(".infoIndividualEnviromentalTappingEdge").style.display = "flex";
 
-  document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Imputazione";
+  document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli Presenza";
 
   document.querySelector(".infoIndividualEnviromentalTappingEdgeIdContent").innerHTML = data.edgeId;
   document.querySelector(".infoIndividualEnviromentalTappingEdgeIndividualContent").innerHTML = data.sourceNodeId;
