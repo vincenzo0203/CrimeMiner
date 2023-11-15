@@ -195,7 +195,7 @@ class IndividuoIntercettazioneAmbRepository:
             for record in result:
                 node_id = record["nodeId"]
                 # Estrai la parte numerica dalla stringa nodeId
-                numeric_part = int(node_id[2:])
+                numeric_part = int(node_id[1:])
 
                 # Confronto con il massimo attuale
                 if numeric_part > max_number:
@@ -203,7 +203,7 @@ class IndividuoIntercettazioneAmbRepository:
                     max_node_id = node_id
 
             result_numeric = max_number + 1
-            result_node_id = f"IA{result_numeric}"
+            result_node_id = f"I{result_numeric}"
 
             return result_node_id
         except Exception as e:
@@ -216,11 +216,27 @@ class IndividuoIntercettazioneAmbRepository:
         try:
             session = Neo4jDriver.get_session()
 
-            resultIndividual=IndividuoRepository.find_all_surname_name()
-            resultIntercettazione=IntercettazioneAmbRepository.find_all_id()
+            # Query per ottenere i nodi degli individui
+            query_individui = "MATCH (i:Individuo) RETURN i.nodeId AS individuoNodeId, i.nome AS individuoNome, i.cognome AS individuoCognome"
+            result_individui = session.run(query_individui)
+
+            # Query per ottenere i nodi delle intercettazioni
+            query_intercettazioni = "MATCH (i:IntercettazioneAmb) RETURN i.nodeId"
+            result_intercettazioni = session.run(query_intercettazioni)
 
             # Unisci i risultati delle query
-            nodes = resultIndividual + resultIntercettazione
+            nodes = []
+            for record in result_individui:
+                nodes.append({
+                    "nodeId": record["individuoNodeId"],
+                    "nome": record["individuoNome"],
+                    "cognome": record["individuoCognome"]
+                })
+
+            for record in result_intercettazioni:
+                nodes.append({
+                    "nodeId": record["nodeId"]
+                })
 
             # Crea il nuovo nodeId
             newNodeId = IndividuoIntercettazioneAmbRepository.get_max_node_id_AMB()
@@ -231,7 +247,11 @@ class IndividuoIntercettazioneAmbRepository:
                 "newNodeId": newNodeId
             }
 
-            return data
+            # Salva i dati in un file JSON
+            with open('output.json', 'w') as json_file:
+                json.dump(data, json_file, indent=2)
+
+            print("Dati convertiti con successo e salvati in output.json")
 
         except Exception as e:
             print("Errore durante la conversione dei dati:", e)

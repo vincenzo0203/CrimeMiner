@@ -14,9 +14,9 @@
     </div>
     <div class="accordionContainer p-2 bd-highlight">
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary btn-success accordionContainerButtonAdd" data-bs-toggle="modal" data-bs-target="#modalIndividualEnviromentalTapping" onclick="openModalAddNewEnviromentalTappingIndividualEnviromentalTapping()">
-        Inserisci una nuova intercettazione ambientale
-      </button>
+      <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalIndividualEnviromentalTapping">
+        Inserisci una nuova condanna o imputazione
+      </button>-->
       <div class="accordion">
 
         <!-- Properties -->
@@ -123,20 +123,6 @@
                   <div>Indirizzo</div>
                   <div class="infoIndividualEnviromentalTappingNodeIndividualAddressContent"></div>
                 </div>
-
-                <div class="infoIndividualEnviromentalTappingEdgeButton d-flex flex-end">
-                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalIndividualEnviromentalTapping" onclick="openModalUpdateIndividualIndividualEnviromentalTapping()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                      <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                    </svg>
-                  </button>
-                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalDeleteIndividualEnviromentalTapping" onclick="openModalDeleteIndividualIndividualEnviromentalTapping()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                    </svg>
-                  </button>
-                </div>
               </div>
 
               <!--Intercettazione Ambientale-->
@@ -158,23 +144,8 @@
                   <div>Contenuto</div>
                   <div class="infoIndividualEnviromentalTappingNodeEnviromentalTappingContentContent"></div>
                 </div>
-
-                <div class="infoIndividualEnviromentalTappingEdgeButton d-flex flex-end">
-                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalIndividualEnviromentalTapping" onclick="openModalUpdateEnviromentalTappingIndividualEnviromentalTapping()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                      <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                    </svg>
-                  </button>
-                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalDeleteIndividualEnviromentalTapping" onclick="openModalDeleteEnviromentalTappingIndividualEnviromentalTapping()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                    </svg>
-                  </button>
-                </div>
               </div>
 
-              <!--Arco-->
               <div class="infoIndividualEnviromentalTappingEdge">
                 <div class="infoIndividualEnviromentalTappingEdgeId d-flex">
                   <div>Identificativo</div>
@@ -199,15 +170,6 @@
                 <div class="infoIndividualEnviromentalTappingEdgeMonthsTotal d-flex">
                   <div>Mesi Totali</div>
                   <div class="infoIndividualEnviromentalTappingEdgeMonthsTotalContent"></div>
-                </div>
-
-                <div class="infoIndividualEnviromentalTappingEdgeButton d-flex flex-end">
-                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalDeleteIndividualEnviromentalTapping" onclick="openModalDeleteEdgeIndividualEnviromentalTapping()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                    </svg>
-                  </button>
                 </div>
               </div>
 
@@ -291,231 +253,5 @@
       </div>   
     </div>
     
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalIndividualEnviromentalTapping" class="modalIndividualEnviromentalTapping" tabindex="-1" aria-labelledby="modalIndividualEnviromentalTappingLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="modalIndividualEnviromentalTappingLabel">Nuova Intercettazione</h1>
-        <button type="button" class="btn-close btnCloseModalAddUpdate" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!--<nav>
-          <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-0-tab" data-bs-toggle="tab" data-bs-target="#nav-0" type="button" role="tab" aria-controls="nav-2" aria-selected="true">2</button>
-            <button class="nav-link" id="nav-1-tab" data-bs-toggle="tab" data-bs-target="#nav-1" type="button" role="tab" aria-controls="nav-1" aria-selected="false">1</button>
-            <button class="nav-link" id="nav-2-tab" data-bs-toggle="tab" data-bs-target="#nav-2" type="button" role="tab" aria-controls="nav-0" aria-selected="false">0</button>
-          </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">-->
-          <div class="tab-pane fade show active" id="nav-0" role="tabpanel" aria-labelledby="nav-0-tab">
-            <form class="modalForm modalFormAddEnviromentalTapping">
-              <div class="modalContainer">
-                <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value=""  onclick="checkedIndividualAndEnviromentalTappingModalIndividualEnviromentalTapping()"  id="CheckIndividualExisting">
-                    <label class="form-check-label" for="CheckIndividualExisting">
-                      Inserisci individuo già registrato
-                    </label>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" onclick="checkedIndividualAndEnviromentalTappingModalIndividualEnviromentalTapping()" id="CheckEnviromentalTappingExisting">
-                    <label class="form-check-label" for="CheckEnviromentalTappingExisting">
-                      Inserisci intercettazione ambientale già registrata
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion accordionIndividual">
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingIndividual">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIndividual" aria-expanded="true" aria-controls="collapseIndividual">
-                      Dati nuovo individuo
-                    </button>
-                  </h2>
-                  <div id="collapseIndividual" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                      <div class="modalContainer">
-                        <div class="mb-3">
-                          <label for="recipient-surname-individual" class="col-form-label">Cognome</label>
-                          <input type="text" class="form-control modalIndividualEnviromentalTappingIndividualAddSurname" id="recipient-surname-individual">
-                        </div>
-                        <div class="mb-3">
-                          <label for="recipient-name-individual" class="col-form-label">Nome</label>
-                          <input type="text" class="form-control modalIndividualEnviromentalTappingIndividualAddName" id="recipient-name-individual" step="1">
-                        </div>
-                        <div class="mb-3">
-                          <label for="recipient-date-individual" class="col-form-label">Data di Nascita</label>
-                          <input type="date" class="form-control modalIndividualEnviromentalTappingIndividualAddDate" id="recipient-date-individual" step="1">
-                        </div>
-                        <div class="mb-3">
-                          <label for="recipient-nation-individual" class="col-form-label">Paese</label>
-                          <input type="text" class="form-control modalIndividualEnviromentalTappingIndividualAddNation" id="recipient-nation-individual">
-                        </div>
-                      </div>
-                      <div class="modalContainer">
-                        <div class="mb-3">
-                          <label for="recipient-province-individual" class="col-form-label">Provincia</label>
-                          <input type="text" class="form-control modalIndividualEnviromentalTappingIndividualAddProvince" id="recipient-province-individual" step="1">
-                        </div>
-                        <div class="mb-3">
-                          <label for="recipient-city-individual" class="col-form-label">Città</label>
-                          <input type="text" class="form-control modalIndividualEnviromentalTappingIndividualAddCity" id="recipient-city-individual" step="1">
-                        </div>
-                        <div class="mb-3">
-                          <label for="recipient-cap-individual" class="col-form-label">Cap</label>
-                          <input type="number" class="form-control modalIndividualEnviromentalTappingIndividualAddCap" id="recipient-cap-individual">
-                        </div>
-                        <div class="mb-3">
-                          <label for="recipient-address-individual" class="col-form-label">Indirizzo</label>
-                          <input type="text" class="form-control modalIndividualEnviromentalTappingIndividualAddAddress" id="recipient-address-individual" step="1">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion accordionEnviromentalTapping">
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingEnviromentalTapping">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEnviromentalTapping" aria-expanded="false" aria-controls="collapseEnviromentalTapping">
-                      Dati nuova intercettazione ambientale
-                    </button>
-                  </h2>
-                  <div id="collapseEnviromentalTapping" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                      <div class="modalContainer">
-                        <div class="mb-3">
-                          <div class="col-form-label">Identificativo</div>
-                          <div class="col-form-label modalIndividualEnviromentalTappingEnviromentalTappingAddId"> </div>
-                        </div>
-                        <div class="mb-3">
-                          <label for="recipient-name-enviromental-tapping" class="col-form-label">Luogo</label>
-                          <input type="text" class="form-control modalIndividualEnviromentalTappingEnviromentalTappingAddPlace" id="recipient-name-enviromental-tapping" step="1">
-                        </div>
-                        <div class="mb-3">
-                          <label for="recipient-date-enviromental-tapping" class="col-form-label">Data</label>
-                          <input type="date" class="form-control modalIndividualEnviromentalTappingEnviromentalTappingAddDate" id="recipient-date-enviromental-tapping" step="1">
-                        </div>
-                      </div>
-                      <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Contenuto Intercettazione</label>
-                        <textarea class="form-control modalIndividualEnviromentalTappingEnviromentalTappingAddTextarea" id="message-text"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="modalContainer">
-                <div class="mb-3">
-                  <label for="recipient-individual" class="col-form-label">Individuo</label>
-                  <select class="form-select modalIndividualEnviromentalTappingIndividual" class="form-control" id="recipient-individual" aria-label="select example">
-                    <option selected></option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="recipient-enviromental-tapping" class="col-form-label modalIndividualEnviromentalTappingEnviromentalTappingLabel">Intercettazione Ambientale</label>
-                  <select class="form-select modalIndividualEnviromentalTappingEnviromentalTapping" class="form-control" id="recipient-enviromental-tapping" aria-label="select example">
-                    <option selected></option>
-                  </select>
-                </div>
-              </div>
-            </form>
-
-            <form class="modalForm modalFormUpdateIndividual">
-              
-              <div class="modalContainer">
-                <div class="mb-3">
-                  <label for="recipient-surname-individual" class="col-form-label">Cognome</label>
-                  <input type="text" class="form-control modalIndividualEnviromentalTappingIndividualSurname" id="recipient-surname-individual">
-                </div>
-                <div class="mb-3">
-                  <label for="recipient-name-individual" class="col-form-label">Nome</label>
-                  <input type="text" class="form-control modalIndividualEnviromentalTappingIndividualName" id="recipient-name-individual" step="1">
-                </div>
-                <div class="mb-3">
-                  <label for="recipient-date-individual" class="col-form-label">Data di Nascita</label>
-                  <input type="date" class="form-control modalIndividualEnviromentalTappingIndividualDate" id="recipient-date-individual" step="1">
-                </div>
-                <div class="mb-3">
-                  <label for="recipient-nation-individual" class="col-form-label">Paese</label>
-                  <input type="text" class="form-control modalIndividualEnviromentalTappingIndividualNation" id="recipient-nation-individual">
-                </div>
-              </div>
-              <div class="modalContainer">
-                <div class="mb-3">
-                  <label for="recipient-province-individual" class="col-form-label">Provincia</label>
-                  <input type="text" class="form-control modalIndividualEnviromentalTappingIndividualProvince" id="recipient-province-individual" step="1">
-                </div>
-                <div class="mb-3">
-                  <label for="recipient-city-individual" class="col-form-label">Città</label>
-                  <input type="text" class="form-control modalIndividualEnviromentalTappingIndividualCity" id="recipient-city-individual" step="1">
-                </div>
-                <div class="mb-3">
-                  <label for="recipient-cap-individual" class="col-form-label">Cap</label>
-                  <input type="text" class="form-control modalIndividualEnviromentalTappingIndividualCap" id="recipient-cap-individual">
-                </div>
-                <div class="mb-3">
-                  <label for="recipient-address-individual" class="col-form-label">Indirizzo</label>
-                  <input type="text" class="form-control modalIndividualEnviromentalTappingIndividualAddress" id="recipient-address-individual" step="1">
-                </div>
-              </div>
-            </form>
-
-            <form class="modalForm modalFormUpdateEnviromentalTapping">
-              
-              <div class="modalContainer">
-                <div class="mb-3">
-                  <div class="col-form-label">Identificativo</div>
-                  <div class="col-form-label modalIndividualEnviromentalTappingEnviromentalTappingId"> </div>
-                </div>
-                <div class="mb-3">
-                  <label for="recipient-place-enviromentalTapping" class="col-form-label">Luogo</label>
-                  <input type="text" class="form-control modalIndividualEnviromentalTappingEnviromentalTappingPlace" id="recipient-place-enviromentalTapping" step="1">
-                </div>
-                <div class="mb-3">
-                  <label for="recipient-date-enviromental-tapping" class="col-form-label">Data</label>
-                  <input type="date" class="form-control modalIndividualEnviromentalTappingEnviromentalTappingDate" id="recipient-date-enviromental-tapping" step="1">
-                </div>
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Contenuto Intercettazione</label>
-                <textarea class="form-control modalIndividualEnviromentalTappingEnviromentalTappingTextarea" id="message-text"></textarea>
-              </div>
-            </form>
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Indietro</button>
-        <button type="button" class="btn btn-success modalButtonSave" onclick="selectFunctionToRegisterDateIndividualEnviromentalTapping()">Salva</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Delete -->
-<div class="modal fade" id="modalDeleteIndividualEnviromentalTapping" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalDeleteIndividualEnviromentalTappingLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header modalDeleteIndividualEnviromentalTappingHeader">
-        <h1 class="modal-title fs-5" id="modalDeleteIndividualEnviromentalTappingLabel">Modal title</h1>
-        <button type="button" class="btn-close btn-close-white btnCloseModalDelete" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body modalDeleteIndividualEnviromentalTappingBody">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Indietro</button>
-        <button type="button" class="btn btn-primary modalDeleteIndividualEnviromentalTappingConfirmButton" onclick="selectFunctionToDeleteDateIndividualEnviromentalTapping()">Conferma</button>
-      </div>
-    </div>
-  </div>
 </div>
 {% endblock %}

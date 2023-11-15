@@ -45,10 +45,10 @@ class Individuo(StructuredNode):
    #haChiamatoList = RelationshipFrom("Individuo", "HaChiamato")
         
     #Sezione di definizione delle relazioni con entity
-    #CondannatoList = RelationshipTo('Reato', 'Condannato',model=Condannato)
+    CondannatoList = RelationshipTo('Reato', 'Condannato',model=Condannato)
 
     #Sezione di definizione delle relazioni con entity
-    #ImputatoDiList = RelationshipTo('Reato', 'ImputatoDi',model=ImputatoDi)
+    ImputatoDiList = RelationshipTo('Reato', 'ImputatoDi',model=ImputatoDi)
 
     #Sezione di definizione delle relazioni con entity
     PresenteList=RelationshipTo('IntercettazioneAmb','Presente')

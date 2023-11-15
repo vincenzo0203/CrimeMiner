@@ -799,7 +799,7 @@ function openModalUpdateIndividualIndividualCrimes(){
   fillUpdateModalIndividualIndividualCrimes();
 }
 
-//Funzione che manda al backend una nuova chiamata da inserire (e enventualmente i nuovi individui)
+                          //Funzione che manda al backend una nuova chiamata da inserire (e enventualmente i nuovi individui)
 function sendNewImputationSentenceToBackendIndividualCrimes(){
 
   let [year, month, day] = "";
@@ -1167,10 +1167,9 @@ function returnToCreationPageIndividualCrimes(){
     document.querySelector("#item-properties").click();
 
   if(document.querySelector("#item-details").checked == true){
-    document.querySelector(".infoIndividualCrimesNodeCrime").style.display = "none";
-    document.querySelector(".infoIndividualCrimesEdge").style.display = "none";
-    document.querySelector(".infoIndividualCrimesNodeIndividual").style.display = "none";
-    document.querySelector(".infoIndividualCrimesNot").style.display = "flex";
+    document.querySelector(".infoIndividualWiretapsEdge").style.display = "none";
+    document.querySelector(".infoIndividualWiretapsNode").style.display = "none";
+    document.querySelector(".infoIndividualWiretapsNot").style.display = "flex";
 
     document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli";
     document.querySelector("#item-details").click();
