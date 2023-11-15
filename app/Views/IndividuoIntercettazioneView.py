@@ -73,12 +73,11 @@ class IndividuoIntercettazioneView(View):
     
 
     @request_mapping("/creaIntercettazione/", method="post")
-    def create_Node(self,request) -> JsonResponse:  
+    def create_EdgeIntercettazione(self,request) -> JsonResponse:  
 
         try:
             #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
-            data =json.loads(json.loads(request.body)) 
-
+            data =json.loads(json.loads(request.body))
 
             id1_individuo=None
             id2_individuo=None

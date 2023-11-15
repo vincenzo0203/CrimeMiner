@@ -3,6 +3,7 @@ from app.Neo4jConnection import Neo4jDriver
 from app.repositories.Entity.ReatoRepository import ReatoRepository
 from app.repositories.Entity.IndividuoRepository import IndividuoRepository
 from app.Models.Relationship.CondannatoModel import Condannato
+from app.Models.Relationship.ImputatoDiModel import ImputatoDi
 from app.Models.Entity.IndividuoModel import Individuo
 from app.Models.Entity.ReatoModel import Reato
 
@@ -183,35 +184,34 @@ class IndividuoReatoRepository:
 
     @staticmethod
     def CreaImputazione(id_individuo,id_reato):
-        #try:
-            #haChiamato_model = HaChiamato()
-            #times=int(IndividuoIntercettazioneRepository.CalcolaTimeStamp())
-            #edge=IndividuoIntercettazioneRepository.get_max_edge_id()
+        try:
+            ImputatoDi_model = ImputatoDi()
+            edge=IndividuoReatoRepository.get_max_edge_imputatoDi_id()
 
-            #nodo1 = Individuo.nodes.get(nodeId=id1)
-            #nodo2 = Individuo.nodes.get(nodeId=id2)
+            nodo1 = Individuo.nodes.get(nodeId=id_individuo)
+            nodo2 = Reato.nodes.get(nodeId=id_reato)
 
-            #haChiamato_model = nodo1.haChiamatoList.connect(nodo2)
+            ImputatoDi_model = nodo1.CondannatoList.connect(nodo2)
 
-            #haChiamato_model.timestamp = times
-            #haChiamato_model.edgeId = edge
-            #haChiamato_model.mesiCondanna=0
-            #haChiamato_model.mesiImputati=0
-            #haChiamato_model.mesiTotali=0
-            #haChiamato_model.data = data.get("date")
-            #haChiamato_model.entityType = "HaChiamato"
-            #haChiamato_model.name = "Name"
-            #haChiamato_model.ora = data.get("time")
-            #haChiamato_model.durata = data.get("duration")
-            #haChiamato_model.contenuto = data.get("content")
-            #haChiamato_model.sourceNodeId = id1
-            #haChiamato_model.targetNodeId = id2
+            ImputatoDi_model.edgeId = edge
 
-            #haChiamato_model.save()
+            mesiCondanna = ((nodo2.maxMonths + nodo2.minMonths )/2)
+          
+            ImputatoDi_model.mesiTotali= nodo1.mesiTotali + mesiCondanna
 
-            #return haChiamato_model.edgeId
+            nodo1.mesiTotali = nodo1.mesiTotali + mesiCondanna
+
+            nodo1.save()
+
+            ImputatoDi_model.entityType = "ImputatoDi"
+            ImputatoDi_model.sourceNodeId = id_individuo
+            ImputatoDi_model.targetNodeId = id_reato
+
+            ImputatoDi_model.save()
+
+            return ImputatoDi_model.edgeId
         
-        #except Exception as e:
+        except Exception as e:
             # Gestione degli altri errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante il salvataggio dell'intercettazione:", e)
             return []
@@ -263,6 +263,34 @@ class IndividuoReatoRepository:
             try:
                 session = Neo4jDriver.get_session()
                 result = session.run("MATCH ()-[r:Condannato]->() RETURN r.edgeId AS edgeId")
+                for record in result:
+                    edge_id = record["edgeId"]
+                    # Estrai la parte numerica dalla stringa edgeId
+                    numeric_part = int(edge_id[2:])  # Assume che i primi due caratteri siano "IT"
+                    # Confronto con il massimo attuale
+                    if numeric_part > max_number:
+                        max_number = numeric_part
+                        max_edge_id = edge_id
+
+                
+                result_numeric_part=max_number+1
+                result_edge_id=f"IT{result_numeric_part}"
+
+                return result_edge_id
+            except Exception as e:
+                # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+                print("Errore durante l'esecuzione della query Cypher:", e)
+                return None  # Restituisci None anziché una lista vuota in caso di errore
+            
+
+
+    @staticmethod
+    def get_max_edge_imputatoDi_id():
+            max_edge_id = None
+            max_number = -1  # Un valore iniziale molto basso per confronto
+            try:
+                session = Neo4jDriver.get_session()
+                result = session.run("MATCH ()-[r:ImputatoDi]->() RETURN r.edgeId AS edgeId")
                 for record in result:
                     edge_id = record["edgeId"]
                     # Estrai la parte numerica dalla stringa edgeId

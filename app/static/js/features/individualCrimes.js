@@ -839,7 +839,7 @@ function sendNewImputationSentenceToBackendIndividualCrimes(){
   
   json += ` 
             "crimeId": "${document.querySelector(".modalIndividualCrimesCrime").value}",
-            "tipologyEdge": "${document.querySelector(".modalIndividualCrimesTipology").value}",
+            "tipologyEdge": "${document.querySelector(".modalIndividualCrimesTipology").value}"
           `;
 
   json += `}`;

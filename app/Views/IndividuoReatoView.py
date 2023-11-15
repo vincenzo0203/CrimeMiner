@@ -92,18 +92,17 @@ class IndividuoReatoView(View):
 
 
     @request_mapping("/creaIndReato/", method="post")
-    def create_Node(self,request) -> JsonResponse:  
-        try:
-            print("ciao")
+    def create_EdgeReato(self,request) -> JsonResponse:  
+        try:            
             #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
-            data =json.loads(json.loads(request.body)) 
-            
-            
+            data = json.loads(json.loads(request.body))
+            #dataJson=json.dumps(data)
             print(data)
 
             id_individuo=None
             id_reato=data["crime"].get("nodeId")
             imputazione=data["edge"].get("tipologyEdge")
+            print(imputazione)
 
             # Esegui la tua query e ottieni il risultato
             if  not "nodeId" in data["individual"]:
@@ -116,6 +115,7 @@ class IndividuoReatoView(View):
                 print("ciao2")
                 intercettazione_result = self.individuoReato_repository.CreaImputazione(id_individuo,id_reato)
             else:
+                print("prova")
                 intercettazione_result = self.individuoReato_repository.CreaCondanna(id_individuo,id_reato)
 
             # Restituisci il risultato con status 100 se la query è andata bene
