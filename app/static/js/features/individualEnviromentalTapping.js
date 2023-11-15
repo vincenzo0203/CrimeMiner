@@ -15,6 +15,7 @@ window.onload = function () {
   //Funzione che fa partire il caricamento
   loadPage(2500);
   requestAllNodesIndividualEnviromentalTapping();
+  checkedIndividualAndEnviromentalTappingModalIndividualEnviromentalTapping();
 
   //Comando che fa aprire all'avvio della pagina l'accordione delle proprietà
   document.querySelector("#item-properties").click();
@@ -43,7 +44,29 @@ function requestAllNodesIndividualEnviromentalTapping() {
     data = JSON.parse(data);
     createGraphIndividualEnviromentalTapping(data.result);
     fillPropertyAccordionIndividualEnviromentalTapping(data.result);
-    //fillSourceAndTargetModalNewCallIndividualEnviromentalTapping(data.nodes)
+    requestAllNodesModalIndividualEnviromentalTapping();
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
+
+//Funzione che effettua la richiesta al backend per caricare i nomi del'individuo e del crimine nella modale
+function requestAllNodesModalIndividualEnviromentalTapping() {
+
+  fetch("/CrimeMiner/individuoIntercettazioneAmb/outputJson/", {
+    method: "GET"
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      throw new Error('Errore nella richiesta.');
+    }
+  })
+  .then(data => {
+    data = JSON.parse(data);
+    fillIndividualAndEnviromentalTappingModalNewEnviromentalTappingIndividualEnviromentalTapping(data.result);
   })
   .catch(error => {
     console.error(error);
@@ -71,8 +94,7 @@ function requestSizeNodesIndividualEnviromentalTapping(){
   })
   .then(data => {
     data = JSON.parse(data);
-    console.log(data);
-    //this['create'+  document.querySelector(".selectMetrics").value +'IndividualWiretaps'](data);
+    //this['create'+  document.querySelector(".selectMetrics").value +'IndividualEnviromentalTapping'](data);
     if(metric != "graphall")
       changeSizeNodesIndividualEnviromentalTapping(data);
     else
@@ -439,6 +461,29 @@ function checkedAnonymizationIndividualEnviromentalTapping(){
   }
 }
 
+//Funzione che controlla dalle checkbox della modale se il mittente o il destinatario sono già registrati
+function checkedIndividualAndEnviromentalTappingModalIndividualEnviromentalTapping(){
+
+  if(document.querySelector("#CheckIndividualExisting").checked){
+    document.querySelector(".accordionIndividual").style.display = "none";
+    document.querySelector(".modalIndividualEnviromentalTappingIndividual").disabled = false;
+  }
+  else{
+    document.querySelector(".accordionIndividual").style.display = "block";
+    document.querySelector(".modalIndividualEnviromentalTappingIndividual").disabled = true;
+  }
+
+  if(document.querySelector("#CheckEnviromentalTappingExisting").checked){
+    document.querySelector(".accordionEnviromentalTapping").style.display = "none";
+    document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTapping").disabled = false;
+  }
+  else{
+    document.querySelector(".accordionEnviromentalTapping").style.display = "block";
+    document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTapping").disabled = true;
+  }
+
+}
+
 //Funzione che mostra i dettagli dei nodi della tipologia Individuo
 function showDetailsOfNodeIndividualIndividualEnviromentalTapping(data){
   document.querySelector(".infoIndividualEnviromentalTappingEdge").style.display = "none";
@@ -601,3 +646,453 @@ function sendNewCallToBackendIndividualEnviromentalTapping(){
 /*
   viewToastMessage("Registrazione Codannato/ImputatoDi", "Registrazione avvenuta con successo.", "success");  
 }*/
+
+//Funzione che inserisce nelle select della modale gli individui da scegliere se già registrati e le intercettazioni se già registrate
+function fillIndividualAndEnviromentalTappingModalNewEnviromentalTappingIndividualEnviromentalTapping(data){
+  let nodes = data.nodes;
+
+  let selectIndividual = document.querySelector(".modalIndividualEnviromentalTappingIndividual");
+  let selectEnviromentalTapping = document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTapping");
+
+  for (let i = 1; i < selectIndividual.length; i++){
+    selectIndividual.remove(i);
+  }
+
+  for (let i = 1; i < selectEnviromentalTapping.length; i++){
+    selectEnviromentalTapping.remove(i);
+  }
+
+  for (let j = 0; j < nodes.length; j++) {
+    let opt = nodes[j].nodeId;
+    let text;
+    let el1;
+
+    if(opt[1] == "A"){
+        
+      el1 = new Option(opt, opt);
+
+      selectEnviromentalTapping.appendChild(el1);
+    }
+    else{
+      text = nodes[j].cognome + " " + nodes[j].nome;
+
+      if(text == "null null"){
+        el1 = new Option(opt, opt);
+      }
+      else{
+        el1 = new Option(opt+" "+text, opt);
+      }
+
+      selectIndividual.appendChild(el1);
+    }
+  }
+
+  document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddId").innerHTML = data.newNodeId;
+}
+
+//Funzione che cancella i valori degli input nella modale
+function fillAddModalIndividualEnviromentalTapping(){
+  
+  //Checkbox
+  document.querySelector("#CheckIndividualExisting").checked = false;
+  document.querySelector("#CheckEnviromentalTappingExisting").checked = false;
+
+  //Individuo
+  document.querySelector(".accordionIndividual").style.display = "block";
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualAddSurname").value = "";
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualAddName").value = "";
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualAddDate").value = "";
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualAddNation").value = "";
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualAddProvince").value = "";
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualAddCity").value = "";
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualAddCap").value = "";
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualAddAddress").value = "";
+
+  if(document.querySelector(".accordionIndividual").childNodes[1].childNodes[3].classList.contains("show")){
+    document.querySelector(".accordionIndividual").childNodes[1].childNodes[3].classList.remove("show");
+    document.querySelector(".accordionIndividual").childNodes[1].childNodes[1].childNodes[1].classList.add("collapsed");
+  }
+    
+  //Intercettazione Ambientale
+  document.querySelector(".accordionEnviromentalTapping").style.display = "block";
+  document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddPlace").value = "";
+  document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddDate").value = "";
+  document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddTextarea").value = "";
+
+  if(document.querySelector(".accordionEnviromentalTapping").childNodes[1].childNodes[3].classList.contains("show")){
+    document.querySelector(".accordionEnviromentalTapping").childNodes[1].childNodes[3].classList.remove("show");
+    document.querySelector(".accordionEnviromentalTapping").childNodes[1].childNodes[1].childNodes[1].classList.add("collapsed");
+  }
+
+  document.querySelector(".modalIndividualEnviromentalTappingIndividual").selectedIndex = 0;
+  document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTapping").selectedIndex = 0;
+  document.querySelector(".modalIndividualEnviromentalTappingIndividual").disabled = true;
+  document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTapping").disabled = true;
+
+}
+
+//Funzione che inserisce i campi dell'intercettazione nella modale
+function fillUpdateModalEnviromentalTappingIndividualEnviromentalTapping(){
+
+  let [day, month, year] = document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingDateContent").innerHTML.split('/');
+  
+  //Intercettazione Ambientale
+  document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingId").innerHTML = document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingIdContent").innerHTML;
+  document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingPlace").value = document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingPlaceContent").innerHTML;
+  document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingDate").value = `${year}-${month}-${day}`;
+  document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingTextarea").value = document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingContentContent").innerHTML;
+
+}
+
+//Funzione che inserisce i campi dell'individuo nella modale
+function fillUpdateModalIndividualIndividualEnviromentalTapping(){
+  let [day, month, year] = cyNodeDataIndividualEnviromentalTapping.date.split('/');
+
+  //Individuo
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualSurname").value = cyNodeDataIndividualEnviromentalTapping.surname;
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualName").value = cyNodeDataIndividualEnviromentalTapping.name;
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualDate").value = `${year}-${month}-${day}`;
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualNation").value = cyNodeDataIndividualEnviromentalTapping.nation;
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualProvince").value = cyNodeDataIndividualEnviromentalTapping.province;
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualCity").value = cyNodeDataIndividualEnviromentalTapping.city;
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualCap").value = cyNodeDataIndividualEnviromentalTapping.cap;
+  document.querySelector(".modalIndividualEnviromentalTappingIndividualAddress").value = cyNodeDataIndividualEnviromentalTapping.address;
+
+}
+
+//Funzione che all'apertura della modale di aggiunta cambia dei campi della modale e richiama la funzione per fillare gli input
+function openModalAddNewEnviromentalTappingIndividualEnviromentalTapping(){
+  document.querySelector(".modalFormAddEnviromentalTapping").style.display = "flex";
+  document.querySelector(".modalFormUpdateEnviromentalTapping").style.display = "none";
+  document.querySelector(".modalFormUpdateIndividual").style.display = "none";
+  document.querySelector("#modalIndividualEnviromentalTappingLabel").innerHTML = "Inserimento nuova presenza in intercettazione ambientale";
+
+  fillAddModalIndividualEnviromentalTapping();
+}
+
+//Funzione che all'apertura della modale di modifica cambia dei campi della modale e richiama la funzione per fillare gli input
+function openModalUpdateEnviromentalTappingIndividualEnviromentalTapping(){
+  document.querySelector(".modalFormAddEnviromentalTapping").style.display = "none";
+  document.querySelector(".modalFormUpdateEnviromentalTapping").style.display = "flex";
+  document.querySelector(".modalFormUpdateIndividual").style.display = "none";
+  document.querySelector("#modalIndividualEnviromentalTappingLabel").innerHTML = "Modifica intercettazione ambientale";
+
+  fillUpdateModalEnviromentalTappingIndividualEnviromentalTapping();
+}
+
+//Funzione che all'apertura della modale di conferma eliminazione cambia i campi per la chiamata
+function openModalDeleteEnviromentalTappingIndividualEnviromentalTapping(){
+  document.querySelector("#modalDeleteIndividualEnviromentalTappingLabel").innerHTML = "Cancellazione intercettazione ambientale";
+  document.querySelector(".modalDeleteIndividualEnviromentalTappingBody").innerHTML = "Sei sicuro di voler cancellare questa intercettazione? Verranno cancellati i dati dell'intercettazione e le presenze degli individui a quell'intercettazione cancellando eventualmente anche mesi imputati o mesi condanna";
+}
+
+//Funzione che all'apertura della modale di modifica cambia dei campi della modale e richiama la funzione per fillare gli input
+function openModalUpdateIndividualIndividualEnviromentalTapping(){
+  document.querySelector(".modalFormAddEnviromentalTapping").style.display = "none";
+  document.querySelector(".modalFormUpdateIndividual").style.display = "flex";
+  document.querySelector(".modalFormUpdateEnviromentalTapping").style.display = "none";
+  document.querySelector("#modalIndividualEnviromentalTappingLabel").innerHTML = "Modifica individuo";
+
+  fillUpdateModalIndividualIndividualEnviromentalTapping();
+}
+
+//Funzione che all'apertura della modale di conferma eliminazione cambia i campi per l'individuo
+function openModalDeleteIndividualIndividualEnviromentalTapping(){
+  document.querySelector("#modalDeleteIndividualEnviromentalTappingLabel").innerHTML = "Cancellazione individuo";
+  document.querySelector(".modalDeleteIndividualEnviromentalTappingBody").innerHTML = "Sei sicuro di voler cancellare questo individuo?";
+}
+
+//Funzione che all'apertura della modale di conferma eliminazione cambia i campi per la presenza
+function openModalDeleteEdgeIndividualEnviromentalTapping(){
+  document.querySelector("#modalDeleteIndividualEnviromentalTappingLabel").innerHTML = "Cancellazione presenza";
+  document.querySelector(".modalDeleteIndividualEnviromentalTappingBody").innerHTML = "Sei sicuro di voler cancellare questa presenza? Verranno rimossi i mesi imputati e i mesi condanna dall'individuo presente all'intercettazione";
+}
+
+//Funzione che manda al backend una nuova chiamata da inserire (e enventualmente i nuovi individui)
+function sendNewPresentToBackendIndividualEnviromentalTapping(){
+
+  let [year, month, day] = "";
+
+  let json = `{`;
+
+  if(!document.querySelector("#CheckIndividualExisting").checked){
+    [year, month, day] = document.querySelector(".modalIndividualEnviromentalTappingIndividualAddDate").value.split('-');
+
+    json += ` "individual" : {
+                            "cognome": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddSurname").value}",
+                            "nome": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddName").value}",
+                            "dataNascita": "${day}/${month}/${year}",
+                            "nazioneResidenza": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddNation").value}",
+                            "provinciaResidenza": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddProvince").value}",
+                            "cittaResidenza": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddCity").value}",
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddAddress").value}"
+                          },
+            `;
+  }
+  else{
+    json += ` "source" : {
+        "nodeId": "${document.querySelector(".modalIndividualEnviromentalTappingIndividual").value}"
+      },
+    `;
+  }
+
+  if(!document.querySelector("#CheckEnviromentalTappingExisting").checked){
+    [year, month, day] = document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddDate").value.split('-');
+    
+    json += ` "enviromentalTapping" : {
+                            "place": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddPlace").value}",
+                            "date": "${day}/${month}/${year}",
+                            "content": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddTextarea").value}"
+                          },
+            `;
+  }
+  else{
+    json += ` "enviromentalTapping" : {
+        "nodeId": "${document.querySelector(".modalIndividualEnviromentalTappingenviromentalTapping").value}"
+      },
+    `;
+  }
+
+  json += `}`;
+  
+  /*fetch("/CrimeMiner/individuoIntercettazione/CreaIntercettazione", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Registrazione Presenza", "Registrazione avvenuta con successo.", "success");
+      returnToCreationPageIndividualEnviromentalTapping();
+    } else {
+      viewToastMessage("Registrazione Presenza", "Errore nella registrazione della presenza.", "error");
+    }
+  })
+  .catch(error => {
+    console.error(error);
+  });*/
+
+}
+
+//Funzione che manda al backend i dati da aggiornare della chiamata
+function sendUpdateEnviromentalTappingToBackendIndividualEnviromentalTapping(){
+
+  let [year, month, day] = document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingDate").value;
+
+  let json = `{`;
+
+  json += ` "enviromentalTapping" : {
+    "nodeId": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingId").value}",
+    "place": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingPlace").value}",
+    "date": "${day}/${month}/${year}",
+    "content": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingTextarea").value}"
+  },
+`;
+
+  json += `}`;
+  
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Modifica Intercettazione", "Modifica avvenuta con successo.", "success");
+      returnToCreationPageIndividualEnviromentalTapping()
+    } else {
+      viewToastMessage("Modifica Intercettazione", "Errore nella modifica dell'intercettazione.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
+}
+
+//Funzione che manda al backend i dati da aggiornare dell'individuo
+function sendUpdateIndividualToBackendIndividualEnviromentalTapping(){
+  let json;
+
+  json = `{
+            "nodeId": "${document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualIdContent").innerHTML}",
+            "surname": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualSurname").value}",
+            "name": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualName").value}",
+            "date": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualDate").value}",
+            "nation": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualNation").value}",
+            "province": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualProvince").value}",
+            "city": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualCity").value}",
+            "address": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddress").value}",
+          }`;
+  
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Modifica Individuo", "Modifica avvenuta con successo.", "success");
+      returnToCreationPageIndividualEnviromentalTapping()
+    } else {
+      viewToastMessage("Modifica Individuo", "Errore nella modifica dell'individuo'.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
+}
+
+//Funzione che invia al backend l'individuo da cancellare
+function deleteNodeIndividualIndividualEnviromentalTapping(){
+  let id = document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualIdContent").innerHTML;
+
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");
+      returnToCreationPageIndividualEnviromentalTapping()
+    } else {
+      viewToastMessage("Cancellazione Individuo", "Errore nella cancellazione dell'individuo'.", "error");
+    }
+  })
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");
+}
+
+//Funzione che invia al backend l'intercettazione da cancellare
+function deleteNodeEnviromentalTappingIndividualEnviromentalTapping(){
+  let id = document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingIdContent").innerHTML;
+
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Cancellazione Intercettazione", "Cancellazione avvenuta con successo.", "success");
+      returnToCreationPageIndividualEnviromentalTapping()
+    } else {
+      viewToastMessage("Cancellazione Intercettazione", "Errore nella cancellazione dell'intercettazione'.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+}
+
+//Funzione che invia al backend la presenza da cancellare
+function deleteEdgeIndividualEnviromentalTapping(){
+  let id = document.querySelector(".infoIndividualEnviromentalTappingEdgeIdContent").innerHTML;
+
+  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+  .then(response => {
+    if (response.ok) {
+      viewToastMessage("Cancellazione Presenza", "Cancellazione avvenuta con successo.", "success");
+      returnToCreationPageIndividualEnviromentalTapping()
+    } else {
+      viewToastMessage("Cancellazione Presenza", "Errore nella cancellazione della presenza.", "error");
+    }
+  })
+  //.then(data => {
+  //  data = JSON.parse(data);
+  //})
+  .catch(error => {
+    console.error(error);
+  });*/
+
+  viewToastMessage("Cancellazione Chiamata", "Cancellazione avvenuta con successo.", "success");
+}
+
+//Funzione che decide se devo richiamare la funzione di aggiunta di un'intercettazione (compresa di individuo se inserito) o di modifica di un individuo o modifica di un'intercettazione'
+function selectFunctionToRegisterDateIndividualEnviromentalTapping(){
+  if(document.querySelector("#modalIndividualEnviromentalTappingLabel").innerHTML == "Inserimento nuova presenza in intercettazione ambientale")
+    sendNewPresentToBackendIndividualEnviromentalTapping();
+
+  if(document.querySelector("#modalIndividualEnviromentalTappingLabel").innerHTML == "Modifica intercettazione ambientale")
+    sendUpdateEnviromentalTappingToBackendIndividualEnviromentalTapping();
+
+  if(document.querySelector("#modalIndividualEnviromentalTappingLabel").innerHTML == "Modifica individuo")
+    sendUpdateIndividualToBackendIndividualEnviromentalTapping();
+}
+
+//Funzione che decide se devo richiamare la funzione di cancellazione di un individuo o una chiamata
+function selectFunctionToDeleteDateIndividualEnviromentalTapping(){
+  if(document.querySelector("#modalDeleteIndividualEnviromentalTappingLabel").innerHTML == "Cancellazione individuo")
+    deleteNodeIndividualIndividualEnviromentalTapping();
+
+  if(document.querySelector("#modalDeleteIndividualEnviromentalTappingLabel").innerHTML == "Cancellazione intercettazione ambientale")
+    deleteNodeEnviromentalTappingIndividualEnviromentalTapping();
+
+  if(document.querySelector("#modalDeleteIndividualEnviromentalTappingLabel").innerHTML == "Cancellazione presenza")
+    deleteEdgeIndividualEnviromentalTapping();
+}
+
+//Funzione di ricaricamento della pagina quando creo, modifico o cancello dati nel grafo
+function returnToCreationPageIndividualEnviromentalTapping(){
+
+  document.querySelector(".btnCloseModalAddUpdate").click();
+  document.querySelector(".btnCloseModalDelete").click();
+
+  //Funzione che fa partire il caricamento
+  loadPage(2500);
+  requestAllNodesIndividualEnviromentalTapping();
+  checkedIndividualAndEnviromentalTappingModalIndividualEnviromentalTapping();
+
+  //Comando che fa aprire all'avvio della pagina l'accordion delle proprietà
+  if(document.querySelector("#item-properties").checked == false)
+    document.querySelector("#item-properties").click();
+
+  if(document.querySelector("#item-details").checked == true){
+    document.querySelector(".infoIndividualEnviromentalTappingEdge").style.display = "none";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeIndividual").style.display = "none";
+    document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTapping").style.display = "none";
+    document.querySelector(".infoIndividualEnviromentalTappingNot").style.display = "flex";
+
+    document.querySelector(".accordionButtonTwo").innerHTML = "Dettagli";
+    document.querySelector("#item-details").click();
+  } 
+
+  if(document.querySelector("#item-settings").checked == true)
+    document.querySelector("#item-settings").click();
+
+  //Controllo se devo anonimizzare i dati
+  if(getCookie("anonymization") == "yes")
+    document.querySelector("#CheckAnonymization").checked = true;
+}

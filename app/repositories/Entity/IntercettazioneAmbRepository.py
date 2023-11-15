@@ -5,10 +5,10 @@ from app.Models.Entity.IndividuoModel import Individuo
 # Questa classe fornisce metodi per recuperare informazioni sugli individui.
 class IntercettazioneAmbRepository:
 
-    # Trova tutti gli individui.
+    # Trova tutte le intercettazioni.
     # Args: none
     # Returns:
-    #     List[dict]: Una lista di risultati contenenti le informazioni su tutti gli individui.
+    #     List[dict]: Una lista di risultati contenenti le informazioni su tutte le intercettazioni.
     @staticmethod
     def find_all():
         try:
@@ -21,6 +21,21 @@ class IntercettazioneAmbRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return []
 
+    # Trova tutte le intercettazioni (gli identificativi).
+    # Args: none
+    # Returns:
+    #     List[dict]: Una lista di risultati contenenti le informazioni su tutte le intercettazioni.
+    @staticmethod
+    def find_all_id():
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = "MATCH (n:IntercettazioneAmb) RETURN n.nodeId AS nodeId"
+            results = session.run(cypher_query).data()
+            return results
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return []
         
     # Ottiene le informazioni di un nodo dato il suo node_id.
     # Args:
