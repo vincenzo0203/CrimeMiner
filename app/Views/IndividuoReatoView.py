@@ -94,8 +94,10 @@ class IndividuoReatoView(View):
     @request_mapping("/creaIndReato/", method="post")
     def create_Node(self,request) -> JsonResponse:  
         try:
+            print("ciao")
             #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
             data =json.loads(json.loads(request.body)) 
+            
             
             print(data)
 
@@ -111,6 +113,7 @@ class IndividuoReatoView(View):
                 id_individuo=data["individual"].get("nodeId")
 
             if  imputazione=="ImputatoDi":
+                print("ciao2")
                 intercettazione_result = self.individuoReato_repository.CreaImputazione(id_individuo,id_reato)
             else:
                 intercettazione_result = self.individuoReato_repository.CreaCondanna(id_individuo,id_reato)
