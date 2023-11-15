@@ -2,6 +2,7 @@ from typing import List
 from app.Neo4jConnection import Neo4jDriver
 from app.Models.Entity.IndividuoModel import Individuo
 from neomodel import UniqueIdProperty, db
+import json
 
 from app.repositories.Entity.IndividuoRepository import IndividuoRepository
 from app.repositories.Entity.IntercettazioneAmbRepository import IntercettazioneAmbRepository
@@ -181,6 +182,79 @@ class IndividuoIntercettazioneAmbRepository:
             # Gestione degli altri errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante il salvataggio di PresenteIntercettazioneAmb:", e)
             return []
+        
+    @staticmethod
+    def get_max_node_id_AMB():
+        max_node_id = None
+        max_number = -1  # Un valore iniziale molto basso per confronto
+
+        try:
+            session = Neo4jDriver.get_session()
+            result = session.run("MATCH (n:IntercettazioneAmb) RETURN n.nodeId AS nodeId")
+
+            for record in result:
+                node_id = record["nodeId"]
+                # Estrai la parte numerica dalla stringa nodeId
+                numeric_part = int(node_id[1:])
+
+                # Confronto con il massimo attuale
+                if numeric_part > max_number:
+                    max_number = numeric_part
+                    max_node_id = node_id
+
+            result_numeric = max_number + 1
+            result_node_id = f"I{result_numeric}"
+
+            return result_node_id
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return None  # Restituisci None anziché una lista vuota in caso di errore
+
+    @staticmethod
+    def convert_and_save_to_json():
+        try:
+            session = Neo4jDriver.get_session()
+
+            # Query per ottenere i nodi degli individui
+            query_individui = "MATCH (i:Individuo) RETURN i.nodeId AS individuoNodeId, i.nome AS individuoNome, i.cognome AS individuoCognome"
+            result_individui = session.run(query_individui)
+
+            # Query per ottenere i nodi delle intercettazioni
+            query_intercettazioni = "MATCH (i:IntercettazioneAmb) RETURN i.nodeId"
+            result_intercettazioni = session.run(query_intercettazioni)
+
+            # Unisci i risultati delle query
+            nodes = []
+            for record in result_individui:
+                nodes.append({
+                    "nodeId": record["individuoNodeId"],
+                    "nome": record["individuoNome"],
+                    "cognome": record["individuoCognome"]
+                })
+
+            for record in result_intercettazioni:
+                nodes.append({
+                    "nodeId": record["nodeId"]
+                })
+
+            # Crea il nuovo nodeId
+            newNodeId = IndividuoIntercettazioneAmbRepository.get_max_node_id_AMB()
+
+            # Costruisci la struttura JSON
+            data = {
+                "nodes": nodes,
+                "newNodeId": newNodeId
+            }
+
+            # Salva i dati in un file JSON
+            with open('output.json', 'w') as json_file:
+                json.dump(data, json_file, indent=2)
+
+            print("Dati convertiti con successo e salvati in output.json")
+
+        except Exception as e:
+            print("Errore durante la conversione dei dati:", e)
 
 #################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
 
