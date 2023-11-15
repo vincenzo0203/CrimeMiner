@@ -78,7 +78,7 @@ class IndividuoIntercettazioneView(View):
         try:
             #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
             data =json.loads(json.loads(request.body)) 
-            print(f"Tipo di 'data': {type(data)}")
+
 
             id1_individuo=None
             id2_individuo=None
@@ -90,7 +90,6 @@ class IndividuoIntercettazioneView(View):
                 id1_individuo = individuo_repository.CreaIndividuo(data["source"])
             else:
                 id1_individuo=data["source"].get("nodeId")
-                print(id1_individuo)
 
 
             if  not "nodeId" in data["target"]:
@@ -98,12 +97,11 @@ class IndividuoIntercettazioneView(View):
                 id2_individuo = individuo_repository.CreaIndividuo(data["target"])
             else:
                 id2_individuo=data["target"].get("nodeId")
-                print(id2_individuo)
 
             intercettazione_result = self.IndividuoIntercettazione_repository.CreaIntercettazione(data["call"],id1_individuo,id2_individuo)
 
             # Restituisci il risultato con status 100 se la query è andata bene
-            return JsonResponse({"status": 100, "result": intercettazione_result},status=100)
+            return JsonResponse({"status": 100, "result": intercettazione_result})
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON data"}, status=400)
         except Exception as e:

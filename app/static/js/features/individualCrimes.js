@@ -886,7 +886,7 @@ function sendNewImputationSentenceToBackendIndividualCrimes(){
 
   console.log(json);
   
-  fetch("/CrimeMiner/individuoIntercettazione/creaIndReato/", {
+  fetch("/CrimeMiner/individuoReato/creaIndReato/", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'

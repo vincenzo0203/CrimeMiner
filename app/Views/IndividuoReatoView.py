@@ -93,29 +93,27 @@ class IndividuoReatoView(View):
 
     @request_mapping("/creaIndReato/", method="post")
     def create_Node(self,request) -> JsonResponse:  
-        print("ciao sono nella")
         try:
             #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
             data =json.loads(json.loads(request.body)) 
-            print(f"Tipo di 'data': {type(data)}")
+            
+            print(data)
 
             id_individuo=None
-            id_reato=data["reato"].get("nodeId")
- 
+            id_reato=data["crime"].get("nodeId")
+            imputazione=data["edge"].get("tipologyEdge")
 
             # Esegui la tua query e ottieni il risultato
-            if  not "nodeId" in data["individuo"]:
+            if  not "nodeId" in data["individual"]:
                 individuo_repository = IndividuoRepository()
-                id_individuo = individuo_repository.CreaIndividuo(data["individuo"])
+                id_individuo = individuo_repository.CreaIndividuo(data["individual"])
             else:
-                id_individuo=data["individuo"].get("nodeId")
-                print(id_individuo)
+                id_individuo=data["individual"].get("nodeId")
 
-
-            if  not "Condannato" in data:
-                intercettazione_result = self.individuoReato_repository.CreaImputazione(data["imputato"],id_individuo,id_reato)
+            if  imputazione=="ImputatoDi":
+                intercettazione_result = self.individuoReato_repository.CreaImputazione(id_individuo,id_reato)
             else:
-                intercettazione_result = self.individuoReato_repository.CreaCondanna(data["condannato"],id_individuo,id_reato)
+                intercettazione_result = self.individuoReato_repository.CreaCondanna(id_individuo,id_reato)
 
             # Restituisci il risultato con status 100 se la query è andata bene
             return JsonResponse({"status": 100, "result": intercettazione_result})

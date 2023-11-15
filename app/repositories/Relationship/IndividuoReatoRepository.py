@@ -179,13 +179,38 @@ class IndividuoReatoRepository:
             return []  # o solleva un'eccezione
 
     @staticmethod
-    def CreaImputazione(data,id_individuo,id_reato):
+    def CreaImputazione(id_individuo,id_reato):
         try:
-           print("Qualcosa")
+            haChiamato_model = HaChiamato()
+            times=int(IndividuoIntercettazioneRepository.CalcolaTimeStamp())
+            edge=IndividuoIntercettazioneRepository.get_max_edge_id()
+
+            nodo1 = Individuo.nodes.get(nodeId=id1)
+            nodo2 = Individuo.nodes.get(nodeId=id2)
+
+            haChiamato_model = nodo1.haChiamatoList.connect(nodo2)
+
+            haChiamato_model.timestamp = times
+            haChiamato_model.edgeId = edge
+            haChiamato_model.mesiCondanna=0
+            haChiamato_model.mesiImputati=0
+            haChiamato_model.mesiTotali=0
+            haChiamato_model.data = data.get("date")
+            haChiamato_model.entityType = "HaChiamato"
+            haChiamato_model.name = "Name"
+            haChiamato_model.ora = data.get("time")
+            haChiamato_model.durata = data.get("duration")
+            haChiamato_model.contenuto = data.get("content")
+            haChiamato_model.sourceNodeId = id1
+            haChiamato_model.targetNodeId = id2
+
+            haChiamato_model.save()
+
+            return haChiamato_model.edgeId
         
         except Exception as e:
             # Gestione degli altri errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
-            print("Errore durante il salvataggio dell'inputazione:", e)
+            print("Errore durante il salvataggio dell'intercettazione:", e)
             return []
         
     @staticmethod
