@@ -1020,7 +1020,7 @@ function sendUpdateIndividualToBackendIndividualCrimes(){
 
   console.log(json);
   
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  /*fetch("CrimeMiner/individuo/modificaIndividuo", { 
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1047,9 +1047,13 @@ function sendUpdateIndividualToBackendIndividualCrimes(){
 
 //Funzione che invia al backend l'individuo da cancellare
 function deleteNodeIndividualCrimes(){
-  let id = document.querySelector(".infoIndividualCrimesNodeIndividualIdContent").innerHTML;
+  let json = `{
+      "nodeId": "${document.querySelector(".infoIndividualCrimesNodeIndividualIdContent").innerHTML}"
+  }`;
 
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  console.log(json);
+
+  /*fetch("CrimeMiner/individuo/eliminaIndividuo", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1073,7 +1077,13 @@ function deleteNodeIndividualCrimes(){
 
 //Funzione che invia al backend l'imputazione da cancellare
 function deleteEdgeImputationIndividualCrimes(){
-  let id = document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML;
+
+  let json = `{
+      "nodeId": "${document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML}"
+  }`;
+
+  console.log(json);
+  
 
   /*fetch("", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
@@ -1102,7 +1112,12 @@ function deleteEdgeImputationIndividualCrimes(){
 
 //Funzione che invia al backend la condanna da cancellare
 function deleteEdgeSentenceIndividualCrimes(){
-  let id = document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML;
+
+  let json = `{
+      "nodeId": "${document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML}"
+  }`;
+
+  console.log(json);
 
   /*fetch("", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
@@ -1190,7 +1205,7 @@ function returnToCreationPageIndividualCrimes(){
 }
 
 function inputControlIndividualCrimes(){
-  let value
+  let value;
 
   if(!document.querySelector("#CheckIndividualExisting").checked){
     value = true;
@@ -1239,7 +1254,7 @@ function inputControlIndividualCrimes(){
 }
 
 function inputControlIndividualCrimesUpdateInd(){
-  let value
+  let value;
 
   value = true;
   

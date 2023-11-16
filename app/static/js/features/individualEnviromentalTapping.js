@@ -933,7 +933,7 @@ function sendUpdateIndividualToBackendIndividualEnviromentalTapping(){
             "address": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddress").value}",
           }`;
   
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  /*fetch("CrimeMiner/individuo/modificaIndividuo", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -960,9 +960,14 @@ function sendUpdateIndividualToBackendIndividualEnviromentalTapping(){
 
 //Funzione che invia al backend l'individuo da cancellare
 function deleteNodeIndividualIndividualEnviromentalTapping(){
-  let id = document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualIdContent").innerHTML;
 
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  let json = `{
+      "nodeId": "${document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualIdContent").innerHTML}"
+  }`;
+
+  console.log(json);
+
+  /*fetch("CrimeMiner/individuo/eliminaIndividuo", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -986,7 +991,12 @@ function deleteNodeIndividualIndividualEnviromentalTapping(){
 
 //Funzione che invia al backend l'intercettazione da cancellare
 function deleteNodeEnviromentalTappingIndividualEnviromentalTapping(){
-  let id = document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingIdContent").innerHTML;
+
+  let json = `{
+      "nodeId": "${document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingIdContent").innerHTML}"
+  }`;
+
+  console.log(json);
 
   /*fetch("", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
@@ -1013,7 +1023,12 @@ function deleteNodeEnviromentalTappingIndividualEnviromentalTapping(){
 
 //Funzione che invia al backend la presenza da cancellare
 function deleteEdgeIndividualEnviromentalTapping(){
-  let id = document.querySelector(".infoIndividualEnviromentalTappingEdgeIdContent").innerHTML;
+
+  let json = `{
+      "nodeId": "${document.querySelector(".infoIndividualEnviromentalTappingEdgeIdContent").innerHTML}"
+  }`;
+
+  console.log(json);
 
   /*fetch("", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
@@ -1101,7 +1116,7 @@ function returnToCreationPageIndividualEnviromentalTapping(){
 }
 
 function inputControlIndividualEnviromentalTapping(){
-  let value
+  let value;
 
   if(!document.querySelector("#CheckIndividualExisting").checked){
     value = true;
@@ -1153,7 +1168,7 @@ function inputControlIndividualEnviromentalTapping(){
 }
 
 function inputControlIndividualEnviromentalTappingUpdateInd(){
-  let value
+  let value;
 
   value = true;
   
@@ -1175,7 +1190,7 @@ function inputControlIndividualEnviromentalTappingUpdateInd(){
 }
 
 function inputControlIndividualEnviromentalTappingUpdateEnvTap(){
-  let value
+  let value;
 
   value = true;
   

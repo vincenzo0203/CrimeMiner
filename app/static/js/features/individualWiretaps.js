@@ -888,7 +888,7 @@ function sendUpdateCallToBackendIndividualWiretaps(){
 
   console.log(json);
   
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  /*fetch("CrimeMiner/individuoIntercettazione/modificaIntInd", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -930,7 +930,7 @@ function sendUpdateIndividualToBackendIndividualWiretaps(){
 
   console.log(json);
   
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  /*fetch("CrimeMiner/individuo/modificaIndividuo", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -957,9 +957,14 @@ function sendUpdateIndividualToBackendIndividualWiretaps(){
 
 //Funzione che invia al backend l'individuo da cancellare
 function deleteNodeIndividualWiretaps(){
-  let id = document.querySelector(".infoIndividualWiretapsNodeIdContent").innerHTML;
 
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  let json = `{
+                    "nodeId": "${document.querySelector(".infoIndividualWiretapsNodeIdContent").innerHTML}"
+  }`;
+
+  console.log(json);
+
+  /*fetch("CrimeMiner/individuo/eliminaIndividuo", { 
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -983,9 +988,14 @@ function deleteNodeIndividualWiretaps(){
 
 //Funzione che invia al backend la chiamata da cancellare
 function deleteEdgeIndividualWiretaps(){
-  let id = document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML;
 
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  let json = `{
+      "nodeId": "${document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML}"
+  }`;
+
+  console.log(json);
+
+  /*fetch("CrimeMiner/individuoIntercettazione/eliminaIntInd", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1000,9 +1010,6 @@ function deleteEdgeIndividualWiretaps(){
       viewToastMessage("Cancellazione Chiamata", "Errore nella cancellazione della chiamata.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
   .catch(error => {
     console.error(error);
   });*/
@@ -1067,7 +1074,7 @@ function returnToCreationPageIndividualWiretaps(){
 }
 
 function inputControlIndividualWiretaps(){
-  let value
+  let value;
 
   if(!document.querySelector("#CheckSourceExisting").checked){
     value = true;
@@ -1127,7 +1134,7 @@ function inputControlIndividualWiretaps(){
 }
 
 function inputControlIndividualWiretapsUpdateInd(){
-  let value
+  let value;
 
   value = true;
   
