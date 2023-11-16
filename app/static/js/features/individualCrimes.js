@@ -930,7 +930,7 @@ function sendUpdateImputationSentenceToBackendIndividualCrimes(){
 
   console.log(json);
   
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoReato/modificaIndReato/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -959,7 +959,7 @@ function sendUpdateImputationSentenceToBackendIndividualCrimes(){
   //})
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
 }

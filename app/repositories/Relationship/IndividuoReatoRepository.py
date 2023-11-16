@@ -315,39 +315,46 @@ class IndividuoReatoRepository:
                 return None  # Restituisci None anziché una lista vuota in caso di errore
 
     @staticmethod
-    def modifica_ArcoCondanato(data,tipologia):
+    def modifica_ArcoCondannato(data,tipologia,id):
 
-        if "sentence" in data:
-            tipology = data["sentence"].get("tipology")
-        elif "imputation" in data:
-                tipology = data["imputation"].get("tipology")
         individuo_id = data["individual"].get("nodeId")
         reato_id = data["crime"].get("nodeId")
-        tipo_relazione = tipologia
-        edge_id = data["sentence"].get("edgeId")
-
-        nodo1 = Individuo.nodes.get(nodeId = individuo_id)
-        nodo2 = Reato.nodes.get(nodeId=reato_id)
-        Condannato_model = nodo1.CondannatoList.connect(nodo2)
-
-    
-        mesiCondanna = ((nodo2.maxMonths + nodo2.minMonths )/2)
+        #mesiCondanna = ((nodo2.maxMonths + nodo2.minMonths )/2)
 
 
         try:
+            
             session = Neo4jDriver.get_session()
-            cypher_query = (
-                """
-                MATCH ()-[r:Condannato]->() WHERE r.edgeId=$edge_id
-                SET r.mesiTotali=$mesiCondanna, r.targetNodeId=$reato_id, r.sourceNodeId=$individuo_id, r.edgeId=$edge_id, r.entityType=$tipo_relazione
-                RETURN r
-                """
-            )
-            results = session.run(
-                cypher_query, {"mesiCondanna":mesiCondanna,"reato_id": reato_id, "individuo_id": individuo_id, "edge_id": edge_id, "tipo_relazione": tipo_relazione}
-            ).data()
+            
+            if id[:2] == "IC":
+                #Query cypher per modificare l'individuo iniziale nella relazione
+                cypher_query = ("MATCH (indi:Individuo {nodeId:$nodo}) MATCH (i:Individuo)-[rel:Condannato]->(r:Reato) WHERE rel.edgeId=$edge_id SET rel.sourceNodeId=indi.nodeId WITH rel, indi CALL apoc.refactor.from(rel, indi) YIELD input, output RETURN input, output, indi.nodeId")
+                results = session.run(cypher_query, {"nodo":individuo_id,"edge_id": id}).data()
 
-            return results
+                #Query cypher per modificare il reato nella relazione
+                cypher_query2 =("MATCH (rea:Reato {nodeId:$nodo}) MATCH (i:Individuo)-[rel:Condannato]->(r:Reato) WHERE rel.edgeId=$edge_id SET rel.targetNodeId=rea.nodeId WITH rel, rea CALL apoc.refactor.to(rel, rea) YIELD input, output RETURN input, output, rea.nodeId")
+                results = session.run(cypher_query2, {"nodo":reato_id,"edge_id": id}).data()
+
+            if id[:2] == "II":
+                print("ciao")
+                cypher_query = ("MATCH ()-[rel:ImputatoDi]->(r:Reato) WHERE rel.edgeId=$edge_id RETURN properties(rel) AS rel, r as reato ")
+                datiTotali = session.run(cypher_query, {"edge_id": id}).data()
+
+                for dati in datiTotali:
+                    datiImputazione = dati["rel"]
+                    datiReato = dati["reato"]
+
+                mesiTotali = int(datiImputazione["mesiTotali"]) - ((int(datiReato["maxMonths"])+int(datiReato["minMonths"]))/2)
+
+                print(mesiTotali)
+            
+            print("Tutto ok")
+
+            # Modifica il nodo destinazione della relazione
+         
+
+            return "Tutto ok"
+        
         except Exception as e:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)

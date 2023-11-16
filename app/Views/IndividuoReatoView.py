@@ -130,14 +130,17 @@ class IndividuoReatoView(View):
 
             if "sentence" in data:
                 tipology = data["sentence"].get("tipology")
+                id=data["sentence"].get("edgeId")
             elif "imputation" in data:
                 tipology = data["imputation"].get("tipology")
+                id=data["imputation"].get("edgeId")
 
+            print(tipology)
             
             if tipology == "Condannato":
-                results = IndividuoReatoRepository.modifica_ArcoCondanato(data,tipology)
+                results = IndividuoReatoRepository.modifica_ArcoCondannato(data,tipology,id)
             if tipology == "ImputatoDi":
-                results = IndividuoReatoRepository.modifica_ArcoImputato(data,tipology)
+                results = IndividuoReatoRepository.modifica_ArcoImputato(data,tipology,id)
             
 
             # Restituisci il risultato con status 200 se la query è andata bene
