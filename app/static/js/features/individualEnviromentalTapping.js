@@ -1043,13 +1043,16 @@ function deleteEdgeIndividualEnviromentalTapping(){
 //Funzione che decide se devo richiamare la funzione di aggiunta di un'intercettazione (compresa di individuo se inserito) o di modifica di un individuo o modifica di un'intercettazione'
 function selectFunctionToRegisterDateIndividualEnviromentalTapping(){
   if(document.querySelector("#modalIndividualEnviromentalTappingLabel").innerHTML == "Inserimento nuova presenza in intercettazione ambientale")
-    sendNewPresentToBackendIndividualEnviromentalTapping();
+    if(inputControlIndividualEnviromentalTapping() === true) 
+      sendNewPresentToBackendIndividualEnviromentalTapping();
 
   if(document.querySelector("#modalIndividualEnviromentalTappingLabel").innerHTML == "Modifica intercettazione ambientale")
-    sendUpdateEnviromentalTappingToBackendIndividualEnviromentalTapping();
+    if(inputControlIndividualEnviromentalTappingUpdateEnvTap() === true)
+      sendUpdateEnviromentalTappingToBackendIndividualEnviromentalTapping();
 
   if(document.querySelector("#modalIndividualEnviromentalTappingLabel").innerHTML == "Modifica individuo")
-    sendUpdateIndividualToBackendIndividualEnviromentalTapping();
+    if(inputControlIndividualEnviromentalTappingUpdateInd() === true)
+      sendUpdateIndividualToBackendIndividualEnviromentalTapping();
 }
 
 //Funzione che decide se devo richiamare la funzione di cancellazione di un individuo o una chiamata
@@ -1095,4 +1098,93 @@ function returnToCreationPageIndividualEnviromentalTapping(){
   //Controllo se devo anonimizzare i dati
   if(getCookie("anonymization") == "yes")
     document.querySelector("#CheckAnonymization").checked = true;
+}
+
+function inputControlIndividualEnviromentalTapping(){
+  let value
+
+  if(!document.querySelector("#CheckIndividualExisting").checked){
+    value = true;
+    
+    if(document.querySelector(".modalIndividualEnviromentalTappingIndividualAddSurname").value == ""){
+      document.querySelector(".modalIndividualEnviromentalTappingIndividualAddSurname").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualEnviromentalTappingIndividualAddSurname").style.borderColor = 'green';
+
+    if(document.querySelector(".modalIndividualEnviromentalTappingIndividualAddName").value == ""){
+      document.querySelector(".modalIndividualEnviromentalTappingIndividualAddName").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualEnviromentalTappingIndividualAddName").style.borderColor = 'green';
+
+  }else{
+    value = true;
+    if(document.querySelector(".modalIndividualEnviromentalTappingIndividual").value == ""){
+      document.querySelector(".modalIndividualEnviromentalTappingIndividual").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualEnviromentalTappingIndividual").style.borderColor = 'green';
+  }
+
+  if(!document.querySelector("#CheckEnviromentalTappingExisting").checked){
+    value = true;
+  
+    if(document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddPlace").value == ""){
+      document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddPlace").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddPlace").style.borderColor = 'green';
+  }else{
+    value = true;
+    if(document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTapping").value == ""){
+      document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTapping").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTapping").style.borderColor = 'green';
+  }
+
+  return value;
+}
+
+function inputControlIndividualEnviromentalTappingUpdateInd(){
+  let value
+
+  value = true;
+  
+  if(document.querySelector(".modalIndividualEnviromentalTappingIndividualSurname").value == ""){
+    document.querySelector(".modalIndividualEnviromentalTappingIndividualSurname").style.borderColor = 'red';
+    value = false;
+  }
+  else
+    document.querySelector(".modalIndividualEnviromentalTappingIndividualSurname").style.borderColor = 'green';
+
+  if(document.querySelector(".modalIndividualEnviromentalTappingIndividualName").value == ""){
+    document.querySelector(".modalIndividualEnviromentalTappingIndividualName").style.borderColor = 'red';
+    value = false;
+  }
+  else
+    document.querySelector(".modalIndividualEnviromentalTappingIndividualName").style.borderColor = 'green';
+
+  return value;
+}
+
+function inputControlIndividualEnviromentalTappingUpdateEnvTap(){
+  let value
+
+  value = true;
+  
+  if(document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingPlace").value == ""){
+    document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingPlace").style.borderColor = 'red';
+    value = false;
+  }
+  else
+    document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingPlace").style.borderColor = 'green';
+
+  return value;
 }

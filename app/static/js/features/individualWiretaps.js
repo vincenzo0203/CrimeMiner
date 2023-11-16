@@ -777,7 +777,7 @@ function sendNewCallToBackendIndividualWiretaps(){
 
   json += `}`;
   
-  fetch("/CrimeMiner/individuoIntercettazione/creaIntercettazione/", {
+   fetch("/CrimeMiner/individuoIntercettazione/creaIntercettazione/", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1013,13 +1013,16 @@ function deleteEdgeIndividualWiretaps(){
 //Funzione che decide se devo richiamare la funzione di aggiunta di una chiamata (compresa di due nuovi individui se inseriti) o di modifica di un individuo o modifica di una chiamata
 function selectFunctionToRegisterDateIndividualWiretaps(){
   if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Inserimento nuova intercettazione telefonica")
-    sendNewCallToBackendIndividualWiretaps();
+    if(inputControlIndividualWiretaps() === true) 
+      sendNewCallToBackendIndividualWiretaps();
 
   if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Modifica intercettazione telefonica")
-    sendUpdateCallToBackendIndividualWiretaps();
+    if(inputControlIndividualWiretaps() === true)  
+      sendUpdateIndividualToBackendIndividualWiretaps();
 
   if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Modifica individuo")
-    sendUpdateIndividualToBackendIndividualWiretaps();
+    if(inputControlIndividualWiretapsUpdateInd() === true)
+      sendUpdateIndividualToBackendIndividualWiretaps();
 }
 
 //Funzione che decide se devo richiamare la funzione di cancellazione di un individuo o una chiamata
@@ -1061,4 +1064,86 @@ function returnToCreationPageIndividualWiretaps(){
   //Controllo se devo anonimizzare i dati
   if(getCookie("anonymization") == "yes")
     document.querySelector("#CheckAnonymization").checked = true;
+}
+
+function inputControlIndividualWiretaps(){
+  let value
+
+  if(!document.querySelector("#CheckSourceExisting").checked){
+    value = true;
+    
+    if(document.querySelector(".modalIndividualWiretapsSourceSurname").value == ""){
+      document.querySelector(".modalIndividualWiretapsSourceSurname").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualWiretapsSourceSurname").style.borderColor = 'green';
+
+    if(document.querySelector(".modalIndividualWiretapsSourceName").value == ""){
+      document.querySelector(".modalIndividualWiretapsSourceName").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualWiretapsSourceName").style.borderColor = 'green';
+
+  }else{
+    value = true;
+    if(document.querySelector(".modalIndividualWiretapsSource").value == ""){
+      document.querySelector(".modalIndividualWiretapsSource").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualWiretapsSource").style.borderColor = 'green';
+  }
+
+  if(!document.querySelector("#CheckTargetExisting").checked){
+    value = true;
+  
+    if(document.querySelector(".modalIndividualWiretapsTargetSurname").value == ""){
+      document.querySelector(".modalIndividualWiretapsTargetSurname").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualWiretapsTargetSurname").style.borderColor = 'green';
+
+    if(document.querySelector(".modalIndividualWiretapsTargetName").value == ""){
+      document.querySelector(".modalIndividualWiretapsTargetName").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualWiretapsTargetName").style.borderColor = 'green';
+
+  }else{
+    value = true;
+    if(document.querySelector(".modalIndividualWiretapsTarget").value == ""){
+      document.querySelector(".modalIndividualWiretapsTarget").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualWiretapsTarget").style.borderColor = 'green';
+  }
+
+  return value;
+}
+
+function inputControlIndividualWiretapsUpdateInd(){
+  let value
+
+  value = true;
+  
+  if(document.querySelector(".modalIndividualWiretapsIndividualSurname").value == ""){
+    document.querySelector(".modalIndividualWiretapsIndividualSurname").style.borderColor = 'red';
+    value = false;
+  }
+  else
+    document.querySelector(".modalIndividualWiretapsIndividualSurname").style.borderColor = 'green';
+
+  if(document.querySelector(".modalIndividualWiretapsIndividualName").value == ""){
+    document.querySelector(".modalIndividualWiretapsIndividualName").style.borderColor = 'red';
+    value = false;
+  }
+  else
+    document.querySelector(".modalIndividualWiretapsIndividualName").style.borderColor = 'green';
+
+  return value;
 }
