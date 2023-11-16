@@ -326,11 +326,11 @@
                       <div class="modalContainer">
                         <div class="mb-3">
                           <label for="recipient-surname-source" class="col-form-label">Cognome</label>
-                          <input type="text" class="form-control modalIndividualWiretapsSourceSurname" id="recipient-surname-source">
+                          <input type="text" class="form-control modalIndividualWiretapsSourceSurname" id="recipient-surname-source" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))'>
                         </div>
                         <div class="mb-3">
                           <label for="recipient-name-source" class="col-form-label">Nome</label>
-                          <input type="text" class="form-control modalIndividualWiretapsSourceName" id="recipient-name-source" step="1">
+                          <input type="text" class="form-control modalIndividualWiretapsSourceName" id="recipient-name-source" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))' step="1">
                         </div>
                         <div class="mb-3">
                           <label for="recipient-date-source" class="col-form-label">Data di Nascita</label>
@@ -338,25 +338,25 @@
                         </div>
                         <div class="mb-3">
                           <label for="recipient-nation-source" class="col-form-label">Paese</label>
-                          <input type="text" class="form-control modalIndividualWiretapsSourceNation" id="recipient-nation-source">
+                          <input type="text" class="form-control modalIndividualWiretapsSourceNation" id="recipient-nation-source" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))' step="1" >
                         </div>
                       </div>
                       <div class="modalContainer">
                         <div class="mb-3">
                           <label for="recipient-province-source" class="col-form-label">Provincia</label>
-                          <input type="text" class="form-control modalIndividualWiretapsSourceProvince" id="recipient-province-source" step="1">
+                          <input type="text" class="form-control modalIndividualWiretapsSourceProvince " id="recipient-province-source" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))' step="1" >
                         </div>
                         <div class="mb-3">
                           <label for="recipient-city-source" class="col-form-label">Città</label>
-                          <input type="text" class="form-control modalIndividualWiretapsSourceCity" id="recipient-city-source" step="1">
+                          <input type="text" class="form-control modalIndividualWiretapsSourceCity " id="recipient-city-source" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))' step="1" >
                         </div>
                         <div class="mb-3">
                           <label for="recipient-cap-source" class="col-form-label">Cap</label>
-                          <input type="number" class="form-control modalIndividualWiretapsSourceCap" id="recipient-cap-source">
+                          <input type="number" class="form-control modalIndividualWiretapsSourceCap" id="recipient-cap-source" >
                         </div>
                         <div class="mb-3">
                           <label for="recipient-address-source" class="col-form-label">Indirizzo</label>
-                          <input type="text" class="form-control modalIndividualWiretapsSourceAddress" id="recipient-address-source" step="1">
+                          <input type="text" class="form-control modalIndividualWiretapsSourceAddress " id="recipient-address-source" step="1" >
                         </div>
                       </div>
                     </div>
@@ -376,15 +376,15 @@
                       <div class="modalContainer">
                         <div class="mb-3">
                           <label for="recipient-surname-target" class="col-form-label">Cognome</label>
-                          <input type="text" class="form-control modalIndividualWiretapsTargetSurname" id="recipient-surname-target">
+                          <input type="text" class="form-control modalIndividualWiretapsTargetSurname" id="recipient-surname-target" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))' >
                         </div>
                         <div class="mb-3">
                           <label for="recipient-name-target" class="col-form-label">Nome</label>
-                          <input type="text" class="form-control modalIndividualWiretapsTargetName" id="recipient-name-target" step="1">
+                          <input type="text" class="form-control modalIndividualWiretapsTargetName" id="recipient-name-target" step="1" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))' >
                         </div>
                         <div class="mb-3">
                           <label for="recipient-date-target" class="col-form-label">Data di Nascita</label>
-                          <input type="date" class="form-control modalIndividualWiretapsTargetDate" id="recipient-date-target" step="1">
+                          <input type="date" class="form-control modalIndividualWiretapsTargetDate" id="recipient-date-target" step="1" >
                         </div>
                         <div class="mb-3">
                           <label for="recipient-nation-target" class="col-form-label">Paese</label>
@@ -395,11 +395,11 @@
                         
                         <div class="mb-3">
                           <label for="recipient-province-target" class="col-form-label">Provincia</label>
-                          <input type="text" class="form-control modalIndividualWiretapsTargetProvince" id="recipient-province-target" step="1">
+                          <input type="text" class="form-control modalIndividualWiretapsTargetProvince" id="recipient-province-target" step="1" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))' >
                         </div>
                         <div class="mb-3">
                           <label for="recipient-city-target" class="col-form-label">Città</label>
-                          <input type="text" class="form-control modalIndividualWiretapsTargetCity" id="recipient-city-target" step="1">
+                          <input type="text" class="form-control modalIndividualWiretapsTargetCity" id="recipient-city-target" step="1" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))' >
                         </div>
                         <div class="mb-3">
                           <label for="recipient-cap-target" class="col-form-label">Cap</label>
@@ -407,7 +407,7 @@
                         </div>
                         <div class="mb-3">
                           <label for="recipient-address-target" class="col-form-label">Indirizzo</label>
-                          <input type="text" class="form-control modalIndividualWiretapsTargetAddress" id="recipient-address-target" step="1">
+                          <input type="text" class="form-control modalIndividualWiretapsTargetAddress" id="recipient-address-target" step="1" >
                         </div>
                       </div>
                     </div>
@@ -418,13 +418,13 @@
               <div class="modalContainer">
                 <div class="mb-3">
                   <label for="recipient-source" class="col-form-label">Mittente</label>
-                  <select class="form-select modalIndividualWiretapsSource" class="form-control" id="recipient-source" aria-label="select example">
+                  <select class="form-select modalIndividualWiretapsSource" class="form-control" id="recipient-source" aria-label="select example" >
                     <option selected></option>
                   </select>
                 </div>
                 <div class="mb-3">
                   <label for="recipient-target" class="col-form-label">Ricevente</label>
-                  <select class="form-select modalIndividualWiretapsTarget" class="form-control" id="recipient-target" aria-label="select example">
+                  <select class="form-select modalIndividualWiretapsTarget" class="form-control" id="recipient-target" aria-label="select example" >
                     <option selected></option>
                   </select>
                 </div>
@@ -433,15 +433,15 @@
               <div class="modalContainer">
                 <div class="mb-3">
                   <label for="recipient-date" class="col-form-label">Data</label>
-                  <input type="date" class="form-control modalIndividualWiretapsDate" id="recipient-date">
+                  <input type="date" class="form-control modalIndividualWiretapsDate" id="recipient-date" >
                 </div>
                 <div class="mb-3">
                   <label for="recipient-duration" class="col-form-label">Durata</label>
-                  <input type="time" class="form-control modalIndividualWiretapsDuration" id="recipient-duration" step="1">
+                  <input type="time" class="form-control modalIndividualWiretapsDuration" id="recipient-duration" step="1" >
                 </div>
                 <div class="mb-3">
                   <label for="recipient-time" class="col-form-label">Ora</label>
-                  <input type="time" class="form-control modalIndividualWiretapsTime" id="recipient-time" step="1">
+                  <input type="time" class="form-control modalIndividualWiretapsTime" id="recipient-time" step="1" >
                 </div>
               </div>
               
@@ -449,6 +449,7 @@
                 <label for="message-text" class="col-form-label">Contenuto Chiamata</label>
                 <textarea class="form-control modalIndividualWiretapsTextarea" id="message-text"></textarea>
               </div>
+              <button class="submitFormAddUpdateCall" type="submit"></button>
             </form>
 
             <form class="modalForm modalFormUpdateIndividual">
@@ -456,11 +457,11 @@
               <div class="modalContainer">
                 <div class="mb-3">
                   <label for="recipient-surname-individual" class="col-form-label">Cognome</label>
-                  <input type="text" class="form-control modalIndividualWiretapsIndividualSurname" id="recipient-surname-individual">
+                  <input type="text" class="form-control modalIndividualWiretapsIndividualSurname" id="recipient-surname-individual" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))'>
                 </div>
                 <div class="mb-3">
                   <label for="recipient-name-individual" class="col-form-label">Nome</label>
-                  <input type="text" class="form-control modalIndividualWiretapsIndividualName" id="recipient-name-individual" step="1">
+                  <input type="text" class="form-control modalIndividualWiretapsIndividualName" id="recipient-name-individual" step="1" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))'>
                 </div>
                 <div class="mb-3">
                   <label for="recipient-date-individual" class="col-form-label">Data di Nascita</label>
@@ -474,11 +475,11 @@
               <div class="modalContainer">
                 <div class="mb-3">
                   <label for="recipient-province-individual" class="col-form-label">Provincia</label>
-                  <input type="text" class="form-control modalIndividualWiretapsIndividualProvince" id="recipient-province-individual" step="1">
+                  <input type="text" class="form-control modalIndividualWiretapsIndividualProvince" id="recipient-province-individual" step="1" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))'>
                 </div>
                 <div class="mb-3">
                   <label for="recipient-city-individual" class="col-form-label">Città</label>
-                  <input type="text" class="form-control modalIndividualWiretapsIndividualCity" id="recipient-city-individual" step="1">
+                  <input type="text" class="form-control modalIndividualWiretapsIndividualCity" id="recipient-city-individual" step="1" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))'>
                 </div>
                 <div class="mb-3">
                   <label for="recipient-cap-individual" class="col-form-label">Cap</label>

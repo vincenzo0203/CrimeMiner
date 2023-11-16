@@ -1132,13 +1132,16 @@ function deleteEdgeSentenceIndividualCrimes(){
 //Funzione che decide se devo richiamare la funzione di aggiunta di una chiamata (compresa di due nuovi individui se inseriti) o di modifica di un individuo o modifica di una chiamata
 function selectFunctionToRegisterDateIndividualCrimes(){
   if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Inserimento nuova condanna o imputazione")
-    sendNewImputationSentenceToBackendIndividualCrimes();
+    if(inputControlIndividualCrimes() === true)
+      sendNewImputationSentenceToBackendIndividualCrimes();
 
   if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica condanna" || document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica imputazione")
-    sendUpdateImputationSentenceToBackendIndividualCrimes();
+    if(inputControlIndividualCrimes() === true)
+      sendUpdateImputationSentenceToBackendIndividualCrimes();
 
   if(document.querySelector("#modalIndividualCrimesLabel").innerHTML == "Modifica individuo")
-    sendUpdateIndividualToBackendIndividualCrimes();
+    if(inputControlIndividualCrimesUpdateInd() === true)
+      sendUpdateIndividualToBackendIndividualCrimes();
 }
 
 //Funzione che decide se devo richiamare la funzione di cancellazione di un individuo, di un'imputazione o di una condanna
@@ -1183,4 +1186,75 @@ function returnToCreationPageIndividualCrimes(){
   //Controllo se devo anonimizzare i dati
   if(getCookie("anonymization") == "yes")
     document.querySelector("#CheckAnonymization").checked = true;
+}
+
+function inputControlIndividualCrimes(){
+  let value
+
+  if(!document.querySelector("#CheckIndividualExisting").checked){
+    value = true;
+    
+    if(document.querySelector(".modalIndividualCrimesIndividualAddSurname").value == ""){
+      document.querySelector(".modalIndividualCrimesIndividualAddSurname").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualCrimesIndividualAddSurname").style.borderColor = 'green';
+
+    if(document.querySelector(".modalIndividualCrimesIndividualAddName").value == ""){
+      document.querySelector(".modalIndividualCrimesIndividualAddName").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualCrimesIndividualAddName").style.borderColor = 'green';
+
+  }else{
+    value = true;
+    if(document.querySelector(".modalIndividualCrimesIndividual").value == ""){
+      document.querySelector(".modalIndividualCrimesIndividual").style.borderColor = 'red';
+      value = false;
+    }
+    else
+      document.querySelector(".modalIndividualCrimesIndividual").style.borderColor = 'green';
+  }
+
+  value = true;
+  if(document.querySelector(".modalIndividualCrimesCrime").value == ""){
+    document.querySelector(".modalIndividualCrimesCrime").style.borderColor = 'red';
+    value = false;
+  }
+  else
+    document.querySelector(".modalIndividualCrimesCrime").style.borderColor = 'green';
+
+  value = true;
+  if(document.querySelector(".modalIndividualCrimesTipology").value == ""){
+    document.querySelector(".modalIndividualCrimesTipology").style.borderColor = 'red';
+    value = false;
+  }
+  else
+    document.querySelector(".modalIndividualCrimesTipology").style.borderColor = 'green';
+
+  return value;
+}
+
+function inputControlIndividualCrimesUpdateInd(){
+  let value
+
+  value = true;
+  
+  if(document.querySelector(".modalIndividualCrimesIndividualSurname").value == ""){
+    document.querySelector(".modalIndividualCrimesIndividualSurname").style.borderColor = 'red';
+    value = false;
+  }
+  else
+    document.querySelector(".modalIndividualCrimesIndividualSurname").style.borderColor = 'green';
+
+  if(document.querySelector(".modalIndividualCrimesIndividualName").value == ""){
+    document.querySelector(".modalIndividualCrimesIndividualName").style.borderColor = 'red';
+    value = false;
+  }
+  else
+    document.querySelector(".modalIndividualCrimesIndividualName").style.borderColor = 'green';
+
+  return value;
 }
