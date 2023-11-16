@@ -66,9 +66,8 @@ class IndividuoView(View):
         print("sono in eliminaNodo")
         try:            
             
-            data = json.loads(json.loads(request.body))
-            print(data)
-            
+            print("prima del data")
+            data = json.loads(json.loads(request.body))            
             individuo_repository = IndividuoRepository()
             individuo_repository.DeleteIndividuo(data)
             

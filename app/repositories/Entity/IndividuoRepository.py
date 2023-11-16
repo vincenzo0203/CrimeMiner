@@ -163,11 +163,8 @@ class IndividuoRepository:
                 #prendersi tutti gli edgeId e cancellarli, poi eliminare il nodo
                 session = Neo4jDriver.get_session()
                 query = ("MATCH p=()-[r]->() where r.sourceNodeId=$sourceNodeId or r.targetNodeId=$targetNodeId return r.edgeId")
-                results = session.run(
-                query, {"sourceNodeId":sourceNodeId,"targetNodeId": targetNodeId}).data()
-
-                print(result)
-                                
+                results = session.run(query, {"sourceNodeId":sourceNodeId,"targetNodeId": targetNodeId}).data()
+                
                 for result in results:
                     edgeId = result.get("r.edgeId")
                     query_delete = (

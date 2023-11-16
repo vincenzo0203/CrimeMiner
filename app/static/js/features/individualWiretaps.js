@@ -705,7 +705,8 @@ function sendNewCallToBackendIndividualWiretaps(){
                             "nazioneResidenza": "${document.querySelector(".modalIndividualWiretapsSourceNation").value}",
                             "provinciaResidenza": "${document.querySelector(".modalIndividualWiretapsSourceProvince").value}",
                             "cittaResidenza": "${document.querySelector(".modalIndividualWiretapsSourceCity").value}",
-                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsSourceAddress").value}"
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsSourceAddress").value}",
+                            "capResidenza":"${document.querySelector(".modalIndividualWiretapsSourceCap").value}"
                           },
             `;
   }
@@ -726,7 +727,8 @@ function sendNewCallToBackendIndividualWiretaps(){
                             "nazioneResidenza": "${document.querySelector(".modalIndividualWiretapsTargetNation").value}",
                             "provinciaResidenza": "${document.querySelector(".modalIndividualWiretapsTargetProvince").value}",
                             "cittaResidenza": "${document.querySelector(".modalIndividualWiretapsTargetCity").value}",
-                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsTargetAddress").value}"
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsTargetAddress").value}",
+                            "capResidenza":"${document.querySelector(".modalIndividualWiretapsTargetCap").value}"
                           },
             `;
   }
@@ -812,7 +814,8 @@ function sendUpdateCallToBackendIndividualWiretaps(){
                             "nazioneResidenza": "${document.querySelector(".modalIndividualWiretapsSourceNation").value}",
                             "provinciaResidenza": "${document.querySelector(".modalIndividualWiretapsSourceProvince").value}",
                             "cittaResidenza": "${document.querySelector(".modalIndividualWiretapsSourceCity").value}",
-                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsSourceAddress").value}"
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsSourceAddress").value}",
+                            "capResidenza":"${document.querySelector(".modalIndividualWiretapsSourceCap").value}"
                           },
             `;
   }
@@ -833,7 +836,8 @@ function sendUpdateCallToBackendIndividualWiretaps(){
                             "nazioneResidenza": "${document.querySelector(".modalIndividualWiretapsTargetNation").value}",
                             "provinciaResidenza": "${document.querySelector(".modalIndividualWiretapsTargetProvince").value}",
                             "cittaResidenza": "${document.querySelector(".modalIndividualWiretapsTargetCity").value}",
-                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsTargetAddress").value}"
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualWiretapsTargetAddress").value}",
+                            "capResidenza":"${document.querySelector(".modalIndividualWiretapsTargetCap").value}"
                           },
             `;
   }
@@ -888,7 +892,7 @@ function sendUpdateCallToBackendIndividualWiretaps(){
 
   console.log(json);
   
-  /*fetch("CrimeMiner/individuoIntercettazione/modificaIntInd", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoIntercettazione/modificaIntInd/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -908,7 +912,7 @@ function sendUpdateCallToBackendIndividualWiretaps(){
   //})
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
 }
@@ -926,11 +930,12 @@ function sendUpdateIndividualToBackendIndividualWiretaps(){
             "province": "${document.querySelector(".modalIndividualWiretapsIndividualProvince").value}",
             "city": "${document.querySelector(".modalIndividualWiretapsIndividualCity").value}",
             "address": "${document.querySelector(".modalIndividualWiretapsIndividualAddress").value}",
+            "cap":"${document.querySelector(".modalIndividualWiretapsIndividualCap").value}"
           }`;
 
   console.log(json);
   
-  /*fetch("CrimeMiner/individuo/modificaIndividuo", {
+  fetch("/CrimeMiner/individuo/modificaIndividuo/", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -950,7 +955,7 @@ function sendUpdateIndividualToBackendIndividualWiretaps(){
   //})
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
 }
@@ -959,12 +964,12 @@ function sendUpdateIndividualToBackendIndividualWiretaps(){
 function deleteNodeIndividualWiretaps(){
 
   let json = `{
-                    "nodeId": "${document.querySelector(".infoIndividualWiretapsNodeIdContent").innerHTML}"
+              "nodeId": "${document.querySelector(".infoIndividualWiretapsNodeIdContent").innerHTML}"
   }`;
 
   console.log(json);
 
-  /*fetch("CrimeMiner/individuo/eliminaIndividuo", { 
+  fetch("/CrimeMiner/individuo/eliminaIndividuo/", { 
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -981,7 +986,7 @@ function deleteNodeIndividualWiretaps(){
   })
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");
 }
@@ -1020,15 +1025,15 @@ function deleteEdgeIndividualWiretaps(){
 //Funzione che decide se devo richiamare la funzione di aggiunta di una chiamata (compresa di due nuovi individui se inseriti) o di modifica di un individuo o modifica di una chiamata
 function selectFunctionToRegisterDateIndividualWiretaps(){
   if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Inserimento nuova intercettazione telefonica")
-    if(inputControlIndividualWiretaps() === true) 
+    if(inputControlIndividualWiretaps() == true) 
       sendNewCallToBackendIndividualWiretaps();
 
   if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Modifica intercettazione telefonica")
-    if(inputControlIndividualWiretaps() === true)  
-      sendUpdateIndividualToBackendIndividualWiretaps();
+    if(inputControlIndividualWiretaps() == true)  
+      sendUpdateCallToBackendIndividualWiretaps();
 
   if(document.querySelector("#modalIndividualWiretapsLabel").innerHTML == "Modifica individuo")
-    if(inputControlIndividualWiretapsUpdateInd() === true)
+    if(inputControlIndividualWiretapsUpdateInd() == true)
       sendUpdateIndividualToBackendIndividualWiretaps();
 }
 

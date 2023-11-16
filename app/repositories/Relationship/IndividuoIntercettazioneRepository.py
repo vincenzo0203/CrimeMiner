@@ -247,6 +247,7 @@ class IndividuoIntercettazioneRepository:
 
     @staticmethod
     def  EditEdgeIndividuoIntercettazione(data):
+            print("editarco")
             try:                
 
                 sourceId=data["source"].get("nodeId")
