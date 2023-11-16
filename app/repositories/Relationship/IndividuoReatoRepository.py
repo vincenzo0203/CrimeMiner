@@ -310,6 +310,79 @@ class IndividuoReatoRepository:
                 print("Errore durante l'esecuzione della query Cypher:", e)
                 return None  # Restituisci None anziché una lista vuota in caso di errore
 
+    @staticmethod
+    def modifica_ArcoCondanato(data,tipologia):
+
+        if "sentence" in data:
+            tipology = data["sentence"].get("tipology")
+        elif "imputation" in data:
+                tipology = data["imputation"].get("tipology")
+        individuo_id = data["individual"].get("nodeId")
+        reato_id = data["crime"].get("nodeId")
+        tipo_relazione = tipologia
+        edge_id = data["sentence"].get("edgeId")
+
+        nodo1 = Individuo.nodes.get(nodeId = individuo_id)
+        nodo2 = Reato.nodes.get(nodeId=reato_id)
+        Condannato_model = nodo1.CondannatoList.connect(nodo2)
+
+    
+        mesiCondanna = ((nodo2.maxMonths + nodo2.minMonths )/2)
+
+
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = (
+                """
+                MATCH ()-[r:Condannato]->() WHERE r.edgeId=$edge_id
+                SET r.mesiTotali=$mesiCondanna, r.targetNodeId=$reato_id, r.sourceNodeId=$individuo_id, r.edgeId=$edge_id, r.entityType=$tipo_relazione
+                RETURN r
+                """
+            )
+            results = session.run(
+                cypher_query, {"mesiCondanna":mesiCondanna,"reato_id": reato_id, "individuo_id": individuo_id, "edge_id": edge_id, "tipo_relazione": tipo_relazione}
+            ).data()
+
+            return results
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return None  # Restituisci None anziché una lista vuota in caso di errore
+
+    @staticmethod
+    def modifica_ArcoImputato(data):
+        print("è un imputato")
+        individuo_id = data["individual"].get("nodeId")
+        reato_id = data["crime"].get("nodeId")
+        tipo_relazione = data["imputation"].get("tipology")
+        edge_id = data["imputation"].get("edgeId")
+
+        nodo2 = Reato.nodes.get(nodeId=reato_id)
+        mesiCondanna = ((nodo2.maxMonths + nodo2.minMonths )/2)
+
+        try:
+            session = Neo4jDriver.get_session()
+            cypher_query = (
+                """
+                MATCH ()-[r:Imputato]->() WHERE r.edgeId=$edge_id
+                SET r.mesiTotali=$mesiCondanna, r.targetNodeId=$reato_id, r.sourceNodeId=$individuo_id, r.edgeId=$edge_id, r.entityType=$tipo_relazione
+                RETURN r
+                """
+            )
+            results = session.run(
+                cypher_query, {"mesiCondanna":mesiCondanna,"reato_id": reato_id, "individuo_id": individuo_id, "edge_id": edge_id, "tipo_relazione": tipo_relazione}
+            ).data()
+
+            return results
+        except Exception as e:
+            # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+            print("Errore durante l'esecuzione della query Cypher:", e)
+            return None  # Restituisci None anziché una lista vuota in caso di errore
+    
+
+
+
+
 
    
 
