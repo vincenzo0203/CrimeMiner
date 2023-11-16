@@ -2,6 +2,8 @@ from neomodel import UniqueIdProperty, db
 from app.Neo4jConnection import Neo4jDriver
 from app.Models.Entity.IndividuoModel import Individuo
 import json
+from neomodel import db as neodb
+
 
 # Questa classe fornisce metodi per recuperare informazioni sugli individui.
 class IndividuoRepository:
@@ -127,7 +129,60 @@ class IndividuoRepository:
                 print("Errore durante l'esecuzione della query Cypher:", e)
                 return None  # Restituisci None anziché una lista vuota in caso di errore
             
+
+    @staticmethod
+    def  EditIndividuo(data):
+            try:                
+                nodo= Individuo.nodes.get(nodeId=data.get("nodeId"))
+                
+                nodo.cognome=data.get("surname")
+                nodo.nome=data.get("name")
+                nodo.nazioneResidenza=data.get("nation")
+                nodo.cittaResidenza=data.get("city")
+                nodo.provinciaResidenza=data.get("province")
+                nodo.indirizzoResidenza=data.get("address")
+                nodo.capResidenza=data.get("cap")
+                
+                if data.get("date")!="":
+                    nodo.dataNascita=data.get("date")                
+
+                nodo.save()
+                
+                return nodo
+            except Exception as e:
+                # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+                print("Errore durante l'esecuzione della query Cypher:", e)
+                return None  # Restituisci None anziché una lista vuota in caso di errore
             
+    @staticmethod
+    def  DeleteIndividuo(data):
+            nodo= Individuo.nodes.get(nodeId=data.get("nodeId"))
+            try:
+                sourceNodeId = data.get("nodeId") 
+                targetNodeId = data.get("nodeId")
+                #prendersi tutti gli edgeId e cancellarli, poi eliminare il nodo
+                session = Neo4jDriver.get_session()
+                query = ("MATCH p=()-[r]->() where r.sourceNodeId=$sourceNodeId or r.targetNodeId=$targetNodeId return r.edgeId")
+                results = session.run(
+                query, {"sourceNodeId":sourceNodeId,"targetNodeId": targetNodeId}).data()
+
+                print(result)
+                                
+                for result in results:
+                    edgeId = result.get("r.edgeId")
+                    query_delete = (
+                        "MATCH ()-[r]->() WHERE r.edgeId = $edgeId DELETE r"
+                    )
+                    session.run(query_delete, {"edgeId": edgeId})
+
+                nodo.delete()
+                    
+                return "tutto eliminato"
+            except Exception as e:
+                # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+                print("Errore durante l'esecuzione della query Cypher:", e)
+                return None  # Restituisci None anziché una lista vuota in caso di errore
+   
 
 
 

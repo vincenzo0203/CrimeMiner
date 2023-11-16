@@ -1,15 +1,14 @@
 from neomodel import StructuredRel,Relationship, RelationshipTo,RelationshipFrom, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
 from django.db import models
-import neo4j
 
-class Condannato(StructuredRel):
-    type = "Condannato"
+class ImputatoDi(StructuredRel):
+    type = "ImputatoDi"
 
     # Valori Long
-    idCondannato = IntegerProperty(primary_key=True, generated_value=True)
-    
+    idImputatoDi = IntegerProperty(primary_key=True, generated_value=True)
+
     # Valori String
-    edgeId = UniqueIdProperty(primary_key=True, json_property="edgeId")
+    edgeId = StringProperty(primary_key=True, json_property="edgeId")
     entityType = StringProperty()
 
     mesiTotali=IntegerProperty()

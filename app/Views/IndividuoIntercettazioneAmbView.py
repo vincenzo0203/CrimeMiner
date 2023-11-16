@@ -44,11 +44,6 @@ class IndividuoIntercettazioneAmbView(View):
             return JsonResponse({"result": edge})
         else:
             return JsonResponse({"error": "Nodes not found"}, status=404)
-        
-    @request_mapping("/outputJson/", method="get")     
-    def OutputJson(self, request) -> JsonResponse:        
-        output = self.individuoIntercettazioneAmb_repository.convert_and_save_to_json()         
-        return JsonResponse({"result": output})
 
     @request_mapping("/Closeness/", method="get")
     def Closeness(self, request) -> JsonResponse:

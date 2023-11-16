@@ -73,12 +73,11 @@ class IndividuoIntercettazioneView(View):
     
 
     @request_mapping("/creaIntercettazione/", method="post")
-    def create_Node(self,request) -> JsonResponse:  
+    def create_EdgeIntercettazione(self,request) -> JsonResponse:  
 
         try:
             #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
-            data =json.loads(json.loads(request.body)) 
-
+            data =json.loads(json.loads(request.body))
 
             id1_individuo=None
             id2_individuo=None
@@ -107,3 +106,22 @@ class IndividuoIntercettazioneView(View):
         except Exception as e:
             # Se si verifica un errore, restituisci status 500 e il messaggio di errore
             return JsonResponse({"error_message": str(e)}, status=500)
+        
+
+    @request_mapping("/modificaIntInd/", method="post")
+    def edit_Edge_HaChiamato(self,request) -> JsonResponse:  
+        try:            
+            
+            data = json.loads(json.loads(request.body))
+            print(data)
+            
+            IndividuoIntercettazione_repository = IndividuoIntercettazioneRepository()
+            IndividuoIntercettazione_repository.EditEdgeIndividuoIntercettazione(data)
+            
+            return JsonResponse({"status": 100, "result": "Tutto apposto"})
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            # Se si verifica un errore, restituisci status 500 e il messaggio di errore
+            return JsonResponse({"error_message": str(e)}, status=500)
+        
