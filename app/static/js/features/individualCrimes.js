@@ -1045,9 +1045,11 @@ function sendUpdateIndividualToBackendIndividualCrimes(){
 
 //Funzione che invia al backend l'individuo da cancellare
 function deleteNodeIndividualCrimes(){
-  let id = document.querySelector(".infoIndividualCrimesNodeIndividualIdContent").innerHTML;
+  let json = `{
+    "nodeId": "${document.querySelector(".infoIndividualCrimesNodeIndividualIdContent").innerHTML}"
+  }`;
 
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuo/eliminaIndividuo/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1064,7 +1066,7 @@ function deleteNodeIndividualCrimes(){
   })
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");
 }

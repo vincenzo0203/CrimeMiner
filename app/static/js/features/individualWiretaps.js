@@ -955,9 +955,11 @@ function sendUpdateIndividualToBackendIndividualWiretaps(){
 
 //Funzione che invia al backend l'individuo da cancellare
 function deleteNodeIndividualWiretaps(){
-  let id = document.querySelector(".infoIndividualWiretapsNodeIdContent").innerHTML;
+  let json = `{
+    "nodeId": "${document.querySelector(".infoIndividualWiretapsNodeIdContent").innerHTML}"
+  }`;
 
-  fetch("", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuo/eliminaIndividuo/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
