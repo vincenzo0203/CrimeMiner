@@ -995,12 +995,12 @@ function deleteNodeIndividualWiretaps(){
 function deleteEdgeIndividualWiretaps(){
 
   let json = `{
-      "nodeId": "${document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML}"
+      "edgeId": "${document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML}"
   }`;
 
   console.log(json);
 
-  /*fetch("CrimeMiner/individuoIntercettazione/eliminaIntInd", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoIntercettazione/eliminaIntInd/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1017,7 +1017,7 @@ function deleteEdgeIndividualWiretaps(){
   })
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Cancellazione Chiamata", "Cancellazione avvenuta con successo.", "success");
 }

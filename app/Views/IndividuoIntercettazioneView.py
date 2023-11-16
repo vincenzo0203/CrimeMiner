@@ -125,3 +125,20 @@ class IndividuoIntercettazioneView(View):
             # Se si verifica un errore, restituisci status 500 e il messaggio di errore
             return JsonResponse({"error_message": str(e)}, status=500)
         
+    @request_mapping("/eliminaIntInd/",method="post")
+    def delete_Edge(self,request) -> JsonResponse:
+        try:
+            data = json.loads(json.loads(request.body))
+            print(data)
+            
+            self.IndividuoIntercettazione_repository.elemina_ArcoIndIntercettazione(data)
+            
+            return JsonResponse({"status": 100, "result": "Tutto apposto"})
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            # Se si verifica un errore, restituisci status 500 e il messaggio di errore
+            return JsonResponse({"error_message": str(e)}, status=500)
+
+
+        

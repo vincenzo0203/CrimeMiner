@@ -78,3 +78,5 @@ class IndividuoReatoIntercettazioneAmbView(View):
     def OutDegree(self, request) -> JsonResponse:
         node_list = self.individuoReatoIntercettazioneAmb_repository.OutDegree()
         return JsonResponse({"result":node_list})
+    
+    

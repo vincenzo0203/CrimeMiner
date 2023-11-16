@@ -816,7 +816,8 @@ function sendNewImputationSentenceToBackendIndividualCrimes(){
                             "nazioneResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddNation").value}",
                             "provinciaResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddProvince").value}",
                             "cittaResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddCity").value}",
-                            "indirizzoResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddAddress").value}"
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddAddress").value}",
+                            "capResidenza": "${document.querySelector(".modalIndividualCrimesIndividualAddCap").value}"
                           },
             `;
   }
@@ -839,48 +840,8 @@ function sendNewImputationSentenceToBackendIndividualCrimes(){
   
   json += ` 
             "crimeId": "${document.querySelector(".modalIndividualCrimesCrime").value}",
-            "tipologyEdge": "${document.querySelector(".modalIndividualCrimesTipology").value}",
-          `;
-
-  json += `}`;
-
-  /*[year, month, day] = document.querySelector(".modalIndividualWiretapsDate").value.split('-');
-  
-  if(document.querySelector("#CheckSourceExisting").checked && document.querySelector("#CheckTargetExisting").checked){
-    if(document.querySelector(".modalIndividualWiretapsSource").value != document.querySelector(".modalIndividualWiretapsTarget").value){
-      
-      json += `  "call" : {
-                            "sourceId": "${document.querySelector(".modalIndividualWiretapsSource").value}",
-                            "targetiD": "${document.querySelector(".modalIndividualWiretapsTarget").value}",
-                            "date": "${day}/${month}/${year}",
-                            "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
-                            "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
-                            "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}"
-                          }
-      `;
-    }
-  }
-  else{
-    json += `  "call" : {`;
-
-    if(document.querySelector("#CheckSourceExisting").checked) 
-    json += `
-              "sourceId": "${document.querySelector(".modalIndividualWiretapsSource").value}",
-            `;
-    
-    if(document.querySelector("#CheckTargetExisting").checked)
-    json += `
-              "targetId": "${document.querySelector(".modalIndividualWiretapsTarget").value}",
-            `;
-  
-    json += `
-              "date": "${day}/${month}/${year}",
-              "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
-              "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
-              "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}"
-            }
-    `;
-  }*/
+            "tipologyEdge": "${document.querySelector(".modalIndividualCrimesTipology").value}"
+          }`;
 
   json += `}`;
 
@@ -1016,11 +977,12 @@ function sendUpdateIndividualToBackendIndividualCrimes(){
             "province": "${document.querySelector(".modalIndividualCrimesIndividualProvince").value}",
             "city": "${document.querySelector(".modalIndividualCrimesIndividualCity").value}",
             "address": "${document.querySelector(".modalIndividualCrimesIndividualAddress").value}",
+            "cap": "${document.querySelector(".modalIndividualCrimesIndividualCap").value}"
           }`;
 
   console.log(json);
   
-  /*fetch("CrimeMiner/individuo/modificaIndividuo", { 
+  fetch("/CrimeMiner/individuo/modificaIndividuo/", { 
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1040,7 +1002,7 @@ function sendUpdateIndividualToBackendIndividualCrimes(){
   //})
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Modifica Individuo", "Modifica avvenuta con successo.", "success");  
 }
@@ -1053,7 +1015,7 @@ function deleteNodeIndividualCrimes(){
 
   console.log(json);
 
-  /*fetch("CrimeMiner/individuo/eliminaIndividuo", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuo/eliminaIndividuo/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1070,7 +1032,7 @@ function deleteNodeIndividualCrimes(){
   })
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");
 }
@@ -1079,13 +1041,13 @@ function deleteNodeIndividualCrimes(){
 function deleteEdgeImputationIndividualCrimes(){
 
   let json = `{
-      "nodeId": "${document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML}"
+      "edgeId": "${document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML}"
   }`;
 
   console.log(json);
   
 
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoReato/eliminaReatoArco/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1105,7 +1067,7 @@ function deleteEdgeImputationIndividualCrimes(){
   //})
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Cancellazione Imputazione", "Cancellazione avvenuta con successo.", "success");
 }
@@ -1114,12 +1076,12 @@ function deleteEdgeImputationIndividualCrimes(){
 function deleteEdgeSentenceIndividualCrimes(){
 
   let json = `{
-      "nodeId": "${document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML}"
+      "edgeId": "${document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML}"
   }`;
 
   console.log(json);
 
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoReato/eliminaReatoArco/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1139,7 +1101,7 @@ function deleteEdgeSentenceIndividualCrimes(){
   //})
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Cancellazione Condanna", "Cancellazione avvenuta con successo.", "success");
 }

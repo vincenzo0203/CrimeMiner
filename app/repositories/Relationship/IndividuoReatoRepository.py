@@ -379,6 +379,22 @@ class IndividuoReatoRepository:
             print("Errore durante l'esecuzione della query Cypher:", e)
             return None  # Restituisci None anziché una lista vuota in caso di errore
     
+    @staticmethod
+    def elemina_ArcoReato(data):
+        edgeId = data.get("edgeId")
+        print(edgeId)
+        print("eliminazione arco reato in corso..")
+        try:
+            session = Neo4jDriver.get_session()
+            query = ("MATCH p=()-[r:Condannato|ImputatoDi]->() WHERE r.edgeId=$edgeId DELETE r")
+            results = session.run(query, {"edgeId":edgeId}).data()
+
+            return "arco reato eliminato"
+        except Exception as e:
+                # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+                print("Errore durante l'esecuzione della query Cypher:", e)
+                return None  # Restituisci None anziché una lista vuota in caso di errore
+    
 
 
 

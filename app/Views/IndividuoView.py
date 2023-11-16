@@ -67,7 +67,8 @@ class IndividuoView(View):
         try:            
             
             print("prima del data")
-            data = json.loads(json.loads(request.body))            
+            data = json.loads(json.loads(request.body))
+                        
             individuo_repository = IndividuoRepository()
             individuo_repository.DeleteIndividuo(data)
             
