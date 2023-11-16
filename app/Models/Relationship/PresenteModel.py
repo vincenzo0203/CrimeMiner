@@ -1,12 +1,12 @@
-from neomodel import Relationship, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
+from neomodel import StructuredRel, RelationshipTo, StringProperty, IntegerProperty, UniqueIdProperty, BooleanProperty
 from django.db import models
 
-class Presente(Relationship):
+class Presente(StructuredRel):
    
     idPresente = IntegerProperty(primary_key=True, generated_value=True)
     edgeId = StringProperty(primary_key=True, json_property="edgeId")
 
-    entityType = StringProperty(default='Presente')
+    entityType = StringProperty()
     name = StringProperty()
 
     mesiCondanna=IntegerProperty()
@@ -15,7 +15,5 @@ class Presente(Relationship):
 
     sourceNodeId = StringProperty(json_property="sourceid")
     targetNodeId = StringProperty(json_property="targetid")
-
-
-    PresenteList = RelationshipTo('Individuo', 'Presente')
     
+    element_id_property= 'edgedId'

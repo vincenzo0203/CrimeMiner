@@ -9,7 +9,7 @@ class Condannato(StructuredRel):
     idCondannato = IntegerProperty(primary_key=True, generated_value=True)
     
     # Valori String
-    edgeId = UniqueIdProperty(primary_key=True, json_property="edgeId")
+    edgeId = StringProperty(primary_key=True, json_property="edgeId")
     entityType = StringProperty()
 
     mesiTotali=IntegerProperty()

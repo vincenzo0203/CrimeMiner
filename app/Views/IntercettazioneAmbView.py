@@ -2,9 +2,10 @@ from django.http import JsonResponse
 from django.views import View
 from app.repositories.Entity.IntercettazioneAmbRepository import IntercettazioneAmbRepository
 from django_request_mapping import request_mapping
+import json
 
 @request_mapping("/intercettazioneAmbientale")
-class IndividuoView(View):
+class IntercettazioneAmbView(View):
 
     def __init__(self):
         super().__init__()
@@ -30,3 +31,34 @@ class IndividuoView(View):
             return JsonResponse({"result": nodes})
         else:
             return JsonResponse({"error": "Nodes not found"}, status=404)
+        
+    @request_mapping("/modificaNodoAmb/", method="post")
+    def edit_Node_IntAmbientale(self,request) -> JsonResponse:  
+        print("boh forse")
+        try:             
+            data = json.loads(json.loads(request.body))
+            print(data)
+            
+            self.individuo_repository.EditIntAmb(data["enviromentalTapping"])
+            
+            return JsonResponse({"status": 100, "result": "Tutto apposto"})
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            # Se si verifica un errore, restituisci status 500 e il messaggio di errore
+            return JsonResponse({"error_message": str(e)}, status=500)
+        
+    @request_mapping("/eliminaNodoAmb/", method="post")
+    def delete_Node_AmbIndividuo(self,request) -> JsonResponse:  
+        try:            
+            
+            data = json.loads(json.loads(request.body))
+                        
+            self.individuo_repository.deleteNodo(data)
+            
+            return JsonResponse({"status": 100, "result": "Tutto apposto"})
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            # Se si verifica un errore, restituisci status 500 e il messaggio di errore
+            return JsonResponse({"error_message": str(e)}, status=500)

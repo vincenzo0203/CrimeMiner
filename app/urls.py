@@ -5,6 +5,7 @@ from app.Views.IndividuoIntercettazioneView import IndividuoIntercettazioneView
 from app.Views.IndividuoReatoIntercettazioneAmbView import IndividuoReatoIntercettazioneAmbView
 from app.Views.IndividuoIntercettazioneAmbView import IndividuoIntercettazioneAmbView
 from app.Views.IndividuoReatoView import IndividuoReatoView
+from app.Views.IntercettazioneAmbView import IntercettazioneAmbView
 
 
 
@@ -18,7 +19,7 @@ urlpattern.register(IndividuoIntercettazioneView)
 urlpattern.register(IndividuoReatoIntercettazioneAmbView)
 urlpattern.register(IndividuoIntercettazioneAmbView)
 urlpattern.register(IndividuoReatoView)
-
+urlpattern.register(IntercettazioneAmbView)
 
 
 

@@ -84,38 +84,58 @@ class IndividuoIntercettazioneAmbView(View):
 
     @request_mapping("/creaIntercettazioneAmb/", method="post")
     def create_Node(self,request) -> JsonResponse:  
-
         try:
             #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
             data =json.loads(json.loads(request.body)) 
-            print(f"Tipo di 'data': {type(data)}")
-
             id_individuo=None
             id_intercettazioneAmb=None
 
             # Esegui la tua query e ottieni il risultato
             
-            if  not "nodeId" in data["individuo"]:
+            if  not "nodeId" in data["individual"]:
                 individuo_repository = IndividuoRepository()
-                id_individuo = individuo_repository.CreaIndividuo(data["source"])
+                id_individuo = individuo_repository.CreaIndividuo(data["individual"])
             else:
-                id_individuo=data["individuo"].get("nodeId")
+                id_individuo=data["individual"].get("nodeId")
                 print(id_individuo)
 
-            if  not "nodeId" in data["intercettazione"]:
+            if  not "nodeId" in data["enviromentalTapping"]:
                 intercettazioneAmb_repository = IntercettazioneAmbRepository()
-                id_intercettazioneAmb = intercettazioneAmb_repository.CreaIntercettazioneAmb(data["intercettazione"])
+                id_intercettazioneAmb = intercettazioneAmb_repository.CreaIntercettazioneAmb(data["enviromentalTapping"])
             else:
-                id_intercettazioneAmb=data["intercettazione"].get("nodeId")
+                id_intercettazioneAmb=data["enviromentalTapping"].get("nodeId")
 
-            presente_result = self.individuoIntercettazioneAmb_repository.CreaPresenteIntercettazioneAmb(data["call"],id_individuo,id_intercettazioneAmb)
+            presente_result = self.individuoIntercettazioneAmb_repository.CreaPresenteIntercettazioneAmb(id_individuo,id_intercettazioneAmb)
 
             # Restituisci il risultato con status 100 se la query è andata bene
-            return JsonResponse({"status": 100, "result": presente_result})
+            return JsonResponse({"status": 100, "result": "ciao"})
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON data"}, status=400)
         except Exception as e:
             # Se si verifica un errore, restituisci status 500 e il messaggio di errore
             return JsonResponse({"error_message": str(e)}, status=500)
+        
+    @request_mapping("/outputJson/", method="get")
+    def OutputJson(self, request) -> JsonResponse:
+        output = self.individuoIntercettazioneAmb_repository.convert_and_save_to_json()
+        return JsonResponse({"result": output})
+     
+          
+    @request_mapping("/eliminaIntIndAmb/",method="post")
+    def delete_EdgePresente(self,request) -> JsonResponse:
+        try:
+            data = json.loads(json.loads(request.body))
+            print(data)
+            
+            self.individuoIntercettazioneAmb_repository.elemina_ArcoIndIntercettazione(data)
+            
+            return JsonResponse({"status": 100, "result": "Tutto apposto"})
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            # Se si verifica un errore, restituisci status 500 e il messaggio di errore
+            return JsonResponse({"error_message": str(e)}, status=500)
+
+
 
     

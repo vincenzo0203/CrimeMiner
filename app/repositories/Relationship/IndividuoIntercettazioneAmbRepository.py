@@ -6,6 +6,8 @@ import json
 
 from app.repositories.Entity.IndividuoRepository import IndividuoRepository
 from app.repositories.Entity.IntercettazioneAmbRepository import IntercettazioneAmbRepository
+from app.Models.Relationship.PresenteModel import Presente
+from app.Models.Entity.IntercettazioneAmbModel import IntercettazioneAmb
 
 #Questa classe fornisce metodi per eseguire query su un database Neo4j che contiene dati sugli individui e le intercettazioni ambientali.
 class IndividuoIntercettazioneAmbRepository:
@@ -174,15 +176,65 @@ class IndividuoIntercettazioneAmbRepository:
         
 
     @staticmethod
-    def CreaPresenteIntercettazioneAmb(data,idIndividuo,IdIntercettazioneAmb):
+    def CreaPresenteIntercettazioneAmb(idIndividuo,IdIntercettazioneAmb):
         try:
-            print("qualcosa")
+            Presente_model = Presente()
+            edge=IndividuoIntercettazioneAmbRepository.get_max_edge_Presente_id()
+
+            nodo1 = Individuo.nodes.get(nodeId=idIndividuo)
+            nodo2 = IntercettazioneAmb.nodes.get(nodeId=IdIntercettazioneAmb)
+
+            Presente_model = nodo1.PresenteList.connect(nodo2)
+
+            Presente_model.mesiTotali = nodo1.mesiTotali
+            Presente_model.mesiImputati = nodo1.mesiImputati
+            Presente_model.mesiCondanna = nodo1.mesiCondanna
+
+            Presente_model.entityType = "Presente"
+            Presente_model.sourceNodeId = idIndividuo
+            Presente_model.targetNodeId = IdIntercettazioneAmb
+            Presente_model.edgeId = edge
+
+            Presente_model.save()
+
+            return "Inserimento effettuato"
         
         except Exception as e:
             # Gestione degli altri errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
-            print("Errore durante il salvataggio di PresenteIntercettazioneAmb:", e)
+            print("Errore durante il salvataggio dell'intercettazione:", e)
             return []
         
+    # Ottiene tutti i nodeId presenti nel database e ritorna il massimo degli edge id
+    # Args:
+    #   none
+    # Returns:
+    #   string: il massimo edge nodeId presente
+    @staticmethod
+    def get_max_edge_Presente_id():
+            max_edge_id = None
+            max_number = -1  # Un valore iniziale molto basso per confronto
+            try:
+                session = Neo4jDriver.get_session()
+                result = session.run("MATCH ()-[r:Presente]->() RETURN r.edgeId AS edgeId")
+                for record in result:
+                    edge_id = record["edgeId"]
+                    # Estrai la parte numerica dalla stringa edgeId
+                    numeric_part = int(edge_id[2:])  # Assume che i primi due caratteri siano "IT"
+                    # Confronto con il massimo attuale
+                    if numeric_part > max_number:
+                        max_number = numeric_part
+                        max_edge_id = edge_id
+
+                
+                result_numeric_part=max_number+1
+                result_edge_id=f"IP{result_numeric_part}"
+
+                return result_edge_id
+            except Exception as e:
+                # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+                print("Errore durante l'esecuzione della query Cypher:", e)
+                return None  # Restituisci None anziché una lista vuota in caso di errore
+               
     @staticmethod
     def get_max_node_id_AMB():
         max_node_id = None
@@ -195,7 +247,7 @@ class IndividuoIntercettazioneAmbRepository:
             for record in result:
                 node_id = record["nodeId"]
                 # Estrai la parte numerica dalla stringa nodeId
-                numeric_part = int(node_id[1:])
+                numeric_part = int(node_id[2:])
 
                 # Confronto con il massimo attuale
                 if numeric_part > max_number:
@@ -203,7 +255,7 @@ class IndividuoIntercettazioneAmbRepository:
                     max_node_id = node_id
 
             result_numeric = max_number + 1
-            result_node_id = f"I{result_numeric}"
+            result_node_id = f"IA{result_numeric}"
 
             return result_node_id
         except Exception as e:
@@ -216,27 +268,11 @@ class IndividuoIntercettazioneAmbRepository:
         try:
             session = Neo4jDriver.get_session()
 
-            # Query per ottenere i nodi degli individui
-            query_individui = "MATCH (i:Individuo) RETURN i.nodeId AS individuoNodeId, i.nome AS individuoNome, i.cognome AS individuoCognome"
-            result_individui = session.run(query_individui)
-
-            # Query per ottenere i nodi delle intercettazioni
-            query_intercettazioni = "MATCH (i:IntercettazioneAmb) RETURN i.nodeId"
-            result_intercettazioni = session.run(query_intercettazioni)
+            resultIndividual=IndividuoRepository.find_all_surname_name()
+            resultIntercettazione=IntercettazioneAmbRepository.find_all_id()
 
             # Unisci i risultati delle query
-            nodes = []
-            for record in result_individui:
-                nodes.append({
-                    "nodeId": record["individuoNodeId"],
-                    "nome": record["individuoNome"],
-                    "cognome": record["individuoCognome"]
-                })
-
-            for record in result_intercettazioni:
-                nodes.append({
-                    "nodeId": record["nodeId"]
-                })
+            nodes = resultIndividual + resultIntercettazione
 
             # Crea il nuovo nodeId
             newNodeId = IndividuoIntercettazioneAmbRepository.get_max_node_id_AMB()
@@ -247,14 +283,27 @@ class IndividuoIntercettazioneAmbRepository:
                 "newNodeId": newNodeId
             }
 
-            # Salva i dati in un file JSON
-            with open('output.json', 'w') as json_file:
-                json.dump(data, json_file, indent=2)
-
-            print("Dati convertiti con successo e salvati in output.json")
+            return data
 
         except Exception as e:
             print("Errore durante la conversione dei dati:", e)
+
+    @staticmethod
+    def elemina_ArcoIndIntercettazione(data):
+        edgeId = data.get("edgeId")
+        print(edgeId)
+        print("eliminazione arco intercettazione amb in corso..")
+        try:
+            session = Neo4jDriver.get_session()
+            query = ("MATCH p=()-[r:Presente]->() WHERE r.edgeId=$edgeId DELETE r")
+            results = session.run(query, {"edgeId":edgeId}).data()
+
+            return "arco presente eliminato"
+        except Exception as e:
+                # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
+                print("Errore durante l'esecuzione della query Cypher:", e)
+                return None  # Restituisci None anziché una lista vuota in caso di errore
+
 
 #################################################### NON UTILIZZATE (POSSIBILMENTE UTILI IN FUTURO) ##############################################################
 

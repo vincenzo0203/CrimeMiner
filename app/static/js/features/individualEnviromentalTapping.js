@@ -825,12 +825,13 @@ function sendNewPresentToBackendIndividualEnviromentalTapping(){
                             "nazioneResidenza": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddNation").value}",
                             "provinciaResidenza": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddProvince").value}",
                             "cittaResidenza": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddCity").value}",
-                            "indirizzoResidenza": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddAddress").value}"
+                            "indirizzoResidenza": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddAddress").value}",
+                            "capResidenza": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddCap").value}"
                           },
             `;
   }
   else{
-    json += ` "source" : {
+    json += ` "individual" : {
         "nodeId": "${document.querySelector(".modalIndividualEnviromentalTappingIndividual").value}"
       },
     `;
@@ -843,19 +844,21 @@ function sendNewPresentToBackendIndividualEnviromentalTapping(){
                             "place": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddPlace").value}",
                             "date": "${day}/${month}/${year}",
                             "content": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddTextarea").value}"
-                          },
+                          }
             `;
   }
   else{
     json += ` "enviromentalTapping" : {
-        "nodeId": "${document.querySelector(".modalIndividualEnviromentalTappingenviromentalTapping").value}"
-      },
+        "nodeId": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTapping").value}"
+      }
     `;
   }
 
   json += `}`;
   
-  /*fetch("/CrimeMiner/individuoIntercettazione/CreaIntercettazione", {
+  console.log(json);
+
+  fetch("/CrimeMiner/individuoIntercettazioneAmb/creaIntercettazioneAmb/", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -872,7 +875,7 @@ function sendNewPresentToBackendIndividualEnviromentalTapping(){
   })
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
 }
 
@@ -884,16 +887,18 @@ function sendUpdateEnviromentalTappingToBackendIndividualEnviromentalTapping(){
   let json = `{`;
 
   json += ` "enviromentalTapping" : {
-    "nodeId": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingId").value}",
+    "nodeId": "${document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingIdContent").innerHTML}",
     "place": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingPlace").value}",
     "date": "${day}/${month}/${year}",
     "content": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingTextarea").value}"
-  },
+  }
 `;
-
-  json += `}`;
   
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  json += `}`;
+
+  console.log(json)
+  
+  fetch("/CrimeMiner/intercettazioneAmbientale/modificaNodoAmb/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -913,7 +918,7 @@ function sendUpdateEnviromentalTappingToBackendIndividualEnviromentalTapping(){
   //})
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
 }
@@ -931,9 +936,10 @@ function sendUpdateIndividualToBackendIndividualEnviromentalTapping(){
             "province": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualProvince").value}",
             "city": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualCity").value}",
             "address": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualAddress").value}",
+            "cap": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualCap").value}"
           }`;
   
-  /*fetch("CrimeMiner/individuo/modificaIndividuo", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuo/modificaIndividuo/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -953,7 +959,7 @@ function sendUpdateIndividualToBackendIndividualEnviromentalTapping(){
   //})
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Modifica Chiamata", "Modifica avvenuta con successo.", "success");  
 }
@@ -967,7 +973,7 @@ function deleteNodeIndividualIndividualEnviromentalTapping(){
 
   console.log(json);
 
-  /*fetch("CrimeMiner/individuo/eliminaIndividuo", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuo/eliminaIndividuo/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -984,7 +990,7 @@ function deleteNodeIndividualIndividualEnviromentalTapping(){
   })
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Cancellazione Individuo", "Cancellazione avvenuta con successo.", "success");
 }
@@ -998,7 +1004,7 @@ function deleteNodeEnviromentalTappingIndividualEnviromentalTapping(){
 
   console.log(json);
 
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/intercettazioneAmbientale/eliminaNodoAmb/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1018,19 +1024,19 @@ function deleteNodeEnviromentalTappingIndividualEnviromentalTapping(){
   //})
   .catch(error => {
     console.error(error);
-  });*/
+  });
 }
 
 //Funzione che invia al backend la presenza da cancellare
 function deleteEdgeIndividualEnviromentalTapping(){
 
   let json = `{
-      "nodeId": "${document.querySelector(".infoIndividualEnviromentalTappingEdgeIdContent").innerHTML}"
+      "edgeId": "${document.querySelector(".infoIndividualEnviromentalTappingEdgeIdContent").innerHTML}"
   }`;
 
   console.log(json);
 
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoIntercettazioneAmb/eliminaIntIndAmb/", { //FUNZIONE PER INSERIRE I DATI
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1050,7 +1056,7 @@ function deleteEdgeIndividualEnviromentalTapping(){
   //})
   .catch(error => {
     console.error(error);
-  });*/
+  });
 
   viewToastMessage("Cancellazione Chiamata", "Cancellazione avvenuta con successo.", "success");
 }

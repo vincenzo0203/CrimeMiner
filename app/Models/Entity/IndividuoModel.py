@@ -5,6 +5,7 @@ from app.Models.Relationship.CondannatoModel import Condannato
 from app.Models.Relationship.ImputatoDiModel import ImputatoDi
 from app.Models.Entity.ReatoModel import Reato
 from app.Models.Entity.IntercettazioneAmbModel import IntercettazioneAmb
+from app.Models.Relationship.PresenteModel import Presente
 
 class Individuo(StructuredNode):
 
@@ -29,6 +30,7 @@ class Individuo(StructuredNode):
 
 
     # Valori Interi
+    mesiCondanna = IntegerProperty()
     mesiImputati=IntegerProperty()
     mesiTotali=IntegerProperty()
     lng = IntegerProperty()
@@ -51,7 +53,7 @@ class Individuo(StructuredNode):
     ImputatoDiList = RelationshipTo('Reato', 'ImputatoDi',model=ImputatoDi)
 
     #Sezione di definizione delle relazioni con entity
-    PresenteList=RelationshipTo('IntercettazioneAmb','Presente')
+    PresenteList=RelationshipTo('IntercettazioneAmb','Presente', model= Presente)
 
 
 

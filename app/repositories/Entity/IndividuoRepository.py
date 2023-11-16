@@ -69,6 +69,7 @@ class IndividuoRepository:
             nodeId=idNodo,
             entityType="Individuo",
             name=idNodo,
+            mesiCondanna=0,
             mesiImputati=0,
             mesiTotali=0,
             lng = 0,

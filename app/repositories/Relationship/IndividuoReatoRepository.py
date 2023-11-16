@@ -201,6 +201,9 @@ class IndividuoReatoRepository:
 
             nodo1.mesiTotali = nodo1.mesiTotali + mesiCondanna
 
+            nodo1.mesiImputati = nodo1.mesiImputati + mesiCondanna
+
+
             nodo1.save()
 
             ImputatoDi_model.entityType = "ImputatoDi"
@@ -220,20 +223,21 @@ class IndividuoReatoRepository:
     def CreaCondanna(id_individuo,id_reato):
         try:
             Condannato_model = Condannato()
-            #edge=IndividuoReatoRepository.get_max_edge_condannato_id()
+            edge=IndividuoReatoRepository.get_max_edge_condannato_id()
 
             nodo1 = Individuo.nodes.get(nodeId=id_individuo)
             nodo2 = Reato.nodes.get(nodeId=id_reato)
 
             Condannato_model = nodo1.CondannatoList.connect(nodo2)
 
-            #Condannato_model.edgeId = edge
+            Condannato_model.edgeId = edge
 
             mesiCondanna = ((nodo2.maxMonths + nodo2.minMonths )/2)
           
             Condannato_model.mesiTotali= nodo1.mesiTotali + mesiCondanna
 
             nodo1.mesiTotali = nodo1.mesiTotali + mesiCondanna
+            nodo1.mesiCondanna = nodo1.mesiCondanna + mesiCondanna
 
             nodo1.save()
 
@@ -274,7 +278,7 @@ class IndividuoReatoRepository:
 
                 
                 result_numeric_part=max_number+1
-                result_edge_id=f"IT{result_numeric_part}"
+                result_edge_id=f"IC{result_numeric_part}"
 
                 return result_edge_id
             except Exception as e:
@@ -302,7 +306,7 @@ class IndividuoReatoRepository:
 
                 
                 result_numeric_part=max_number+1
-                result_edge_id=f"IT{result_numeric_part}"
+                result_edge_id=f"II{result_numeric_part}"
 
                 return result_edge_id
             except Exception as e:
