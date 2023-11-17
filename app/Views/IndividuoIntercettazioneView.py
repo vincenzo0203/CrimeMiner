@@ -130,7 +130,7 @@ class IndividuoIntercettazioneView(View):
             
             intercettazione_result = self.IndividuoIntercettazione_repository.EditEdgeIndividuoIntercettazione(data["call"],id1_individuo,id2_individuo)
             
-            return JsonResponse({"status": 100, "result": intercettazione_result})
+            return JsonResponse({"status": 100, "result": "tutto ok"})
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON data"}, status=400)
         except Exception as e:

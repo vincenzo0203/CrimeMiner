@@ -250,6 +250,8 @@ class IndividuoIntercettazioneRepository:
             try:                
                 session = Neo4jDriver.get_session()
 
+                print(data)
+
                 sourceId=id1
                 targetId=id2
                 edge_id = data.get("edgeId")
@@ -257,28 +259,35 @@ class IndividuoIntercettazioneRepository:
                 source_node = Individuo.nodes.get(nodeId=sourceId)
                 target_node = Individuo.nodes.get(nodeId=targetId)
 
+                
                 cypher_query = ("MATCH (indi:Individuo {nodeId:$nodo}) MATCH (i:Individuo)-[rel:HaChiamato]->() WHERE rel.edgeId=$edge_id SET rel.sourceNodeId=indi.nodeId WITH rel, indi CALL apoc.refactor.from(rel, indi) YIELD input, output RETURN input, output, indi.nodeId")
-                results = session.run(cypher_query, {"nodo":sourceId,"edge_id": edge_id}).data()
+                results1 = session.run(cypher_query, {"nodo":sourceId,"edge_id": edge_id}).data()
 
                 cypher_query2 =("MATCH (indi:Individuo {nodeId:$nodo}) MATCH ()-[rel:HaChiamato]->(i:Individuo) WHERE rel.edgeId=$edge_id SET rel.targetNodeId=indi.nodeId WITH rel, indi CALL apoc.refactor.to(rel, indi) YIELD input, output RETURN input, output, indi.nodeId")
-                results = session.run(cypher_query2, {"nodo":targetId,"edge_id": edge_id}).data()
+                results2 = session.run(cypher_query2, {"nodo":targetId,"edge_id": edge_id}).data()
 
+                print(results1)
+                print(results2)
 
                 HaChiamato=source_node.haChiamatoList.relationship(target_node)
+
+                print("qualcosa")
                 
                 #HaChiamato.sourceNodeId=data["source"].get("nodeId")
                 #HaChiamato.targetNodeId=data["target"].get("nodeId")
-                HaChiamato.ora=data["call"].get("time")
-                HaChiamato.durata=data["call"].get("duration")
-                HaChiamato.contenuto=data["call"].get("content")
 
                 
-                if data.get("date")!="":
-                    HaChiamato.data=data.get("date")                
+                HaChiamato.ora = data.get("time")
+                print(HaChiamato.ora)
 
+                HaChiamato.durata = data.get("duration")
+                HaChiamato.contenuto = data.get("content")
+
+                if data.get("date") != "":
+                    HaChiamato.data = data.get("date")
+                    
                 HaChiamato.save()
-                
-
+            
                 return HaChiamato
             except Exception as e:
                 # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
