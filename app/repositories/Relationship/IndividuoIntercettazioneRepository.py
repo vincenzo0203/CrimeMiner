@@ -246,15 +246,23 @@ class IndividuoIntercettazioneRepository:
             
 
     @staticmethod
-    def  EditEdgeIndividuoIntercettazione(data):
-            print("editarco")
+    def  EditEdgeIndividuoIntercettazione(data,id1,id2):
             try:                
+                session = Neo4jDriver.get_session()
 
-                sourceId=data["source"].get("nodeId")
-                targetId=data["target"].get("nodeId")
+                sourceId=id1
+                targetId=id2
+                edge_id = data["call"].get("edgeId")
 
                 source_node = Individuo.nodes.get(nodeId=sourceId)
                 target_node = Individuo.nodes.get(nodeId=targetId)
+
+                cypher_query = ("MATCH (indi:Individuo {nodeId:$nodo}) MATCH (i:Individuo)-[rel:HaChiamato]->() WHERE rel.edgeId=$edge_id SET rel.sourceNodeId=indi.nodeId WITH rel, indi CALL apoc.refactor.from(rel, indi) YIELD input, output RETURN input, output, indi.nodeId")
+                results = session.run(cypher_query, {"nodo":sourceId,"edge_id": edge_id}).data()
+
+                cypher_query2 =("MATCH (indi:Individuo {nodeId:$nodo}) MATCH ()-[rel:HaChiamato]->(i:Individuo) WHERE rel.edgeId=$edge_id SET rel.targetNodeId=indi.nodeId WITH rel, indi CALL apoc.refactor.to(rel, indi) YIELD input, output RETURN input, output, indi.nodeId")
+                results = session.run(cypher_query2, {"nodo":targetId,"edge_id": edge_id}).data()
+
 
                 HaChiamato=source_node.haChiamatoList.relationship(target_node)
                 

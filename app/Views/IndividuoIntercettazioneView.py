@@ -114,9 +114,21 @@ class IndividuoIntercettazioneView(View):
             
             data = json.loads(json.loads(request.body))
             print(data)
+
+            if  not "nodeId" in data["source"]:
+                individuo_repository = IndividuoRepository()
+                id1_individuo = individuo_repository.CreaIndividuo(data["source"])
+            else:
+                id1_individuo=data["source"].get("nodeId")
+
+
+            if  not "nodeId" in data["target"]:
+                individuo_repository = IndividuoRepository()
+                id2_individuo = individuo_repository.CreaIndividuo(data["target"])
+            else:
+                id2_individuo=data["target"].get("nodeId")
             
-            IndividuoIntercettazione_repository = IndividuoIntercettazioneRepository()
-            IndividuoIntercettazione_repository.EditEdgeIndividuoIntercettazione(data)
+            intercettazione_result = self.IndividuoIntercettazione_repository.EditEdgeIndividuoIntercettazione(data["call"],id1_individuo,id2_individuo)
             
             return JsonResponse({"status": 100, "result": "Tutto apposto"})
         except json.JSONDecodeError:
