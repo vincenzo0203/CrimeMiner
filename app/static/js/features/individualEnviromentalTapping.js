@@ -1047,6 +1047,7 @@ function returnToCreationPageIndividualEnviromentalTapping(){
     document.querySelector("#CheckAnonymization").checked = true;
 }
 
+//Funzione che controlla se gli input nei form di creazione sono vuoti
 function inputControlIndividualEnviromentalTapping(){
   let value;
 
@@ -1099,6 +1100,7 @@ function inputControlIndividualEnviromentalTapping(){
   return value;
 }
 
+//Funzione che controlla se gli input nei form di aggiornamento sono vuoti
 function inputControlIndividualEnviromentalTappingUpdateInd(){
   let value;
 
@@ -1121,6 +1123,7 @@ function inputControlIndividualEnviromentalTappingUpdateInd(){
   return value;
 }
 
+//Funzione che controlla se gli input nei form di aggiornamento sono vuoti
 function inputControlIndividualEnviromentalTappingUpdateEnvTap(){
   let value;
 

@@ -1137,6 +1137,7 @@ function returnToCreationPageIndividualCrimes(){
     document.querySelector("#CheckAnonymization").checked = true;
 }
 
+//Funzione che controlla se gli input nei form di creazione sono vuoti
 function inputControlIndividualCrimes(){
   let value;
 
@@ -1186,6 +1187,7 @@ function inputControlIndividualCrimes(){
   return value;
 }
 
+//Funzione che controlla se gli input nei form di aggiornamento sono vuoti
 function inputControlIndividualCrimesUpdateInd(){
   let value;
 

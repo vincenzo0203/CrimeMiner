@@ -1067,6 +1067,7 @@ function returnToCreationPageIndividualWiretaps(){
     document.querySelector("#CheckAnonymization").checked = true;
 }
 
+//Funzione che controlla se gli input nei form di creazione sono vuoti
 function inputControlIndividualWiretaps(){
   let value;
 
@@ -1127,6 +1128,7 @@ function inputControlIndividualWiretaps(){
   return value;
 }
 
+//Funzione che controlla se gli input nei form di aggiornamento sono vuoti
 function inputControlIndividualWiretapsUpdateInd(){
   let value;
 
