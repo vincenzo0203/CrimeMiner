@@ -608,6 +608,8 @@ function fillAddModalIndividualWiretaps(){
 //Funzione che inserisce i campi della chiamata nella modale
 function fillUpdateModalCallIndividualWiretaps(){
 
+  fillAddModalIndividualWiretaps();
+
   let [day, month, year] = document.querySelector(".infoIndividualWiretapsEdgeDateContent").innerHTML.split('/');
   
   //Checkbox
@@ -890,10 +892,8 @@ function sendUpdateCallToBackendIndividualWiretaps(){
   }
 
   json += `}`;
-
-  console.log(json);
   
-  fetch("/CrimeMiner/individuoIntercettazione/modificaIntInd/", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoIntercettazione/modificaIntInd/", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -908,9 +908,6 @@ function sendUpdateCallToBackendIndividualWiretaps(){
       viewToastMessage("Modifica Chiamata", "Errore nella modifica della chiamata.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
   .catch(error => {
     console.error(error);
   });
@@ -933,8 +930,6 @@ function sendUpdateIndividualToBackendIndividualWiretaps(){
             "address": "${document.querySelector(".modalIndividualWiretapsIndividualAddress").value}",
             "cap":"${document.querySelector(".modalIndividualWiretapsIndividualCap").value}"
           }`;
-
-  console.log(json);
   
   fetch("/CrimeMiner/individuo/modificaIndividuo/", {
     method: 'POST',
@@ -951,9 +946,6 @@ function sendUpdateIndividualToBackendIndividualWiretaps(){
       viewToastMessage("Modifica Chiamata", "Errore nella modifica della chiamata.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
   .catch(error => {
     console.error(error);
   });
@@ -967,8 +959,6 @@ function deleteNodeIndividualWiretaps(){
   let json = `{
               "nodeId": "${document.querySelector(".infoIndividualWiretapsNodeIdContent").innerHTML}"
   }`;
-
-  console.log(json);
 
   fetch("/CrimeMiner/individuo/eliminaIndividuo/", { 
     method: 'POST',
@@ -999,9 +989,7 @@ function deleteEdgeIndividualWiretaps(){
       "edgeId": "${document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML}"
   }`;
 
-  console.log(json);
-
-  fetch("/CrimeMiner/individuoIntercettazione/eliminaIntInd/", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoIntercettazione/eliminaIntInd/", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'

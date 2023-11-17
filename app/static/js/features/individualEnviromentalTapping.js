@@ -94,7 +94,6 @@ function requestSizeNodesIndividualEnviromentalTapping(){
   })
   .then(data => {
     data = JSON.parse(data);
-    //this['create'+  document.querySelector(".selectMetrics").value +'IndividualEnviromentalTapping'](data);
     if(metric != "graphall")
       changeSizeNodesIndividualEnviromentalTapping(data);
     else
@@ -593,60 +592,6 @@ function fillPropertyAccordionIndividualEnviromentalTapping(data){
   document.querySelector(".accordionNumberNodesEdgesEdgesContent").innerHTML = data.edges.length;
 }
 
-/*function fillSourceAndTargetModalNewCallIndividualEnviromentalTapping(nodes){
-  let selectSource = document.querySelector(".modalIndividualEnviromentalTappingSource");
-  let selectTarget = document.querySelector(".modalIndividualEnviromentalTappingTarget");
-  for (let j = 0; j < nodes.length; j++) {
-    let opt = nodes[j].data.id;
-    let el = new Option(opt, opt);
-
-    if(nodes[j].data.id[0] == 'I')
-      selectSource.appendChild(el);
-
-    if(nodes[j].data.id[0] == 'R')
-      selectTarget.appendChild(el);
-  }
-}
-
-function sendNewCallToBackendIndividualEnviromentalTapping(){
-  let json;
-
-  json = `{
-                sourceId: ${document.querySelector(".modalIndividualEnviromentalTappingSource").value},
-                targetiD: ${document.querySelector(".modalIndividualEnviromentalTappingTarget").value},
-                date: ${document.querySelector(".modalIndividualEnviromentalTappingDate").value},
-                duration: ${document.querySelector(".modalIndividualEnviromentalTappingDuration").value},
-                time: ${document.querySelector(".modalIndividualEnviromentalTappingTime").value},
-                content: ${document.querySelector(".modalIndividualEnviromentalTappingTextarea").value},
-              }`;
-
-  console.log(json);
-  
-  /*fetch("", { //FUNZIONE PER INSERIRE I DATI
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(json)
-  })
-  .then(response => {
-    if (response.ok) {
-      viewToastMessage("Registrazione Chiamata", "Registrazione avvenuta con successo.", "success");
-      return response.text();
-    } else {
-      viewToastMessage("Registrazione Chiamata", "Errore nella registrazione della chiamata.", "error");
-    }
-  })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
-  .catch(error => {
-    console.error(error);
-  });*/
-/*
-  viewToastMessage("Registrazione Codannato/ImputatoDi", "Registrazione avvenuta con successo.", "success");  
-}*/
-
 //Funzione che inserisce nelle select della modale gli individui da scegliere se già registrati e le intercettazioni se già registrate
 function fillIndividualAndEnviromentalTappingModalNewEnviromentalTappingIndividualEnviromentalTapping(data){
   let nodes = data.nodes;
@@ -855,8 +800,6 @@ function sendNewPresentToBackendIndividualEnviromentalTapping(){
   }
 
   json += `}`;
-  
-  console.log(json);
 
   fetch("/CrimeMiner/individuoIntercettazioneAmb/creaIntercettazioneAmb/", {
     method: 'POST',
@@ -895,10 +838,8 @@ function sendUpdateEnviromentalTappingToBackendIndividualEnviromentalTapping(){
 `;
   
   json += `}`;
-
-  console.log(json)
   
-  fetch("/CrimeMiner/intercettazioneAmbientale/modificaNodoAmb/", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/intercettazioneAmbientale/modificaNodoAmb/", { 
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -913,9 +854,6 @@ function sendUpdateEnviromentalTappingToBackendIndividualEnviromentalTapping(){
       viewToastMessage("Modifica Intercettazione", "Errore nella modifica dell'intercettazione.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
   .catch(error => {
     console.error(error);
   });
@@ -939,7 +877,7 @@ function sendUpdateIndividualToBackendIndividualEnviromentalTapping(){
             "cap": "${document.querySelector(".modalIndividualEnviromentalTappingIndividualCap").value}"
           }`;
   
-  fetch("/CrimeMiner/individuo/modificaIndividuo/", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuo/modificaIndividuo/", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -954,9 +892,6 @@ function sendUpdateIndividualToBackendIndividualEnviromentalTapping(){
       viewToastMessage("Modifica Individuo", "Errore nella modifica dell'individuo'.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
   .catch(error => {
     console.error(error);
   });
@@ -971,9 +906,7 @@ function deleteNodeIndividualIndividualEnviromentalTapping(){
       "nodeId": "${document.querySelector(".infoIndividualEnviromentalTappingNodeIndividualIdContent").innerHTML}"
   }`;
 
-  console.log(json);
-
-  fetch("/CrimeMiner/individuo/eliminaIndividuo/", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuo/eliminaIndividuo/", { 
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1002,9 +935,7 @@ function deleteNodeEnviromentalTappingIndividualEnviromentalTapping(){
       "nodeId": "${document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingIdContent").innerHTML}"
   }`;
 
-  console.log(json);
-
-  fetch("/CrimeMiner/intercettazioneAmbientale/eliminaNodoAmb/", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/intercettazioneAmbientale/eliminaNodoAmb/", { 
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1019,9 +950,6 @@ function deleteNodeEnviromentalTappingIndividualEnviromentalTapping(){
       viewToastMessage("Cancellazione Intercettazione", "Errore nella cancellazione dell'intercettazione'.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
   .catch(error => {
     console.error(error);
   });
@@ -1034,9 +962,7 @@ function deleteEdgeIndividualEnviromentalTapping(){
       "edgeId": "${document.querySelector(".infoIndividualEnviromentalTappingEdgeIdContent").innerHTML}"
   }`;
 
-  console.log(json);
-
-  fetch("/CrimeMiner/individuoIntercettazioneAmb/eliminaIntIndAmb/", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoIntercettazioneAmb/eliminaIntIndAmb/", { 
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'

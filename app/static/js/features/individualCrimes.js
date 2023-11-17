@@ -94,7 +94,6 @@ function requestSizeNodesIndividualCrimes(){
   })
   .then(data => {
     data = JSON.parse(data);
-    //this['create'+  document.querySelector(".selectMetrics").value +'IndividualWiretaps'](data);
     changeSizeNodesIndividualCrimes(data);
   })
   .catch(error => {
@@ -707,8 +706,8 @@ function fillAddModalIndividualCrimes(){
 //Funzione che inserisce i campi della chiamata nella modale
 function fillUpdateModalSentenceImputationIndividualWiretaps(){
 
-  //let [day, month, year] = document.querySelector(".infoIndividualWiretapsEdgeDateContent").innerHTML.split('/');
-  
+  fillAddModalIndividualCrimes();
+
   //Checkbox
   document.querySelector("#CheckIndividualExisting").checked = true;
 
@@ -844,8 +843,6 @@ function sendNewImputationSentenceToBackendIndividualCrimes(){
           }`;
 
   json += `}`;
-
-  console.log(json);
   
   fetch("/CrimeMiner/individuoReato/creaIndReato/", {
     method: 'POST',
@@ -921,16 +918,10 @@ function sendUpdateImputationSentenceToBackendIndividualCrimes(){
             "individualId": "${document.querySelector(".modalIndividualCrimesIndividual").value}",
             "crimeId": "${document.querySelector(".modalIndividualCrimesCrime").value}",
             "tipology": "${document.querySelector(".modalIndividualCrimesTipology").value}"}`;
-   /*         "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
-            "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
-            "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}",
-          }`;*/
     
   json += `}`;
-
-  console.log(json);
   
-  fetch("/CrimeMiner/individuoReato/modificaIndReato/", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoReato/modificaIndReato/", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -954,9 +945,6 @@ function sendUpdateImputationSentenceToBackendIndividualCrimes(){
         viewToastMessage("Modifica Imputazione", "Errore nella modifica dell'imputazione.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
   .catch(error => {
     console.error(error);
   });
@@ -980,7 +968,6 @@ function sendUpdateIndividualToBackendIndividualCrimes(){
             "cap": "${document.querySelector(".modalIndividualCrimesIndividualCap").value}"
           }`;
 
-  console.log(json);
   
   fetch("/CrimeMiner/individuo/modificaIndividuo/", { 
     method: 'POST',
@@ -997,9 +984,6 @@ function sendUpdateIndividualToBackendIndividualCrimes(){
       viewToastMessage("Modifica Individuo", "Errore nella modifica dell'individuo.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
   .catch(error => {
     console.error(error);
   });
@@ -1013,9 +997,7 @@ function deleteNodeIndividualCrimes(){
       "nodeId": "${document.querySelector(".infoIndividualCrimesNodeIndividualIdContent").innerHTML}"
   }`;
 
-  console.log(json);
-
-  fetch("/CrimeMiner/individuo/eliminaIndividuo/", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuo/eliminaIndividuo/", { 
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1044,10 +1026,7 @@ function deleteEdgeImputationIndividualCrimes(){
       "edgeId": "${document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML}"
   }`;
 
-  console.log(json);
-  
-
-  fetch("/CrimeMiner/individuoReato/eliminaReatoArco/", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoReato/eliminaReatoArco/", { 
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1062,9 +1041,6 @@ function deleteEdgeImputationIndividualCrimes(){
       viewToastMessage("Cancellazione Imputazione", "Errore nella cancellazione dell'imputazione.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
   .catch(error => {
     console.error(error);
   });
@@ -1079,9 +1055,7 @@ function deleteEdgeSentenceIndividualCrimes(){
       "edgeId": "${document.querySelector(".infoIndividualCrimesEdgeIdContent").innerHTML}"
   }`;
 
-  console.log(json);
-
-  fetch("/CrimeMiner/individuoReato/eliminaReatoArco/", { //FUNZIONE PER INSERIRE I DATI
+  fetch("/CrimeMiner/individuoReato/eliminaReatoArco/", { 
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1096,9 +1070,6 @@ function deleteEdgeSentenceIndividualCrimes(){
       viewToastMessage("Cancellazione Condanna", "Errore nella cancellazione della condanna.", "error");
     }
   })
-  //.then(data => {
-  //  data = JSON.parse(data);
-  //})
   .catch(error => {
     console.error(error);
   });
