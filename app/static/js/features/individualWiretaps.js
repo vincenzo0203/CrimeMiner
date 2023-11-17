@@ -854,6 +854,7 @@ function sendUpdateCallToBackendIndividualWiretaps(){
     if(document.querySelector(".modalIndividualWiretapsSource").value != document.querySelector(".modalIndividualWiretapsTarget").value){
       
       json += `  "call" : {
+                            "edgeId": "${document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML}",
                             "sourceId": "${document.querySelector(".modalIndividualWiretapsSource").value}",
                             "targetiD": "${document.querySelector(".modalIndividualWiretapsTarget").value}",
                             "date": "${day}/${month}/${year}",
@@ -866,7 +867,7 @@ function sendUpdateCallToBackendIndividualWiretaps(){
   }
   else{
     json += `  "call" : {
-                          "edgeId": "${document.querySelector(".infoIndividualWiretapsEdgeIdContent").value}",
+                          "edgeId": "${document.querySelector(".infoIndividualWiretapsEdgeIdContent").innerHTML}",
         `;
 
     if(document.querySelector("#CheckSourceExisting").checked) 

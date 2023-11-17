@@ -246,13 +246,13 @@ class IndividuoIntercettazioneRepository:
             
 
     @staticmethod
-    def  EditEdgeIndividuoIntercettazione(data,id1,id2):
+    def EditEdgeIndividuoIntercettazione(data,id1,id2):
             try:                
                 session = Neo4jDriver.get_session()
 
                 sourceId=id1
                 targetId=id2
-                edge_id = data["call"].get("edgeId")
+                edge_id = data.get("edgeId")
 
                 source_node = Individuo.nodes.get(nodeId=sourceId)
                 target_node = Individuo.nodes.get(nodeId=targetId)
