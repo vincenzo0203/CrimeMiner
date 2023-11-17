@@ -336,19 +336,59 @@ class IndividuoReatoRepository:
                 results = session.run(cypher_query2, {"nodo":reato_id,"edge_id": id}).data()
 
             if id[:2] == "II":
-                print("ciao")
-                cypher_query = ("MATCH ()-[rel:ImputatoDi]->(r:Reato) WHERE rel.edgeId=$edge_id RETURN properties(rel) AS rel, r as reato ")
+                cypher_query = ("MATCH (i:Individuo)-[rel:ImputatoDi]->(r:Reato) WHERE rel.edgeId=$edge_id RETURN properties(rel) AS rel, r as reato, i as individuo")
                 datiTotali = session.run(cypher_query, {"edge_id": id}).data()
 
                 for dati in datiTotali:
-                    datiImputazione = dati["rel"]
+                    datiRelazione = dati["rel"]
                     datiReato = dati["reato"]
+                    datiIndividuo = dati["individuo"]
 
-                mesiTotali = int(datiImputazione["mesiTotali"]) - ((int(datiReato["maxMonths"])+int(datiReato["minMonths"]))/2)
+                mesiImputazioneVecchioReato = ((int(datiReato["maxMonths"])+int(datiReato["minMonths"]))/2)
+                mesiImputazioneVecchioIndAgg = int(datiIndividuo["mesiImputati"]) - mesiImputazioneVecchioReato
+                mesiTotaliIndividuo = int(datiIndividuo["mesiTotali"]) - mesiImputazioneVecchioReato
 
-                print(mesiTotali)
+                cypher_queryVecchioInd = ("MATCH (i:Individuo) WHERE i.nodeId=$node_id SET i.mesiImputati=$mesiImp, i.mesiTotali=$mesiTot")
+                datiVecchioIndividuo = session.run(cypher_queryVecchioInd, {"node_id": datiIndividuo["nodeId"],"mesiImp": mesiImputazioneVecchioIndAgg,"mesiTot": mesiTotaliIndividuo}).data()
+                
+                cypher_query2 = ("MATCH (i:Individuo) WHERE i.nodeId=$node_id RETURN i AS indi")
+                datiNuovoIndividuo = session.run(cypher_query2, {"node_id": individuo_id}).data()
+                
+                cypher_query3 = ("MATCH (r:Reato) WHERE r.nodeId=$node_id RETURN r AS reati")
+                datiNuovoReato = session.run(cypher_query3, {"node_id": reato_id}).data()
+
+              
+
+                for dati in datiNuovoIndividuo:
+                    datiNuovoIndividuoSingle = dati["indi"]
+
+                for dati in datiNuovoReato:
+                    datiNuovoReatoSingle = dati["reati"]
+
+                
+
+                mesiCondannaNuovoReato = ((int(datiNuovoReatoSingle["maxMonths"])+int(datiNuovoReatoSingle["minMonths"]))/2)
+                mesiCondannaNuovoInd = int(datiNuovoIndividuoSingle["mesiCondanna"]) + mesiCondannaNuovoReato
+                mesiTotaliNuovoInd = int(datiNuovoIndividuoSingle["mesiTotali"]) + mesiCondannaNuovoReato
+
+               
+
+                nuovoedgeId = IndividuoReatoRepository.get_max_edge_condannato_id()
+
+                cypher_queryCreaCondanna = ("MATCH (i:Individuo), (r:Reato) WHERE i.nodeId = $node_id AND r.nodeId = $reato_id WITH i, r CREATE (i)-[rel:Condannato { mesiTotali: $mesiTot,edgeId: $edge,entityType: $type,sourceNodeId: $source,targetNodeId: $target}]->(r)")
+                datiNuovoReato = session.run(cypher_queryCreaCondanna, {"node_id": individuo_id,"reato_id": reato_id,"mesiTot": mesiTotaliNuovoInd,"edge": nuovoedgeId ,"type": tipologia,"source": individuo_id,"target": reato_id}).data()
+             
+                cypher_queryNuovoInd = ("MATCH (i:Individuo) WHERE i.nodeId=$node_id SET i.mesiCondanna=$mesiCond, i.mesiTotali=$mesiTot")
+                datiNuovoIndividuoQuery = session.run(cypher_queryNuovoInd, {"node_id": individuo_id,"mesiCond": mesiCondannaNuovoInd,"mesiTot": mesiTotaliNuovoInd}).data()
+
+                cypher_queryEliminaVecchiaRel = ("MATCH ()-[rel:ImputatoDi]->() WHERE rel.edgeId = $edge_id DELETE rel")
+                datiNuovoIndividuoQuery = session.run(cypher_queryEliminaVecchiaRel, {"edge_id": id}).data()
+
+                cypher_queryAggiornaCondannaRel = ("MATCH (i:Individuo)-[rel:Condannato]->() WHERE i.nodeId=$nodeId SET rel.mesiTotali=$mesToti")
+                datiNuovoIndividuoQuery = session.run(cypher_queryAggiornaCondannaRel, {"nodeId": individuo_id,"mesToti": mesiTotaliNuovoInd}).data()
+             
             
-            print("Tutto ok")
+            
 
             # Modifica il nodo destinazione della relazione
          
