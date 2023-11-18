@@ -9,6 +9,7 @@ import json
 @request_mapping("/individuoIntercettazione")    
 class IndividuoIntercettazioneView(View): 
 
+    #Funzione di init in cui vengono specificati alcuni parametri che vengono configurati all'inizio dell'app
     def __init__(self):     
         super().__init__()
         self.IndividuoIntercettazione_repository: IndividuoIntercettazioneRepository = IndividuoIntercettazioneRepository()
@@ -36,36 +37,50 @@ class IndividuoIntercettazioneView(View):
         else:
             return JsonResponse({"error": "Nodes not found"}, status=404)
     
+    #Fa riferimento alla Closeness() della repository IndividuoIntercettazioneRepository 
+    #Restituisce una lista contenete l'insieme dei nodi e lo score di ciascuno calcolato attraverso l'algoritmo di Closeness dei grafi 
     @request_mapping("/Closeness/", method="get")
     def Closeness(self, request) -> JsonResponse:
         node_list = self.IndividuoIntercettazione_repository.Closeness()
         return JsonResponse({"result":node_list})
     
+    #Fa riferimento alla Betweenness() della repository IndividuoIntercettazioneRepository 
+    #Restituisce una lista contenete l'insieme dei nodi e lo score di ciascuno calcolato attraverso l'algoritmo di Betweenness dei grafi 
     @request_mapping("/Betweenness/", method="get")
     def Betweenness(self, request) -> JsonResponse:
         node_list = self.IndividuoIntercettazione_repository.Betweenness()
         return JsonResponse({"result":node_list})
     
+    #Fa riferimento al PageRank() della repository IndividuoIntercettazioneRepository 
+    #Restituisce una lista contenete l'insieme dei nodi e lo score di ciascuno calcolato attraverso l'algoritmo di PageRank dei grafi 
     @request_mapping("/PageRank/", method="get")
     def PageRank(self, request) -> JsonResponse:
         node_list = self.IndividuoIntercettazione_repository.PageRank()
         return JsonResponse({"result":node_list})
     
+    #Fa riferimento al WeightedPageRank() della repository IndividuoIntercettazioneRepository 
+    #Restituisce una lista contenete l'insieme dei nodi e lo score di ciascuno calcolato attraverso l'algoritmo di WeightedPageRank(sul parametro mesiTotali) dei grafi 
     @request_mapping("/WeightedPageRank/", method="get")
     def WeightedPageRank(self, request) -> JsonResponse:
         node_list = self.IndividuoIntercettazione_repository.WeightedPageRank()
         return JsonResponse({"result":node_list})
     
+    #Fa riferimento al Degree() della repository IndividuoIntercettazioneRepository 
+    #Restituisce una lista contenete l'insieme dei nodi e lo score di ciascuno calcolato attraverso l'algoritmo di Degree dei grafi 
     @request_mapping("/Degree/", method="get")
     def Degree(self, request) -> JsonResponse:
         node_list = self.IndividuoIntercettazione_repository.Degree()
         return JsonResponse({"result":node_list})
     
+    #Fa riferimento all' InDegree() della repository IndividuoIntercettazioneRepository 
+    #Restituisce una lista contenete l'insieme dei nodi e lo score di ciascuno calcolato attraverso l'algoritmo di InDegree dei grafi 
     @request_mapping("/InDegree/", method="get")
     def InDegree(self, request) -> JsonResponse:
         node_list = self.IndividuoIntercettazione_repository.InDegree()
         return JsonResponse({"result":node_list})
     
+    #Fa riferimento all' OutDegree() della repository IndividuoIntercettazioneRepository 
+    #Restituisce una lista contenete l'insieme dei nodi e lo score di ciascuno calcolato attraverso l'algoritmo di OutDegree dei grafi 
     @request_mapping("/OutDegree/", method="get")
     def OutDegree(self, request) -> JsonResponse:
         node_list = self.IndividuoIntercettazione_repository.OutDegree()

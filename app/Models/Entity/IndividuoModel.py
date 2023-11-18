@@ -9,10 +9,10 @@ from app.Models.Relationship.PresenteModel import Presente
 
 class Individuo(StructuredNode):
 
-    # Valori Long
+    # Valori Long, primary_key=True per indicare una chiave primaria e generated_value per generare il valore in automatico
     idIndividuo = IntegerProperty(primary_key=True, generated_value=True)
 
-    # Valori String
+    # Valori String, json_property per indicare una proprietà json
     nodeId = StringProperty(primary_key=True, json_property="nodeid")
     entityType = StringProperty()
     name = StringProperty()
@@ -22,11 +22,9 @@ class Individuo(StructuredNode):
     indirizzoResidenza = StringProperty()
     cognome = StringProperty()
     nome = StringProperty()
-    #codice = StringProperty()
     capResidenza = StringProperty()
     cittaResidenza = StringProperty()
     nazioneResidenza = StringProperty()
-    #pseudonimo = StringProperty()
 
 
     # Valori Interi
@@ -43,16 +41,11 @@ class Individuo(StructuredNode):
     
     # Sezione di definizione delle relazioni
     haChiamatoList = RelationshipTo('Individuo', 'HaChiamato', model=HaChiamato)
-   
-   #haChiamatoList = RelationshipFrom("Individuo", "HaChiamato")
-        
-    #Sezione di definizione delle relazioni con entity
+ 
     CondannatoList = RelationshipTo('Reato', 'Condannato',model=Condannato)
 
-    #Sezione di definizione delle relazioni con entity
     ImputatoDiList = RelationshipTo('Reato', 'ImputatoDi',model=ImputatoDi)
 
-    #Sezione di definizione delle relazioni con entity
     PresenteList=RelationshipTo('IntercettazioneAmb','Presente', model= Presente)
 
 
