@@ -1,3 +1,7 @@
+$varDeleteModal: #a30404;
+$varBackColor: #cfcfcf;
+$varColor: white;
+
 .accordion{
     &NumberNodesEdges{
         &Individual,&EnviromentalTapping,&Present{
@@ -80,7 +84,7 @@
         &::-webkit-scrollbar-thumb{
             border-radius: 10px;
             -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-            background-color: #cfcfcf;
+            background-color: $varBackColor;
         }
 
         &Cap{
@@ -114,7 +118,7 @@
             &::-webkit-scrollbar-thumb{
                 border-radius: 10px;
                 -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-                background-color: #cfcfcf;
+                background-color: $varBackColor;
             }
         }
     }
@@ -123,8 +127,8 @@
 .modalDeleteIndividualEnviromentalTapping{
 
     &Header{
-        background: #a30404;
-        color: white;
+        background: $varDeleteModal;
+        color: $varColor;
     }
 
     &Body{
@@ -132,12 +136,12 @@
     }
 
     &ConfirmButton{
-        background: #a30404;
-        color: white;
+        background: $varDeleteModal;
+        color: $varColor;
         border: 1px solid #a30404;
 
         &:hover{
-            background: #a30404;
+            background: $varDeleteModal;
             border: 1px solid #a30404;
         }
     }
