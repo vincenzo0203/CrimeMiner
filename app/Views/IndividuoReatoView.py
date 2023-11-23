@@ -142,7 +142,6 @@ class IndividuoReatoView(View):
             if tipology == "ImputatoDi":
                 results = IndividuoReatoRepository.modifica_ArcoImputato(data,tipology,id)
             
-
             # Restituisci il risultato con status 200 se la query è andata bene
             return JsonResponse({"status": 200,'result': "ciao"})
         except json.JSONDecodeError:

@@ -327,13 +327,51 @@ class IndividuoReatoRepository:
             session = Neo4jDriver.get_session()
             
             if id[:2] == "IC":
+                
+                cypher_query = ("MATCH (indi:Individuo {nodeId:$nodo}) MATCH (i:Individuo)-[rel:Condannato]->(r:Reato) WHERE rel.edgeId=$edge_id RETURN i,rel,r")
+                resultTotale = session.run(cypher_query, {"nodo":individuo_id,"edge_id": id}).data()
+
+                for dati in resultTotale:
+                    datiVecchiaRelazione = dati["rel"]
+                    datiVecchioIndividuo = dati["i"]
+                    datiVecchioReato = dati["r"]
+
+                mesiCondannaVecchioReato = ((int(datiVecchioReato["maxMonths"])+int(datiVecchioReato["minMonths"]))/2)
+                mesiCondannaVecchioIndAgg = int(datiVecchioIndividuo["mesiCondanna"]) - mesiCondannaVecchioReato
+                mesiTotaliIndividuo = int(datiVecchioIndividuo["mesiTotali"]) - mesiCondannaVecchioReato
+
+                cypher_queryVecchioInd = ("MATCH (i:Individuo) WHERE i.nodeId=$node_id SET i.mesiCondanna=$mesiCond, i.mesiTotali=$mesiTot")
+                datiVecchioIndividuo = session.run(cypher_queryVecchioInd, {"node_id": datiVecchioIndividuo["nodeId"],"mesiCond": mesiCondannaVecchioIndAgg,"mesiTot": mesiTotaliIndividuo}).data()
+
+                cypher_query2 = ("MATCH (i:Individuo) WHERE i.nodeId=$node_id RETURN i AS indi")
+                datiNuovoIndividuo = session.run(cypher_query2, {"node_id": individuo_id}).data()
+
+                cypher_query3 = ("MATCH (r:Reato) WHERE r.nodeId=$node_id RETURN r AS reati")
+                datiNuovoReato = session.run(cypher_query3, {"node_id": reato_id}).data()
+
+                for dati in datiNuovoIndividuo:
+                    datiNuovoIndividuoSingle = dati["indi"]
+
+                for dati in datiNuovoReato:
+                    datiNuovoReatoSingle = dati["reati"]
+
+                mesiCondannaNuovoReato = ((int(datiNuovoReatoSingle["maxMonths"])+int(datiNuovoReatoSingle["minMonths"]))/2)
+                mesiCondannaNuovoInd = int(datiNuovoIndividuoSingle["mesiCondanna"]) + mesiCondannaNuovoReato
+                mesiTotaliNuovoInd = int(datiNuovoIndividuoSingle["mesiTotali"]) + mesiCondannaNuovoReato
+
+                cypher_queryNuovoInd = ("MATCH (i:Individuo) WHERE i.nodeId=$node_id SET i.mesiCondanna=$mesiCond, i.mesiTotali=$mesiTot")
+                datiNuovoIndividuoQuery = session.run(cypher_queryNuovoInd, {"node_id": individuo_id,"mesiCond": mesiCondannaNuovoInd,"mesiTot": mesiTotaliNuovoInd}).data()
+                
                 #Query cypher per modificare l'individuo iniziale nella relazione
                 cypher_query = ("MATCH (indi:Individuo {nodeId:$nodo}) MATCH (i:Individuo)-[rel:Condannato]->(r:Reato) WHERE rel.edgeId=$edge_id SET rel.sourceNodeId=indi.nodeId WITH rel, indi CALL apoc.refactor.from(rel, indi) YIELD input, output RETURN input, output, indi.nodeId")
-                results = session.run(cypher_query, {"nodo":individuo_id,"edge_id": id}).data()
+                resultIndividuo = session.run(cypher_query, {"nodo":individuo_id,"edge_id": id}).data()
 
                 #Query cypher per modificare il reato nella relazione
                 cypher_query2 =("MATCH (rea:Reato {nodeId:$nodo}) MATCH (i:Individuo)-[rel:Condannato]->(r:Reato) WHERE rel.edgeId=$edge_id SET rel.targetNodeId=rea.nodeId WITH rel, rea CALL apoc.refactor.to(rel, rea) YIELD input, output RETURN input, output, rea.nodeId")
                 results = session.run(cypher_query2, {"nodo":reato_id,"edge_id": id}).data()
+
+                cypher_queryAggiornaCondannaRel = ("MATCH (i:Individuo)-[rel:Condannato]->() WHERE i.nodeId=$nodeId SET rel.mesiTotali=$mesToti")
+                datiNuovoIndividuoQuery = session.run(cypher_queryAggiornaCondannaRel, {"nodeId": individuo_id,"mesToti": mesiTotaliNuovoInd}).data()
 
             if id[:2] == "II":
                 cypher_query = ("MATCH (i:Individuo)-[rel:ImputatoDi]->(r:Reato) WHERE rel.edgeId=$edge_id RETURN properties(rel) AS rel, r as reato, i as individuo")
