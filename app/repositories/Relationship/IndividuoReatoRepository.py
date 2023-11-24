@@ -319,8 +319,6 @@ class IndividuoReatoRepository:
 
         individuo_id = data["individual"].get("nodeId")
         reato_id = data["crime"].get("nodeId")
-        #mesiCondanna = ((nodo2.maxMonths + nodo2.minMonths )/2)
-
 
         try:
             
@@ -439,30 +437,106 @@ class IndividuoReatoRepository:
             return None  # Restituisci None anziché una lista vuota in caso di errore
 
     @staticmethod
-    def modifica_ArcoImputato(data):
-        print("è un imputato")
+    def modifica_ArcoImputato(data,tipologia,id):
         individuo_id = data["individual"].get("nodeId")
         reato_id = data["crime"].get("nodeId")
-        tipo_relazione = data["imputation"].get("tipology")
-        edge_id = data["imputation"].get("edgeId")
-
-        nodo2 = Reato.nodes.get(nodeId=reato_id)
-        mesiCondanna = ((nodo2.maxMonths + nodo2.minMonths )/2)
-
         try:
+            
             session = Neo4jDriver.get_session()
-            cypher_query = (
-                """
-                MATCH ()-[r:Imputato]->() WHERE r.edgeId=$edge_id
-                SET r.mesiTotali=$mesiCondanna, r.targetNodeId=$reato_id, r.sourceNodeId=$individuo_id, r.edgeId=$edge_id, r.entityType=$tipo_relazione
-                RETURN r
-                """
-            )
-            results = session.run(
-                cypher_query, {"mesiCondanna":mesiCondanna,"reato_id": reato_id, "individuo_id": individuo_id, "edge_id": edge_id, "tipo_relazione": tipo_relazione}
-            ).data()
+            
+            if id[:2] == "IC":
+                
+                cypher_query = ("MATCH (i:Individuo)-[rel:Condannato]->(r:Reato) WHERE rel.edgeId=$edge_id RETURN properties(rel) AS rel, r as reato, i as individuo")
+                datiTotali = session.run(cypher_query, {"edge_id": id}).data()
 
-            return results
+                for dati in datiTotali:
+                    datiReato = dati["reato"]
+                    datiIndividuo = dati["individuo"]
+
+                mesiCondannaVecchioReato = ((int(datiReato["maxMonths"])+int(datiReato["minMonths"]))/2)
+                mesiCondannaVecchioIndAgg = int(datiIndividuo["mesiCondanna"]) - mesiCondannaVecchioReato
+                mesiTotaliIndividuo = int(datiIndividuo["mesiTotali"]) - mesiCondannaVecchioReato
+
+                cypher_queryVecchioInd = ("MATCH (i:Individuo) WHERE i.nodeId=$node_id SET i.mesiCondanna=$mesiCond, i.mesiTotali=$mesiTot")
+                datiVecchioIndividuo = session.run(cypher_queryVecchioInd, {"node_id": datiIndividuo["nodeId"],"mesiCond": mesiCondannaVecchioIndAgg,"mesiTot": mesiTotaliIndividuo}).data()
+
+                cypher_query2 = ("MATCH (i:Individuo) WHERE i.nodeId=$node_id RETURN i AS indi")
+                datiNuovoIndividuo = session.run(cypher_query2, {"node_id": individuo_id}).data()
+                
+                cypher_query3 = ("MATCH (r:Reato) WHERE r.nodeId=$node_id RETURN r AS reati")
+                datiNuovoReato = session.run(cypher_query3, {"node_id": reato_id}).data()
+
+                for dati in datiNuovoIndividuo:
+                    datiNuovoIndividuoSingle = dati["indi"]
+
+                for dati in datiNuovoReato:
+                    datiNuovoReatoSingle = dati["reati"]
+
+                mesiImputatiNuovoReato = ((int(datiNuovoReatoSingle["maxMonths"])+int(datiNuovoReatoSingle["minMonths"]))/2)
+                mesiImputatiNuovoInd = int(datiNuovoIndividuoSingle["mesiImputati"]) + mesiImputatiNuovoReato
+                mesiTotaliNuovoInd = int(datiNuovoIndividuoSingle["mesiTotali"]) + mesiImputatiNuovoReato
+
+                nuovoedgeId = IndividuoReatoRepository.get_max_edge_imputatoDi_id()
+
+                cypher_queryCreaCondanna = ("MATCH (i:Individuo), (r:Reato) WHERE i.nodeId = $node_id AND r.nodeId = $reato_id WITH i, r CREATE (i)-[rel:ImputatoDi { mesiTotali: $mesiTot,edgeId: $edge,entityType: $type,sourceNodeId: $source,targetNodeId: $target}]->(r)")
+                datiNuovoReato = session.run(cypher_queryCreaCondanna, {"node_id": individuo_id,"reato_id": reato_id,"mesiTot": mesiTotaliNuovoInd,"edge": nuovoedgeId ,"type": tipologia,"source": individuo_id,"target": reato_id}).data()
+           
+                cypher_queryNuovoInd = ("MATCH (i:Individuo) WHERE i.nodeId=$node_id SET i.mesiImputati=$mesiImp, i.mesiTotali=$mesiTot")
+                datiNuovoIndividuoQuery = session.run(cypher_queryNuovoInd, {"node_id": individuo_id,"mesiImp": mesiImputatiNuovoInd,"mesiTot": mesiTotaliNuovoInd}).data()
+                
+                cypher_queryEliminaVecchiaRel = ("MATCH ()-[rel:Condannato]->() WHERE rel.edgeId = $edge_id DELETE rel")
+                datiNuovoIndividuoQuery = session.run(cypher_queryEliminaVecchiaRel, {"edge_id": id}).data()
+                
+                cypher_queryAggiornaCondannaRel = ("MATCH (i:Individuo)-[rel:ImputatoDi]->() WHERE i.nodeId=$nodeId SET rel.mesiTotali=$mesToti")
+                datiNuovoIndividuoQuery = session.run(cypher_queryAggiornaCondannaRel, {"nodeId": individuo_id,"mesToti": mesiTotaliNuovoInd}).data()
+            
+            if id[:2] == "II":
+                cypher_query = ("MATCH (indi:Individuo {nodeId:$nodo}) MATCH (i:Individuo)-[rel:ImputatoDi]->(r:Reato) WHERE rel.edgeId=$edge_id RETURN i,rel,r")
+                resultTotale = session.run(cypher_query, {"nodo":individuo_id,"edge_id": id}).data()
+
+                for dati in resultTotale:
+                    datiVecchiaRelazione = dati["rel"]
+                    datiVecchioIndividuo = dati["i"]
+                    datiVecchioReato = dati["r"]
+
+                mesiImputatiVecchioReato = ((int(datiVecchioReato["maxMonths"])+int(datiVecchioReato["minMonths"]))/2)
+                mesiImputatiVecchioIndAgg = int(datiVecchioIndividuo["mesiImputati"]) - mesiImputatiVecchioReato
+                mesiTotaliIndividuo = int(datiVecchioIndividuo["mesiTotali"]) - mesiImputatiVecchioReato
+
+                cypher_queryVecchioInd = ("MATCH (i:Individuo) WHERE i.nodeId=$node_id SET i.mesiImputati=$mesiImp, i.mesiTotali=$mesiTot")
+                datiVecchioIndividuo = session.run(cypher_queryVecchioInd, {"node_id": datiVecchioIndividuo["nodeId"],"mesiImp": mesiImputatiVecchioIndAgg,"mesiTot": mesiTotaliIndividuo}).data()
+
+                cypher_query2 = ("MATCH (i:Individuo) WHERE i.nodeId=$node_id RETURN i AS indi")
+                datiNuovoIndividuo = session.run(cypher_query2, {"node_id": individuo_id}).data()
+
+                cypher_query3 = ("MATCH (r:Reato) WHERE r.nodeId=$node_id RETURN r AS reati")
+                datiNuovoReato = session.run(cypher_query3, {"node_id": reato_id}).data()
+
+                for dati in datiNuovoIndividuo:
+                    datiNuovoIndividuoSingle = dati["indi"]
+
+                for dati in datiNuovoReato:
+                    datiNuovoReatoSingle = dati["reati"]
+
+                mesiImputatiNuovoReato = ((int(datiNuovoReatoSingle["maxMonths"])+int(datiNuovoReatoSingle["minMonths"]))/2)
+                mesiImputatiNuovoInd = int(datiNuovoIndividuoSingle["mesiImputati"]) + mesiImputatiNuovoReato
+                mesiTotaliNuovoInd = int(datiNuovoIndividuoSingle["mesiTotali"]) + mesiImputatiNuovoReato
+
+                cypher_queryNuovoInd = ("MATCH (i:Individuo) WHERE i.nodeId=$node_id SET i.mesiImputati=$mesiImp, i.mesiTotali=$mesiTot")
+                datiNuovoIndividuoQuery = session.run(cypher_queryNuovoInd, {"node_id": individuo_id,"mesiImp": mesiImputatiNuovoInd,"mesiTot": mesiTotaliNuovoInd}).data()
+                
+                #Query cypher per modificare l'individuo iniziale nella relazione
+                cypher_query = ("MATCH (indi:Individuo {nodeId:$nodo}) MATCH (i:Individuo)-[rel:ImputatoDi]->(r:Reato) WHERE rel.edgeId=$edge_id SET rel.sourceNodeId=indi.nodeId WITH rel, indi CALL apoc.refactor.from(rel, indi) YIELD input, output RETURN input, output, indi.nodeId")
+                resultIndividuo = session.run(cypher_query, {"nodo":individuo_id,"edge_id": id}).data()
+
+                #Query cypher per modificare il reato nella relazione
+                cypher_query2 =("MATCH (rea:Reato {nodeId:$nodo}) MATCH (i:Individuo)-[rel:ImputatoDi]->(r:Reato) WHERE rel.edgeId=$edge_id SET rel.targetNodeId=rea.nodeId WITH rel, rea CALL apoc.refactor.to(rel, rea) YIELD input, output RETURN input, output, rea.nodeId")
+                results = session.run(cypher_query2, {"nodo":reato_id,"edge_id": id}).data()
+
+                cypher_queryAggiornaCondannaRel = ("MATCH (i:Individuo)-[rel:ImputatoDi]->() WHERE i.nodeId=$nodeId SET rel.mesiTotali=$mesToti")
+                datiNuovoIndividuoQuery = session.run(cypher_queryAggiornaCondannaRel, {"nodeId": individuo_id,"mesToti": mesiTotaliNuovoInd}).data()
+
+            return "Tutto ok"
         except Exception as e:
             # Gestione degli errori, ad esempio, registra l'errore o solleva un'eccezione personalizzata
             print("Errore durante l'esecuzione della query Cypher:", e)

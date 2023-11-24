@@ -96,7 +96,6 @@ class IndividuoReatoView(View):
         try:            
             #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
             data = json.loads(json.loads(request.body))
-            print(data)
             id_individuo=None
             id_reato=data["crime"].get("nodeId")
             imputazione=data["edge"].get("tipologyEdge")
@@ -126,7 +125,6 @@ class IndividuoReatoView(View):
         try:            
             #il primo json.load lo converte da Unicode a Stringa e il secondo json.load converte la Stringa in un oggetto Json
             data = json.loads(json.loads(request.body))
-            print(data)
 
             if "sentence" in data:
                 tipology = data["sentence"].get("tipology")
@@ -135,7 +133,6 @@ class IndividuoReatoView(View):
                 tipology = data["imputation"].get("tipology")
                 id=data["imputation"].get("edgeId")
 
-            print(tipology)
             
             if tipology == "Condannato":
                 results = IndividuoReatoRepository.modifica_ArcoCondannato(data,tipology,id)
@@ -154,7 +151,6 @@ class IndividuoReatoView(View):
     def delete_Edge(self,request) -> JsonResponse:
         try:
             data = json.loads(json.loads(request.body))
-            print(data)
             
             self.individuoReato_repository.elemina_ArcoReato(data)
             
