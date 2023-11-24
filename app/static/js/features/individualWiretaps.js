@@ -8,6 +8,8 @@ let cyEdgeTouchedIndividualWiretaps  = "";
 //Variabile che ci consente di tener traccia dell'id dell'utente quando si anonimizza
 let cyNodeDataIndividualWiretaps  = "";
 
+let editorModalTextAreaIndividualWiretaps = "";
+
 //Funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Intercettazione delle chiamate tra gli Individui";
@@ -26,6 +28,22 @@ window.onload = function () {
     else
       if(getCookie("anonymization") == "yes")
         document.querySelector("#CheckAnonymization").checked = true;
+
+  //elemento che rimpiazza la Textarea con un text editor tipo word
+  CKEDITOR.replace("textarea-content", {
+    wordcount: {'showWordCount': false,
+                'showParagraphs': false,
+                'showCharCount': true
+            },
+            removeButtons: 'Source,PasteFromWord,Scayt,PasteText,RemoveFormat,Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Image,Link,Unlink,Table,HorizontalRule,SpecialChar,Maximize,About,Styles,Format,Font,FontSize,Blockquote,Indent,Outdent,NumberedList,BulletedList,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,BidiLtr,BidiRtl,Language,Smiley,Iframe',
+            resize_enabled: false,
+            on: {
+              instanceReady: function (ev) {
+                  editorModalTextAreaIndividualWiretaps = ev.editor;
+                  ev.editor.container.$.getElementsByClassName('cke_bottom')[0].style.display = 'none';
+              }
+            }
+  });
 };
 
 //Funzione che effettua la richiesta al backend per caricare il grafo iniziale
@@ -600,7 +618,6 @@ function fillAddModalIndividualWiretaps(){
   document.querySelector(".modalIndividualWiretapsDate").value = "";
   document.querySelector(".modalIndividualWiretapsDuration").value = "";
   document.querySelector(".modalIndividualWiretapsTime").value = "";
-  document.querySelector(".modalIndividualWiretapsTextarea").value = "";
 
 }
 
@@ -622,6 +639,7 @@ function fillUpdateModalCallIndividualWiretaps(){
   document.querySelector(".accordionTarget").style.display = "none";
 
 
+  
   //Chiamata
   document.querySelector(".modalIndividualWiretapsSource").value = document.querySelector(".infoIndividualWiretapsEdgeSourceContent").innerHTML;
   document.querySelector(".modalIndividualWiretapsTarget").value = document.querySelector(".infoIndividualWiretapsEdgeTargetContent").innerHTML;
@@ -631,7 +649,7 @@ function fillUpdateModalCallIndividualWiretaps(){
   document.querySelector(".modalIndividualWiretapsDuration").value = document.querySelector(".infoIndividualWiretapsEdgeDurationContent").innerHTML;
   document.querySelector(".modalIndividualWiretapsTime").value = document.querySelector(".infoIndividualWiretapsEdgeTimeContent").innerHTML;
   document.querySelector(".modalIndividualWiretapsTextarea").value = document.querySelector(".infoIndividualWiretapsEdgeContentContent").innerHTML;
-
+  editorModalTextAreaIndividualWiretaps.setData(document.querySelector(".infoIndividualWiretapsEdgeContentContent").innerHTML);
 }
 
 //Funzione che inserisce i campi dell'individuo nella modale
@@ -657,6 +675,9 @@ function openModalAddNewCallIndividualWiretaps(){
   document.querySelector("#modalIndividualWiretapsLabel").innerHTML = "Inserimento nuova intercettazione telefonica";
 
   fillAddModalIndividualWiretaps();
+
+  //è stato messo qua e non dentro fillAllModalIndividualWiretaps() in quanto da problemi quando voglio fillare nella modifica, non prendendo il comando successivo, ma solo il seguente
+  editorModalTextAreaIndividualWiretaps.setData("");
 }
 
 //Funzione che all'apertura della modale di modifica cambia dei campi della modale e richiama la funzione per fillare gli input
@@ -751,7 +772,7 @@ function sendNewCallToBackendIndividualWiretaps(){
                             "date": "${day}/${month}/${year}",
                             "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
                             "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
-                            "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}"
+                            "content": "${editorModalTextAreaIndividualWiretaps.getData().replace(/\n/g,"")}"
                           }
       `;
     }
@@ -773,14 +794,16 @@ function sendNewCallToBackendIndividualWiretaps(){
               "date": "${day}/${month}/${year}",
               "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
               "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
-              "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}"
+              "content": "${editorModalTextAreaIndividualWiretaps.getData().replace(/\n/g,"")}"
             }
     `;
   }
 
   json += `}`;
+
+  console.log(json)
   
-   fetch("/CrimeMiner/individuoIntercettazione/creaIntercettazione/", {
+  fetch("/CrimeMiner/individuoIntercettazione/creaIntercettazione/", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -861,7 +884,7 @@ function sendUpdateCallToBackendIndividualWiretaps(){
                             "date": "${day}/${month}/${year}",
                             "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
                             "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
-                            "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}"
+                            "content": "${editorModalTextAreaIndividualWiretaps.getData().replace(/\n/g,"")}"
                           }
       `;
     }
@@ -885,7 +908,7 @@ function sendUpdateCallToBackendIndividualWiretaps(){
               "date": "${day}/${month}/${year}",
               "duration": "${document.querySelector(".modalIndividualWiretapsDuration").value}",
               "time": "${document.querySelector(".modalIndividualWiretapsTime").value}",
-              "content": "${document.querySelector(".modalIndividualWiretapsTextarea").value}"
+              "content": "${editorModalTextAreaIndividualWiretaps.getData().replace(/\n/g,"")}"
             }
     `;
   }

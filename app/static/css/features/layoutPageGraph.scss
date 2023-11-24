@@ -296,3 +296,32 @@ hr{
         }
     }
 }
+
+/* Arrotonda i bordi dell'editor CKEditor */
+.cke_top{
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+#cke_message-text,.cke_inner,.cke_contents{
+    border-radius: 10px
+}
+
+.cke_scrollbar{
+    &::-webkit-scrollbar-track{
+        -webkit-box-shadow: inset 0 0 6px $varShdwClr;
+        border-radius: 10px;
+        background-color: auto;
+    }
+
+    &::-webkit-scrollbar {
+        width: 12px;
+        background-color: auto;
+    }
+
+    &::-webkit-scrollbar-thumb{
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px $varShdwClr;
+        background-color: $varBackColor;
+    }
+}

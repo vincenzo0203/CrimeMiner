@@ -8,6 +8,9 @@ let cyEdgeTouchedIndividualEnviromentalTapping  = "";
 //Variabile che ci consente di tener traccia dell'id dell'utente quando si anonimizza
 let cyNodeDataIndividualEnviromentalTapping  = "";
 
+let editorModalAddTextAreaIndividualEnviromentalTapping = "";
+let editorModalTextAreaIndividualEnviromentalTapping = "";
+
 //Funzione che permette di caricare script javascript al caricamento della pagina
 window.onload = function () {
   document.querySelector(".navbarText").innerHTML = "Intercettazione Ambientale tra gli Individui";
@@ -26,6 +29,42 @@ window.onload = function () {
     else
       if(getCookie("anonymization") == "yes")
         document.querySelector("#CheckAnonymization").checked = true;
+
+  //elemento che rimpiazza la Textarea con un text editor tipo word
+  CKEDITOR.replace("textarea-add-content", {
+    wordcount: {'showWordCount': false,
+                'showParagraphs': false,
+                'showCharCount': true
+            },
+            removeButtons: 'Source,PasteFromWord,Scayt,PasteText,RemoveFormat,Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Image,Link,Unlink,Table,HorizontalRule,SpecialChar,Maximize,About,Styles,Format,Font,FontSize,Blockquote,Indent,Outdent,NumberedList,BulletedList,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,BidiLtr,BidiRtl,Language,Smiley,Iframe',
+            resize_enabled: false,
+            on: {
+              instanceReady: function (ev) {
+                  editorModalAddTextAreaIndividualEnviromentalTapping = ev.editor;
+                  ev.editor.container.$.getElementsByClassName('cke_bottom')[0].style.display = 'none';
+              }
+            }
+  });
+
+  //elemento che rimpiazza la Textarea con un text editor tipo word
+  CKEDITOR.replace("textarea-content", {
+    wordcount: {'showWordCount': false,
+                'showParagraphs': false,
+                'showCharCount': true
+            },
+            removeButtons: 'Source,PasteFromWord,Scayt,PasteText,RemoveFormat,Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript,Image,Link,Unlink,Table,HorizontalRule,SpecialChar,Maximize,About,Styles,Format,Font,FontSize,Blockquote,Indent,Outdent,NumberedList,BulletedList,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,BidiLtr,BidiRtl,Language,Smiley,Iframe',
+            resize_enabled: false,
+            on: {
+              instanceReady: function (ev) {
+                editorModalTextAreaIndividualEnviromentalTapping = ev.editor;
+                ev.editor.container.$.getElementsByClassName('cke_bottom')[0].style.display = 'none';
+              }
+            }
+  });
+
+  CKEDITOR.on("instanceReady", function (event) {
+    editorModalTextAreaIndividualWiretaps = event.editor;
+  });
 };
 
 //Funzione che effettua la richiesta al backend per caricare il grafo iniziale
@@ -662,7 +701,7 @@ function fillAddModalIndividualEnviromentalTapping(){
   document.querySelector(".accordionEnviromentalTapping").style.display = "block";
   document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddPlace").value = "";
   document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddDate").value = "";
-  document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddTextarea").value = "";
+  editorModalAddTextAreaIndividualEnviromentalTapping.setData("");
 
   if(document.querySelector(".accordionEnviromentalTapping").childNodes[1].childNodes[3].classList.contains("show")){
     document.querySelector(".accordionEnviromentalTapping").childNodes[1].childNodes[3].classList.remove("show");
@@ -685,8 +724,8 @@ function fillUpdateModalEnviromentalTappingIndividualEnviromentalTapping(){
   document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingId").innerHTML = document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingIdContent").innerHTML;
   document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingPlace").value = document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingPlaceContent").innerHTML;
   document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingDate").value = `${year}-${month}-${day}`;
-  document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingTextarea").value = document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingContentContent").innerHTML;
-
+  //document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingTextarea").value = document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingContentContent").innerHTML;
+  editorModalTextAreaIndividualEnviromentalTapping.setData(document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingContentContent").innerHTML);
 }
 
 //Funzione che inserisce i campi dell'individuo nella modale
@@ -713,6 +752,7 @@ function openModalAddNewEnviromentalTappingIndividualEnviromentalTapping(){
   document.querySelector("#modalIndividualEnviromentalTappingLabel").innerHTML = "Inserimento nuova presenza in intercettazione ambientale";
 
   fillAddModalIndividualEnviromentalTapping();
+
 }
 
 //Funzione che all'apertura della modale di modifica cambia dei campi della modale e richiama la funzione per fillare gli input
@@ -788,7 +828,7 @@ function sendNewPresentToBackendIndividualEnviromentalTapping(){
     json += ` "enviromentalTapping" : {
                             "place": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddPlace").value}",
                             "date": "${day}/${month}/${year}",
-                            "content": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddTextarea").value}"
+                            "content": "${editorModalAddTextAreaIndividualEnviromentalTapping.getData().replace(/\n/g,"")}"
                           }
             `;
   }
@@ -833,7 +873,7 @@ function sendUpdateEnviromentalTappingToBackendIndividualEnviromentalTapping(){
     "nodeId": "${document.querySelector(".infoIndividualEnviromentalTappingNodeEnviromentalTappingIdContent").innerHTML}",
     "place": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingPlace").value}",
     "date": "${day}/${month}/${year}",
-    "content": "${document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingTextarea").value}"
+    "content": "${editorModalTextAreaIndividualEnviromentalTapping.getData().replace(/\n/g,"")}"
   }
 `;
   
