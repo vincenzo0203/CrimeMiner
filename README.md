@@ -15,7 +15,7 @@
 - Add "C:\Program Files\ `JDK 17`\bin"
 
 ## Install Neo4j on Windows
-- Download the given Neo4j Community 5.12.0 folder (In the installation folder of the GitHub project)
+- Download Neo4j Community 5.12.0 folder on this link https://drive.google.com/file/d/1P3TJL8pJirJEB7Pw_XHCD1eqwhVjK-ZP/view?usp=sharing
 - Move the downloaded `<neo4j_folder>` to C:\Program Files and also to C:\Apps to grant access to neo4j files
 - Create new variable NEO4J_HOME and set value as "C:\Apps\ `<neo4j_folder>`" in System Variables
 - Go to System Enviroment Variables and modify 'Path' Variable 
