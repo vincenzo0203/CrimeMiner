@@ -30,7 +30,8 @@
 
 ## CrimeMiner Start Application
 - Open CMD, go to path of the project 
-- Then run the following command: "npm run full"
+- Then run the following command: "neo4j console"
+- After neo4j is running, open another CMD and run the following command: "npm run full" (Nota non eseguire npm run full prima di neo4j console altrimenti le metriche del progetto non andranno)
 - Open Browser and write "localhost:8000/CrimeMiner"
 - For stop server use command ctrl+c
 
