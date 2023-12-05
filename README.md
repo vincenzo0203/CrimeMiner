@@ -35,8 +35,8 @@
     - Add downloaded libraries into <neo4j_folder>\plugins
     - Add following line at the bottom of file <neo4j_folder>\conf\neo4j.conf "dbms.security.procedures.unrestricted=algo.\*,apoc.\*" If you open the README on a editor don't use this "\" in algo. and apoc.
 - Now go to "C:\Program Files\ `<neo4j_folder>`\data\dumps"
-- Insert the file "neo4j.dump" and open CMD (contact the administrators for the dump)
-- Now run the command: "neo4j-admin database dump neo4j" and the database is populated
+- Insert the file "neo4j.dump" and open CMD (contact the administrators for neo4j.dump file)
+- Now run the command: "neo4j-admin database load --overwrite-destination=true neo4j" and the database is populated
 
 
 
