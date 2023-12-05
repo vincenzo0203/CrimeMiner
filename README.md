@@ -39,7 +39,7 @@
 - Open CMD as Administrator and just execute `<neo4j_folder>\bin\neo4j console` and Neo4j will start listening on the default port with URL "localhost:7474/browser"
 - Credentials username: "neo4j" and password: "neo44%*j" for enter db on URL
 
-## Start Neo4j Secondo caso
+## Start Neo4j Secondo caso(Non fare se eseguito il precedente Start Neo4j)
 - Open CMD as Administrator and just execute `<neo4j_folder>\bin\neo4j console` and Neo4j will start listening on the default port with URL "localhost:7474/browser"
 - Enter init credentials username: "neo4j" and password: "neo4j"
 - Neo4j will redirect you to a new password web-page and here you have to enter the project password: "neo44%*j"
