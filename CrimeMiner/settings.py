@@ -134,7 +134,6 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = (
     'node_modules',
     'CrimeMiner/static/',
-    'homepage/static/',
     'app/static/'
 )
 
