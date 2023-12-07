@@ -15,19 +15,19 @@
 - Add "C:\Program Files\ `JDK 17`\bin"
 
 ### Install Neo4j First method(Simplified version with neo4j already given)
-- Download Neo4j Community 5.12.0 folder on this link https://drive.google.com/file/d/1P3TJL8pJirJEB7Pw_XHCD1eqwhVjK-ZP/view?usp=sharing
+- Download [Neo4j Community 5.12.0 folder](https://drive.google.com/file/d/1P3TJL8pJirJEB7Pw_XHCD1eqwhVjK-ZP/view?usp=sharing)
 - Move the downloaded `<neo4j_folder>` to C:\Program Files to grant access to neo4j files
 - Create new variable NEO4J_HOME and set value as "C:\Program Files\ `<neo4j_folder>`" in System Variables
 - Go to System Enviroment Variables and modify 'Path' Variable 
 - Add "C:\Program Files\ `<neo4j_folder>`\bin"
 
 ### Install Neo4j Second method (If neo4j folder is not available.  Don't follow this steps if the last ones have been completed.)
-- Download Neo4j Community 5.12.0 folder on this link https://neo4j.com/deployment-center/
+- Download [Neo4j Community 5.12.0](https://neo4j.com/download-thanks/?edition=community&release=5.12.0&flavour=winzip&_ga=2.70199892.534428204.1701943928-1393289357.1701943928)
 - Move the downloaded `<neo4j_folder>` to C:\Program Files to grant access to neo4j files
 - Create new variable NEO4J_HOME and set value as "C:\Program Files\ `<neo4j_folder>`" in System Variables
 - Go to System Enviroment Variables and modify 'Path' Variable 
 - Add "C:\Program Files\ `<neo4j_folder>`\bin"
-- Open CMD and run the following command: "cd C:\Program Files\neo4j\bin"
+- Open CMD and run the following command: "cd C:\Program Files\ `<neo4j_folder>`\bin"
 - Now run the command: "neo4j install-service" and service will be installed
 - Now install some plugins for the graph:
     - Download [APOC Library 5.12.0](https://github.com/neo4j/apoc/releases/tag/5.12.0)
