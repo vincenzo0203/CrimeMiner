@@ -33,8 +33,9 @@
     - Download [Graph Data Science 2.5.0](https://github.com/neo4j/graph-data-science/releases/download/2.5.0/neo4j-graph-data-science-2.5.0.jar)
     - Add downloaded libraries into `<neo4j_folder>`\plugins
     - Add following line at the bottom of file `<neo4j_folder>`\conf\neo4j.conf "dbms.security.procedures.unrestricted=gds.\*,apoc.\*" <!--(If you open the README on a editor don't use this "\" in gds. and apoc.)-->
-- Now go to "C:\Program Files\ `<neo4j_folder>`\data\dumps"
-- Insert the file "neo4j.dump" and open CMD (contact the administrators for neo4j.dump file)
+- Now go to "C:\Program Files\ `<neo4j_folder>`\data"
+- In this folder create the folder "dumps"
+- Insert the file "neo4j.dump" in "dumps" and open CMD (contact the administrators for neo4j.dump file)
 - Now run the command: "neo4j-admin database load --overwrite-destination=true neo4j" and the database is populated
 
 ### Start Neo4j First method
@@ -72,7 +73,7 @@
     - nvm install v18.18.1
 
 ### Install Python
-- Generally on Ubuntu, Python is installed by default.
+- Generally on Ubuntu, Python is installed by default (use a version of Python above 3.7).
 - Open CMD and run following command: sudo apt install python3-pip.
 
 ### Install JDK 17 
@@ -94,8 +95,9 @@
     - Download [Graph Data Science 2.5.0](https://github.com/neo4j/graph-data-science/releases/download/2.5.0/neo4j-graph-data-science-2.5.0.jar)
     - Add downloaded libraries into `<neo4j_folder>`\plugins
     - Add following line at the bottom of file `<neo4j_folder>`\conf\neo4j.conf "dbms.security.procedures.unrestricted=gds.\*,apoc.\*" (If you open the README on a editor don't use this "\" in gds. and apoc.)
-- Now open CMD and run the following command "sudo nautilus /usr/local/`<neo4j_folder>`/data/dumps"
-- Insert the file "neo4j.dump" (contact the administrators for neo4j.dump file)
+- Now open CMD and run the following command "sudo nautilus /usr/local/`<neo4j_folder>`/data"
+- In this folder create the folder "dumps" 
+- Insert the file "neo4j.dump" in "dumps" (contact the administrators for neo4j.dump file)
 - Now return on CMD and run the command: "neo4j-admin database load --overwrite-destination=true neo4j" and the database is populated
 
 ### Start Neo4j
