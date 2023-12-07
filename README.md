@@ -4,11 +4,9 @@
 
 ### Install NodeJS
 - Download & Install Node.js 18.18.1 LTS
-- Open CMD, go to path of the project and run this command `npm install`
 
 ### Install Python
 - Download & Install Python version 3.11.5 (As of today, installing python version 3.12.0 does not allow to download the django-neomodel library, useful for django and neo4j).
-- Open CMD, go to path of the project and run this command `pip install -r requirements.txt`
 
 ### Install JDK 17 
 - Download & Install JDK on this link https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
@@ -52,6 +50,9 @@
 ### Install Project in VSCode
 - Download VSCode
 - Download the projet with zip on GitHub and the open the folder of the project on VSCode (Not the zip).
+- Open VSCode terminal and run this commands: 
+    - `npm install`
+    - `pip install -r requirements.txt`
 
 ### CrimeMiner Start Application
 - Open CMD, go to path of the project 
@@ -63,33 +64,32 @@
 ### Documentation of the project
 - For project documentation, ho on the GitHub project page and search the Documentation folder.
 
-## CrimeMiner Ubuntu Installation
+## CrimeMiner Ubuntu 22.04.3 Installation
 
 ### Install NodeJS
 - Open CMD, then run the following commands:
-    - sudo apt install -y nodejs
-    - sudo apt install -y npm
-- Open CMD, go to path of the project and run this command `npm install`
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh
+- Close CMD and open again:
+    - nvm install v18.18.1
 
 ### Install Python
-- Download & Install Python version 3.11.5 (As of today, installing python version 3.12.0 does not allow to download the django-neomodel library, useful for django and neo4j).
-- Open CMD, go to path of the project and run this command `pip install -r requirements.txt`
+- Generally on Ubuntu, Python is installed by default.
+- Open CMD and run following command: sudo apt install python3-pip.
 
 ### Install JDK 17 
-- Open CMD, then run the following command: sudo apt install -y openjdk-17-jdk
+- Open CMD, then run the following command: sudo apt install openjdk-17-jdk
 - After installation run on CMD the following command: gedit ~/.bashrc
 - Create new variable JAVA_HOME and set value as "C:\Program Files\ `JDK 17`" in System Variables
 - Go to System Enviroment Variables and modify 'Path' Variable 
 - Add "C:\Program Files\ `JDK 17`\bin"
 
 ### Install Neo4j
-- Download Neo4j Community 5.12.0 folder on this link https://neo4j.com/deployment-center/ and take Linux/Mac Executable with tar extension
+- Download [Neo4j Community 5.12.0](https://neo4j.com/download-thanks/?edition=community&release=5.12.0&flavour=unix&_ga=2.215629648.659733033.1701947907-34595816.1701947907)
 - Move the downloaded `<neo4j_folder>` to /usr/local to grant access to neo4j files
 - After installation run on CMD the following command: gedit ~/.bashrc
 - When the file is opened, go at the end and add the following lines:
     - export NEO4J_HOME="/usr/local/`<neo4j_folder>`"
     - export PATH="/usr/local/`<neo4j_folder>`/bin:$PATH"
-
 - Now run the command: "neo4j install-service" and service will be installed
 - Now install some plugins for the graph:
     - Download [APOC Library 5.12.0](https://github.com/neo4j/apoc/releases/tag/5.12.0)
@@ -100,18 +100,17 @@
 - Insert the file "neo4j.dump" (contact the administrators for neo4j.dump file)
 - Now return on CMD and run the command: "neo4j-admin database load --overwrite-destination=true neo4j" and the database is populated
 
-### Start Neo4j First method
-- Open CMD as Administrator and just execute `<neo4j_folder>\bin\neo4j console` and Neo4j will start listening on the default port with URL "localhost:7474/browser"
-- Credentials username: "neo4j" and password: "neo44%*j" for enter db on URL
-
-### Start Neo4j Second method(If you did the previous Start Neo4j, ignore this)
-- Open CMD as Administrator and just execute `<neo4j_folder>\bin\neo4j console` and Neo4j will start listening on the default port with URL "localhost:7474/browser"
+### Start Neo4j
+- Open CMD as Administrator and just execute "neo4j console" and Neo4j will start listening on the default port with URL "localhost:7474/browser"
 - Enter init credentials username: "neo4j" and password: "neo4j"
 - Neo4j will redirect you to a new password web-page and here you have to enter the project password: "neo44%*j"
 
 ### Install Project in VSCode
 - Download VSCode
 - Download the projet with zip on GitHub and the open the folder of the project on VSCode (Not the zip).
+- Open VSCode terminal and run this commands: 
+    - `npm install`
+    - `pip install -r requirements.txt`
 
 ### CrimeMiner Start Application
 - Open CMD, go to path of the project 
