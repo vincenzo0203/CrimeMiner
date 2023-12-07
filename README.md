@@ -29,8 +29,8 @@
 - Add "C:\Program Files\ `<neo4j_folder>`\bin"
 - Open CMD and run the following command: "cd C:\Program Files\ `<neo4j_folder>`\bin"
 - Now install some plugins for the graph:
-    - Download [APOC Library 5.12.0](https://github.com/neo4j/apoc/releases/tag/5.12.0)
-    - Download [Graph Data Science 2.5.0](https://github.com/neo4j/graph-data-science/releases/tag/2.5.0)
+    - Download [APOC Library 5.12.0](https://github.com/neo4j/apoc/releases/download/5.12.0/apoc-5.12.0-core.jar)
+    - Download [Graph Data Science 2.5.0](https://github.com/neo4j/graph-data-science/releases/download/2.5.0/neo4j-graph-data-science-2.5.0.jar)
     - Add downloaded libraries into `<neo4j_folder>`\plugins
     - Add following line at the bottom of file `<neo4j_folder>`\conf\neo4j.conf "dbms.security.procedures.unrestricted=gds.\*,apoc.\*" <!--(If you open the README on a editor don't use this "\" in gds. and apoc.)-->
 - Now go to "C:\Program Files\ `<neo4j_folder>`\data\dumps"
