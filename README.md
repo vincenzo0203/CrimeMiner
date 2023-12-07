@@ -55,7 +55,7 @@
     - `pip install -r requirements.txt`
 
 ### CrimeMiner Start Application
-- Open CMD, go to path of the project 
+- Open CMD, go to path of neo4j
 - Then run the following command: "neo4j console"
 - After neo4j is running, open another CMD and run the following command (you can also open the terminal on VSCode and run this command): "npm run full" (Dont execute npm run full command before neo4j console stops running, or project metrics will not work)
 - Open Browser and write "localhost:8000/CrimeMiner/"
@@ -80,7 +80,8 @@
 
 ### Install JDK 17 
 - Open CMD, then run the following command: sudo apt install openjdk-17-jdk
-- After installation run on CMD the following command: gedit ~/.bashrc
+- After installation run on CMD the following command: sudo -i
+- Then run gedit ~/.bashrc
 - When the file is opened, go at the end and add the following lines:
     - export JAVA_HOME="/usr/lib/jvm/java-1.17.0-openjdk-amd64"
     - export PATH="/usr/lib/jvm/java-1.17.0-openjdk-amd64/bin:$PATH"
@@ -88,7 +89,8 @@
 ### Install Neo4j
 - Download [Neo4j Community 5.12.0](https://neo4j.com/download-thanks/?edition=community&release=5.12.0&flavour=unix&_ga=2.215629648.659733033.1701947907-34595816.1701947907)
 - Move the downloaded `<neo4j_folder>` to /usr/local to grant access to neo4j files
-- After installation run on CMD the following command: gedit ~/.bashrc
+- After installation run on CMD the following command: sudo -i
+- Then run gedit ~/.bashrc
 - When the file is opened, go at the end and add the following lines:
     - export NEO4J_HOME="/usr/local/`<neo4j_folder>`"
     - export PATH="/usr/local/`<neo4j_folder>`/bin:$PATH"
@@ -100,10 +102,10 @@
 - Now open CMD and run the following command "sudo nautilus /usr/local/`<neo4j_folder>`/data"
 - In this folder create the folder "dumps" 
 - Insert the file "neo4j.dump" in "dumps" (contact the administrators for neo4j.dump file)
-- Now return on CMD and run the command: "neo4j-admin database load --overwrite-destination=true neo4j" and the database is populated
+- Now return on CMD run sudo -i and then run the command: "neo4j-admin database load --overwrite-destination=true neo4j" and the database is populated
 
 ### Start Neo4j
-- Open CMD as Administrator and just execute "neo4j console" and Neo4j will start listening on the default port with URL "localhost:7474/browser"
+- Open CMD run sudo -i and then just execute "neo4j console" and Neo4j will start listening on the default port with URL "localhost:7474/browser"
 - Enter init credentials username: "neo4j" and password: "neo4j"
 - Neo4j will redirect you to a new password web-page and here you have to enter the project password: "neo44%*j"
 
@@ -115,9 +117,9 @@
     - `pip install -r requirements.txt`
 
 ### CrimeMiner Start Application
-- Open CMD, go to path of the project 
-- Then run the following command: "neo4j console"
-- After neo4j is running, open another CMD and run the following command (you can also open the terminal on VSCode and run this command): "npm run full" (Dont execute npm run full command before neo4j console stops running, or project metrics will not work)
+- Open CMD, go to path of neo4j 
+- First run sudo -i and then run the following command: "neo4j console"
+- After neo4j is running, open another CMD go the the path of the project and run the following command (you can also open the terminal on VSCode and run this command): "npm run full" (Dont execute npm run full command before neo4j console stops running, or project metrics will not work)
 - Open Browser and write "localhost:8000/CrimeMiner/"
 - For stop server use command ctrl+c
 
