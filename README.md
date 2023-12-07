@@ -68,13 +68,15 @@
 
 ### Install NodeJS
 - Open CMD, then run the following commands:
+    - sudo apt install curl
     - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 - Close CMD and open again:
     - nvm install v18.18.1
 
 ### Install Python
 - Generally on Ubuntu, Python is installed by default (use a version of Python above 3.7).
-- Open CMD and run following command: sudo apt install python3-pip.
+- Open CMD and run following command: "sudo apt install python3-pip".
 
 ### Install JDK 17 
 - Open CMD, then run the following command: sudo apt install openjdk-17-jdk
@@ -94,7 +96,7 @@
     - Download [APOC Library 5.12.0](https://github.com/neo4j/apoc/releases/download/5.12.0/apoc-5.12.0-core.jar)
     - Download [Graph Data Science 2.5.0](https://github.com/neo4j/graph-data-science/releases/download/2.5.0/neo4j-graph-data-science-2.5.0.jar)
     - Add downloaded libraries into `<neo4j_folder>`\plugins
-    - Add following line at the bottom of file `<neo4j_folder>`\conf\neo4j.conf "dbms.security.procedures.unrestricted=gds.\*,apoc.\*" (If you open the README on a editor don't use this "\" in gds. and apoc.)
+    - Add following line at the bottom of file `<neo4j_folder>`\conf\neo4j.conf "dbms.security.procedures.unrestricted=gds.\*,apoc.\*" <!--(If you open the README on a editor don't use this "\" in gds. and apoc.)-->
 - Now open CMD and run the following command "sudo nautilus /usr/local/`<neo4j_folder>`/data"
 - In this folder create the folder "dumps" 
 - Insert the file "neo4j.dump" in "dumps" (contact the administrators for neo4j.dump file)
