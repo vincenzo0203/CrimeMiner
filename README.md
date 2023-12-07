@@ -9,7 +9,7 @@
 - Download & Install Python version 3.11.5 (As of today, installing python version 3.12.0 does not allow to download the django-neomodel library, useful for django and neo4j).
 
 ### Install JDK 17 
-- Download & Install JDK on this link https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
+- Download & Install [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 - Create new variable JAVA_HOME and set value as "C:\Program Files\ `JDK 17`" in System Variables
 - Go to System Enviroment Variables and modify 'Path' Variable 
 - Add "C:\Program Files\ `JDK 17`\bin"
@@ -28,7 +28,6 @@
 - Go to System Enviroment Variables and modify 'Path' Variable 
 - Add "C:\Program Files\ `<neo4j_folder>`\bin"
 - Open CMD and run the following command: "cd C:\Program Files\ `<neo4j_folder>`\bin"
-- Now run the command: "neo4j install-service" and service will be installed
 - Now install some plugins for the graph:
     - Download [APOC Library 5.12.0](https://github.com/neo4j/apoc/releases/tag/5.12.0)
     - Download [Graph Data Science 2.5.0](https://github.com/neo4j/graph-data-science/releases/tag/2.5.0)
@@ -79,9 +78,9 @@
 ### Install JDK 17 
 - Open CMD, then run the following command: sudo apt install openjdk-17-jdk
 - After installation run on CMD the following command: gedit ~/.bashrc
-- Create new variable JAVA_HOME and set value as "C:\Program Files\ `JDK 17`" in System Variables
-- Go to System Enviroment Variables and modify 'Path' Variable 
-- Add "C:\Program Files\ `JDK 17`\bin"
+- When the file is opened, go at the end and add the following lines:
+    - export JAVA_HOME="/usr/lib/jvm/java-1.17.0-openjdk-amd64"
+    - export PATH="/usr/lib/jvm/java-1.17.0-openjdk-amd64/bin:$PATH"
 
 ### Install Neo4j
 - Download [Neo4j Community 5.12.0](https://neo4j.com/download-thanks/?edition=community&release=5.12.0&flavour=unix&_ga=2.215629648.659733033.1701947907-34595816.1701947907)
@@ -90,10 +89,9 @@
 - When the file is opened, go at the end and add the following lines:
     - export NEO4J_HOME="/usr/local/`<neo4j_folder>`"
     - export PATH="/usr/local/`<neo4j_folder>`/bin:$PATH"
-- Now run the command: "neo4j install-service" and service will be installed
 - Now install some plugins for the graph:
-    - Download [APOC Library 5.12.0](https://github.com/neo4j/apoc/releases/tag/5.12.0)
-    - Download [Graph Data Science 2.5.0](https://github.com/neo4j/graph-data-science/releases/tag/2.5.0)
+    - Download [APOC Library 5.12.0](https://github.com/neo4j/apoc/releases/download/5.12.0/apoc-5.12.0-core.jar)
+    - Download [Graph Data Science 2.5.0](https://github.com/neo4j/graph-data-science/releases/download/2.5.0/neo4j-graph-data-science-2.5.0.jar)
     - Add downloaded libraries into `<neo4j_folder>`\plugins
     - Add following line at the bottom of file `<neo4j_folder>`\conf\neo4j.conf "dbms.security.procedures.unrestricted=gds.\*,apoc.\*" (If you open the README on a editor don't use this "\" in gds. and apoc.)
 - Now open CMD and run the following command "sudo nautilus /usr/local/`<neo4j_folder>`/data/dumps"
