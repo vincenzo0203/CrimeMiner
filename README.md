@@ -112,9 +112,10 @@
 ### Install Project in VSCode
 - Download VSCode
 - Download the projet with zip on GitHub and the open the folder of the project on VSCode (Not the zip).
-- Open VSCode terminal and run this commands: 
+- Open VSCode set the version of python on your VSCode and then open terminal and run this commands: 
     - `npm install`
     - `pip install -r requirements.txt`
+
 
 ### CrimeMiner Start Application
 - Open CMD, go to path of neo4j 
