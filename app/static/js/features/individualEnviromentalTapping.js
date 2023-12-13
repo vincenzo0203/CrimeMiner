@@ -865,7 +865,7 @@ function sendNewPresentToBackendIndividualEnviromentalTapping(){
 //Funzione che manda al backend i dati da aggiornare della chiamata
 function sendUpdateEnviromentalTappingToBackendIndividualEnviromentalTapping(){
 
-  let [year, month, day] = document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingDate").value;
+  let [year, month, day] = document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingDate").value.split('-');
 
   let json = `{`;
 
