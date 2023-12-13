@@ -1091,10 +1091,9 @@ function returnToCreationPageIndividualWiretaps(){
 
 //Funzione che controlla se gli input nei form di creazione sono vuoti
 function inputControlIndividualWiretaps(){
-  let value;
+  let value = true;
 
   if(!document.querySelector("#CheckSourceExisting").checked){
-    value = true;
     
     if(document.querySelector(".modalIndividualWiretapsSourceSurname").value == ""){
       document.querySelector(".modalIndividualWiretapsSourceSurname").style.borderColor = 'red';
@@ -1111,7 +1110,6 @@ function inputControlIndividualWiretaps(){
       document.querySelector(".modalIndividualWiretapsSourceName").style.borderColor = 'green';
 
   }else{
-    value = true;
     if(document.querySelector(".modalIndividualWiretapsSource").value == ""){
       document.querySelector(".modalIndividualWiretapsSource").style.borderColor = 'red';
       value = false;
@@ -1121,7 +1119,6 @@ function inputControlIndividualWiretaps(){
   }
 
   if(!document.querySelector("#CheckTargetExisting").checked){
-    value = true;
   
     if(document.querySelector(".modalIndividualWiretapsTargetSurname").value == ""){
       document.querySelector(".modalIndividualWiretapsTargetSurname").style.borderColor = 'red';
@@ -1138,7 +1135,6 @@ function inputControlIndividualWiretaps(){
       document.querySelector(".modalIndividualWiretapsTargetName").style.borderColor = 'green';
 
   }else{
-    value = true;
     if(document.querySelector(".modalIndividualWiretapsTarget").value == ""){
       document.querySelector(".modalIndividualWiretapsTarget").style.borderColor = 'red';
       value = false;
@@ -1152,9 +1148,7 @@ function inputControlIndividualWiretaps(){
 
 //Funzione che controlla se gli input nei form di aggiornamento sono vuoti
 function inputControlIndividualWiretapsUpdateInd(){
-  let value;
-
-  value = true;
+  let value = true;
   
   if(document.querySelector(".modalIndividualWiretapsIndividualSurname").value == ""){
     document.querySelector(".modalIndividualWiretapsIndividualSurname").style.borderColor = 'red';

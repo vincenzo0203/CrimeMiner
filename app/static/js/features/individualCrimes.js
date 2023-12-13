@@ -1139,10 +1139,9 @@ function returnToCreationPageIndividualCrimes(){
 
 //Funzione che controlla se gli input nei form di creazione sono vuoti
 function inputControlIndividualCrimes(){
-  let value;
+  let value = true;
 
   if(!document.querySelector("#CheckIndividualExisting").checked){
-    value = true;
     
     if(document.querySelector(".modalIndividualCrimesIndividualAddSurname").value == ""){
       document.querySelector(".modalIndividualCrimesIndividualAddSurname").style.borderColor = 'red';
@@ -1159,7 +1158,6 @@ function inputControlIndividualCrimes(){
       document.querySelector(".modalIndividualCrimesIndividualAddName").style.borderColor = 'green';
 
   }else{
-    value = true;
     if(document.querySelector(".modalIndividualCrimesIndividual").value == ""){
       document.querySelector(".modalIndividualCrimesIndividual").style.borderColor = 'red';
       value = false;
@@ -1168,7 +1166,6 @@ function inputControlIndividualCrimes(){
       document.querySelector(".modalIndividualCrimesIndividual").style.borderColor = 'green';
   }
 
-  value = true;
   if(document.querySelector(".modalIndividualCrimesCrime").value == ""){
     document.querySelector(".modalIndividualCrimesCrime").style.borderColor = 'red';
     value = false;
@@ -1176,7 +1173,6 @@ function inputControlIndividualCrimes(){
   else
     document.querySelector(".modalIndividualCrimesCrime").style.borderColor = 'green';
 
-  value = true;
   if(document.querySelector(".modalIndividualCrimesTipology").value == ""){
     document.querySelector(".modalIndividualCrimesTipology").style.borderColor = 'red';
     value = false;
@@ -1189,9 +1185,7 @@ function inputControlIndividualCrimes(){
 
 //Funzione che controlla se gli input nei form di aggiornamento sono vuoti
 function inputControlIndividualCrimesUpdateInd(){
-  let value;
-
-  value = true;
+  let value = true;
   
   if(document.querySelector(".modalIndividualCrimesIndividualSurname").value == ""){
     document.querySelector(".modalIndividualCrimesIndividualSurname").style.borderColor = 'red';

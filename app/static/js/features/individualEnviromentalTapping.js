@@ -1089,10 +1089,9 @@ function returnToCreationPageIndividualEnviromentalTapping(){
 
 //Funzione che controlla se gli input nei form di creazione sono vuoti
 function inputControlIndividualEnviromentalTapping(){
-  let value;
+  let value = true;
 
   if(!document.querySelector("#CheckIndividualExisting").checked){
-    value = true;
     
     if(document.querySelector(".modalIndividualEnviromentalTappingIndividualAddSurname").value == ""){
       document.querySelector(".modalIndividualEnviromentalTappingIndividualAddSurname").style.borderColor = 'red';
@@ -1109,7 +1108,6 @@ function inputControlIndividualEnviromentalTapping(){
       document.querySelector(".modalIndividualEnviromentalTappingIndividualAddName").style.borderColor = 'green';
 
   }else{
-    value = true;
     if(document.querySelector(".modalIndividualEnviromentalTappingIndividual").value == ""){
       document.querySelector(".modalIndividualEnviromentalTappingIndividual").style.borderColor = 'red';
       value = false;
@@ -1119,7 +1117,6 @@ function inputControlIndividualEnviromentalTapping(){
   }
 
   if(!document.querySelector("#CheckEnviromentalTappingExisting").checked){
-    value = true;
   
     if(document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddPlace").value == ""){
       document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddPlace").style.borderColor = 'red';
@@ -1128,7 +1125,6 @@ function inputControlIndividualEnviromentalTapping(){
     else
       document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingAddPlace").style.borderColor = 'green';
   }else{
-    value = true;
     if(document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTapping").value == ""){
       document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTapping").style.borderColor = 'red';
       value = false;
@@ -1142,9 +1138,7 @@ function inputControlIndividualEnviromentalTapping(){
 
 //Funzione che controlla se gli input nei form di aggiornamento sono vuoti
 function inputControlIndividualEnviromentalTappingUpdateInd(){
-  let value;
-
-  value = true;
+  let value = true;
   
   if(document.querySelector(".modalIndividualEnviromentalTappingIndividualSurname").value == ""){
     document.querySelector(".modalIndividualEnviromentalTappingIndividualSurname").style.borderColor = 'red';
@@ -1165,9 +1159,7 @@ function inputControlIndividualEnviromentalTappingUpdateInd(){
 
 //Funzione che controlla se gli input nei form di aggiornamento sono vuoti
 function inputControlIndividualEnviromentalTappingUpdateEnvTap(){
-  let value;
-
-  value = true;
+  let value = true;
   
   if(document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingPlace").value == ""){
     document.querySelector(".modalIndividualEnviromentalTappingEnviromentalTappingPlace").style.borderColor = 'red';
