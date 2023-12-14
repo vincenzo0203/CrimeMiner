@@ -126,3 +126,7 @@
 
 ### Documentation of the project
 - For project documentation, ho on the GitHub project page and search the Documentation folder.
+
+### Config external port for Django server
+- Go to "package.json" and in the voice server add on "python manage.py runserver" the command "0.0.0.0:8000", the result is "python manage.py runserver 0.0.0.0:8000"
+- Go to file "CrimeMiner/settings.py" and in ALLOWED_HOSTS = ['The ip you want to add'] the example is ALLOWED_HOSTS = [\'193.205.161.136\'] 
